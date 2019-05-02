@@ -13,7 +13,9 @@
         "jeroennoten/laravel-adminlte": "^1.25",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
-        "mateusjunges/laravel-acl": "^1.4"
+        "mateusjunges/laravel-acl": "^1.4",
+        "uepg/sgi-authorizer": "0.2.32",
+        "uepg/sgi-user": "1.1.*"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
@@ -49,6 +51,16 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://git.uepg.br/sgi/sgi-authorizer.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://git.uepg.br/sgi/sgi-user.git"
+        }
+    ],
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",

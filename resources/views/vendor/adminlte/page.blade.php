@@ -3,6 +3,7 @@
 @section('adminlte_css')
     <link rel="stylesheet"
           href="{{ asset('vendor/adminlte/dist/css/skins/skin-' . config('adminlte.skin', 'blue') . '.min.css')}} ">
+    <link rel="stylesheet" href="{{ asset('css/adminlte/page/dropdown-button.css') }}">
     @stack('css')
     @yield('css')
 @stop
@@ -63,11 +64,24 @@
                                     <i class="fa fa-fw fa-power-off"></i> {{ trans('adminlte::adminlte.log_out') }}
                                 </a>
                             @else
-                                <a href="#"
-                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                                >
-                                    <i class="fa fa-fw fa-power-off"></i> {{ trans('adminlte::adminlte.log_out') }}
-                                </a>
+                                <div class="dropdownn">
+                                    <button class="dropbtn">
+                                        <i class="fa fa-fw fa-user"></i>{{ isset(Auth::user()->nome) ? Auth::user()->nome : trans('adminlte::adminlte.log_out') }}
+                                    </button>
+                                    <div class="dropdownn-content">
+                                        <a href="{{ route('userinfo') }}"><i class="fa fa-fw fa-user"></i>Meu Perfil</a>
+                                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit()">
+                                            <i class="fa fa-fw fa-power-off"></i>
+                                            Sair
+                                        </a>
+                                    </div>
+                                </div>
+
+{{--                                <a href="#"--}}
+{{--                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();"--}}
+{{--                                >--}}
+{{--                                    <i class="fa fa-fw fa-power-off"></i> {{ trans('adminlte::adminlte.log_out') }}--}}
+{{--                                </a>--}}
                                 <form id="logout-form" action="{{ url(config('adminlte.logout_url', 'auth/logout')) }}" method="POST" style="display: none;">
                                     @if(config('adminlte.logout_method'))
                                         {{ method_field(config('adminlte.logout_method')) }}

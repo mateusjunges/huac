@@ -42,6 +42,7 @@
 <body class="hold-transition @yield('body_class')">
 
 @yield('body')
+@yield('loginContent')
 
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.slimscroll.min.js') }}"></script>

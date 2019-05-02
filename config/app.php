@@ -171,9 +171,16 @@ return [
          */
         HUAC\Providers\AppServiceProvider::class,
         HUAC\Providers\AuthServiceProvider::class,
-        // HUAC\Providers\BroadcastServiceProvider::class,
+        HUAC\Providers\BroadcastServiceProvider::class,
         HUAC\Providers\EventServiceProvider::class,
         HUAC\Providers\RouteServiceProvider::class,
+
+        /*
+         * SGIAuthorizer Service Providers
+         */
+        Uepg\SGIAuthorizer\SGIAuthorizerServiceProvider::class,
+        Uepg\SGIAuthorizer\Auth\Providers\SGIAuthProvider::class,
+
 
     ],
 
