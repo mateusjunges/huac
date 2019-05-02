@@ -20,7 +20,10 @@ Route::get(config('sgiauthorizer.app.loginRoute'), [
     'uses' => '\Uepg\SGIAuthorizer\Auth\Controllers\LoginController@getLogin'
 ]);
 Route::post(config('sgiauthorizer.app.loginRoute'), 'Auth\LoginController@login');
-Route::get('/logout', ['as' => 'logout', 'uses' => '\Uepg\SGIAuthorizer\Auth\Controllers\LoginController@logout']);
+Route::get('/logout', [
+    'as' => 'logout',
+    'uses' => 'Auth\LoginController@logout'
+]);
 
 Route::group(['middleware' => 'sgiauth'], function() {
     Route::any(config('sgiauthorizer.app.userInfoRoute'),

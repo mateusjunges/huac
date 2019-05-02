@@ -46,13 +46,7 @@
                             <li>{{ Session::get('message') }}</li>
                         </ul>
                     </div>
-                @endif
-                @if(session('message') != null)
-                    <div class="alert alert-{{ session('message')['type'] }}"
-                         id="session-message">
-                        <p>{{ session('message')['text'] }}</p>
-                    </div>
-                @endif
+            @endif
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="wrap-input100 validate-input m-b-16" data-validate = "Nome de usuário obrigatório!">
                     <input class="input100" type="text" name="username" value="{{ old('username') }}" placeholder="Nome de usuário">

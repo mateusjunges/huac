@@ -32,4 +32,18 @@ class LoginController extends UEPGLoginController
             return $login;
         }
     }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function logout()
+    {
+        $user = '';
+        if (Auth::user() !== null) {
+            $user = Auth::user()->username;
+        }
+        session()->forget('sgiauthorizer');
+        Auth::logout();
+        return redirect()->route('login')->with('message', 'Usuário '. $user .' desconectado com sucesso!');
+    }
 }
