@@ -5,10 +5,12 @@ namespace HUAC;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Junges\ACL\Traits\UsersTrait;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use UsersTrait;
 
     /**
      * The attributes that are mass assignable.
