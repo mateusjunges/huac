@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'sgiauthorizer',
-            'model' => \Uepg\SGIUser\Models\Usuario::class,
+            'model' => \HUAC\User::class,
         ],
 
         // 'users' => [

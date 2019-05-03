@@ -3,22 +3,22 @@
 namespace HUAC;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Junges\ACL\Traits\UsersTrait;
+use Uepg\SGIUser\Models\Usuario;
 
-class User extends Authenticatable
+class User extends Usuario
 {
     use Notifiable;
     use UsersTrait;
 
     /**
      * The attributes that are mass assignable.
+     * The 'nome' field is used only for login proposes.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'username',
+        'name', 'email', 'username', 'nome',
     ];
 
     /**
