@@ -18,7 +18,10 @@ class User extends Usuario
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'username', 'nome',
+        'name',
+        'email',
+        'username',
+        'nome',
     ];
 
     /**
