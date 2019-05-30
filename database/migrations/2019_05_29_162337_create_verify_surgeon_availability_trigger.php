@@ -38,9 +38,11 @@ class CreateVerifySurgeonAvailabilityTrigger extends Migration
             END;
             \$BODY\$
             LANGUAGE plpgsql;
-            
-             CREATE TRIGGER verify_if_surgeon_is_available BEFORE INSERT ON \"events\"
-             FOR EACH ROW EXECUTE PROCEDURE verify_if_surgeon_is_available();
+        ");
+
+        DB::statement("
+            CREATE TRIGGER verify_if_surgeon_is_available BEFORE INSERT ON \"events\"
+            FOR EACH ROW EXECUTE PROCEDURE verify_if_surgeon_is_available();
         ");
     }
 
