@@ -16,3 +16,4 @@ package-json.lock
 .config/
 .gitconfig
 .local/
+.bash_history
