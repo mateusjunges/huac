@@ -3,7 +3,6 @@
 namespace HUAC;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Surgery extends Model
@@ -29,8 +28,25 @@ class Surgery extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function events() : HasMany
+    public function events()
     {
         return $this->hasMany(Event::class, 'surgery_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function status()
+    {
+        return $this->hasMany(Log::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function latestStatus()
+    {
+        return $this->hasOne(Log::class)
+            ->orderBy('created_at', 'desc');
     }
 }
