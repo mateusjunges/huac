@@ -3,6 +3,7 @@
 namespace HUAC;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Patient extends Model
@@ -20,4 +21,12 @@ class Patient extends Model
     ];
 
     protected $dates = ['birthday_at'];
+
+    /**
+     * @return HasMany
+     */
+    public function surgeries() : HasMany
+    {
+        return $this->hasMany(Surgery::class);
+    }
 }
