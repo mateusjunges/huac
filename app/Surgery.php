@@ -3,6 +3,7 @@
 namespace HUAC;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Surgery extends Model
@@ -24,4 +25,12 @@ class Surgery extends Model
     protected $guarded = ['id'];
 
     protected $dates = ['deleted_at'];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function events() : HasMany
+    {
+        return $this->hasMany(Event::class, 'surgery_id');
+    }
 }
