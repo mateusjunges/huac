@@ -3,7 +3,6 @@
 namespace HUAC;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Event extends Model
@@ -32,8 +31,24 @@ class Event extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function surgery() : BelongsTo
+    public function surgery()
     {
         return $this->belongsTo(Surgery::class);
+    }
+
+    /**
+     * Return only events where the corresponding surgery has the CONFIRMED status
+     * @return mixed
+     */
+    public function scopeConfirmedMaterials()
+    {
+        return $this->whereHas('surgery.latestStatus', function ($query){
+            $query->where('status_id', env('CONFIRMED'));
+        })->get()
+            ->filter(function ($event){
+                return $event->surgery
+                    ->latestStatus
+                    ->status_id == env('CONFIRMED');
+            });
     }
 }
