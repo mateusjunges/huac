@@ -3,6 +3,7 @@
 namespace HUAC;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Event extends Model
@@ -27,4 +28,12 @@ class Event extends Model
     protected $dates = ['deleted_at'];
 
     protected $guarded = ['id'];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function surgery() : BelongsTo
+    {
+        return $this->belongsTo(Surgery::class);
+    }
 }
