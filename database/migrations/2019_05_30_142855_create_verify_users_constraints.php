@@ -22,14 +22,14 @@ class CreateVerifyUsersConstraints extends Migration
                 -- Check for null columns:
                 IF (NEW.email IS NULL || NEW.name IS NULL || NEW.username IS NULL)
                 THEN
-                    RAISE NOTICE 'Email, name and username are required!';
+                    RAISE EXCEPTION 'Email, name and username are required!';
                     RETURN NULL;
                 END IF;
                 -- Verify if the NEW.username is unique on database:
                 countUsername := COUNT(users.username) FROM users WHERE username = NEW.username;
                 IF (countUsername > 0)
                 THEN 
-                    RAISE NOTICE 'Username already exists.';
+                    RAISE EXCEPTION 'Username already exists.';
                     RETURN NULL;
                 END IF;
                 RETURN NEW;

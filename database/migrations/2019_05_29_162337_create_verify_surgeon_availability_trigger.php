@@ -30,7 +30,7 @@ class CreateVerifySurgeonAvailabilityTrigger extends Migration
                     
                 IF(busySurgeons > 0)
                 THEN
-                    RAISE NOTICE 'One of the surgeons are busy at the desired scheduling period. Please, check and try again';
+                    RAISE EXCEPTION 'One of the surgeons are busy at the desired scheduling period. Please, check and try again';
                     RETURN NULL;
                 END IF;
                     -- If the surgeons of the surgery are not busy, the insertion can be finished.

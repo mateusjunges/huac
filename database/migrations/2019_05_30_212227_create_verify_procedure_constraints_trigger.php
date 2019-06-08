@@ -21,7 +21,7 @@ class CreateVerifyProcedureConstraintsTrigger extends Migration
                 -- Check for null columns:
                 IF (NEW.name IS NULL || NEW.sus_code IS NULL)
                 THEN
-                    RAISE NOTICE 'The name and sus_code fields are required';
+                    RAISE EXCEPTION 'The \"name\" and \"sus_code\" attributes are required';
                     RETURN NULL;
                 END IF;
                 
@@ -29,14 +29,14 @@ class CreateVerifyProcedureConstraintsTrigger extends Migration
                 stringLength := LENGTH(NEW.name);
                 IF (stringLength NOT BETWEEN 1 AND 60)
                 THEN
-                    RAISE NOTICE 'The name column length must be between 1 and 60 characters!';
+                    RAISE EXCEPTION 'The \"name\" column length must be between 1 and 60 characters!';
                     RETURN NULL;
                 END IF;
                 stringLength := 0;
                 stringLength := LENGTH(NEW.sus_code);
                 IF(stringLength NOT BETWEEN 1 AND 20)
                 THEN
-                    RAISE NOTICE 'The sus_code column length must be between 1 and 20 characters!';
+                    RAISE EXCEPTION 'The \"sus_code\" column length must be between 1 and 20 characters!';
                     RETURN NULL;
                 END IF;
                 
@@ -44,7 +44,7 @@ class CreateVerifyProcedureConstraintsTrigger extends Migration
                 countProcedures := COUNT(procedures.*) FROM procedures WHERE procedures.sus_code = NEW.sus_code;
                 IF(countProcedures > 0)
                 THEN
-                    RAISE NOTICE 'The supplied sus_code is already registered.';
+                    RAISE EXCEPTION 'The supplied \"sus_code\" is already registered.';
                     RETURN NULL;
                 END IF;
                 
