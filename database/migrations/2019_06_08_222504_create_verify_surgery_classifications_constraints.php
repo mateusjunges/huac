@@ -15,7 +15,7 @@ class CreateVerifySurgeryClassificationsConstraints extends Migration
         DB::statement("
             CREATE OR REPLACE FUNCTION verify_surgery_classifications_constraints()
             RETURNS TRIGGER AS 
-            $BODY$
+            \$BODY\$
             BEGIN
                 -- Check for null columns:
                 IF (NEW.name IS NULL)
@@ -36,7 +36,7 @@ class CreateVerifySurgeryClassificationsConstraints extends Migration
                 END IF;
                 RETURN NEW;
             END;
-            $BODY$
+            \$BODY\$
             LANGUAGE plpgsql;
         ");
         DB::statement("
