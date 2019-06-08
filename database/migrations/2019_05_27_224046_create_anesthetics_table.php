@@ -15,7 +15,7 @@ class CreateAnestheticsTable extends Migration
     {
         Schema::create('anesthetics', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')
+            $table->string('name', 60)
                 ->unique()
                 ->nullable(false);
             $table->softDeletes();
