@@ -15,11 +15,11 @@ class CreateEventsTable extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title', 25)->nullable(false);
+            $table->string('title', 70)->nullable(false);
             $table->string('color', 7)->nullable(false);
             $table->dateTime('start_at')->nullable(false);
             $table->dateTime('end_at')->nullable(false);
-            $table->dateTime('doctor_star_at')->nullable(false);
+            $table->dateTime('doctor_start_at')->nullable(false);
             $table->dateTime('doctor_end_at')->nullable(false);
             $table->dateTime('doctor_started_at')->nullable();
             $table->dateTime('doctor_ended_at')->nullable();
