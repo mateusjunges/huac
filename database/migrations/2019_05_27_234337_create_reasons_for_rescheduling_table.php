@@ -15,7 +15,7 @@ class CreateReasonsForReschedulingTable extends Migration
     {
         Schema::create('reasons_for_rescheduling', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')
+            $table->string('name', 70)
                 ->unique()
                 ->nullable(false);
             $table->text('description')->nullable(false);
