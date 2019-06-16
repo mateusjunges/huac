@@ -21,5 +21,10 @@ END;
 $BODY$
 LANGUAGE plpgsql;
 
+-- Before insert:
 CREATE TRIGGER verify_anesthetics_constraints BEFORE INSERT ON anesthetics
+FOR EACH ROW EXECUTE PROCEDURE verify_anesthetics_constraints();
+
+-- Before update:
+CREATE TRIGGER verify_anesthetics_constraints BEFORE UPDATE ON anesthetics
 FOR EACH ROW EXECUTE PROCEDURE verify_anesthetics_constraints();
