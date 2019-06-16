@@ -1,0 +1,89 @@
+<html>
+<head>
+<title>surgeons.sql</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #000080; font-weight: bold;}
+.s1 { color: #000000;}
+.s2 { color: #0000ff;}
+.s3 { color: #808080; font-style: italic;}
+.s4 { color: #008000; font-weight: bold;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+surgeons.sql</font>
+</center></td></tr></table>
+<pre><span class="s0">CREATE OR </span>REPLACE FUNCTION verify_surgeons_constraints_for_update()
+RETURNS TRIGGER <span class="s0">AS</span>
+$BODY$
+<span class="s0">DECLARE </span>countSurgeons <span class="s0">integer </span>:= <span class="s2">0</span>;
+<span class="s0">BEGIN</span>
+	<span class="s3">-- Check for null columns:</span>
+	IF (NEW.crm <span class="s0">IS NULL</span>)
+	<span class="s0">THEN</span>
+		RAISE <span class="s0">EXCEPTION </span><span class="s4">'The &quot;crm&quot; attribute is required!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+
+	<span class="s3">-- Check for duplicate rows:</span>
+	countSurgeons := <span class="s0">COUNT</span>(*) <span class="s0">FROM </span>surgeons <span class="s0">WHERE </span>surgeons.crm = NEW.crm <span class="s0">AND </span>surgeons.id &lt;&gt; OLD.id;
+	IF (countSurgeons &gt; <span class="s2">0</span>)
+	<span class="s0">THEN</span>
+		RAISE <span class="s0">EXCEPTION </span><span class="s4">'This CRM is already taken!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+	RETURN NEW;
+
+	<span class="s3">-- Check for string length:</span>
+	IF (<span class="s0">SELECT LENGTH</span>(NEW.crm) <span class="s0">NOT BETWEEN </span><span class="s2">3 </span><span class="s0">AND </span><span class="s2">20</span>)
+	<span class="s0">THEN</span>
+		RAISE <span class="s0">EXCEPTION </span><span class="s4">'The &quot;crm&quot; must have between 3 and 20 characters!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+<span class="s0">END</span>;
+$BODY$
+<span class="s0">LANGUAGE </span>plpgsql;
+
+<span class="s0">CREATE OR </span>REPLACE FUNCTION verify_surgeons_constraints()
+RETURNS TRIGGER <span class="s0">AS</span>
+$BODY$
+<span class="s0">DECLARE </span>countSurgeons <span class="s0">integer </span>:= <span class="s2">0</span>;
+<span class="s0">BEGIN</span>
+	<span class="s3">-- Check for null columns:</span>
+	IF (NEW.crm <span class="s0">IS NULL</span>)
+	<span class="s0">THEN</span>
+		RAISE <span class="s0">EXCEPTION </span><span class="s4">'The &quot;crm&quot; attribute is required!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+
+	<span class="s3">-- Check for duplicate rows:</span>
+	countSurgeons := <span class="s0">COUNT</span>(*) <span class="s0">FROM </span>surgeons <span class="s0">WHERE </span>surgeons.crm = NEW.crm;
+	IF (countSurgeons &gt; <span class="s2">0</span>)
+	<span class="s0">THEN</span>
+		RAISE <span class="s0">EXCEPTION </span><span class="s4">'This CRM is already taken!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+	RETURN NEW;
+
+	<span class="s3">-- Check for string length:</span>
+	IF (<span class="s0">SELECT LENGTH</span>(NEW.crm) <span class="s0">NOT BETWEEN </span><span class="s2">3 </span><span class="s0">AND </span><span class="s2">20</span>)
+	<span class="s0">THEN</span>
+		RAISE <span class="s0">EXCEPTION </span><span class="s4">'The &quot;crm&quot; must have between 3 and 20 characters!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+<span class="s0">END</span>;
+$BODY$
+<span class="s0">LANGUAGE </span>plpgsql;
+
+
+<span class="s0">CREATE </span>TRIGGER verify_surgeons_constraints BEFORE <span class="s0">INSERT ON </span>surgeons
+<span class="s0">FOR </span>EACH ROW <span class="s0">EXECUTE PROCEDURE </span>verify_surgeons_constraints();
+
+<span class="s0">CREATE </span>TRIGGER verify_surgeons_constraints_before_update BEFORE <span class="s0">UPDATE ON </span>surgeons
+<span class="s0">FOR </span>EACH ROW <span class="s0">EXECUTE PROCEDURE </span>verify_surgeons_constraints_for_update();
+</pre>
+</body>
+</html>

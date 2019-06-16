@@ -1,0 +1,132 @@
+<html>
+<head>
+<title>users.sql</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #000080; font-weight: bold;}
+.s1 { color: #000000;}
+.s2 { color: #0000ff;}
+.s3 { color: #808080; font-style: italic;}
+.s4 { color: #008000; font-weight: bold;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+users.sql</font>
+</center></td></tr></table>
+<pre><span class="s0">CREATE OR </span>REPLACE FUNCTION verify_users_constraints()
+RETURNS TRIGGER <span class="s0">AS</span>
+$BODY$
+<span class="s0">DECLARE </span>countUsername <span class="s0">integer </span>:= <span class="s2">0</span>;
+<span class="s0">BEGIN</span>
+	<span class="s3">-- Check for null columns</span>
+	IF (NEW.name <span class="s0">IS NULL</span>)
+	<span class="s0">THEN</span>
+		RAISE <span class="s0">EXCEPTION </span><span class="s4">'The &quot;name&quot; attribute is required!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	ELSIF (NEW.email <span class="s0">IS NULL</span>)
+	<span class="s0">THEN</span>
+		RAISE <span class="s0">EXCEPTION </span><span class="s4">'The &quot;email&quot; attribute is required!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	ELSIF (NEW.username <span class="s0">IS NULL</span>)
+	<span class="s0">THEN</span>
+		RAISE <span class="s0">EXCEPTION </span><span class="s4">'The &quot;username&quot; attribute is required!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+
+	<span class="s3">-- Email validation:</span>
+	IF (NEW.email <span class="s0">NOT LIKE </span><span class="s4">'%_@__%.__%'</span>)
+	<span class="s0">THEN</span>
+		RAISE <span class="s0">EXCEPTION </span><span class="s4">'Please enter a valid email!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+
+	<span class="s3">-- Check for string length:</span>
+	IF (<span class="s0">SELECT LENGTH</span>(NEW.name) <span class="s0">NOT BETWEEN </span><span class="s2">3 </span><span class="s0">AND </span><span class="s2">70</span>)
+	<span class="s0">THEN</span>
+		RAISE <span class="s0">EXCEPTION </span><span class="s4">'The &quot;name&quot; attribute must have between 3 and 70 characters!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	ELSIF (<span class="s0">SELECT LENGTH</span>(NEW.username) <span class="s0">NOT BETWEEN </span><span class="s2">3 </span><span class="s0">AND </span><span class="s2">30</span>)
+	<span class="s0">THEN</span>
+		RAISE <span class="s0">EXCEPTION </span><span class="s4">'The &quot;username&quot; must have between 3 and 30 characters!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+
+	<span class="s3">-- Check for unique username:</span>
+	countUsername := <span class="s0">COUNT</span>(users.username) <span class="s0">FROM </span>users <span class="s0">WHERE </span>username = NEW.username;
+	IF (countUsername &gt; <span class="s2">0</span>)
+	<span class="s0">THEN</span>
+		RAISE NOTICE <span class="s4">'Username already exists.'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+
+	RETURN NEW;
+
+<span class="s0">END</span>;
+$BODY$
+<span class="s0">LANGUAGE </span>plpgsql;
+
+
+<span class="s0">CREATE OR </span>REPLACE FUNCTION verify_users_constraints_for_update()
+RETURNS TRIGGER <span class="s0">AS</span>
+$BODY$
+<span class="s0">DECLARE </span>countUsername <span class="s0">integer </span>:= <span class="s2">0</span>;
+<span class="s0">BEGIN</span>
+	<span class="s3">-- Check for null columns</span>
+	IF (NEW.name <span class="s0">IS NULL</span>)
+	<span class="s0">THEN</span>
+		RAISE <span class="s0">EXCEPTION </span><span class="s4">'The &quot;name&quot; attribute is required!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	ELSIF (NEW.email <span class="s0">IS NULL</span>)
+	<span class="s0">THEN</span>
+		RAISE <span class="s0">EXCEPTION </span><span class="s4">'The &quot;email&quot; attribute is required!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	ELSIF (NEW.username <span class="s0">IS NULL</span>)
+	<span class="s0">THEN</span>
+		RAISE <span class="s0">EXCEPTION </span><span class="s4">'The &quot;username&quot; attribute is required!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+
+	<span class="s3">-- Email validation:</span>
+	IF (NEW.email <span class="s0">NOT LIKE </span><span class="s4">'%_@__%.__%'</span>)
+	<span class="s0">THEN</span>
+		RAISE <span class="s0">EXCEPTION </span><span class="s4">'Please enter a valid email!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+
+	<span class="s3">-- Check for string length:</span>
+	IF (<span class="s0">SELECT LENGTH</span>(NEW.name) <span class="s0">NOT BETWEEN </span><span class="s2">3 </span><span class="s0">AND </span><span class="s2">70</span>)
+	<span class="s0">THEN</span>
+		RAISE <span class="s0">EXCEPTION </span><span class="s4">'The &quot;name&quot; attribute must have between 3 and 70 characters!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	ELSIF (<span class="s0">SELECT LENGTH</span>(NEW.username) <span class="s0">NOT BETWEEN </span><span class="s2">3 </span><span class="s0">AND </span><span class="s2">30</span>)
+	<span class="s0">THEN</span>
+		RAISE <span class="s0">EXCEPTION </span><span class="s4">'The &quot;username&quot; must have between 3 and 30 characters!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+
+	<span class="s3">-- Check for unique username:</span>
+	countUsername := <span class="s0">COUNT</span>(users.username) <span class="s0">FROM </span>users <span class="s0">WHERE </span>username = NEW.username <span class="s0">AND </span>users.id &lt;&gt; OLD.id;
+	IF (countUsername &gt; <span class="s2">0</span>)
+	<span class="s0">THEN</span>
+		RAISE NOTICE <span class="s4">'Username already exists.'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+
+	RETURN NEW;
+
+<span class="s0">END</span>;
+$BODY$
+<span class="s0">LANGUAGE </span>plpgsql;
+
+
+<span class="s0">CREATE </span>TRIGGER verify_users_constraints BEFORE <span class="s0">INSERT ON </span>users
+<span class="s0">FOR </span>EACH ROW <span class="s0">EXECUTE PROCEDURE </span>verify_users_constraints();
+
+<span class="s0">CREATE </span>TRIGGER verify_users_constraints_before_update BEFORE <span class="s0">UPDATE ON </span>users
+<span class="s0">FOR </span>EACH ROW <span class="s0">EXECUTE PROCEDURE </span>verify_users_constraints_for_update();
+</pre>
+</body>
+</html>
