@@ -15,7 +15,7 @@ class CreateSurgeonsTable extends Migration
     {
         Schema::create('surgeons', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('crm')->unique()->nullable(false);
+            $table->string('crm', 20)->unique()->nullable(false);
             $table->bigInteger('user_id', false, true);
             $table->foreign('user_id')
                 ->references('id')
