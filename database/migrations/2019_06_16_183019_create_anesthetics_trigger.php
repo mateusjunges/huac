@@ -1,10 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVerifyAnestheticsConstraints extends Migration
+class CreateAnestheticsTrigger extends Migration
 {
     /**
      * Run the migrations.
@@ -37,8 +35,13 @@ class CreateVerifyAnestheticsConstraints extends Migration
             \$BODY\$
             LANGUAGE plpgsql;
         ");
+
         DB::statement("
             CREATE TRIGGER verify_anesthetics_constraints BEFORE INSERT ON anesthetics
+            FOR EACH ROW EXECUTE PROCEDURE verify_anesthetics_constraints();
+        ");
+        DB::statement("
+            CREATE TRIGGER verify_anesthetics_constraints_before_update BEFORE UPDATE ON anesthetics
             FOR EACH ROW EXECUTE PROCEDURE verify_anesthetics_constraints();
         ");
     }
@@ -52,5 +55,6 @@ class CreateVerifyAnestheticsConstraints extends Migration
     {
         DB::statement("DROP PROCEDURE IF EXISTS verify_anesthetics_constraints()");
         DB::statement("DROP TRIGGER IF EXISTS verify_anesthetics_constraints ON status");
+        DB::statement("DROP TRIGGER IF EXISTS verify_anesthetics_constraints_before_update ON status");
     }
 }

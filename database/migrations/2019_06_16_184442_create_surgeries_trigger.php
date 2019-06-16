@@ -1,10 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVerifySurgeriesConstraints extends Migration
+class CreateSurgeriesTrigger extends Migration
 {
     /**
      * Run the migrations.
@@ -57,6 +55,10 @@ class CreateVerifySurgeriesConstraints extends Migration
             CREATE TRIGGER verify_surgeries_constraints BEFORE INSERT ON surgeries
             FOR EACH ROW EXECUTE PROCEDURE verify_surgeries_constraints();
         ");
+        DB::statement("
+            CREATE TRIGGER verify_surgeries_constraints_before_update BEFORE UPDATE ON surgeries
+            FOR EACH ROW EXECUTE PROCEDURE verify_surgeries_constraints();
+        ");
     }
 
     /**
@@ -68,5 +70,6 @@ class CreateVerifySurgeriesConstraints extends Migration
     {
         DB::statement("DROP PROCEDURE IF EXISTS verify_surgeries_constraints()");
         DB::statement("DROP TRIGGER IF EXISTS verify_surgeries_constraints ON status");
+        DB::statement("DROP TRIGGER IF EXISTS verify_surgeries_constraints_before_update ON status");
     }
 }

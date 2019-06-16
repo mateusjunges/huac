@@ -24,18 +24,22 @@ BEGIN
 		RAISE EXCEPTION 'The "patient_id" attribute is required!';
 		RETURN NULL;
 	END IF;
-	
+
 	-- Check for string length:
 	IF (SELECT LENGTH(NEW.anesthetic_evaluation) <= 10)
 	THEN
 		RAISE EXCEPTION 'The "anesthetic_evaluation" must have at least 10 characters!';
 		RETURN NULL;
 	END IF;
-	
+
 	RETURN NEW;
 END;
 $BODY$
 LANGUAGE plpgsql;
 
+
 CREATE TRIGGER verify_surgeries_constraints BEFORE INSERT ON surgeries
+FOR EACH ROW EXECUTE PROCEDURE verify_surgeries_constraints();
+
+CREATE TRIGGER verify_surgeries_constraints_before_update BEFORE UPDATE ON surgeries
 FOR EACH ROW EXECUTE PROCEDURE verify_surgeries_constraints();
