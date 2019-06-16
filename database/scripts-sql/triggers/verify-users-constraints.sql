@@ -1,6 +1,7 @@
 CREATE OR REPLACE FUNCTION verify_users_constraints()
 RETURNS TRIGGER AS
 $BODY$
+DECLARE countUsername integer := 0;
 BEGIN
 	-- Check for null columns
 	IF (NEW.name IS NULL)
@@ -23,7 +24,6 @@ BEGIN
 		RAISE EXCEPTION 'Please enter a valid email!';
 		RETURN NULL;
 	END IF;
-	RETURN NEW;
 	
 	-- Check for string length:
 	IF (SELECT LENGTH(NEW.name) NOT BETWEEN 3 AND 70)
@@ -35,6 +35,17 @@ BEGIN
 		RAISE EXCEPTION 'The "username" must have between 3 and 30 characters!';
 		RETURN NULL;
 	END IF;
+
+	-- Check for unique username:
+	countUsername := SELECT COUNT(users.username) FROM users WHERE username = NEW.username;
+	IF (countUsername > 0)
+	THEN
+		RAISE NOTICE 'Username already exists.';
+		RETURN NULL;
+	END IF;
+
+	RETURN NEW;
+
 END;
 $BODY$
 LANGUAGE plpgsql;

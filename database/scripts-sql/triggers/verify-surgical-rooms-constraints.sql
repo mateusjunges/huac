@@ -35,7 +35,7 @@ BEGIN
 	END IF;
 	
 	-- Check for string length: 
-	IF (SELECT LENGTH(NEW.name) NOT BETWEEN 1 AND 15)
+	IF (SELECT LENGTH(NEW.name) NOT BETWEEN 1 AND 70)
 	THEN
 		RAISE NOTICE 'The name attribute must have between 1 and 15 characters!';
 		RETURN NULL;

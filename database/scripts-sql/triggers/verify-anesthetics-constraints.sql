@@ -10,7 +10,7 @@ BEGIN
 	END IF;
 	
 	-- Check for string length:
-	IF (SELECT LENGTH(NEW.name) NOT BETWEEN 1 AND 60)
+	IF (SELECT LENGTH(NEW.name) NOT BETWEEN 1 AND 70)
 	THEN
 		RAISE EXCEPTION 'The "name" attribute must have between 1 and 60 characters!';
 		RETURN NULL;
