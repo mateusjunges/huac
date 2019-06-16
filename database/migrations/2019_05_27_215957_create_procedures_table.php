@@ -15,8 +15,8 @@ class CreateProceduresTable extends Migration
     {
         Schema::create('procedures', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 100)->nullable(false);
-            $table->string('sus_code', 20)
+            $table->string('name', 70)->nullable(false);
+            $table->string('sus_code', 50)
                 ->unique()
                 ->nullable(false);
             $table->softDeletes();
