@@ -15,7 +15,7 @@ class CreateSurgicalRoomsTable extends Migration
     {
         Schema::create('surgical_rooms', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 15)
+            $table->string('name', 70)
                 ->unique()
                 ->nullable(false);
             $table->boolean('available')
