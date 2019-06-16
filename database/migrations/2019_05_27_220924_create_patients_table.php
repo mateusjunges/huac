@@ -19,7 +19,7 @@ class CreatePatientsTable extends Migration
             $table->date('birthday_at')->nullable(false);
             $table->string('mother_name', 70)->nullable(false);
             $table->enum('gender', ['M', 'F', 'O'])->nullable(false);
-            $table->string('medical_record', 15)
+            $table->string('medical_record', 20)
                 ->unique()
                 ->nullable(false);
             $table->softDeletes();
