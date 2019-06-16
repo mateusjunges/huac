@@ -19,8 +19,6 @@ class CreateEventsTable extends Migration
             $table->string('color', 7)->nullable(false);
             $table->dateTime('start_at')->nullable(false);
             $table->dateTime('end_at')->nullable(false);
-            $table->dateTime('doctor_start_at')->nullable(false);
-            $table->dateTime('doctor_end_at')->nullable(false);
             $table->dateTime('doctor_started_at')->nullable();
             $table->dateTime('doctor_ended_at')->nullable();
             $table->bigInteger('surgery_id', false, true);

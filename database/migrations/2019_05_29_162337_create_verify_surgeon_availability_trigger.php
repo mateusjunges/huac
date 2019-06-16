@@ -21,9 +21,9 @@ class CreateVerifySurgeonAvailabilityTrigger extends Migration
             BEGIN
                 SELECT count(DISTINCT surgeon_has_surgeries.surgeon_id) INTO busySurgeons
                         FROM events 
-                        inner join surgeon_has_surgeries ON surgeon_has_surgeries.surgery_id = 1
+                        inner join surgeon_has_surgeries ON surgeon_has_surgeries.surgery_id = NEW.surgery_id
                         AND surgeon_has_surgeries.surgeon_id IN (
-                            SELECT surgeon_has_surgeries.surgeon_id FROM surgeon_has_surgeries WHERE surgery_id = 1
+                            SELECT surgeon_has_surgeries.surgeon_id FROM surgeon_has_surgeries WHERE surgery_id = NEW.surgery_id
                         )	
                         WHERE (events.start_at::timestamp BETWEEN NEW.start_at::timestamp AND NEW.end_at::timestamp 
                               OR events.end_at::timestamp BETWEEN NEW.start_at::timestamp AND NEW.end_at::timestamp);

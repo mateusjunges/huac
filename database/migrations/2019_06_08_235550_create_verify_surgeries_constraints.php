@@ -31,9 +31,9 @@ class CreateVerifySurgeriesConstraints extends Migration
                 THEN
                     RAISE EXCEPTION 'The \"procedure_id\" attribute is required!';
                     RETURN NULL;
-                ELSIF (NEW.surgery_classification_id)
+                ELSIF (NEW.surgery_classification_id IS NULL)
                 THEN
-                    RAISE EXCEPTION 'The \"surgery_classfication_id\" attribute is required!';
+                    RAISE EXCEPTION 'The \"surgery_classification_id\" attribute is required!';
                     RETURN NULL;
                 ELSIF (NEW.patient_id IS NULL)
                 THEN
