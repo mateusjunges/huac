@@ -1,3 +1,4 @@
+CREATE SEQUENCE groups_id_seq;
 CREATE TABLE public.groups
 (
     id bigint NOT NULL DEFAULT nextval('groups_id_seq'::regclass),

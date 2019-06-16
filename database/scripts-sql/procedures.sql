@@ -1,3 +1,4 @@
+CREATE SEQUENCE procedures_id_seq;
 CREATE TABLE public.procedures
 (
     id integer NOT NULL DEFAULT nextval('procedures_id_seq'::regclass),

@@ -1,3 +1,4 @@
+CREATE SEQUENCE events_id_seq;
 CREATE TABLE public.events
 (
     id integer NOT NULL DEFAULT nextval('events_id_seq'::regclass),

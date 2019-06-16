@@ -1,3 +1,4 @@
+CREATE SEQUENCE logs_id_seq;
 CREATE TABLE public.logs
 (
     id integer NOT NULL DEFAULT nextval('logs_id_seq'::regclass),

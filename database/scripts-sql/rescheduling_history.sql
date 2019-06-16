@@ -1,3 +1,4 @@
+CREATE SEQUENCE rescheduling_history_id_seq;
 CREATE TABLE public.rescheduling_history
 (
     id integer NOT NULL DEFAULT nextval('rescheduling_history_id_seq'::regclass),

@@ -1,3 +1,4 @@
+CREATE SEQUENCE patients_id_seq;
 CREATE TABLE public.patients
 (
     id integer NOT NULL DEFAULT nextval('patients_id_seq'::regclass),

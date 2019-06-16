@@ -1,3 +1,4 @@
+CREATE SEQUENCE surgeon_has_surgeries_id_seq;
 CREATE TABLE public.surgeon_has_surgeries
 (
     id integer NOT NULL DEFAULT nextval('surgeon_has_surgeries_id_seq'::regclass),

@@ -1,3 +1,4 @@
+CREATE SEQUENCE reasons_for_rescheduling_id_seq;
 CREATE TABLE public.reasons_for_rescheduling
 (
     id integer NOT NULL DEFAULT nextval('reasons_for_rescheduling_id_seq'::regclass),

@@ -1,3 +1,4 @@
+CREATE SEQUENCE permissions_id_seq;
 CREATE TABLE public.permissions
 (
     id bigint NOT NULL DEFAULT nextval('permissions_id_seq'::regclass),

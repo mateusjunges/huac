@@ -1,4 +1,5 @@
 -- CREATE USERS TABLE
+CREATE SEQUENCE users_id_seq;
 CREATE TABLE public.users
 (
     id integer NOT NULL DEFAULT nextval('users_id_seq'::regclass),
@@ -15,6 +16,7 @@ CREATE TABLE public.users
 );
 
 -- CREATE SURGEONS TABLE
+CREATE SEQUENCE surgeons_id_seq;
 CREATE TABLE public.surgeons
 (
     id integer NOT NULL DEFAULT nextval('surgeons_id_seq'::regclass),
@@ -32,6 +34,7 @@ CREATE TABLE public.surgeons
 );
 
 -- CREATE PROCEDURES TABLE
+CREATE SEQUENCE procedures_id_seq;
 CREATE TABLE public.procedures
 (
     id integer NOT NULL DEFAULT nextval('procedures_id_seq'::regclass),
@@ -45,6 +48,7 @@ CREATE TABLE public.procedures
 );
 
 -- CREATE PATIENTS TABLE
+CREATE SEQUENCE patients_id_seq;
 CREATE TABLE public.patients
 (
     id integer NOT NULL DEFAULT nextval('patients_id_seq'::regclass),
@@ -62,6 +66,7 @@ CREATE TABLE public.patients
 );
 
 -- CREATE STATUS TABLE
+CREATE SEQUENCE status_id_seq;
 CREATE TABLE public.status
 (
     id integer NOT NULL DEFAULT nextval('status_id_seq'::regclass),
@@ -75,6 +80,7 @@ CREATE TABLE public.status
 );
 
 -- CREATE SURGERY_CLASSIFICATIONS TABLE
+CREATE SEQUENCE surgery_classifications_id_seq;
 CREATE TABLE public.surgery_classifications
 (
     id integer NOT NULL DEFAULT nextval('surgery_classifications_id_seq'::regclass),
@@ -88,6 +94,7 @@ CREATE TABLE public.surgery_classifications
 );
 
 -- CREATE SURGICAL_ROOMS TABLE
+CREATE SEQUENCE surgical_rooms_id_seq;
 CREATE TABLE public.surgical_rooms
 (
     id integer NOT NULL DEFAULT nextval('surgical_rooms_id_seq'::regclass),
@@ -105,6 +112,7 @@ CREATE TABLE public.surgical_rooms
 );
 
 -- CREATE ANESTHETICS TABLE
+CREATE SEQUENCE anesthetics_id_seq;
 CREATE TABLE public.anesthetics
 (
     id integer NOT NULL DEFAULT nextval('anesthetics_id_seq'::regclass),
@@ -118,6 +126,7 @@ CREATE TABLE public.anesthetics
 );
 
 -- CREATE SURGERIES TABLE
+CREATE SEQUENCE surgeries_id_seq;
 CREATE TABLE public.surgeries
 (
     id integer NOT NULL DEFAULT nextval('surgeries_id_seq'::regclass),
@@ -147,6 +156,7 @@ CREATE TABLE public.surgeries
 );
 
 -- CREATE EVENTS TABLE
+CREATE SEQUENCE events_id_seq;
 CREATE TABLE public.events
 (
     id integer NOT NULL DEFAULT nextval('events_id_seq'::regclass),
@@ -175,6 +185,7 @@ CREATE TABLE public.events
 );
 
 -- CREATE LOGS TABLE
+CREATE SEQUENCE logs_id_seq;
 CREATE TABLE public.logs
 (
     id integer NOT NULL DEFAULT nextval('logs_id_seq'::regclass),
@@ -201,6 +212,7 @@ CREATE TABLE public.logs
 );
 
 -- CREATE REASONS_FOR_RESCHEDULING TABLE
+CREATE SEQUENCE reasons_for_rescheduling_id_seq;
 CREATE TABLE public.reasons_for_rescheduling
 (
     id integer NOT NULL DEFAULT nextval('reasons_for_rescheduling_id_seq'::regclass),
@@ -214,6 +226,7 @@ CREATE TABLE public.reasons_for_rescheduling
 );
 
 -- CREATE RESCHEDULING_HISTORY TABLE
+CREATE SEQUENCE rescheduling_history_id_seq;
 CREATE TABLE public.rescheduling_history
 (
     id integer NOT NULL DEFAULT nextval('rescheduling_history_id_seq'::regclass),
@@ -234,6 +247,7 @@ CREATE TABLE public.rescheduling_history
 );
 
 -- CREATE SURGERY_HAS_ANESTHETICS TABLE
+CREATE SEQUENCE surgery_has_anesthetics_id_seq;
 CREATE TABLE public.surgery_has_anesthetics
 (
     id integer NOT NULL DEFAULT nextval('surgery_has_anesthetics_id_seq'::regclass),
@@ -253,6 +267,7 @@ CREATE TABLE public.surgery_has_anesthetics
 );
 
 -- CREATE SURGEON_HAS_SURGERIES TABLE
+CREATE SEQUENCE surgeon_has_surgeries_id_seq;
 CREATE TABLE public.surgeon_has_surgeries
 (
     id integer NOT NULL DEFAULT nextval('surgeon_has_surgeries_id_seq'::regclass),
@@ -274,6 +289,7 @@ CREATE TABLE public.surgeon_has_surgeries
 );
 
 -- CREATE PERMISSIONS TABLE
+CREATE SEQUENCE permissions_id_seq;
 CREATE TABLE public.permissions
 (
     id bigint NOT NULL DEFAULT nextval('permissions_id_seq'::regclass),
@@ -304,6 +320,7 @@ CREATE TABLE public.user_has_permissions
 );
 
 -- CREATE GROUPS TABLE
+CREATE SEQUENCE groups_id_seq;
 CREATE TABLE public.groups
 (
     id bigint NOT NULL DEFAULT nextval('groups_id_seq'::regclass),
