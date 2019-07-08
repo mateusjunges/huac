@@ -11,5 +11,16 @@ const mix = require('laravel-mix');
  |
  */
 
+mix.extend('aliasConfig', new class {
+    webpackConfig(webpackConfig) {
+        webpackConfig.resolve.extensions.push('.js', '.json', '.vue'); // you don't need this on v4
+        webpackConfig.resolve.alias = {
+            'vue$': 'vue/dist/vue.esm.js',
+            '@components': __dirname + '/resources/js/components'
+        };
+    }
+});
+mix.aliasConfig();
+
 mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css');
