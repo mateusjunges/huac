@@ -200,20 +200,20 @@
         },
         data(){
             return {
-                patientNameErrors: null,
-                medicalRecordErrors: null,
-                motherNameErrors: null,
-                birthdayAtErrors: null,
-                genderErrors: null,
-                procedureErrors: null,
-                estimatedDurationErrors: null,
-                classificationErrors: null,
-                anestheticsErrors: null,
-                headSurgeonErrors: null,
-                assistantSurgeonErrors: null,
-                materialsErrors: null,
-                observationErrors: null,
-                anestheticEvaluationErrors: null,
+                patientNameErrors: "",
+                medicalRecordErrors: "",
+                motherNameErrors: "",
+                birthdayAtErrors: "",
+                genderErrors: "",
+                procedureErrors: "",
+                estimatedDurationErrors: "",
+                classificationErrors: "",
+                anestheticsErrors: "",
+                headSurgeonErrors: "",
+                assistantSurgeonErrors: "",
+                materialsErrors: "",
+                observationErrors: "",
+                anestheticEvaluationErrors: "",
 
                 //Form variables for validation:
                 name: '',
@@ -236,7 +236,7 @@
         },
         methods: {
             validateFullName(name){
-                const regex = /^[a-zA-Z]+ [a-zA-Z]+$/;
+                const regex = /^[a-zA-Z]+ [a-zA-Z]+.[a-zA-Z\s]*$/;
                 return regex.test(name);
             }
         },
@@ -248,13 +248,16 @@
             patientNameClass: function () {
                 if (!this.validateFullName(this.name)){
                     this.validated = false;
+                    this.patientNameErrors = "Informe o nome completo, sem pontos ou traços!";
                     return 'validation-error';
                 }else {
-                    if (this.name.length < 5){
+                    if (this.name.length < 7){
                         this.validated = false;
+                        this.patientNameErrors = "Insira pelo menos 7 caracteres!";
                         return 'validation-error';
                     }else {
                         this.validated = true;
+                        this.patientNameErrors = "";
                         return 'validated';
                     }
                 }
@@ -267,9 +270,11 @@
             medicalRecordClass(){
                 if (this.medicalRecord.length < 3){
                     this.validated = false;
+                    this.medicalRecordErrors = "Insira pelo menos 3 caracteres!";
                     return 'validation-error';
                 }else{
                     this.validated = true;
+                    this.medicalRecordErrors = "";
                     return 'validated';
                 }
             },
