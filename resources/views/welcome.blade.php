@@ -4,6 +4,6 @@
 @endsection
 @section('content')
    <div id="app">
-
+        <create-surgery></create-surgery>
    </div>
 @endsection
