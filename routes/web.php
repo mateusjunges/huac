@@ -1,6 +1,7 @@
 <?php
 
 use HUAC\Http\Controllers\HomeController;
+use HUAC\Http\Controllers\Surgery\SurgeryController;
 
 /*
  * Rotas padrões do pacote SGIAuthorizer para login e exibição dos usuários logados.
@@ -28,4 +29,6 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'sgi-auth'], function (){
    Route::get('/home', HomeController::class);
+
+   Route::resource('surgeries', SurgeryController::class);
 });
