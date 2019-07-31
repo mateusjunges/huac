@@ -270,7 +270,7 @@
             medicalRecordClass(){
                 if (this.medicalRecord.length < 3){
                     this.validated = false;
-                    this.medicalRecordErrors = "Insira pelo menos 3 caracteres!";
+                    this.medicalRecordErrors = "Insira pelo menos 3 caracteres";
                     return 'validation-error';
                 }else{
                     this.validated = true;
