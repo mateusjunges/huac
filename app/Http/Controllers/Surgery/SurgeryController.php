@@ -2,6 +2,7 @@
 
 namespace HUAC\Http\Controllers\Surgery;
 
+use HUAC\Exceptions\ViewNotFoundException;
 use Illuminate\Http\Request;
 use HUAC\Http\Controllers\Controller;
 
@@ -24,7 +25,12 @@ class SurgeryController extends Controller
      */
     public function create()
     {
-        //
+        try{
+            return view('surgeries.create');
+        }catch (\Exception $exception){
+            if ($exception instanceof \InvalidArgumentException)
+                return ViewNotFoundException::forView();
+        }
     }
 
     /**
