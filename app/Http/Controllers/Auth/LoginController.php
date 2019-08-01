@@ -1,39 +1,49 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace HUAC\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use HUAC\User;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
+use Uepg\SGIAuthorizer\Auth\Controllers\LoginController as UEPGLoginController;
 
-class LoginController extends Controller
+class LoginController extends UEPGLoginController
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
-    use AuthenticatesUsers;
-
     /**
-     * Where to redirect users after login.
-     *
-     * @var string
+     * Log in the user
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector|string
      */
-    protected $redirectTo = '/home';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function login()
     {
-        $this->middleware('guest')->except('logout');
+        try{
+            $login = parent::login();
+//            If successfully logged in verify if the user already exists on the database.
+//             If not, create him.
+            if (Auth::check()){
+                $user = User::firstOrCreate(['username' => Auth::user()->username], [
+                    'name' => Auth::user()->nome,
+                    'email' => Auth::user()->email,
+                ]);
+            }
+        }catch (\Exception $exception){
+            session()->forget('sgiauthorizer');
+            return response($exception->getMessage(), Response::HTTP_BAD_REQUEST);
+        }finally{
+            return $login;
+        }
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function logout()
+    {
+        $user = '';
+        if (Auth::user() !== null) {
+            $user = Auth::user()->username;
+        }
+        session()->forget('sgiauthorizer');
+        Auth::logout();
+        return redirect()->route('login')->with('message', 'Usuário '. $user .' desconectado com sucesso!');
     }
 }

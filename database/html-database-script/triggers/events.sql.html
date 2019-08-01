@@ -1,0 +1,140 @@
+<html>
+<head>
+<title>events.sql</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #000080; font-weight: bold;}
+.s1 { color: #000000;}
+.s2 { color: #808080; font-style: italic;}
+.s3 { color: #008000; font-weight: bold;}
+.s4 { color: #0000ff;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+events.sql</font>
+</center></td></tr></table>
+<pre><span class="s0">CREATE OR </span>REPLACE FUNCTION verify_events_constraints()
+RETURNS TRIGGER <span class="s0">AS</span>
+$BODY$
+<span class="s0">BEGIN</span>
+	<span class="s2">-- Check for null columns:</span>
+	IF (NEW.title <span class="s0">IS NULL</span>)
+	<span class="s0">THEN</span>
+		RAISE <span class="s0">EXCEPTION </span><span class="s3">'The &quot;title&quot; attribute is required!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	ELSIF (NEW.color <span class="s0">IS NULL</span>)
+	<span class="s0">THEN</span>
+		RAISE <span class="s0">EXCEPTION </span><span class="s3">'The &quot;color&quot; attribute is required!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	ELSIF (NEW.start_at <span class="s0">IS NULL</span>)
+	<span class="s0">THEN</span>
+		RAISE <span class="s0">EXCEPTION </span><span class="s3">'The &quot;start_at&quot; attribute is required!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	ELSIF (NEW.end_at <span class="s0">IS NULL</span>)
+	<span class="s0">THEN</span>
+		RAISE <span class="s0">EXCEPTION </span><span class="s3">'The &quot;end_at&quot; attribute is required!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	ELSIF (NEW.surgery_id <span class="s0">IS NULL</span>)
+	<span class="s0">THEN</span>
+		RAISE <span class="s0">EXCEPTION </span><span class="s3">'The &quot;surgery_id&quot; attribute is required!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	ELSIF (NEW.surgical_room_id <span class="s0">IS NULL</span>)
+	<span class="s0">THEN</span>
+		RAISE <span class="s0">EXCEPTION </span><span class="s3">'The &quot;surgical_room_id&quot; attribute is required!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+
+	<span class="s2">-- Check for string length:</span>
+	IF (<span class="s0">SELECT LENGTH</span>(NEW.title) <span class="s0">NOT BETWEEN </span><span class="s4">1 </span><span class="s0">AND </span><span class="s4">70</span>)
+	<span class="s0">THEN</span>
+		RAISE <span class="s0">EXCEPTION </span><span class="s3">'The &quot;title&quot; attribute must have between 1 and 70 characters!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	ELSIF (<span class="s0">SELECT LENGTH</span>(NEW.color) &lt;&gt; <span class="s4">7</span>)
+	<span class="s0">THEN</span>
+		RAISE <span class="s0">EXCEPTION </span><span class="s3">'The &quot;color&quot; attribute must have exactly 7 characters!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+
+	RETURN NEW;
+<span class="s0">END</span>;
+$BODY$
+<span class="s0">LANGUAGE </span>plpgsql;
+
+<span class="s2">-- Verify surgeon availbility for update:</span>
+<span class="s0">CREATE OR </span>REPLACE FUNCTION verify_if_surgeon_is_available_for_update()
+RETURNS trigger <span class="s0">AS</span>
+$BODY$
+<span class="s0">DECLARE </span>busySurgeons <span class="s0">integer</span>;
+<span class="s0">BEGIN</span>
+	IF (NEW.surgery_id &lt;&gt; OLD.surgery_id)
+	<span class="s0">THEN</span>
+		RAISE <span class="s0">EXCEPTION </span><span class="s3">'You can not change the surgery while updating an event.'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+
+    <span class="s0">SELECT count</span>(<span class="s0">DISTINCT </span>surgeon_has_surgeries.surgeon_id) <span class="s0">INTO </span>busySurgeons
+            <span class="s0">FROM </span>events
+            <span class="s0">inner join </span>surgeon_has_surgeries <span class="s0">ON </span>surgeon_has_surgeries.surgery_id = NEW.surgery_id
+            <span class="s0">AND </span>surgeon_has_surgeries.surgeon_id <span class="s0">IN </span>(
+                <span class="s0">SELECT </span>surgeon_has_surgeries.surgeon_id <span class="s0">FROM </span>surgeon_has_surgeries <span class="s0">WHERE </span>surgery_id = NEW.surgery_id
+            )
+            <span class="s0">WHERE </span>(
+				    (events.start_at::<span class="s0">timestamp BETWEEN </span>NEW.start_at::<span class="s0">timestamp AND </span>NEW.end_at::<span class="s0">timestamp</span>
+                     OR events.end_at::<span class="s0">timestamp BETWEEN </span>NEW.start_at::<span class="s0">timestamp AND </span>NEW.end_at::<span class="s0">timestamp</span>
+					)
+				     <span class="s0">AND </span>events.id &lt;&gt; OLD.id
+				  );
+
+    IF(busySurgeons &gt; <span class="s4">0</span>)
+    <span class="s0">THEN</span>
+        RAISE <span class="s0">EXCEPTION </span><span class="s3">'One of the surgeons are busy at the desired scheduling period. Please, check and try again'</span>;
+        RETURN <span class="s0">NULL</span>;
+    <span class="s0">END </span>IF;
+    <span class="s2">-- If the surgeons of the surgery are not busy, the insertion can be finished.</span>
+    RETURN NEW;
+<span class="s0">END</span>;
+$BODY$
+<span class="s0">LANGUAGE </span>plpgsql;
+
+<span class="s2">-- Verify surgeon availability for insert:</span>
+<span class="s0">CREATE OR </span>REPLACE FUNCTION verify_if_surgeon_is_available()
+RETURNS trigger <span class="s0">AS</span>
+$BODY$
+<span class="s0">DECLARE </span>busySurgeons <span class="s0">integer</span>;
+<span class="s0">BEGIN</span>
+    SELECT count(<span class="s0">DISTINCT </span>surgeon_has_surgeries.surgeon_id) <span class="s0">INTO </span>busySurgeons
+            <span class="s0">FROM </span>events
+            <span class="s0">inner join </span>surgeon_has_surgeries <span class="s0">ON </span>surgeon_has_surgeries.surgery_id = NEW.surgery_id
+            <span class="s0">AND </span>surgeon_has_surgeries.surgeon_id <span class="s0">IN </span>(
+                <span class="s0">SELECT </span>surgeon_has_surgeries.surgeon_id <span class="s0">FROM </span>surgeon_has_surgeries <span class="s0">WHERE </span>surgery_id = NEW.surgery_id
+            )
+            <span class="s0">WHERE </span>(events.start_at::<span class="s0">timestamp BETWEEN </span>NEW.start_at::<span class="s0">timestamp AND </span>NEW.end_at::<span class="s0">timestamp</span>
+                  OR events.end_at::<span class="s0">timestamp BETWEEN </span>NEW.start_at::<span class="s0">timestamp AND </span>NEW.end_at::<span class="s0">timestamp</span>);
+
+    IF(busySurgeons &gt; <span class="s4">0</span>)
+    <span class="s0">THEN</span>
+        RAISE NOTICE <span class="s3">'One of the surgeons are busy at the desired scheduling period. Please, check and try again'</span>;
+        RETURN <span class="s0">NULL</span>;
+    <span class="s0">END </span>IF;
+    <span class="s2">-- If the surgeons of the surgery are not busy, the insertion can be finished.</span>
+    RETURN NEW;
+<span class="s0">END</span>;
+$BODY$
+<span class="s0">LANGUAGE </span>plpgsql;
+
+
+<span class="s0">CREATE </span>TRIGGER verify_events_constraints BEFORE <span class="s0">INSERT ON </span>events
+<span class="s0">FOR </span>EACH ROW <span class="s0">EXECUTE PROCEDURE </span>verify_events_constraints();
+
+<span class="s0">CREATE </span>TRIGGER verify_if_surgeon_is_available_for_update BEFORE <span class="s0">UPDATE ON </span>events
+<span class="s0">FOR </span>EACH ROW <span class="s0">EXECUTE PROCEDURE </span>verify_if_surgeon_is_available_for_update();
+
+<span class="s0">CREATE </span>TRIGGER verify_if_surgeon_is_available BEFORE <span class="s0">INSERT ON </span>&quot;events&quot;
+<span class="s0">FOR </span>EACH ROW <span class="s0">EXECUTE PROCEDURE </span>verify_if_surgeon_is_available();
+
+</pre>
+</body>
+</html>

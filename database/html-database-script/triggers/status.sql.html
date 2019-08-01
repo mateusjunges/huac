@@ -1,0 +1,105 @@
+<html>
+<head>
+<title>status.sql</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #000080; font-weight: bold;}
+.s1 { color: #000000;}
+.s2 { color: #0000ff;}
+.s3 { color: #808080; font-style: italic;}
+.s4 { color: #008000; font-weight: bold;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+status.sql</font>
+</center></td></tr></table>
+<pre><span class="s0">CREATE OR </span>REPLACE FUNCTION verify_status_constraints_for_update()
+RETURNS TRIGGER <span class="s0">AS</span>
+$BODY$
+	<span class="s0">DECLARE </span>countStatus <span class="s0">integer </span>:= <span class="s2">0</span>;
+<span class="s0">BEGIN</span>
+	<span class="s3">-- Check for duplicate rows:</span>
+	countStatus := <span class="s0">COUNT</span>(status.*) <span class="s0">FROM </span>status <span class="s0">WHERE </span>status.name = NEW.name <span class="s0">AND </span>status.id &lt;&gt; OLD.id;
+	IF (countStatus &gt; <span class="s2">0</span>)
+	<span class="s0">THEN</span>
+		RAISE NOTICE <span class="s4">'The given name is already in use!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+
+	<span class="s3">-- Check for required columns:</span>
+	IF(NEW.name <span class="s0">IS NULL</span>)
+	<span class="s0">THEN</span>
+		RAISE NOTICE <span class="s4">'The name attribute is required!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	ELSIF (NEW.description <span class="s0">IS NULL</span>)
+	<span class="s0">THEN</span>
+		RAISE NOTICE <span class="s4">'The description attribute is required!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+
+	<span class="s3">-- Check for string length:</span>
+	IF (<span class="s0">SELECT LENGTH</span>(NEW.name) <span class="s0">NOT BETWEEN </span><span class="s2">1 </span><span class="s0">AND </span><span class="s2">20</span>)
+	<span class="s0">THEN</span>
+		RAISE NOTICE <span class="s4">'The name must have between 1 and 20 characters'</span>;
+		RETURN <span class="s0">NULL</span>;
+	ELSIF (<span class="s0">SELECT LENGTH</span>(NEW.description) &lt;= <span class="s2">5</span>)
+	<span class="s0">THEN</span>
+		RAISE NOTICE <span class="s4">'The description must have more than 5 characters!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+	RETURN NEW;
+<span class="s0">END</span>;
+$BODY$
+<span class="s0">LANGUAGE </span>plpgsql;
+
+<span class="s0">CREATE OR </span>REPLACE FUNCTION verify_status_constraints()
+RETURNS TRIGGER <span class="s0">AS</span>
+$BODY$
+	<span class="s0">DECLARE </span>countStatus <span class="s0">integer </span>:= <span class="s2">0</span>;
+<span class="s0">BEGIN</span>
+	<span class="s3">-- Check for duplicate rows:</span>
+	countStatus := <span class="s0">COUNT</span>(status.*) <span class="s0">FROM </span>status <span class="s0">WHERE </span>status.name = NEW.name;
+	IF (countStatus &gt; <span class="s2">0</span>)
+	<span class="s0">THEN</span>
+		RAISE NOTICE <span class="s4">'The given name is already in use!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+
+	<span class="s3">-- Check for required columns:</span>
+	IF(NEW.name <span class="s0">IS NULL</span>)
+	<span class="s0">THEN</span>
+		RAISE NOTICE <span class="s4">'The name attribute is required!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	ELSIF (NEW.description <span class="s0">IS NULL</span>)
+	<span class="s0">THEN</span>
+		RAISE NOTICE <span class="s4">'The description attribute is required!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+
+	<span class="s3">-- Check for string length:</span>
+	IF (<span class="s0">SELECT LENGTH</span>(NEW.name) <span class="s0">NOT BETWEEN </span><span class="s2">1 </span><span class="s0">AND </span><span class="s2">20</span>)
+	<span class="s0">THEN</span>
+		RAISE NOTICE <span class="s4">'The name must have between 1 and 20 characters'</span>;
+		RETURN <span class="s0">NULL</span>;
+	ELSIF (<span class="s0">SELECT LENGTH</span>(NEW.description) &lt;= <span class="s2">5</span>)
+	<span class="s0">THEN</span>
+		RAISE NOTICE <span class="s4">'The description must have more than 5 characters!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+	RETURN NEW;
+<span class="s0">END</span>;
+$BODY$
+<span class="s0">LANGUAGE </span>plpgsql;
+
+
+<span class="s0">CREATE </span>TRIGGER verify_status_constraints_before_update_on_status BEFORE <span class="s0">UPDATE ON </span>&quot;status&quot;
+<span class="s0">FOR </span>EACH ROW <span class="s0">EXECUTE PROCEDURE </span>verify_status_constraints_for_update();
+
+<span class="s0">CREATE </span>TRIGGER verify_status_constraints_before_insert_on_status BEFORE <span class="s0">INSERT ON </span>&quot;status&quot;
+<span class="s0">FOR </span>EACH ROW <span class="s0">EXECUTE PROCEDURE </span>verify_status_constraints();
+</pre>
+</body>
+</html>

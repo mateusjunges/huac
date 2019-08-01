@@ -169,11 +169,18 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        HUAC\Providers\AppServiceProvider::class,
+        HUAC\Providers\AuthServiceProvider::class,
+        HUAC\Providers\BroadcastServiceProvider::class,
+        HUAC\Providers\EventServiceProvider::class,
+        HUAC\Providers\RouteServiceProvider::class,
+
+        /*
+         * SGIAuthorizer Service Providers
+         */
+        Uepg\SGIAuthorizer\SGIAuthorizerServiceProvider::class,
+        Uepg\SGIAuthorizer\Auth\Providers\SGIAuthProvider::class,
+
 
     ],
 

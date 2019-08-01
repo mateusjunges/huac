@@ -9,11 +9,11 @@
          processIsolation="false"
          stopOnFailure="false">
     <testsuites>
-        <testsuite name="Unit">
+        <testsuite name="HUAC Unit Tests">
             <directory suffix="Test.php">./tests/Unit</directory>
         </testsuite>
 
-        <testsuite name="Feature">
+        <testsuite name="HUAC Feature Tests">
             <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>
     </testsuites>
@@ -29,5 +29,7 @@
         <env name="MAIL_DRIVER" value="array"/>
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>
+        <env name="DB_CONNECTION" value="sqlite"/>
+        <env name="DB_DATABASE" value=":memory:"/>
     </php>
 </phpunit>

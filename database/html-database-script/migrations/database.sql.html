@@ -1,0 +1,389 @@
+<html>
+<head>
+<title>database.sql</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #808080; font-style: italic;}
+.s1 { color: #000000;}
+.s2 { color: #000080; font-weight: bold;}
+.s3 { color: #008000; font-weight: bold;}
+.s4 { color: #0000ff;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+database.sql</font>
+</center></td></tr></table>
+<pre><span class="s0">-- CREATE USERS TABLE</span>
+<span class="s2">CREATE </span>SEQUENCE users_id_seq;
+<span class="s2">CREATE TABLE public</span>.users
+(
+    id <span class="s2">integer NOT NULL DEFAULT </span>nextval(<span class="s3">'users_id_seq'</span>::regclass),
+    <span class="s2">name character varying</span>(<span class="s4">70</span>) <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    email <span class="s2">character varying</span>(<span class="s4">70</span>) <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    username <span class="s2">character varying</span>(<span class="s4">30</span>) <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    remember_token <span class="s2">character varying</span>(<span class="s4">100</span>) <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot;,
+    deleted_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    created_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    updated_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    <span class="s2">CONSTRAINT </span>users_pkey <span class="s2">PRIMARY KEY </span>(id),
+    <span class="s2">CONSTRAINT </span>users_email_unique <span class="s2">UNIQUE </span>(email),
+    <span class="s2">CONSTRAINT </span>users_username_unique <span class="s2">UNIQUE </span>(username)
+);
+
+<span class="s0">-- CREATE SURGEONS TABLE</span>
+<span class="s2">CREATE </span>SEQUENCE surgeons_id_seq;
+<span class="s2">CREATE TABLE public</span>.surgeons
+(
+    id <span class="s2">integer NOT NULL DEFAULT </span>nextval(<span class="s3">'surgeons_id_seq'</span>::regclass),
+    crm <span class="s2">character varying</span>(<span class="s4">20</span>) <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    user_id bigint <span class="s2">NOT NULL</span>,
+    deleted_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    created_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    updated_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    <span class="s2">CONSTRAINT </span>surgeons_pkey <span class="s2">PRIMARY KEY </span>(id),
+    <span class="s2">CONSTRAINT </span>surgeons_crm_unique <span class="s2">UNIQUE </span>(crm),
+    <span class="s2">CONSTRAINT </span>surgeons_user_id_foreign <span class="s2">FOREIGN KEY </span>(user_id)
+        <span class="s2">REFERENCES public</span>.users (id) <span class="s2">MATCH </span>SIMPLE
+        <span class="s2">ON UPDATE NO ACTION</span>
+        ON DELETE NO ACTION
+);
+
+<span class="s0">-- CREATE PROCEDURES TABLE</span>
+<span class="s2">CREATE </span>SEQUENCE procedures_id_seq;
+<span class="s2">CREATE TABLE public</span>.procedures
+(
+    id <span class="s2">integer NOT NULL DEFAULT </span>nextval(<span class="s3">'procedures_id_seq'</span>::regclass),
+    <span class="s2">name character varying</span>(<span class="s4">70</span>) <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    sus_code <span class="s2">character varying</span>(<span class="s4">50</span>) <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    deleted_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    created_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    updated_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    <span class="s2">CONSTRAINT </span>procedures_pkey <span class="s2">PRIMARY KEY </span>(id),
+    <span class="s2">CONSTRAINT </span>procedures_sus_code_unique <span class="s2">UNIQUE </span>(sus_code)
+);
+
+<span class="s0">-- CREATE PATIENTS TABLE</span>
+<span class="s2">CREATE </span>SEQUENCE patients_id_seq;
+<span class="s2">CREATE TABLE public</span>.patients
+(
+    id <span class="s2">integer NOT NULL DEFAULT </span>nextval(<span class="s3">'patients_id_seq'</span>::regclass),
+    <span class="s2">name character varying</span>(<span class="s4">70</span>) <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    birthday_at <span class="s2">date NOT NULL</span>,
+    mother_name <span class="s2">character varying</span>(<span class="s4">70</span>) <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    gender <span class="s2">character varying</span>(<span class="s4">255</span>) <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    medical_record <span class="s2">character varying</span>(<span class="s4">20</span>) <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    deleted_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    created_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    updated_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    <span class="s2">CONSTRAINT </span>patients_pkey <span class="s2">PRIMARY KEY </span>(id),
+    <span class="s2">CONSTRAINT </span>patients_medical_record_unique <span class="s2">UNIQUE </span>(medical_record),
+    <span class="s2">CONSTRAINT </span>patients_gender_check <span class="s2">CHECK </span>(gender::text = <span class="s2">ANY </span>(ARRAY[<span class="s3">'M'</span>::<span class="s2">character varying</span>, <span class="s3">'F'</span>::<span class="s2">character varying</span>, <span class="s3">'O'</span>::<span class="s2">character varying</span>]::text[]))
+);
+
+<span class="s0">-- CREATE STATUS TABLE</span>
+<span class="s2">CREATE </span>SEQUENCE status_id_seq;
+<span class="s2">CREATE TABLE public</span>.status
+(
+    id <span class="s2">integer NOT NULL DEFAULT </span>nextval(<span class="s3">'status_id_seq'</span>::regclass),
+    <span class="s2">name character varying</span>(<span class="s4">20</span>) <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    description text <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    deleted_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    created_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    updated_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    <span class="s2">CONSTRAINT </span>status_pkey <span class="s2">PRIMARY KEY </span>(id),
+    <span class="s2">CONSTRAINT </span>status_name_unique <span class="s2">UNIQUE </span>(<span class="s2">name</span>)
+);
+
+<span class="s0">-- CREATE SURGERY_CLASSIFICATIONS TABLE</span>
+<span class="s2">CREATE </span>SEQUENCE surgery_classifications_id_seq;
+<span class="s2">CREATE TABLE public</span>.surgery_classifications
+(
+    id <span class="s2">integer NOT NULL DEFAULT </span>nextval(<span class="s3">'surgery_classifications_id_seq'</span>::regclass),
+    <span class="s2">name character varying</span>(<span class="s4">70</span>) <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    description text <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    deleted_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    created_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    updated_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    <span class="s2">CONSTRAINT </span>surgery_classifications_pkey <span class="s2">PRIMARY KEY </span>(id),
+    <span class="s2">CONSTRAINT </span>surgery_classifications_name_unique <span class="s2">UNIQUE </span>(<span class="s2">name</span>)
+);
+
+<span class="s0">-- CREATE SURGICAL_ROOMS TABLE</span>
+<span class="s2">CREATE </span>SEQUENCE surgical_rooms_id_seq;
+<span class="s2">CREATE TABLE public</span>.surgical_rooms
+(
+    id <span class="s2">integer NOT NULL DEFAULT </span>nextval(<span class="s3">'surgical_rooms_id_seq'</span>::regclass),
+    <span class="s2">name character varying</span>(<span class="s4">70</span>) <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    available boolean <span class="s2">NOT NULL DEFAULT true</span>,
+    morning_reservation_starts_at <span class="s2">character varying</span>(<span class="s4">8</span>) <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    morning_reservation_ends_at <span class="s2">character varying</span>(<span class="s4">8</span>) <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    afternoon_reservation_starts_at <span class="s2">character varying</span>(<span class="s4">8</span>) <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    afternoon_reservation_ends_at <span class="s2">character varying</span>(<span class="s4">8</span>) <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    deleted_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    created_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    updated_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    <span class="s2">CONSTRAINT </span>surgical_rooms_pkey <span class="s2">PRIMARY KEY </span>(id),
+    <span class="s2">CONSTRAINT </span>surgical_rooms_name_unique <span class="s2">UNIQUE </span>(<span class="s2">name</span>)
+);
+
+<span class="s0">-- CREATE ANESTHETICS TABLE</span>
+<span class="s2">CREATE </span>SEQUENCE anesthetics_id_seq;
+<span class="s2">CREATE TABLE public</span>.anesthetics
+(
+    id <span class="s2">integer NOT NULL DEFAULT </span>nextval(<span class="s3">'anesthetics_id_seq'</span>::regclass),
+    <span class="s2">name character varying</span>(<span class="s4">70</span>) <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    deleted_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    created_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    updated_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    <span class="s2">CONSTRAINT </span>anesthetics_pkey <span class="s2">PRIMARY KEY </span>(id),
+    <span class="s2">CONSTRAINT </span>anesthetics_name_unique <span class="s2">UNIQUE </span>(<span class="s2">name</span>)
+
+);
+
+<span class="s0">-- CREATE SURGERIES TABLE</span>
+<span class="s2">CREATE </span>SEQUENCE surgeries_id_seq;
+<span class="s2">CREATE TABLE public</span>.surgeries
+(
+    id <span class="s2">integer NOT NULL DEFAULT </span>nextval(<span class="s3">'surgeries_id_seq'</span>::regclass),
+    estimated_duration_time <span class="s2">integer NOT NULL</span>,
+    anesthetic_evaluation text <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot;,
+    materials text <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    observation text <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot;,
+    procedure_id bigint <span class="s2">NOT NULL</span>,
+    surgery_classification_id bigint <span class="s2">NOT NULL</span>,
+    patient_id bigint <span class="s2">NOT NULL</span>,
+    deleted_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    created_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    updated_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    <span class="s2">CONSTRAINT </span>surgeries_pkey <span class="s2">PRIMARY KEY </span>(id),
+    <span class="s2">CONSTRAINT </span>surgeries_patient_id_foreign <span class="s2">FOREIGN KEY </span>(patient_id)
+        <span class="s2">REFERENCES public</span>.patients (id) <span class="s2">MATCH </span>SIMPLE
+        <span class="s2">ON UPDATE NO ACTION</span>
+        ON DELETE NO ACTION,
+    <span class="s2">CONSTRAINT </span>surgeries_procedure_id_foreign <span class="s2">FOREIGN KEY </span>(procedure_id)
+        <span class="s2">REFERENCES public</span>.procedures (id) <span class="s2">MATCH </span>SIMPLE
+        <span class="s2">ON UPDATE NO ACTION</span>
+        ON DELETE NO ACTION,
+    <span class="s2">CONSTRAINT </span>surgeries_surgery_classification_id_foreign <span class="s2">FOREIGN KEY </span>(surgery_classification_id)
+        <span class="s2">REFERENCES public</span>.surgery_classifications (id) <span class="s2">MATCH </span>SIMPLE
+        <span class="s2">ON UPDATE NO ACTION</span>
+        ON DELETE NO ACTION
+);
+
+<span class="s0">-- CREATE EVENTS TABLE</span>
+<span class="s2">CREATE </span>SEQUENCE events_id_seq;
+<span class="s2">CREATE TABLE public</span>.events
+(
+    id <span class="s2">integer NOT NULL DEFAULT </span>nextval(<span class="s3">'events_id_seq'</span>::regclass),
+    title <span class="s2">character varying</span>(<span class="s4">70</span>) <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    color <span class="s2">character varying</span>(<span class="s4">7</span>) <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    start_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone NOT NULL</span>,
+    end_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone NOT NULL</span>,
+    doctor_start_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone NOT NULL</span>,
+    doctor_end_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone NOT NULL</span>,
+    doctor_started_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    doctor_ended_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    surgery_id bigint <span class="s2">NOT NULL</span>,
+    surgical_room_id bigint <span class="s2">NOT NULL</span>,
+    deleted_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    created_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    updated_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    <span class="s2">CONSTRAINT </span>events_pkey <span class="s2">PRIMARY KEY </span>(id),
+    <span class="s2">CONSTRAINT </span>events_surgery_id_foreign <span class="s2">FOREIGN KEY </span>(surgery_id)
+        <span class="s2">REFERENCES public</span>.surgeries (id) <span class="s2">MATCH </span>SIMPLE
+        <span class="s2">ON UPDATE NO ACTION</span>
+        ON DELETE NO ACTION,
+    <span class="s2">CONSTRAINT </span>events_surgical_room_id_foreign <span class="s2">FOREIGN KEY </span>(surgical_room_id)
+        <span class="s2">REFERENCES public</span>.surgical_rooms (id) <span class="s2">MATCH </span>SIMPLE
+        <span class="s2">ON UPDATE NO ACTION</span>
+        ON DELETE NO ACTION
+);
+
+<span class="s0">-- CREATE LOGS TABLE</span>
+<span class="s2">CREATE </span>SEQUENCE logs_id_seq;
+<span class="s2">CREATE TABLE public</span>.logs
+(
+    id <span class="s2">integer NOT NULL DEFAULT </span>nextval(<span class="s3">'logs_id_seq'</span>::regclass),
+    observation text <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    surgery_id bigint <span class="s2">NOT NULL</span>,
+    status_id bigint <span class="s2">NOT NULL</span>,
+    user_id bigint <span class="s2">NOT NULL</span>,
+    deleted_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    created_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    updated_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    <span class="s2">CONSTRAINT </span>logs_pkey <span class="s2">PRIMARY KEY </span>(id),
+    <span class="s2">CONSTRAINT </span>logs_status_id_foreign <span class="s2">FOREIGN KEY </span>(status_id)
+        <span class="s2">REFERENCES public</span>.status (id) <span class="s2">MATCH </span>SIMPLE
+        <span class="s2">ON UPDATE NO ACTION</span>
+        ON DELETE NO ACTION,
+    <span class="s2">CONSTRAINT </span>logs_surgery_id_foreign <span class="s2">FOREIGN KEY </span>(surgery_id)
+        <span class="s2">REFERENCES public</span>.surgeries (id) <span class="s2">MATCH </span>SIMPLE
+        <span class="s2">ON UPDATE NO ACTION</span>
+        ON DELETE NO ACTION,
+    <span class="s2">CONSTRAINT </span>logs_user_id_foreign <span class="s2">FOREIGN KEY </span>(user_id)
+        <span class="s2">REFERENCES public</span>.users (id) <span class="s2">MATCH </span>SIMPLE
+        <span class="s2">ON UPDATE NO ACTION</span>
+        ON DELETE NO ACTION
+);
+
+<span class="s0">-- CREATE REASONS_FOR_RESCHEDULING TABLE</span>
+<span class="s2">CREATE </span>SEQUENCE reasons_for_rescheduling_id_seq;
+<span class="s2">CREATE TABLE public</span>.reasons_for_rescheduling
+(
+    id <span class="s2">integer NOT NULL DEFAULT </span>nextval(<span class="s3">'reasons_for_rescheduling_id_seq'</span>::regclass),
+    <span class="s2">name character varying</span>(<span class="s4">70</span>) <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    description text <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    deleted_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    created_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    updated_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    <span class="s2">CONSTRAINT </span>reasons_for_rescheduling_pkey <span class="s2">PRIMARY KEY </span>(id),
+    <span class="s2">CONSTRAINT </span>reasons_for_rescheduling_name_unique <span class="s2">UNIQUE </span>(<span class="s2">name</span>)
+);
+
+<span class="s0">-- CREATE RESCHEDULING_HISTORY TABLE</span>
+<span class="s2">CREATE </span>SEQUENCE rescheduling_history_id_seq;
+<span class="s2">CREATE TABLE public</span>.rescheduling_history
+(
+    id <span class="s2">integer NOT NULL DEFAULT </span>nextval(<span class="s3">'rescheduling_history_id_seq'</span>::regclass),
+    rescheduling_reason_id bigint <span class="s2">NOT NULL</span>,
+    log_id bigint <span class="s2">NOT NULL</span>,
+    deleted_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    created_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    updated_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    <span class="s2">CONSTRAINT </span>rescheduling_history_pkey <span class="s2">PRIMARY KEY </span>(id),
+    <span class="s2">CONSTRAINT </span>rescheduling_history_log_id_foreign <span class="s2">FOREIGN KEY </span>(log_id)
+        <span class="s2">REFERENCES public</span>.logs (id) <span class="s2">MATCH </span>SIMPLE
+        <span class="s2">ON UPDATE NO ACTION</span>
+        ON DELETE NO ACTION,
+    <span class="s2">CONSTRAINT </span>rescheduling_history_rescheduling_reason_id_foreign <span class="s2">FOREIGN KEY </span>(rescheduling_reason_id)
+        <span class="s2">REFERENCES public</span>.reasons_for_rescheduling (id) <span class="s2">MATCH </span>SIMPLE
+        <span class="s2">ON UPDATE NO ACTION</span>
+        ON DELETE NO ACTION
+);
+
+<span class="s0">-- CREATE SURGERY_HAS_ANESTHETICS TABLE</span>
+<span class="s2">CREATE </span>SEQUENCE surgery_has_anesthetics_id_seq;
+<span class="s2">CREATE TABLE public</span>.surgery_has_anesthetics
+(
+    id <span class="s2">integer NOT NULL DEFAULT </span>nextval(<span class="s3">'surgery_has_anesthetics_id_seq'</span>::regclass),
+    surgery_id bigint <span class="s2">NOT NULL</span>,
+    anesthesia_id bigint <span class="s2">NOT NULL</span>,
+    created_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    updated_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    <span class="s2">CONSTRAINT </span>surgery_anesthetics_pkey <span class="s2">PRIMARY KEY </span>(id),
+    <span class="s2">CONSTRAINT </span>surgery_anesthetics_anesthesia_id_foreign <span class="s2">FOREIGN KEY </span>(anesthesia_id)
+        <span class="s2">REFERENCES public</span>.anesthetics (id) <span class="s2">MATCH </span>SIMPLE
+        <span class="s2">ON UPDATE NO ACTION</span>
+        ON DELETE NO ACTION,
+    <span class="s2">CONSTRAINT </span>surgery_anesthetics_surgery_id_foreign <span class="s2">FOREIGN KEY </span>(surgery_id)
+        <span class="s2">REFERENCES public</span>.surgeries (id) <span class="s2">MATCH </span>SIMPLE
+        <span class="s2">ON UPDATE NO ACTION</span>
+        ON DELETE NO ACTION
+);
+
+<span class="s0">-- CREATE SURGEON_HAS_SURGERIES TABLE</span>
+<span class="s2">CREATE </span>SEQUENCE surgeon_has_surgeries_id_seq;
+<span class="s2">CREATE TABLE public</span>.surgeon_has_surgeries
+(
+    id <span class="s2">integer NOT NULL DEFAULT </span>nextval(<span class="s3">'surgeon_has_surgeries_id_seq'</span>::regclass),
+    head_surgeon boolean <span class="s2">NOT NULL</span>,
+    surgeon_id bigint <span class="s2">NOT NULL</span>,
+    surgery_id bigint <span class="s2">NOT NULL</span>,
+    deleted_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    created_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    updated_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    <span class="s2">CONSTRAINT </span>surgeon_has_surgeries_pkey <span class="s2">PRIMARY KEY </span>(id),
+    <span class="s2">CONSTRAINT </span>surgeon_has_surgeries_surgeon_id_foreign <span class="s2">FOREIGN KEY </span>(surgeon_id)
+        <span class="s2">REFERENCES public</span>.surgeons (id) <span class="s2">MATCH </span>SIMPLE
+        <span class="s2">ON UPDATE NO ACTION</span>
+        ON DELETE NO ACTION,
+    <span class="s2">CONSTRAINT </span>surgeon_has_surgeries_surgery_id_foreign <span class="s2">FOREIGN KEY </span>(surgery_id)
+        <span class="s2">REFERENCES public</span>.surgeries (id) <span class="s2">MATCH </span>SIMPLE
+        <span class="s2">ON UPDATE NO ACTION</span>
+        ON DELETE NO ACTION
+);
+
+<span class="s0">-- CREATE PERMISSIONS TABLE</span>
+<span class="s2">CREATE </span>SEQUENCE permissions_id_seq;
+<span class="s2">CREATE TABLE public</span>.permissions
+(
+    id bigint <span class="s2">NOT NULL DEFAULT </span>nextval(<span class="s3">'permissions_id_seq'</span>::regclass),
+    <span class="s2">name character varying</span>(<span class="s4">50</span>) <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    slug <span class="s2">character varying</span>(<span class="s4">50</span>) <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    description text <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot;,
+    deleted_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    created_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    updated_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    <span class="s2">CONSTRAINT </span>permissions_pkey <span class="s2">PRIMARY KEY </span>(id),
+    <span class="s2">CONSTRAINT </span>permissions_name_unique <span class="s2">UNIQUE </span>(<span class="s2">name</span>)
+);
+
+<span class="s0">-- CREATE USER_HAS_PERMISSIONS TABLE</span>
+<span class="s2">CREATE TABLE public</span>.user_has_permissions
+(
+    user_id bigint <span class="s2">NOT NULL</span>,
+    permission_id bigint <span class="s2">NOT NULL</span>,
+    <span class="s2">CONSTRAINT </span>user_has_permissions_pkey <span class="s2">PRIMARY KEY </span>(user_id, permission_id),
+    <span class="s2">CONSTRAINT </span>user_has_permissions_permission_id_foreign <span class="s2">FOREIGN KEY </span>(permission_id)
+        <span class="s2">REFERENCES public</span>.permissions (id) <span class="s2">MATCH </span>SIMPLE
+        <span class="s2">ON UPDATE NO ACTION</span>
+        ON DELETE CASCADE,
+    <span class="s2">CONSTRAINT </span>user_has_permissions_user_id_foreign <span class="s2">FOREIGN KEY </span>(user_id)
+        <span class="s2">REFERENCES public</span>.users (id) <span class="s2">MATCH </span>SIMPLE
+        <span class="s2">ON UPDATE NO ACTION</span>
+        ON DELETE CASCADE
+);
+
+<span class="s0">-- CREATE GROUPS TABLE</span>
+<span class="s2">CREATE </span>SEQUENCE groups_id_seq;
+<span class="s2">CREATE TABLE public</span>.groups
+(
+    id bigint <span class="s2">NOT NULL DEFAULT </span>nextval(<span class="s3">'groups_id_seq'</span>::regclass),
+    <span class="s2">name character varying</span>(<span class="s4">50</span>) <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    slug <span class="s2">character varying</span>(<span class="s4">50</span>) <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s2">NOT NULL</span>,
+    description text <span class="s2">COLLATE </span>pg_catalog.&quot;default&quot;,
+    deleted_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    created_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    updated_at <span class="s2">timestamp</span>(<span class="s4">0</span>) without <span class="s2">time zone</span>,
+    <span class="s2">CONSTRAINT </span>groups_pkey <span class="s2">PRIMARY KEY </span>(id),
+    <span class="s2">CONSTRAINT </span>groups_name_unique <span class="s2">UNIQUE </span>(<span class="s2">name</span>),
+    <span class="s2">CONSTRAINT </span>groups_slug_unique <span class="s2">UNIQUE </span>(slug)
+);
+
+<span class="s0">-- CREATE GROUP_HAS_PERMISSIONS TABLE</span>
+<span class="s2">CREATE TABLE public</span>.group_has_permissions
+(
+    group_id bigint <span class="s2">NOT NULL</span>,
+    permission_id bigint <span class="s2">NOT NULL</span>,
+    <span class="s2">CONSTRAINT </span>group_has_permissions_pkey <span class="s2">PRIMARY KEY </span>(group_id, permission_id),
+    <span class="s2">CONSTRAINT </span>group_has_permissions_group_id_foreign <span class="s2">FOREIGN KEY </span>(group_id)
+        <span class="s2">REFERENCES public</span>.groups (id) <span class="s2">MATCH </span>SIMPLE
+        <span class="s2">ON UPDATE NO ACTION</span>
+        ON DELETE CASCADE,
+    <span class="s2">CONSTRAINT </span>group_has_permissions_permission_id_foreign <span class="s2">FOREIGN KEY </span>(permission_id)
+        <span class="s2">REFERENCES public</span>.permissions (id) <span class="s2">MATCH </span>SIMPLE
+        <span class="s2">ON UPDATE NO ACTION</span>
+        ON DELETE CASCADE
+);
+
+<span class="s0">-- CREATE USER_HAS_GROUPS TABLE</span>
+<span class="s2">CREATE TABLE public</span>.user_has_groups
+(
+    user_id bigint <span class="s2">NOT NULL</span>,
+    group_id bigint <span class="s2">NOT NULL</span>,
+    <span class="s2">CONSTRAINT </span>user_has_groups_pkey <span class="s2">PRIMARY KEY </span>(user_id, group_id),
+    <span class="s2">CONSTRAINT </span>user_has_groups_group_id_foreign <span class="s2">FOREIGN KEY </span>(group_id)
+        <span class="s2">REFERENCES public</span>.groups (id) <span class="s2">MATCH </span>SIMPLE
+        <span class="s2">ON UPDATE NO ACTION</span>
+        ON DELETE CASCADE,
+    <span class="s2">CONSTRAINT </span>user_has_groups_user_id_foreign <span class="s2">FOREIGN KEY </span>(user_id)
+        <span class="s2">REFERENCES public</span>.users (id) <span class="s2">MATCH </span>SIMPLE
+        <span class="s2">ON UPDATE NO ACTION</span>
+        ON DELETE CASCADE
+);
+</pre>
+</body>
+</html>

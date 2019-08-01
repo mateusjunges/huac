@@ -1,0 +1,112 @@
+<html>
+<head>
+<title>procedures.sql</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #000080; font-weight: bold;}
+.s1 { color: #000000;}
+.s2 { color: #0000ff;}
+.s3 { color: #808080; font-style: italic;}
+.s4 { color: #008000; font-weight: bold;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+procedures.sql</font>
+</center></td></tr></table>
+<pre><span class="s0">CREATE OR </span>REPLACE FUNCTION verify_procedure_constraints_for_update()
+RETURNS TRIGGER <span class="s0">AS</span>
+$BODY$
+	<span class="s0">DECLARE </span>stringLength <span class="s0">integer </span>:= <span class="s2">0</span>;
+	<span class="s0">DECLARE </span>countProcedures <span class="s0">integer </span>:= <span class="s2">0</span>;
+<span class="s0">BEGIN</span>
+	<span class="s3">-- Check for null columns:</span>
+	IF (NEW.name <span class="s0">IS NULL </span>|| NEW.sus_code <span class="s0">IS NULL</span>)
+	<span class="s0">THEN</span>
+		RAISE NOTICE <span class="s4">'The name and sus_code fields are required'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+
+	<span class="s3">-- Check for max string length:</span>
+	stringLength := <span class="s0">LENGTH</span>(NEW.name);
+	IF (stringLength <span class="s0">NOT BETWEEN </span><span class="s2">1 </span><span class="s0">AND </span><span class="s2">60</span>)
+	<span class="s0">THEN</span>
+		RAISE NOTICE <span class="s4">'The name column length must be between 1 and 60 characters!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+	stringLength := <span class="s2">0</span>;
+	stringLength := <span class="s0">LENGTH</span>(NEW.sus_code);
+	IF(stringLength <span class="s0">NOT BETWEEN </span><span class="s2">1 </span><span class="s0">AND </span><span class="s2">20</span>)
+	<span class="s0">THEN</span>
+		RAISE NOTICE <span class="s4">'The sus_code column length must be between 1 and 20 characters!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+
+	<span class="s3">-- Check for duplicate rows:</span>
+	countProcedures := <span class="s0">COUNT</span>(procedures.*) <span class="s0">FROM </span>procedures <span class="s0">WHERE </span>procedures.sus_code = NEW.sus_code
+	            <span class="s0">AND </span>procedures.id &lt;&gt; OLD.id;
+	IF(countProcedures &gt; <span class="s2">0</span>)
+	<span class="s0">THEN</span>
+		RAISE NOTICE <span class="s4">'The supplied sus_code is already registered.'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+
+	RETURN NEW;
+<span class="s0">END</span>;
+$BODY$
+
+<span class="s0">LANGUAGE </span>plpgsql;
+
+<span class="s0">CREATE OR </span>REPLACE FUNCTION verify_procedure_constraints()
+RETURNS TRIGGER <span class="s0">AS</span>
+$BODY$
+	<span class="s0">DECLARE </span>stringLength <span class="s0">integer </span>:= <span class="s2">0</span>;
+	<span class="s0">DECLARE </span>countProcedures <span class="s0">integer </span>:= <span class="s2">0</span>;
+<span class="s0">BEGIN</span>
+	<span class="s3">-- Check for null columns:</span>
+	IF (NEW.name <span class="s0">IS NULL </span>|| NEW.sus_code <span class="s0">IS NULL</span>)
+	<span class="s0">THEN</span>
+		RAISE NOTICE <span class="s4">'The name and sus_code fields are required'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+
+	<span class="s3">-- Check for max string length:</span>
+	stringLength := <span class="s0">LENGTH</span>(NEW.name);
+	IF (stringLength <span class="s0">NOT BETWEEN </span><span class="s2">1 </span><span class="s0">AND </span><span class="s2">60</span>)
+	<span class="s0">THEN</span>
+		RAISE NOTICE <span class="s4">'The name column length must be between 1 and 60 characters!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+	stringLength := <span class="s2">0</span>;
+	stringLength := <span class="s0">LENGTH</span>(NEW.sus_code);
+	IF(stringLength <span class="s0">NOT BETWEEN </span><span class="s2">1 </span><span class="s0">AND </span><span class="s2">20</span>)
+	<span class="s0">THEN</span>
+		RAISE NOTICE <span class="s4">'The sus_code column length must be between 1 and 20 characters!'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+
+	<span class="s3">-- Check for duplicate rows:</span>
+	countProcedures := <span class="s0">COUNT</span>(procedures.*) <span class="s0">FROM </span>procedures <span class="s0">WHERE </span>procedures.sus_code = NEW.sus_code;
+	IF(countProcedures &gt; <span class="s2">0</span>)
+	<span class="s0">THEN</span>
+		RAISE NOTICE <span class="s4">'The supplied sus_code is already registered.'</span>;
+		RETURN <span class="s0">NULL</span>;
+	<span class="s0">END </span>IF;
+
+	RETURN NEW;
+<span class="s0">END</span>;
+$BODY$
+
+<span class="s0">LANGUAGE </span>plpgsql;
+
+
+<span class="s0">CREATE </span>TRIGGER verify_procedure_constraints_before_insert_on_procedures BEFORE <span class="s0">INSERT ON </span>&quot;procedures&quot;
+<span class="s0">FOR </span>EACH ROW <span class="s0">EXECUTE PROCEDURE </span>verify_procedure_constraints();
+
+<span class="s0">CREATE </span>TRIGGER verify_procedure_constraints_before_update_on_procedures BEFORE <span class="s0">UPDATE ON </span>&quot;procedures&quot;
+<span class="s0">FOR </span>EACH ROW <span class="s0">EXECUTE PROCEDURE </span>verify_procedure_constraints_for_update();
+</pre>
+</body>
+</html>

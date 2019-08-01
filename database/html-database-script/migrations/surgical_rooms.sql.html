@@ -1,0 +1,36 @@
+<html>
+<head>
+<title>surgical_rooms.sql</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #000080; font-weight: bold;}
+.s1 { color: #000000;}
+.s2 { color: #008000; font-weight: bold;}
+.s3 { color: #0000ff;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+surgical_rooms.sql</font>
+</center></td></tr></table>
+<pre><span class="s0">CREATE </span>SEQUENCE surgical_rooms_id_seq;
+<span class="s0">CREATE TABLE public</span>.surgical_rooms
+(
+    id <span class="s0">integer NOT NULL DEFAULT </span>nextval(<span class="s2">'surgical_rooms_id_seq'</span>::regclass),
+    <span class="s0">name character varying</span>(<span class="s3">70</span>) <span class="s0">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s0">NOT NULL</span>,
+    available boolean <span class="s0">NOT NULL DEFAULT true</span>,
+    morning_reservation_starts_at <span class="s0">character varying</span>(<span class="s3">8</span>) <span class="s0">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s0">NOT NULL</span>,
+    morning_reservation_ends_at <span class="s0">character varying</span>(<span class="s3">8</span>) <span class="s0">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s0">NOT NULL</span>,
+    afternoon_reservation_starts_at <span class="s0">character varying</span>(<span class="s3">8</span>) <span class="s0">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s0">NOT NULL</span>,
+    afternoon_reservation_ends_at <span class="s0">character varying</span>(<span class="s3">8</span>) <span class="s0">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s0">NOT NULL</span>,
+    deleted_at <span class="s0">timestamp</span>(<span class="s3">0</span>) without <span class="s0">time zone</span>,
+    created_at <span class="s0">timestamp</span>(<span class="s3">0</span>) without <span class="s0">time zone</span>,
+    updated_at <span class="s0">timestamp</span>(<span class="s3">0</span>) without <span class="s0">time zone</span>,
+    <span class="s0">CONSTRAINT </span>surgical_rooms_pkey <span class="s0">PRIMARY KEY </span>(id),
+    <span class="s0">CONSTRAINT </span>surgical_rooms_name_unique <span class="s0">UNIQUE </span>(<span class="s0">name</span>)
+);
+</pre>
+</body>
+</html>
