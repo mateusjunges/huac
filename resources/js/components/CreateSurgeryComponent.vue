@@ -297,9 +297,21 @@
                     }
                 }
             },
-            birthdayAtClass(){
 
+
+            birthdayAtClass(){
+                // TODO: Verify all possible validation rules
+                if (this.birthdayAt.length < 8) {
+                    this.validated = false;
+                    this.birthdayAtErrors = "Por favor, informe a data de nascimento completa!";
+                    return 'validation-error';
+                } else {
+                    this.validated = true;
+                    this.birthdayAtErrors = "";
+                    return 'validated';
+                }
             },
+
             genderClass(){
 
             },

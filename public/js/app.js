@@ -1994,7 +1994,18 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
     },
-    birthdayAtClass: function birthdayAtClass() {},
+    birthdayAtClass: function birthdayAtClass() {
+      // TODO: Verify all possible validation rules
+      if (this.birthdayAt.length < 8) {
+        this.validated = false;
+        this.birthdayAtErrors = "Por favor, informe a data de nascimento completa!";
+        return 'validation-error';
+      } else {
+        this.validated = true;
+        this.birthdayAtErrors = "";
+        return 'validated';
+      }
+    },
     genderClass: function genderClass() {},
     surgicalProcedureClass: function surgicalProcedureClass() {},
     estimatedDurationClass: function estimatedDurationClass() {},
