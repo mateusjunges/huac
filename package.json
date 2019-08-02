@@ -25,5 +25,8 @@
     },
     "rules": {
         "no-console": 0
+    },
+    "dependencies": {
+        "dotenv": "^8.0.0"
     }
 }
