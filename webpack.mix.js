@@ -11,6 +11,12 @@ const mix = require('laravel-mix');
  |
  */
 
+mix.webpackConfig({
+    node: {
+        fs: "empty",
+    }
+});
+
 mix.extend('aliasConfig', new class {
     webpackConfig(webpackConfig) {
         webpackConfig.resolve.extensions.push('.js', '.json', '.vue'); // you don't need this on v4
