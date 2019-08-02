@@ -8,9 +8,13 @@
 require('./bootstrap');
 
 import Vue from 'vue'
+import dotenv from 'dotenv'
+
+dotenv.config();
 
 Vue.component('create-surgery', require('@components/CreateSurgeryComponent.vue').default);
 
 const app = new Vue({
     el: '#app',
 });
+

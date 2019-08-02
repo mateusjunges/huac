@@ -2,7 +2,7 @@
 
 namespace HUAC\Http\Controllers\Auth;
 
-use HUAC\User;
+use HUAC\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 use Uepg\SGIAuthorizer\Auth\Controllers\LoginController as UEPGLoginController;

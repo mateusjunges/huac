@@ -1,6 +1,6 @@
 <?php
 
-namespace HUAC;
+namespace HUAC\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

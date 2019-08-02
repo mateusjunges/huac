@@ -12,6 +12,7 @@
         "fideloper/proxy": "^4.0",
         "jeroennoten/laravel-adminlte": "^1.25",
         "laravel/framework": "5.7.*",
+        "laravel/passport": "^7.3",
         "laravel/tinker": "^1.0",
         "mateusjunges/laravel-acl": "^1.7",
         "uepg/sgi-authorizer": "0.2.32",

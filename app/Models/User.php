@@ -1,15 +1,17 @@
 <?php
 
-namespace HUAC;
+namespace HUAC\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Junges\ACL\Traits\UsersTrait;
+use Laravel\Passport\HasApiTokens;
 use Uepg\SGIUser\Models\Usuario;
 
 class User extends Usuario
 {
     use Notifiable;
     use UsersTrait;
+    use HasApiTokens;
 
     /**
      * The attributes that are mass assignable.

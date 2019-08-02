@@ -2,7 +2,7 @@
 
 namespace HUAC\Http\Controllers\Auth;
 
-use HUAC\User;
+use HUAC\Models\User;
 use HUAC\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;

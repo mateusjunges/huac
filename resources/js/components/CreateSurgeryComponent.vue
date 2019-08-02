@@ -192,14 +192,15 @@
     export default {
         name: "CreateSurgeryComponent",
         props: {
-            genderList: Array,
-            procedures: Array,
             classifications: Array,
             anesthetics: Array,
             surgeons: Array,
         },
         data(){
             return {
+                //Environment variables:
+                APP_URL: process.env.APP_URL,
+
                 patientNameErrors: "",
                 medicalRecordErrors: "",
                 motherNameErrors: "",
@@ -232,13 +233,40 @@
                 anestheticEvaluation: '',
                 validated: false,
                 estimatedDuration: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+                genderList: [
+                    {
+                        name: 'Masculino',
+                        value: 'M',
+                    },
+                    {
+                        name: 'Prefiro não dizer',
+                        value: 'O',
+                    },
+                    {
+                        name: 'Feminino',
+                        value: 'F',
+                    }
+                ],
+                procedures: [],
             }
         },
         methods: {
             validateFullName(name){
                 const regex = /^[a-zA-Z]+ [a-zA-Z]+.[a-zA-Z\s]*$/;
                 return regex.test(name);
+            },
+
+            getProcedures() {
+                // axios.get(this.APP_URL + '/api/procedures')
+                axios.get(this.APP_URL + '/api/procedures')
+                    .then((response) => {
+                       this.procedures = response.data.data;
+                    });
             }
+        },
+
+        mounted() {
+            this.getProcedures();
         },
         computed: {
             /**
@@ -298,7 +326,10 @@
                 }
             },
 
-
+            /**
+             * Validate the patient birth date
+             * @returns {string}
+             */
             birthdayAtClass(){
                 // TODO: Verify all possible validation rules
                 if (this.birthdayAt.length < 8) {
@@ -312,12 +343,38 @@
                 }
             },
 
+            /**
+             * Validate the patient gender.
+             * @returns {string}
+             */
             genderClass(){
-
+                if (this.patientGender === "") {
+                    this.validated = false;
+                    this.genderErrors = "Por favor, selecione o gênero do paciente";
+                    return 'validation-errors';
+                } else {
+                    this.validated = true;
+                    this.genderErrors = "";
+                    return 'validated';
+                }
             },
+
+            /**
+             * Validate the surgical procedure.
+             * @returns {string}
+             */
             surgicalProcedureClass(){
-
+                if (this.procedure === "") {
+                    this.validated = false;
+                    this.procedureErrors = "Por favor, selecione o procedimento cirúrgico a ser realizado!";
+                    return 'validation-error';
+                } else {
+                    this.validated = true;
+                    this.procedureErrors = "";
+                    return 'validated';
+                }
             },
+
             estimatedDurationClass(){
 
             },

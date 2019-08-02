@@ -1,21 +1,20 @@
 <?php
 
-namespace HUAC;
+namespace HUAC\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SurgeryClassification extends Model
+class Procedure extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'surgery_classifications';
+    protected $table = 'procedures';
 
     protected $fillable = [
         'name',
-        'description',
+        'sus_code',
     ];
 
-    protected $guarded = ['id'];
-
+    protected $dates = ['deleted_at'];
 }

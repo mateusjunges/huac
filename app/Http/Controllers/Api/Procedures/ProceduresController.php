@@ -3,7 +3,7 @@
 namespace HUAC\Http\Controllers\Api\Procedures;
 
 use HUAC\Http\Resources\ProceduresResource;
-use HUAC\Procedure;
+use HUAC\Models\Procedure;
 
 class ProceduresController
 {
