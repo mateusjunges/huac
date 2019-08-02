@@ -14,7 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'HUAC\Model' => 'HUAC\Policies\ModelPolicy',
+        //
     ];
 
     /**

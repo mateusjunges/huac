@@ -257,8 +257,7 @@
             },
 
             getProcedures() {
-                // axios.get(this.APP_URL + '/api/procedures')
-                axios.get(this.APP_URL + '/api/procedures')
+                axios.get('/api/procedures')
                     .then((response) => {
                        this.procedures = response.data.data;
                     });
@@ -269,6 +268,7 @@
             this.getProcedures();
         },
         computed: {
+
             /**
              * Validate the patient name field.
              * @returns {string}

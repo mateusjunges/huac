@@ -24,6 +24,7 @@ class LoginController extends UEPGLoginController
                     'name' => Auth::user()->nome,
                     'email' => Auth::user()->email,
                 ]);
+//                $user->createToken($user->name);
             }
         }catch (\Exception $exception){
             session()->forget('sgiauthorizer');
