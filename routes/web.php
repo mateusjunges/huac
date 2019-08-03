@@ -11,9 +11,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-Route::group(['middleware' => 'auth'], function (){
-   Route::resource('surgeries', SurgeryController::class);
-});
-
 Route::get('home', [HomeController::class, 'index'])->name('home');
+
+/* Routes that needs authentication */
+Route::group(['middleware' => 'auth'], function (){
+    Route::resource('surgeries', SurgeryController::class);
+});
