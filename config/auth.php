@@ -66,7 +66,7 @@ return [
 
     'providers' => [
         'users' => [
-            'driver' => 'sgiauthorizer',
+            'driver' => 'eloquent',
             'model' => \HUAC\Models\User::class,
         ],
 

@@ -5,9 +5,9 @@ namespace HUAC\Models;
 use Illuminate\Notifications\Notifiable;
 use Junges\ACL\Traits\UsersTrait;
 use Laravel\Passport\HasApiTokens;
-use Uepg\SGIUser\Models\Usuario;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Usuario
+class User extends Authenticatable
 {
     use Notifiable;
     use UsersTrait;
@@ -23,7 +23,7 @@ class User extends Usuario
         'name',
         'email',
         'username',
-        'nome',
+        'password'
     ];
 
     /**

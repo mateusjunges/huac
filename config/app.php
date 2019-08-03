@@ -174,14 +174,6 @@ return [
         HUAC\Providers\BroadcastServiceProvider::class,
         HUAC\Providers\EventServiceProvider::class,
         HUAC\Providers\RouteServiceProvider::class,
-
-        /*
-         * SGIAuthorizer Service Providers
-         */
-        Uepg\SGIAuthorizer\SGIAuthorizerServiceProvider::class,
-        Uepg\SGIAuthorizer\Auth\Providers\SGIAuthProvider::class,
-
-
     ],
 
     /*
@@ -230,7 +222,6 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
     ],
 
 ];

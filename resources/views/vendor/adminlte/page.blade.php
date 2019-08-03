@@ -69,7 +69,7 @@
                                         <i class="fa fa-fw fa-user"></i>{{ isset(Auth::user()->nome) ? Auth::user()->nome : trans('adminlte::adminlte.log_out') }}
                                     </button>
                                     <div class="dropdownn-content">
-                                        <a href="{{ route('userinfo') }}"><i class="fa fa-fw fa-user"></i>Meu Perfil</a>
+{{--                                        <a href="{{ route('userinfo') }}"><i class="fa fa-fw fa-user"></i>Meu Perfil</a>--}}
                                         <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit()">
                                             <i class="fa fa-fw fa-power-off"></i>
                                             Sair
