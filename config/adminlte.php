@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 2',
+    'title' => 'HUAC - Agendamento cirúrgico do Hospital Universitário dos Campos Gerais',
 
     'title_prefix' => '',
 
@@ -108,7 +108,20 @@ return [
     */
 
     'menu' => [
-        //
+        [
+            'icon'    => 'list',
+            'text'    => 'Cirurgias',
+            'submenu' => [
+                [
+                    'text' => 'Nova cirurgia',
+                    'route' => 'surgeries.create'
+                ],
+                [
+                    'text'  => 'Listar cirurgias',
+                    'route' => 'surgeries.index'
+                ]
+            ]
+        ]
     ],
 
     /*
