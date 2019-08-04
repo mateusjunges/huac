@@ -261,11 +261,19 @@
                     .then((response) => {
                        this.procedures = response.data.data;
                     });
+            },
+
+            getAnesthetics() {
+                axios.get('/api/anesthetics')
+                    .then((response) => {
+                        this.anesthetics = response.data.data;
+                    })
             }
         },
 
         mounted() {
             this.getProcedures();
+            this.getAnesthetics();
         },
         computed: {
 

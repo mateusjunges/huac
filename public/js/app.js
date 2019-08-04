@@ -1953,10 +1953,18 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('/api/procedures').then(function (response) {
         _this.procedures = response.data.data;
       });
+    },
+    getAnesthetics: function getAnesthetics() {
+      var _this2 = this;
+
+      axios.get('/api/anesthetics').then(function (response) {
+        _this2.anesthetics = response.data.data;
+      });
     }
   },
   mounted: function mounted() {
     this.getProcedures();
+    this.getAnesthetics();
   },
   computed: {
     /**
