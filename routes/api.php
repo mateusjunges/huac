@@ -12,4 +12,3 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('procedures/{procedure}', [ProceduresController::class, 'find'])->name('api.procedures.find');
 });
 
-

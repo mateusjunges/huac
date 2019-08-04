@@ -351,7 +351,7 @@
                 if (this.patientGender === "") {
                     this.validated = false;
                     this.genderErrors = "Por favor, selecione o gênero do paciente";
-                    return 'validation-errors';
+                    return 'validation-error';
                 } else {
                     this.validated = true;
                     this.genderErrors = "";
@@ -375,27 +375,110 @@
                 }
             },
 
+            /**
+             * Validate the surgery estimated duration.
+             * @returns {string}
+             */
             estimatedDurationClass(){
-
+                if (this.duration === '') {
+                    this.validated = false;
+                    this.estimatedDurationErrors = "Por vafor, selecione a duração estimada da cirurgia!";
+                    return 'validation-error';
+                } else {
+                    this.validated = true;
+                    this.estimatedDurationErrors = "";
+                    return 'validated';
+                }
             },
+
+            /**
+             * Validate the surgery classification.
+             * @returns {string}
+             */
             classificationClass(){
-
+                if (this.classification === "") {
+                    this.validated = false;
+                    this.classificationErrors = "Por favor, informe a classificação desta cirurgi!";
+                    return 'validation-error';
+                } else {
+                    this.validated = true;
+                    this.classificationErrors = "";
+                    return 'validated';
+                }
             },
+
+            /**
+             * Validate the surgery anesthesia.
+             * @returns {string}
+             */
             anestheticsClass(){
-
+                if (this.anesthesia === "") {
+                    this.validated = false;
+                    this.anestheticsErrors = "Por favor, informe a anestesia para esta cirurgia!";
+                    return 'validation-error';
+                } else {
+                    this.validated = true;
+                    this.anestheticsErrors = "";
+                    return 'validated';
+                }
             },
+
+            /**
+             * Validate the head surgeon field.
+             * @returns {string}
+             */
             headSurgeonClass(){
-
+                if (this.headSurgeon === "") {
+                    this.validated = false;
+                    this.headSurgeonErrors = "Por favor, selecione o cirurgião principal!";
+                    return 'validation-error';
+                } else {
+                    this.validated = true;
+                    this.headSurgeonErrors = "";
+                    return 'validated';
+                }
             },
+
+            /**
+             * Validate the assistant surgeon field.
+             * @returns {string}
+             */
             assistantSurgeonClass(){
-
+                return 'validated';
             },
+
+            /**
+             * Validate the materials field.
+             * @returns {string}
+             */
             materialsClass(){
-
+                if (this.materials === "") {
+                    this.validated = false;
+                    this.materialsErrors = "Por favor, informe os materiais necessários para esta cirurgia!"
+                    return 'validation-error';
+                } else if (this.materials.length < 10) {
+                    this.validated = false;
+                    this.materialsErrors = "Informe pelo menos 10 caracteres!";
+                    return 'validation-error';
+                } else {
+                    this.validated = false;
+                    this.materialsErrors = "";
+                    return 'validated';
+                }
             },
+
+            /**
+             * Validate the observation field.
+             * @returns {string}
+             */
             observationClass(){
-
+                return 'validated';
             },
+
+            /**
+             * Validate the anesthetic evaluation field
+             * @returns {string}
+             */
             anestheticEvaluationClass(){
                 if (this.anestheticEvaluation.length === 0)
                     return 'validated';
@@ -407,11 +490,14 @@
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+    $valid: #00a65a;
+    $invalid: #ff0000;
+
     .validation-error {
-        border: solid 1px #ff0000;
+        border: solid 1px $invalid;
     }
     .validated {
-        border: solid 1px green;
+        border: solid 1px $valid;
     }
 </style>

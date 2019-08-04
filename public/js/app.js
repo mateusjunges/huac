@@ -2041,7 +2041,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.patientGender === "") {
         this.validated = false;
         this.genderErrors = "Por favor, selecione o gênero do paciente";
-        return 'validation-errors';
+        return 'validation-error';
       } else {
         this.validated = true;
         this.genderErrors = "";
@@ -2064,13 +2064,111 @@ __webpack_require__.r(__webpack_exports__);
         return 'validated';
       }
     },
-    estimatedDurationClass: function estimatedDurationClass() {},
-    classificationClass: function classificationClass() {},
-    anestheticsClass: function anestheticsClass() {},
-    headSurgeonClass: function headSurgeonClass() {},
-    assistantSurgeonClass: function assistantSurgeonClass() {},
-    materialsClass: function materialsClass() {},
-    observationClass: function observationClass() {},
+
+    /**
+     * Validate the surgery estimated duration.
+     * @returns {string}
+     */
+    estimatedDurationClass: function estimatedDurationClass() {
+      if (this.duration === '') {
+        this.validated = false;
+        this.estimatedDurationErrors = "Por vafor, selecione a duração estimada da cirurgia!";
+        return 'validation-error';
+      } else {
+        this.validated = true;
+        this.estimatedDurationErrors = "";
+        return 'validated';
+      }
+    },
+
+    /**
+     * Validate the surgery classification.
+     * @returns {string}
+     */
+    classificationClass: function classificationClass() {
+      if (this.classification === "") {
+        this.validated = false;
+        this.classificationErrors = "Por favor, informe a classificação desta cirurgi!";
+        return 'validation-error';
+      } else {
+        this.validated = true;
+        this.classificationErrors = "";
+        return 'validated';
+      }
+    },
+
+    /**
+     * Validate the surgery anesthesia.
+     * @returns {string}
+     */
+    anestheticsClass: function anestheticsClass() {
+      if (this.anesthesia === "") {
+        this.validated = false;
+        this.anestheticsErrors = "Por favor, informe a anestesia para esta cirurgia!";
+        return 'validation-error';
+      } else {
+        this.validated = true;
+        this.anestheticsErrors = "";
+        return 'validated';
+      }
+    },
+
+    /**
+     * Validate the head surgeon field.
+     * @returns {string}
+     */
+    headSurgeonClass: function headSurgeonClass() {
+      if (this.headSurgeon === "") {
+        this.validated = false;
+        this.headSurgeonErrors = "Por favor, selecione o cirurgião principal!";
+        return 'validation-error';
+      } else {
+        this.validated = true;
+        this.headSurgeonErrors = "";
+        return 'validated';
+      }
+    },
+
+    /**
+     * Validate the assistant surgeon field.
+     * @returns {string}
+     */
+    assistantSurgeonClass: function assistantSurgeonClass() {
+      return 'validated';
+    },
+
+    /**
+     * Validate the materials field.
+     * @returns {string}
+     */
+    materialsClass: function materialsClass() {
+      if (this.materials === "") {
+        this.validated = false;
+        this.materialsErrors = "Por favor, informe os materiais necessários para esta cirurgia!";
+        return 'validation-error';
+      } else if (this.materials.length < 10) {
+        this.validated = false;
+        this.materialsErrors = "Informe pelo menos 10 caracteres!";
+        return 'validation-error';
+      } else {
+        this.validated = false;
+        this.materialsErrors = "";
+        return 'validated';
+      }
+    },
+
+    /**
+     * Validate the observation field.
+     * @returns {string}
+     */
+    observationClass: function observationClass() {
+      return 'validated';
+    },
+
+    /**
+     * Validate the anesthetic evaluation field
+     * @returns {string}
+     */
     anestheticEvaluationClass: function anestheticEvaluationClass() {
       if (this.anestheticEvaluation.length === 0) return 'validated';else {}
     }
@@ -7300,10 +7398,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=css&":
-/*!****************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=css& ***!
-  \****************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=scss&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/lib/loader.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=scss& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7312,7 +7410,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.validation-error[data-v-9aa55c62] {\n    border: solid 1px #ff0000;\n}\n.validated[data-v-9aa55c62] {\n    border: solid 1px green;\n}\n", ""]);
+exports.push([module.i, ".validation-error[data-v-9aa55c62] {\n  border: solid 1px #ff0000;\n}\n.validated[data-v-9aa55c62] {\n  border: solid 1px #00a65a;\n}", ""]);
 
 // exports
 
@@ -38671,15 +38769,15 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=css&":
-/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=css& ***!
-  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=scss&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/lib/loader.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=scss& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=css&");
+var content = __webpack_require__(/*! !../../../node_modules/css-loader!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-2!../../../node_modules/sass-loader/lib/loader.js??ref--7-3!../../../node_modules/vue-loader/lib??vue-loader-options!./CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=scss& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=scss&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -53398,7 +53496,7 @@ if (token) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _CreateSurgeryComponent_vue_vue_type_template_id_9aa55c62_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateSurgeryComponent.vue?vue&type=template&id=9aa55c62&scoped=true& */ "./resources/js/components/CreateSurgeryComponent.vue?vue&type=template&id=9aa55c62&scoped=true&");
 /* harmony import */ var _CreateSurgeryComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateSurgeryComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/CreateSurgeryComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _CreateSurgeryComponent_vue_vue_type_style_index_0_id_9aa55c62_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=css& */ "./resources/js/components/CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=css&");
+/* empty/unused harmony star reexport *//* harmony import */ var _CreateSurgeryComponent_vue_vue_type_style_index_0_id_9aa55c62_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=scss& */ "./resources/js/components/CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=scss&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -53440,19 +53538,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=css&":
-/*!*********************************************************************************************************************!*\
-  !*** ./resources/js/components/CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=css& ***!
-  \*********************************************************************************************************************/
+/***/ "./resources/js/components/CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=scss&":
+/*!**********************************************************************************************************************!*\
+  !*** ./resources/js/components/CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=scss& ***!
+  \**********************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateSurgeryComponent_vue_vue_type_style_index_0_id_9aa55c62_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateSurgeryComponent_vue_vue_type_style_index_0_id_9aa55c62_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateSurgeryComponent_vue_vue_type_style_index_0_id_9aa55c62_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateSurgeryComponent_vue_vue_type_style_index_0_id_9aa55c62_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateSurgeryComponent_vue_vue_type_style_index_0_id_9aa55c62_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateSurgeryComponent_vue_vue_type_style_index_0_id_9aa55c62_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateSurgeryComponent_vue_vue_type_style_index_0_id_9aa55c62_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-2!../../../node_modules/sass-loader/lib/loader.js??ref--7-3!../../../node_modules/vue-loader/lib??vue-loader-options!./CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=scss& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=scss&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateSurgeryComponent_vue_vue_type_style_index_0_id_9aa55c62_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateSurgeryComponent_vue_vue_type_style_index_0_id_9aa55c62_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateSurgeryComponent_vue_vue_type_style_index_0_id_9aa55c62_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateSurgeryComponent_vue_vue_type_style_index_0_id_9aa55c62_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateSurgeryComponent_vue_vue_type_style_index_0_id_9aa55c62_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
