@@ -3,6 +3,7 @@
 use HUAC\Http\Controllers\Api\SurgeryClassifications\SurgeryClassificationsController;
 use Illuminate\Http\Request;
 use HUAC\Http\Controllers\Api\Procedures\ProceduresController;
+use HUAC\Http\Controllers\Api\ACL\UsersController;
 use HUAC\Http\Controllers\Api\Anesthetics\AnestheticsController;
 use HUAC\Http\Controllers\Api\Surgeons\SurgeonsController;
 
@@ -24,4 +25,7 @@ Route::middleware(['auth:api'])->group(function () {
         ->name('api.surgery-classifications.all');
     Route::get('classifications/{classification}', [SurgeryClassificationsController::class, 'find'])
         ->name('api.surgery-classifications.find');
+
+    Route::get('users', [UsersController::class, 'data'])->name('api.users.data');
+    Route::get('users/columns', [UsersController::class, 'columns'])->name('api.users.columns');
 });

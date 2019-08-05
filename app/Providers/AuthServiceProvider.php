@@ -30,6 +30,8 @@ class AuthServiceProvider extends ServiceProvider
 
         Passport::tokensExpireIn(now()->addDays(env('PASSPORT_TOKEN_EXPIRES_IN', 15)));
 
-
+        Gate::before(function ($user, $ability) {
+            return $user->hasPermission('admin') ? true : null;
+        });
     }
 }

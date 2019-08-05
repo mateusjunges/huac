@@ -120,6 +120,20 @@ return [
                     'text'  => 'Listar cirurgias',
                     'route' => 'surgeries.index'
                 ]
+            ],
+        ],
+        [
+            'icon'    => 'users',
+            'text'    => 'Usuários',
+            'submenu' => [
+                [
+                    'text'  => 'Listar usuários',
+                    'route' => 'users.index',
+                ],
+                [
+                    'text'  => 'Novo usuário',
+                    'route' => 'users.create'
+                ],
             ]
         ]
     ],
