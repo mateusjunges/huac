@@ -1,9 +1,12 @@
 <?php
 
+use HUAC\Http\Controllers\Api\ACL\Users\UsersDataController;
+use HUAC\Http\Controllers\Api\ACL\Users\ValidateEmailController;
+use HUAC\Http\Controllers\Api\ACL\Users\ValidateUsernameController;
 use HUAC\Http\Controllers\Api\SurgeryClassifications\SurgeryClassificationsController;
 use Illuminate\Http\Request;
 use HUAC\Http\Controllers\Api\Procedures\ProceduresController;
-use HUAC\Http\Controllers\Api\ACL\UsersController;
+use HUAC\Http\Controllers\Api\ACL\Users\UsersColumnsController;
 use HUAC\Http\Controllers\Api\Anesthetics\AnestheticsController;
 use HUAC\Http\Controllers\Api\Surgeons\SurgeonsController;
 
@@ -12,6 +15,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware(['auth:api'])->group(function () {
+    Route::prefix('validation')->group(function () {
+        Route::get('username', ValidateUsernameController::class)->name('api.validation.username');
+        Route::get('email', ValidateEmailController::class)->name('api.validation.email');
+    });
+
     Route::get('procedures', [ProceduresController::class, 'all'])->name('api.procedures.index');
     Route::get('procedures/{procedure}', [ProceduresController::class, 'find'])->name('api.procedures.find');
 
@@ -26,6 +34,6 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('classifications/{classification}', [SurgeryClassificationsController::class, 'find'])
         ->name('api.surgery-classifications.find');
 
-    Route::get('users', [UsersController::class, 'data'])->name('api.users.data');
-    Route::get('users/columns', [UsersController::class, 'columns'])->name('api.users.columns');
+    Route::get('users', UsersDataController::class)->name('api.users.data');
+    Route::get('users/columns', UsersColumnsController::class)->name('api.users.columns');
 });

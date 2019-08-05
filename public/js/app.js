@@ -1762,9 +1762,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CreateUsersComponent",
-  props: {},
+  props: {
+    button: String,
+    route: String,
+    type: String
+  },
   data: function data() {
     return {
       name: '',
@@ -1777,16 +1789,74 @@ __webpack_require__.r(__webpack_exports__);
       passwordErrors: '',
       passwordConfirmation: '',
       passwordConfirmationErrors: '',
-      validated: true
+      validated: true,
+      username_class: '',
+      email_class: ''
     };
   },
-  methods: {},
+  methods: {
+    submit: function submit() {},
+    validateFullName: function validateFullName(name) {
+      var regex = /^[a-zA-Z]+ [a-zA-Z]+.[a-zA-Z\s]*$/;
+      return regex.test(name);
+    },
+    validateEmail: function validateEmail(email) {
+      var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return regex.test(String(email).toLowerCase());
+    },
+    isUniqueEmail: function isUniqueEmail(email) {
+      return axios.get('/api/validation/email', {
+        params: {
+          email: email
+        }
+      }).then(function (response) {
+        return response.data <= 0;
+      });
+    },
+    isUniqueUsername: function isUniqueUsername(username) {
+      return axios.get('/api/validation/username', {
+        params: {
+          username: username
+        }
+      }).then(function (response) {
+        return response.data <= 0;
+      });
+    }
+  },
   computed: {
     nameClass: function nameClass() {
-      return 'validated';
+      if (!this.validateFullName(this.name)) {
+        this.nameErrors = "Informe o nome completo!";
+        this.validated = false;
+        return 'validation-error';
+      } else {
+        this.validated = true;
+        this.nameErrors = "";
+        return 'validated';
+      }
     },
     usernameClass: function usernameClass() {
-      axios.get('/api/validate-username');
+      var _this = this;
+
+      if (this.username.length < 3) {
+        this.validated = false;
+        this.usernameErrors = "Informe pelo menos 3 caracters!";
+        return 'validation-error';
+      } else {
+        this.isUniqueUsername(this.username).then(function (response) {
+          if (response === false) {
+            _this.validated = false;
+            _this.usernameErrors = "Este username já está em uso!";
+            _this.username_class = 'validation-error';
+          } else {
+            _this.usernameErrors = "";
+            _this.validated = true;
+            _this.username_class = 'validated';
+          }
+        });
+        console.log(this.username_class);
+        return this.username_class;
+      }
     },
     passwordClass: function passwordClass() {
       if (this.password.length < 6) {
@@ -1816,7 +1886,31 @@ __webpack_require__.r(__webpack_exports__);
         return 'validated';
       }
     },
-    emailClass: function emailClass() {}
+    emailClass: function emailClass() {
+      var _this2 = this;
+
+      var email = this.email;
+
+      if (!this.validateEmail(this.email)) {
+        this.validated = false;
+        this.emailErrors = "Informe um email válido! (exemplo: email@email.com)";
+        return 'validation-error';
+      } else {
+        this.isUniqueEmail(email).then(function (response) {
+          if (response === false) {
+            _this2.validated = false;
+            _this2.emailErrors = "Este email já está em uso!";
+            _this2.email_class = 'validation-error';
+          } else {
+            _this2.emailErrors = "";
+            _this2.validated = true;
+            _this2.email_class = 'validated';
+          }
+        });
+        console.log(this.email_class);
+        return this.email_class;
+      }
+    }
   }
 });
 
@@ -39823,7 +39917,7 @@ var render = function() {
               staticClass: "form-control",
               class: _vm.passwordClass,
               attrs: {
-                type: "text",
+                type: "password",
                 placeholder: "Escolha uma senha:",
                 id: "password"
               },
@@ -39879,6 +39973,29 @@ var render = function() {
             _c("small", { staticClass: "text-danger" }, [
               _vm._v(_vm._s(this.passwordConfirmationErrors))
             ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-block btn-success",
+                attrs: { disabled: !_vm.validated, type: _vm.type },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.submit()
+                  }
+                }
+              },
+              [
+                _vm._v(
+                  "\n                        " +
+                    _vm._s(_vm.button) +
+                    "\n                    "
+                )
+              ]
+            )
           ])
         ])
       ])

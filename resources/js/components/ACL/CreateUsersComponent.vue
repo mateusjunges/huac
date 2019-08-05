@@ -38,7 +38,7 @@
                     </div>
                     <div class="form-group">
                         <label for="password">Senha:</label>
-                        <input type="text"
+                        <input type="password"
                                class="form-control"
                                :class="passwordClass"
                                placeholder="Escolha uma senha:"
@@ -57,6 +57,14 @@
                                id="password-confirmation">
                         <small class="text-danger">{{ this.passwordConfirmationErrors }}</small>
                     </div>
+                    <div class="form-group">
+                        <button class="btn btn-block btn-success"
+                                :disabled="!validated"
+                                @click.prevent="submit()"
+                                :type="type">
+                            {{ button }}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -67,7 +75,9 @@
     export default {
         name: "CreateUsersComponent",
         props: {
-
+            button: String,
+            route: String,
+            type: String
         },
         data() {
             return {
@@ -83,18 +93,77 @@
                 passwordConfirmationErrors: '',
 
                 validated: true,
+                username_class : '',
+                email_class: '',
             }
         },
         methods: {
+            submit() {
 
+            },
+
+            validateFullName(name){
+                const regex = /^[a-zA-Z]+ [a-zA-Z]+.[a-zA-Z\s]*$/;
+                return regex.test(name);
+            },
+            validateEmail(email) {
+                var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return regex.test(String(email).toLowerCase());
+            },
+
+            isUniqueEmail(email) {
+                return axios.get('/api/validation/email', {
+                    params: {
+                        email: email
+                    }
+                }).then((response) => {
+                        return response.data <= 0;
+                    });
+            },
+
+            isUniqueUsername(username) {
+                return axios.get('/api/validation/username', {
+                    params: {
+                        username: username,
+                    }
+                }).then((response) => {
+                    return response.data <= 0;
+                });
+            }
         },
         computed: {
             nameClass() {
-                return 'validated';
+                if (!this.validateFullName(this.name)) {
+                    this.nameErrors = "Informe o nome completo!";
+                    this.validated = false;
+                    return 'validation-error';
+                } else {
+                    this.validated = true;
+                    this.nameErrors = "";
+                    return 'validated';
+                }
             },
 
             usernameClass() {
-                axios.get('/api/validate-username')
+                if (this.username.length < 3) {
+                    this.validated = false;
+                    this.usernameErrors = "Informe pelo menos 3 caracters!";
+                    return 'validation-error';
+                } else {
+                    this.isUniqueUsername(this.username).then((response) => {
+                        if (response === false) {
+                            this.validated = false;
+                            this.usernameErrors = "Este username já está em uso!";
+                            this.username_class = 'validation-error';
+                        } else {
+                            this.usernameErrors = "";
+                            this.validated = true;
+                            this.username_class = 'validated';
+                        }
+                    });
+                    console.log(this.username_class);
+                    return this.username_class;
+                }
             },
 
             passwordClass() {
@@ -128,7 +197,26 @@
             },
 
             emailClass() {
-
+                let email = this.email;
+                if (!this.validateEmail(this.email)) {
+                    this.validated = false;
+                    this.emailErrors = "Informe um email válido! (exemplo: email@email.com)";
+                    return 'validation-error';
+                } else {
+                    this.isUniqueEmail(email).then((response) => {
+                        if (response === false) {
+                            this.validated = false;
+                            this.emailErrors = "Este email já está em uso!";
+                            this.email_class = 'validation-error';
+                        } else {
+                            this.emailErrors = "";
+                            this.validated = true;
+                            this.email_class = 'validated';
+                        }
+                    });
+                    console.log(this.email_class);
+                    return this.email_class;
+                }
             }
         }
     }

@@ -14,9 +14,9 @@
     </div>
     <div class="row" id="app">
         <div class="col-md-8 col-md-push-2 col-md-pull-2">
-            <form action="{{ route('users.store') }}">
-                @include('_forms.users.users')
-            </form>
+{{--            <form action="{{ route('users.store') }}" method="post">--}}
+            <create-users button="Salvar"></create-users>
+{{--            </form>--}}
         </div>
     </div>
 @endsection
