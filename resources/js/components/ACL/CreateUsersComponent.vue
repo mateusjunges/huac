@@ -98,8 +98,33 @@
             }
         },
         methods: {
+            clear() {
+              this.name = "";
+              this.email = "";
+              this.password = "";
+              this.username = "";
+              this.passwordConfirmation = "";
+            },
             submit() {
-
+                axios.post('/api/users', {
+                    name: this.name,
+                    username: this.username,
+                    email: this.email,
+                    password: this.password,
+                    password_confirmation: this.passwordConfirmation,
+                }).then((response) => {
+                    if (response.data.code === 200)
+                        this.clear();
+                    swal({
+                        icon: response.data.icon,
+                        title: response.data.title,
+                        text: response.data.text,
+                        timer: response.data.timer
+                    })
+                }).catch((error) => {
+                    console.log("error");
+                    console.log(error);
+                });
             },
 
             validateFullName(name){

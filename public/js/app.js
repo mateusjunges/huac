@@ -1795,7 +1795,35 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    submit: function submit() {},
+    clear: function clear() {
+      this.name = "";
+      this.email = "";
+      this.password = "";
+      this.username = "";
+      this.passwordConfirmation = "";
+    },
+    submit: function submit() {
+      var _this = this;
+
+      axios.post('/api/users', {
+        name: this.name,
+        username: this.username,
+        email: this.email,
+        password: this.password,
+        password_confirmation: this.passwordConfirmation
+      }).then(function (response) {
+        if (response.data.code === 200) _this.clear();
+        swal({
+          icon: response.data.icon,
+          title: response.data.title,
+          text: response.data.text,
+          timer: response.data.timer
+        });
+      })["catch"](function (error) {
+        console.log("error");
+        console.log(error);
+      });
+    },
     validateFullName: function validateFullName(name) {
       var regex = /^[a-zA-Z]+ [a-zA-Z]+.[a-zA-Z\s]*$/;
       return regex.test(name);
@@ -1836,7 +1864,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     usernameClass: function usernameClass() {
-      var _this = this;
+      var _this2 = this;
 
       if (this.username.length < 3) {
         this.validated = false;
@@ -1845,13 +1873,13 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         this.isUniqueUsername(this.username).then(function (response) {
           if (response === false) {
-            _this.validated = false;
-            _this.usernameErrors = "Este username já está em uso!";
-            _this.username_class = 'validation-error';
+            _this2.validated = false;
+            _this2.usernameErrors = "Este username já está em uso!";
+            _this2.username_class = 'validation-error';
           } else {
-            _this.usernameErrors = "";
-            _this.validated = true;
-            _this.username_class = 'validated';
+            _this2.usernameErrors = "";
+            _this2.validated = true;
+            _this2.username_class = 'validated';
           }
         });
         console.log(this.username_class);
@@ -1887,7 +1915,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     emailClass: function emailClass() {
-      var _this2 = this;
+      var _this3 = this;
 
       var email = this.email;
 
@@ -1898,13 +1926,13 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         this.isUniqueEmail(email).then(function (response) {
           if (response === false) {
-            _this2.validated = false;
-            _this2.emailErrors = "Este email já está em uso!";
-            _this2.email_class = 'validation-error';
+            _this3.validated = false;
+            _this3.emailErrors = "Este email já está em uso!";
+            _this3.email_class = 'validation-error';
           } else {
-            _this2.emailErrors = "";
-            _this2.validated = true;
-            _this2.email_class = 'validated';
+            _this3.emailErrors = "";
+            _this3.validated = true;
+            _this3.email_class = 'validated';
           }
         });
         console.log(this.email_class);
