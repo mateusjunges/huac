@@ -1,5 +1,6 @@
 <?php
 
+use HUAC\Http\Controllers\Api\SurgeryClassifications\SurgeryClassificationsController;
 use Illuminate\Http\Request;
 use HUAC\Http\Controllers\Api\Procedures\ProceduresController;
 use HUAC\Http\Controllers\Api\Anesthetics\AnestheticsController;
@@ -18,5 +19,9 @@ Route::middleware(['auth:api'])->group(function () {
 
     Route::get('surgeons', [SurgeonsController::class, 'all'])->name('api.surgeons.all');
     Route::get('surgeons/{surgeon}', [SurgeonsController::class, 'find'])->name('api.surgeons.find');
-});
 
+    Route::get('classifications', [SurgeryClassificationsController::class, 'all'])
+        ->name('api.surgery-classifications.all');
+    Route::get('classifications/{classification}', [SurgeryClassificationsController::class, 'find'])
+        ->name('api.surgery-classifications.find');
+});
