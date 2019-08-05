@@ -16,4 +16,9 @@ class Surgeon extends Model
         'crm',
         'user_id',
     ];
+
+    public function scopeName()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
