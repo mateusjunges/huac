@@ -1889,11 +1889,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CreateSurgeryComponent",
-  props: {
-    classifications: Array,
-    anesthetics: Array,
-    surgeons: Array
-  },
+  props: {},
   data: function data() {
     return {
       //Environment variables:
@@ -1939,7 +1935,10 @@ __webpack_require__.r(__webpack_exports__);
         name: 'Feminino',
         value: 'F'
       }],
-      procedures: []
+      procedures: [],
+      anesthetics: [],
+      surgeons: [],
+      classifications: []
     };
   },
   methods: {
@@ -1960,11 +1959,27 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('/api/anesthetics').then(function (response) {
         _this2.anesthetics = response.data.data;
       });
+    },
+    getSurgeons: function getSurgeons() {
+      var _this3 = this;
+
+      axios.get('/api/surgeons').then(function (response) {
+        _this3.surgeons = response.data.data;
+      });
+    },
+    getClassifications: function getClassifications() {
+      var _this4 = this;
+
+      axios.get('/api/classifications').then(function (response) {
+        _this4.classifications = response.data.data;
+      });
     }
   },
   mounted: function mounted() {
     this.getProcedures();
     this.getAnesthetics();
+    this.getSurgeons();
+    this.getClassifications();
   },
   computed: {
     /**

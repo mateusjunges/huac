@@ -191,11 +191,7 @@
 <script>
     export default {
         name: "CreateSurgeryComponent",
-        props: {
-            classifications: Array,
-            anesthetics: Array,
-            surgeons: Array,
-        },
+        props: {},
         data(){
             return {
                 //Environment variables:
@@ -248,6 +244,9 @@
                     }
                 ],
                 procedures: [],
+                anesthetics: [],
+                surgeons: [],
+                classifications: []
             }
         },
         methods: {
@@ -268,15 +267,29 @@
                     .then((response) => {
                         this.anesthetics = response.data.data;
                     })
+            },
+
+            getSurgeons() {
+                axios.get('/api/surgeons')
+                    .then((response) => {
+                       this.surgeons = response.data.data;
+                    });
+            },
+            getClassifications() {
+                axios.get('/api/classifications')
+                    .then((response) => {
+                        this.classifications = response.data.data;
+                    })
             }
         },
 
         mounted() {
             this.getProcedures();
             this.getAnesthetics();
+            this.getSurgeons();
+            this.getClassifications();
         },
         computed: {
-
             /**
              * Validate the patient name field.
              * @returns {string}
