@@ -1789,7 +1789,7 @@ __webpack_require__.r(__webpack_exports__);
       passwordErrors: '',
       passwordConfirmation: '',
       passwordConfirmationErrors: '',
-      validated: true,
+      validated: false,
       username_class: '',
       email_class: ''
     };
@@ -1819,8 +1819,16 @@ __webpack_require__.r(__webpack_exports__);
           title: response.data.title,
           text: response.data.text,
           timer: response.data.timer
+        }).then(function () {
+          window.location.replace('/users');
         });
       })["catch"](function (error) {
+        swal({
+          icon: 'warning',
+          text: 'Verifique os erros no formulário!',
+          title: 'Ops...',
+          timer: 4000
+        });
         var errors = error.response.data.errors;
         if (errors.name) _this.nameErrors = errors.name[0];else _this.nameErrors = "";
         if (errors.username) _this.usernameErrors = errors.username[0];else _this.usernameErrors = "";

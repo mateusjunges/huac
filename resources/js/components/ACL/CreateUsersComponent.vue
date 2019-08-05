@@ -92,7 +92,7 @@
                 passwordConfirmation: '',
                 passwordConfirmationErrors: '',
 
-                validated: true,
+                validated: false,
                 username_class : '',
                 email_class: '',
             }
@@ -122,8 +122,16 @@
                         title: response.data.title,
                         text: response.data.text,
                         timer: response.data.timer
+                    }).then(() => {
+                        window.location.replace('/users');
                     })
                 }).catch((error) => {
+                    swal({
+                        icon: 'warning',
+                        text: 'Verifique os erros no formulário!',
+                        title: 'Ops...',
+                        timer: 4000
+                    });
                     let errors = error.response.data.errors;
                     if (errors.name)
                         this.nameErrors = errors.name[0];
