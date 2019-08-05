@@ -113,6 +113,8 @@
                     password: this.password,
                     password_confirmation: this.passwordConfirmation,
                 }).then((response) => {
+                    console.log(response.data);
+
                     if (response.data.code === 200)
                         this.clear();
                     swal({
@@ -122,8 +124,19 @@
                         timer: response.data.timer
                     })
                 }).catch((error) => {
-                    console.log("error");
-                    console.log(error);
+                    let errors = error.response.data.errors;
+                    if (errors.name)
+                        this.nameErrors = errors.name[0];
+                    else this.nameErrors = "";
+                    if (errors.username)
+                        this.usernameErrors = errors.username[0];
+                    else this.usernameErrors = "";
+                    if (errors.password)
+                        this.passwordErrors = errors.password[0];
+                    else this.passwordErrors = "";
+                    if (errors.email)
+                        this.emailErrors = errors.email[0];
+                    else this.emailErrors = "";
                 });
             },
 

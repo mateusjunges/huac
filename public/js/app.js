@@ -1812,6 +1812,7 @@ __webpack_require__.r(__webpack_exports__);
         password: this.password,
         password_confirmation: this.passwordConfirmation
       }).then(function (response) {
+        console.log(response.data);
         if (response.data.code === 200) _this.clear();
         swal({
           icon: response.data.icon,
@@ -1820,8 +1821,11 @@ __webpack_require__.r(__webpack_exports__);
           timer: response.data.timer
         });
       })["catch"](function (error) {
-        console.log("error");
-        console.log(error);
+        var errors = error.response.data.errors;
+        if (errors.name) _this.nameErrors = errors.name[0];else _this.nameErrors = "";
+        if (errors.username) _this.usernameErrors = errors.username[0];else _this.usernameErrors = "";
+        if (errors.password) _this.passwordErrors = errors.password[0];else _this.passwordErrors = "";
+        if (errors.email) _this.emailErrors = errors.email[0];else _this.emailErrors = "";
       });
     },
     validateFullName: function validateFullName(name) {

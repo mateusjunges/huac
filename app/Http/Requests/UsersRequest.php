@@ -31,15 +31,18 @@ class UsersRequest extends FormRequest
             'name'     => 'required|min:3|full_name|string',
             'username' => 'required|string|unique:users,username,'.$id,
             'password' => 'required|confirmed|min:6',
+            'email'    => 'required|email|unique:users,email,'.$id,
         ];
     }
 
     public function messages()
     {
         return [
-            '*.required'     => 'O atributo :attribute é obrigatório!',
+            '*.required'     => 'O :attribute é obrigatório!',
             '*.unique'       => 'Este :attribute já está em uso!',
             'name.full_name' => 'Informe o nome completo!',
+            '*.confirmed'    => 'As senhas não coincidem!',
+            '*.email'        => 'Informe um email válido!'
         ];
     }
 
