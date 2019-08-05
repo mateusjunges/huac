@@ -52,6 +52,7 @@
                                v-model="passwordConfirmation"
                                :class="passwordConfirmationClass"
                                name=" password_confirmation"
+                               placeholder="Confirme sua senha!"
                                class="form-control"
                                id="password-confirmation">
                         <small class="text-danger">{{ this.passwordConfirmationErrors }}</small>
@@ -80,6 +81,8 @@
                 passwordErrors: '',
                 passwordConfirmation: '',
                 passwordConfirmationErrors: '',
+
+                validated: true,
             }
         },
         methods: {
@@ -91,15 +94,37 @@
             },
 
             usernameClass() {
-
+                axios.get('/api/validate-username')
             },
 
             passwordClass() {
-
+                if (this.password.length < 6) {
+                    this.validated = false;
+                    this.passwordErrors = "Informe pelo menos 6 caracteres!";
+                    return 'validation-error';
+                } else {
+                    if (this.password !== this.passwordConfirmation) {
+                        this.validated = false;
+                        this.passwordErrors = "As senhas não coincidem!";
+                        return 'validation-error';
+                    } else {
+                        this.validated = true;
+                        this.passwordErrors = "";
+                        return 'validated';
+                    }
+                }
             },
 
             passwordConfirmationClass() {
-
+                if (this.password !== this.passwordConfirmation) {
+                    this.validated = false;
+                    this.passwordConfirmationErrors = "As senhas não coincidem!";
+                    return 'validation-error';
+                } else {
+                    this.validated = true;
+                    this.passwordConfirmationErrors = "";
+                    return 'validated';
+                }
             },
 
             emailClass() {

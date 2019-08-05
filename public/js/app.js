@@ -1761,6 +1761,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CreateUsersComponent",
   props: {},
@@ -1775,7 +1776,8 @@ __webpack_require__.r(__webpack_exports__);
       password: '',
       passwordErrors: '',
       passwordConfirmation: '',
-      passwordConfirmationErrors: ''
+      passwordConfirmationErrors: '',
+      validated: true
     };
   },
   methods: {},
@@ -1783,9 +1785,37 @@ __webpack_require__.r(__webpack_exports__);
     nameClass: function nameClass() {
       return 'validated';
     },
-    usernameClass: function usernameClass() {},
-    passwordClass: function passwordClass() {},
-    passwordConfirmationClass: function passwordConfirmationClass() {},
+    usernameClass: function usernameClass() {
+      axios.get('/api/validate-username');
+    },
+    passwordClass: function passwordClass() {
+      if (this.password.length < 6) {
+        this.validated = false;
+        this.passwordErrors = "Informe pelo menos 6 caracteres!";
+        return 'validation-error';
+      } else {
+        if (this.password !== this.passwordConfirmation) {
+          this.validated = false;
+          this.passwordErrors = "As senhas não coincidem!";
+          return 'validation-error';
+        } else {
+          this.validated = true;
+          this.passwordErrors = "";
+          return 'validated';
+        }
+      }
+    },
+    passwordConfirmationClass: function passwordConfirmationClass() {
+      if (this.password !== this.passwordConfirmation) {
+        this.validated = false;
+        this.passwordConfirmationErrors = "As senhas não coincidem!";
+        return 'validation-error';
+      } else {
+        this.validated = true;
+        this.passwordConfirmationErrors = "";
+        return 'validated';
+      }
+    },
     emailClass: function emailClass() {}
   }
 });
@@ -39832,6 +39862,7 @@ var render = function() {
               attrs: {
                 type: "password",
                 name: " password_confirmation",
+                placeholder: "Confirme sua senha!",
                 id: "password-confirmation"
               },
               domProps: { value: _vm.passwordConfirmation },
