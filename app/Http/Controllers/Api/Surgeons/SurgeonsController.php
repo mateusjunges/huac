@@ -4,7 +4,6 @@ namespace HUAC\Http\Controllers\Api\Surgeons;
 
 use HUAC\Http\Resources\SurgeonsResource;
 use HUAC\Models\Surgeon;
-use Illuminate\Http\Request;
 
 class SurgeonsController
 {
