@@ -44,12 +44,14 @@
                     <td>{{ $group->slug }}</td>
                     @can('groups.view-permissions')
                         <td>
-                            <button class="btn btn-success btn-sm view-group-permissions"
-                                    data-toggle="tooltip"
-                                    title="Ver as permissões deste grupo"
-                                    data-placement="top">
-                                <i class="fa fa-eye"></i>
-                            </button>
+                            <a href="{{ route('groups.permissions', $group->id) }}">
+                                <button class="btn btn-success btn-sm view-group-permissions"
+                                        data-toggle="tooltip"
+                                        title="Ver as permissões deste grupo"
+                                        data-placement="top">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                            </a>
                         </td>
                     @endcan
                     @can('groups.assign-user')

@@ -21,5 +21,5 @@ Route::group(['middleware' => 'auth'], function (){
     Route::resource('surgeries', SurgeryController::class);
     Route::resource('users', UsersController::class);
     Route::resource('groups', GroupsController::class);
-    Route::get('groups/{group}/permissions', [GroupsPermissionsController::class, 'index']);
+    Route::get('groups/{group}/permissions', [GroupsPermissionsController::class, 'index'])->name('groups.permissions');
 });
