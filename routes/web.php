@@ -1,5 +1,6 @@
 <?php
 
+use HUAC\Http\Controllers\ACL\GroupsController;
 use HUAC\Http\Controllers\ACL\UsersController;
 use HUAC\Http\Controllers\Surgery\SurgeryController;
 use HUAC\Http\Controllers\HomeController;
@@ -18,4 +19,5 @@ Route::get('home', [HomeController::class, 'index'])->name('home');
 Route::group(['middleware' => 'auth'], function (){
     Route::resource('surgeries', SurgeryController::class);
     Route::resource('users', UsersController::class);
+    Route::resource('groups', GroupsController::class);
 });

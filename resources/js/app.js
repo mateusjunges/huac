@@ -14,7 +14,7 @@ dotenv.config();
 
 Vue.component('create-surgery', require('@components/CreateSurgeryComponent.vue').default);
 Vue.component('create-users', require('@components/ACL/CreateUsersComponent.vue').default);
-
+Vue.component('create-groups', require('@components/ACL/CreateGroupsComponent.vue').default);
 
 Vue.component('passport-clients', require('@passport/Clients.vue').default);
 Vue.component('passport-authorized-clients', require('@passport/AuthorizedClients.vue').default);

@@ -24,7 +24,7 @@ class GroupsController extends Controller
      */
     public function create()
     {
-        //
+        return view('ACL.groups.create');
     }
 
     /**

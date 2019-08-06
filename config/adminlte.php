@@ -135,6 +135,16 @@ return [
                     'route' => 'users.create'
                 ],
             ]
+        ],
+        [
+            'icon' => 'group',
+            'text' => 'Grupos',
+            'submenu' => [
+                [
+                    'text' => 'Novo grupo',
+                    'route' => 'groups.create'
+                ]
+            ]
         ]
     ],
 
