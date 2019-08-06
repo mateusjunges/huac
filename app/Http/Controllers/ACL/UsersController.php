@@ -2,9 +2,11 @@
 
 namespace HUAC\Http\Controllers\ACL;
 
+use HUAC\Http\Requests\UsersRequest;
 use HUAC\Models\User;
 use Illuminate\Http\Request;
 use HUAC\Http\Controllers\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class UsersController extends Controller
 {
@@ -31,12 +33,19 @@ class UsersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  UsersRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UsersRequest $request)
     {
-        //
+        $user = User::create($request->all());
+        $message = array(
+            'title' => trans('huac.success'),
+            'text'  => trans('huac.user_saved_successfully'),
+            'type'  => 'success',
+        );
+        session()->flash('message', $message);
+        return redirect()->route('users.index');
     }
 
     /**

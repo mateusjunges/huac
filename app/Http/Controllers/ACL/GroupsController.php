@@ -4,6 +4,7 @@ namespace HUAC\Http\Controllers\ACL;
 
 use Illuminate\Http\Request;
 use HUAC\Http\Controllers\Controller;
+use Junges\ACL\Http\Models\Permission;
 
 class GroupsController extends Controller
 {
@@ -24,7 +25,10 @@ class GroupsController extends Controller
      */
     public function create()
     {
-        return view('ACL.groups.create');
+        $permissions = Permission::all();
+        return view('ACL.groups.create')->with([
+            'permissions' => $permissions
+        ]);
     }
 
     /**

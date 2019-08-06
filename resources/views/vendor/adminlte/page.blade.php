@@ -128,6 +128,12 @@
 
             <!-- Main content -->
             <section class="content">
+                @if(session('message') != null)
+                    <div id="w3" class="callout callout-{{session('message')['type']}}">
+                        <h4>{{ session('message')['title'] }}</h4>
+                        <p>{{ session('message')['text'] }}</p>
+                    </div>
+                @endif
 
                 @yield('content')
 
