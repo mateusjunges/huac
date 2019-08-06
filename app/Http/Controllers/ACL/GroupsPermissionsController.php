@@ -4,6 +4,8 @@ namespace HUAC\Http\Controllers\ACL;
 
 use Illuminate\Http\Request;
 use Junges\ACL\Http\Models\Group;
+use Junges\ACL\Http\Models\Permission;
+use Symfony\Component\HttpFoundation\Response;
 
 class GroupsPermissionsController
 {
@@ -19,6 +21,19 @@ class GroupsPermissionsController
         return view('ACL.groups.permissions.group-permissions')->with([
             'permissions' => $permissions,
             'group'       => $group
+        ]);
+    }
+
+    public function revoke(Request $request)
+    {
+        $group = Group::find($request->input('group_id'));
+
+        $group->revokePermissions($request->input('permissions'));
+
+        return response()->json([
+            'code'  => Response::HTTP_OK,
+            'text'  => trans('huac.permission_revoked_successfully'),
+            'title' => trans('')
         ]);
     }
 }
