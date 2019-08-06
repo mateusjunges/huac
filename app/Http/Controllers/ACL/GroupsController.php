@@ -17,7 +17,10 @@ class GroupsController extends Controller
      */
     public function index()
     {
-        return view('ACL.groups.index');
+        $groups = Group::all();
+        return view('ACL.groups.index')->with([
+            'groups' => $groups
+        ]);
     }
 
     /**
