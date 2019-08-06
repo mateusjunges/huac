@@ -1,6 +1,11 @@
 @extends('adminlte::page')
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/ACL/users/index.css') }}">
+    <style>
+        table#users {
+            width: 100% !important;
+        }
+    </style>
 @endsection
 
 @section('js')

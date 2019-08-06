@@ -16,7 +16,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-8 col-md-pull-2 col-md-push-2">
+    <div class="col-md-10 col-md-pull-1 col-md-push-1">
         <table class="table table-responsive table-hover" id="groups">
             <thead>
                 <tr>
@@ -34,6 +34,7 @@
                     @can('groups.delete')
                         <th>Remover</th>
                     @endcan
+                    <th>Descrição</th>
                 </tr>
             </thead>
             <tbody>
@@ -43,28 +44,38 @@
                     <td>{{ $group->slug }}</td>
                     @can('groups.view-permissions')
                         <td>
-                            <button class="btn btn-success btn-sm view-group-permissions">
-                                <i class="fa fa-check-circle"></i>
+                            <button class="btn btn-success btn-sm view-group-permissions"
+                                    data-toggle="tooltip"
+                                    title="Ver as permissões deste grupo"
+                                    data-placement="top">
+                                <i class="fa fa-eye"></i>
                             </button>
                         </td>
                     @endcan
                     @can('groups.assign-user')
                         <td>
                             <button class="btn btn-warning btn-sm assign-user-to-group"
+                                    value="{{ csrf_token() }}"
                                     data-type="grupo"
                                     data-gender="o"
                                     data-route="groups"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="Atribuir um usuário a este grupo"
                                     data-name="{{ $group->name }}"
                                     data-id="{{ $group->id }}"
                                     id="group{{$group->id}}">
-                                <i class="fa fa-eye"></i>
+                                <i class="fa fa-check-circle"></i>
                             </button>
                         </td>
                     @endcan
                     @can('groups.edit')
                         <td>
                             <a href="{{ route('groups.edit', $group->id) }}">
-                                <button class="btn btn-primary btn-sm edit-group">
+                                <button class="btn btn-primary btn-sm edit-group"
+                                        data-placement="top"
+                                        title="Editar este grupo"
+                                        data-toggle="tooltip">
                                     <i class="fa fa-edit"></i>
                                 </button>
                             </a>
@@ -73,6 +84,9 @@
                     @can('groups.delete')
                         <td>
                             <button class="btn btn-danger btn-sm delete"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="Remover este grupo"
                                     value="{{ csrf_token() }}"
                                     data-route="groups"
                                     data-gender="o"
@@ -83,6 +97,7 @@
                             </button>
                         </td>
                     @endcan
+                    <td>{{ $group->description != null ? $group->description : 'Não informado.' }}</td>
                 </tr>
             @endforeach
             </tbody>
