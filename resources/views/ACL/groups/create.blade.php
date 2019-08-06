@@ -7,7 +7,7 @@
 
 @section('content')
 <div class="row" id="app">
-    <div class="col-md-12">
+    <div class="col-md-8 col-md-pull-2 col-md-push-2">
         <h1 class="text-center">Cadastro de grupos de permissões</h1>
         <form action="" method="">
             <create-groups></create-groups>
