@@ -1,7 +1,6 @@
 <?php
 
 use HUAC\Http\Controllers\Api\ACL\Permissions\PermissionsController;
-use HUAC\Http\Controllers\Api\ACL\Users\UsersController;
 use HUAC\Http\Controllers\Api\ACL\Users\UsersDataController;
 use HUAC\Http\Controllers\Api\ACL\Users\ValidateEmailController;
 use HUAC\Http\Controllers\Api\ACL\Users\ValidateUsernameController;
@@ -33,8 +32,6 @@ Route::middleware(['auth:api'])->group(function () {
 
     Route::get('users', UsersDataController::class)->name('api.users.data');
     Route::get('users/columns', UsersColumnsController::class)->name('api.users.columns');
-
-    Route::post('users', [UsersController::class, 'store'])->name('api.users.store');
 
     Route::get('permissions', PermissionsController::class)->name('api.permissions.index');
 });
