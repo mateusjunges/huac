@@ -2,8 +2,6 @@
 
 use HUAC\Http\Controllers\Api\ACL\Permissions\PermissionsController;
 use HUAC\Http\Controllers\Api\ACL\Users\UsersDataController;
-use HUAC\Http\Controllers\Api\ACL\Users\ValidateEmailController;
-use HUAC\Http\Controllers\Api\ACL\Users\ValidateUsernameController;
 use HUAC\Http\Controllers\Api\SurgeryClassifications\SurgeryClassificationsController;
 use Illuminate\Http\Request;
 use HUAC\Http\Controllers\Api\Procedures\ProceduresController;

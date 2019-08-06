@@ -2,8 +2,10 @@
 
 namespace HUAC\Http\Controllers\ACL;
 
+use HUAC\Http\Requests\GroupRequest;
 use Illuminate\Http\Request;
 use HUAC\Http\Controllers\Controller;
+use Junges\ACL\Http\Models\Group;
 use Junges\ACL\Http\Models\Permission;
 
 class GroupsController extends Controller
@@ -15,7 +17,7 @@ class GroupsController extends Controller
      */
     public function index()
     {
-        //
+        return view('ACL.groups.index');
     }
 
     /**
@@ -34,21 +36,31 @@ class GroupsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  GroupRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(GroupRequest $request)
     {
-        //
+        Group::create($request->all());
+
+        $message = array(
+            'type'  => 'success',
+            'title' => trans('huac.success'),
+            'text'  => trans('huac.group_created_successfully'),
+        );
+
+        session()->flash('message', $message);
+
+        return redirect()->route('groups.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Group $group
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Group $group)
     {
         //
     }
@@ -56,10 +68,10 @@ class GroupsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Group $group
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($group)
     {
         //
     }
@@ -68,10 +80,10 @@ class GroupsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Group $group
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Group $group)
     {
         //
     }
@@ -79,10 +91,10 @@ class GroupsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Group $group
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Group $group)
     {
         //
     }

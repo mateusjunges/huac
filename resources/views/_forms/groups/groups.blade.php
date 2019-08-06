@@ -20,7 +20,7 @@
             <input type="text"
                    id="slug"
                    data-toggle="tooltip"
-                   placeholder="Informe o slug do grupo (ou deixe em branco para gerar automaticamente)"
+                   placeholder="Informe o slug do grupo"
                    name="slug"
                    value="{{ isset($group) ? $group->slug : old('slug') }}"
                    class="form-control @error('slug') validation-error @enderror">
