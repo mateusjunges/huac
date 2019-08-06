@@ -9,7 +9,7 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('js/users/index.js') }}"></script>
+    <script src="{{ asset('js/ACL/users/index.js') }}"></script>
 @endsection
 
 @section('content')

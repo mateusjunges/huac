@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use HUAC\Http\Controllers\Controller;
 use Junges\ACL\Http\Models\Group;
 use Junges\ACL\Http\Models\Permission;
+use Symfony\Component\HttpFoundation\Response;
 
 class GroupsController extends Controller
 {
@@ -44,7 +45,11 @@ class GroupsController extends Controller
      */
     public function store(GroupRequest $request)
     {
-        Group::create($request->all());
+        $group = Group::create($request->except('permissions'));
+
+        collect($request->input('permissions'))->map(function ($permission) use ($group) {
+            $group->assignPermissions($permission);
+        });
 
         $message = array(
             'type'  => 'success',
@@ -99,6 +104,24 @@ class GroupsController extends Controller
      */
     public function destroy(Group $group)
     {
-        //
+        try{
+            $group->delete();
+
+            return response()->json([
+                'code' => Response::HTTP_OK,
+                'icon' => 'success',
+                'title' => trans('huac.success'),
+                'text'  => trans('huac.group_removed_successfully'),
+                'timer' => 5000,
+            ]);
+        }catch (\Exception $exception) {
+            return response()->json([
+                'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'icon' => 'success',
+                'title' => trans('huac.error'),
+                'text'  => trans('huac.somenthing_went_wrong'),
+                'timer' => 5000,
+            ]);
+        }
     }
 }

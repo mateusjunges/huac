@@ -11,7 +11,7 @@
 @endsection
 @section('js')
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/groups/create.js') }}"></script>
+    <script src="{{ asset('js/ACL/groups/create.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
 @endsection
 

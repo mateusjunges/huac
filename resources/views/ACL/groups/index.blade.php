@@ -1,6 +1,7 @@
 @extends('adminlte::page')
 @section('js')
-    <script src="{{ asset('js/groups/index.js') }}"></script>
+    <script src="{{ asset('js/ACL/groups/index.js') }}"></script>
+    <script src="{{ asset('js/CRUD/crud.js') }}"></script>
 @endsection
 @section('css')
     <style>
