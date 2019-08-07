@@ -3,6 +3,7 @@
     <script src="{{ asset('js/ACL/groups/index.js') }}"></script>
     <script src="{{ asset('js/CRUD/crud.js') }}"></script>
     <script src="{{ asset('js/ACL/groups/permissions/assign-permissions.js') }}"></script>
+    <script src="{{ asset('js/ACL/groups/users/assign-to-user.js') }}"></script>
 @endsection
 @section('css')
     <style>
@@ -138,4 +139,5 @@
     </div>
 </div>
     @include('_modals.groups.assign-permissions')
+    @include('_modals.groups.attach-user')
 @endsection

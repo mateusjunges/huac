@@ -8,7 +8,7 @@ $(document).ready(function () {
      * Load the form, allowing group permission assignment.
      */
     dataTable.on('click', 'button.assign-permission', function () {
-        let user_id = $(this).data('id');
+        let group_id = $(this).data('id');
 
         $.ajax({
            url: '/api/permissions',
@@ -34,7 +34,7 @@ $(document).ready(function () {
                select_groups.html("");
                for (let i = 0; i < response.data.length; i++)
                    select_groups.append(new Option(response.data[i].name, response.data[i].id));
-               select_groups.val(user_id);
+               select_groups.val(group_id);
            } 
         });
         $("#assign-permissions-modal").modal('show');

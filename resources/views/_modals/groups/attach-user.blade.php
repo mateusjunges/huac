@@ -1,9 +1,9 @@
-<div class="modal fade" tabindex="-1" role="dialog" id="assign-permissions-modal">
+<div class="modal fade" tabindex="-1" role="dialog" id="assign-users-modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Adiconar permissões ao grupo <span id="group-name"></span></h4>
+                <h4 class="modal-title">Adiconar grupo a usuário<span id="user-name"></span></h4>
             </div>
             <div class="modal-body">
                 <form>
@@ -12,17 +12,18 @@
                         <select name="group_id"
                                 class="form-control"
                                 disabled
-                                id="select-groups">
+                                id="select-groups-1">
                         </select>
                         <small id="error-group-id"></small>
                     </div>
                     <div class="form-group">
-                        <label for="permissions">Selecione as permissões:</label>
-                        <select name="permissions[]"
+                        <label for="permissions">Selecione os usuários:</label>
+                        <select name="users[]"
                                 multiple="multiple"
                                 style="width: 100%"
-                                id="permissions"
+                                id="users"
                                 class="form-control"></select>
+                        <small id="error-users"></small>
                     </div>
                 </form>
             </div>
@@ -32,7 +33,7 @@
                         data-dismiss="modal">Fechar</button>
                 <button type="button"
                         class="btn btn-primary"
-                        id="store-group-permissions">Adicionar permissões</button>
+                        id="store-group-permissions">Adicionar grupos</button>
             </div>
         </div>
     </div>
