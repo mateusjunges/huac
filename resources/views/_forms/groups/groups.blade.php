@@ -34,10 +34,10 @@
                     multiple="multiple"
                     id="permissions"
                     class="form-control @error('permissions') validation-error @enderror">
-                @if(isset($groupPermissions))
+                @if(isset($group))
                     @foreach($permissions as $permission)
                         <option value="{{ $permission->id }}"
-                            @if(in_array($permission->id, $groupPermissions))
+                            @if($group->hasPermission($permission))
                                 selected
                             @endif
                             @if(!is_null(old('permissions')))

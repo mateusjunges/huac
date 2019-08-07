@@ -5,6 +5,7 @@ namespace HUAC\Http\Controllers\ACL;
 use HUAC\Http\Requests\GroupRequest;
 use Illuminate\Http\Request;
 use HUAC\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Junges\ACL\Http\Models\Group;
 use Junges\ACL\Http\Models\Permission;
 use Symfony\Component\HttpFoundation\Response;
@@ -82,10 +83,11 @@ class GroupsController extends Controller
     public function edit(Group $group)
     {
         $groupPermissions = $group->permissions()->get();
-
+        $permissions = Permission::all();
         return view('ACL.groups.edit')->with([
             'group' => $group,
-            'permissions' => $groupPermissions
+            'permissions' => $permissions,
+            'groupPermission' => $groupPermissions
         ]);
     }
 
@@ -98,13 +100,15 @@ class GroupsController extends Controller
      */
     public function update(GroupRequest $request, Group $group)
     {
+        $group = $group->syncPermissions($request->permissions);
 
-        $group->syncPermissions($request->input('permissions'));
+        $message = array(
+            'title' => trans('huac.success'),
+            'text'  => trans('huac.group_updated_successfully'),
+            'type'  => 'success'
+        );
+        session()->flash('message', $message);
+        return redirect()->route('groups.index');
 
-//        $group = $group->update($request->except('permissions'));
-//        collect($request->input('permissions'))
-//            ->map(function ($permission) use ($group) {
-//               $group->assignPermissions($permission);
-//            });
     }
 }
