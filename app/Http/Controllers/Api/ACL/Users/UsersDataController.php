@@ -63,7 +63,7 @@ class UsersDataController
             foreach ($users as $user){
                 $edit = route('users.edit', $user->id);
                 $userGroups = '';
-                $userPermissions = 'afasdfadsfdsaf  ';
+                $userPermissions = route('users.permissions', $user->id);
                 $token = csrf_token();
 
                 $nestedData['Nome'] = $user->name;

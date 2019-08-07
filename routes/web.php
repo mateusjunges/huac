@@ -2,6 +2,7 @@
 
 use HUAC\Http\Controllers\ACL\GroupsUsersController;
 use HUAC\Http\Controllers\ACL\GroupsController;
+use HUAC\Http\Controllers\ACL\UserPermissionsController;
 use HUAC\Http\Controllers\ACL\UsersController;
 use HUAC\Http\Controllers\Surgery\SurgeryController;
 use HUAC\Http\Controllers\HomeController;
@@ -20,7 +21,10 @@ Route::get('home', [HomeController::class, 'index'])->name('home');
 /* Routes that needs authentication */
 Route::group(['middleware' => 'auth'], function (){
     Route::resource('surgeries', SurgeryController::class);
+
+    Route::get('users/{user}/permissions', [UserPermissionsController::class, 'index'])->name('users.permissions');
     Route::resource('users', UsersController::class);
+
     Route::get('groups/{group}/users', [GroupsUsersController::class, 'users'])->name('groups.users');
     Route::resource('groups', GroupsController::class)->except([
         'destroy'
