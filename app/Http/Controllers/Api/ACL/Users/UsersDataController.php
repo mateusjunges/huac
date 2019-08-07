@@ -62,15 +62,15 @@ class UsersDataController
         if(!empty($users)){
             foreach ($users as $user){
                 $edit = route('users.edit', $user->id);
-                $userGroups = '';//route('groups.usergroups', $user->id);
-                $userPermissions = '';//route('permissoes.userPermissions', $user->id);
+                $userGroups = '';
+                $userPermissions = 'afasdfadsfdsaf  ';
                 $token = csrf_token();
 
                 $nestedData['Nome'] = $user->name;
                 $nestedData['Username'] = $user->username;
                 $nestedData['Email'] = $user->email;
                 if (Gate::allows('users.edit'))
-                    $nestedData['Editar'] = "&emsp;<a href='{$edit}'>
+                    $nestedData['Editar'] = "<a href='{$edit}'>
                                                             <button class='btn btn-primary btn-sm'>
                                                                 <i class='fa fa-edit'></i>
                                                             </button>
@@ -90,7 +90,7 @@ class UsersDataController
                                                                   </button>
                                                               </a>";
                 if (Gate::allows('users.view-groups'))
-                    $nestedData['Ver grupos'] = "&emsp;<a href='{$userGroups}'>
+                    $nestedData['Ver grupos'] = "<a href='{$userGroups}'>
                                                                         <button class='btn btn-sm btn-info viewGroups'
                                                                                 data-id='{$user->id}' value='{$token}'
                                                                                 type='button' id='viewGroups{$user->id}'>
