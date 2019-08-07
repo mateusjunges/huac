@@ -1,5 +1,6 @@
 <?php
 
+use HUAC\Http\Controllers\Api\ACL\Groups\GroupsUsersController;
 use HUAC\Http\Controllers\Api\ACL\Groups\GroupsController;
 use HUAC\Http\Controllers\Api\ACL\Groups\GroupsPermissionsController;
 use HUAC\Http\Controllers\Api\ACL\Permissions\PermissionsController;
@@ -20,6 +21,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('groups', [GroupsController::class, 'all'])->name('api.groups.all');
     Route::post('groups/{group}/assign-permissions', [GroupsPermissionsController::class, 'attach']);
     Route::delete('groups/permissions', [GroupsPermissionsController::class, 'revoke'])->name('api.delete.groups.permissions');
+    Route::delete('groups/users', [GroupsUsersController::class, 'remove'])->name('groups.users.remove');
     Route::delete('groups/{group}', [GroupsController::class, 'destroy'])->name('api.groups.delete');
 
     Route::get('permissions', PermissionsController::class);

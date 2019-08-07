@@ -79,9 +79,14 @@ class GroupsController extends Controller
      * @param  Group $group
      * @return \Illuminate\Http\Response
      */
-    public function edit($group)
+    public function edit(Group $group)
     {
-        //
+        $groupPermissions = $group->permissions()->get();
+
+        return view('ACL.groups.edit')->with([
+            'group' => $group,
+            'permissions' => $groupPermissions
+        ]);
     }
 
     /**
@@ -91,8 +96,15 @@ class GroupsController extends Controller
      * @param  Group $group
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Group $group)
+    public function update(GroupRequest $request, Group $group)
     {
-        //
+
+        $group->syncPermissions($request->input('permissions'));
+
+//        $group = $group->update($request->except('permissions'));
+//        collect($request->input('permissions'))
+//            ->map(function ($permission) use ($group) {
+//               $group->assignPermissions($permission);
+//            });
     }
 }

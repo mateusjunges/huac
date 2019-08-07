@@ -30,6 +30,9 @@
                     @can('groups.assign-user')
                         <th>Atribuir a usuário</th>
                     @endcan
+                    @can('groups.view-users')
+                        <th>Ver usuários</th>
+                    @endcan
                     @can('groups.assign-permission')
                         <th>Atribuir permissão</th>
                     @endcan
@@ -74,6 +77,18 @@
                                     id="group{{$group->id}}">
                                 <i class="fa fa-check-circle"></i>
                             </button>
+                        </td>
+                    @endcan
+                    @can('groups.view-users')
+                        <td>
+                            <a href="{{ route('groups.users', $group->id) }}">
+                                <button class="btn btn-sm"
+                                        data-placement="top"
+                                        title="Ver usuários pertencentes ao grupo"
+                                        data-toggle="tooltip">
+                                    <i class="fa fa-group"></i>
+                                </button>
+                            </a>
                         </td>
                     @endcan
                     @can('groups.assign-permission')
