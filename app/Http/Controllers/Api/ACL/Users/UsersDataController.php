@@ -62,7 +62,7 @@ class UsersDataController
         if(!empty($users)){
             foreach ($users as $user){
                 $edit = route('users.edit', $user->id);
-                $userGroups = '';
+                $userGroups = route('users.groups', $user->id);
                 $userPermissions = route('users.permissions', $user->id);
                 $token = csrf_token();
 

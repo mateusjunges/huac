@@ -2,6 +2,7 @@
 
 use HUAC\Http\Controllers\ACL\GroupsUsersController;
 use HUAC\Http\Controllers\ACL\GroupsController;
+use HUAC\Http\Controllers\ACL\UserGroupsController;
 use HUAC\Http\Controllers\ACL\UserPermissionsController;
 use HUAC\Http\Controllers\ACL\UsersController;
 use HUAC\Http\Controllers\Surgery\SurgeryController;
@@ -23,6 +24,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::resource('surgeries', SurgeryController::class);
 
     Route::get('users/{user}/permissions', [UserPermissionsController::class, 'index'])->name('users.permissions');
+    Route::get('users/{user}/groups', [UserGroupsController::class, 'index'])->name('users.groups');
     Route::resource('users', UsersController::class);
 
     Route::get('groups/{group}/users', [GroupsUsersController::class, 'users'])->name('groups.users');
