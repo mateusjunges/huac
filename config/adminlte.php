@@ -143,6 +143,10 @@ return [
                 [
                     'text' => 'Novo grupo',
                     'route' => 'groups.create'
+                ],
+                [
+                    'text' => 'Listar grupos',
+                    'route' => 'groups.index'
                 ]
             ]
         ]

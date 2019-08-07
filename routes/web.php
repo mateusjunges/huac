@@ -20,6 +20,8 @@ Route::get('home', [HomeController::class, 'index'])->name('home');
 Route::group(['middleware' => 'auth'], function (){
     Route::resource('surgeries', SurgeryController::class);
     Route::resource('users', UsersController::class);
-    Route::resource('groups', GroupsController::class);
+    Route::resource('groups', GroupsController::class)->except([
+        'destroy'
+    ]);
     Route::get('groups/{group}/permissions', [GroupsPermissionsController::class, 'index'])->name('groups.permissions');
 });

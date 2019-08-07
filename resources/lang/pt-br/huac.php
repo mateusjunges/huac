@@ -8,4 +8,6 @@ return [
     'something_went_wrong'            => 'Algo deu errado :(',
     'error'                           => 'Ops...',
     'group_removed_successfully'      => 'Grupo removido com sucesso!',
+    'group_permission_removed_successfully' => 'Permissão removida com sucesso!',
+    'permissions_successfully_attached' => 'Permissões atribuídas com sucesso!',
 ];

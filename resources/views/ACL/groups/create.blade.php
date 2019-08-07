@@ -6,13 +6,9 @@
         border: solid 1px #ff0000;
     }
     </style>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css" rel="stylesheet" />
-
 @endsection
 @section('js')
-    <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/ACL/groups/create.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
 @endsection
 
 @section('content')
