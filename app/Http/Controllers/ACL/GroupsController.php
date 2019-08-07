@@ -3,12 +3,9 @@
 namespace HUAC\Http\Controllers\ACL;
 
 use HUAC\Http\Requests\GroupRequest;
-use Illuminate\Http\Request;
 use HUAC\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Junges\ACL\Http\Models\Group;
 use Junges\ACL\Http\Models\Permission;
-use Symfony\Component\HttpFoundation\Response;
 
 class GroupsController extends Controller
 {
