@@ -37,4 +37,29 @@ $(document).ready(function () {
 
         $("#assign-users-modal").modal('show');
     });
+
+    $("#store-group-users").click(function () {
+       let select_groups = $("#select-groups-1");
+       let users = $("#users");
+       let group = select_groups.val();
+       let selected_users = users.val();
+
+       $.ajax({
+           url: `/api/groups/${group}/attach-users`,
+           headers: headers,
+           method: 'post',
+           data: {
+               'users': selected_users,
+           },
+           success: function (response) {
+               $("#assign-users-modal").modal('hide');
+               swal({
+                  icon: response.icon,
+                  title: response.title,
+                  text: response.text,
+                  timer: response.timer,
+               });
+           }
+       });
+    });
 });

@@ -33,7 +33,7 @@
                         data-dismiss="modal">Fechar</button>
                 <button type="button"
                         class="btn btn-primary"
-                        id="store-group-permissions">Adicionar grupos</button>
+                        id="store-group-users">Adicionar usuários ao grupo</button>
             </div>
         </div>
     </div>

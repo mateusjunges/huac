@@ -37,7 +37,7 @@ class GroupsUsersController
      */
     public function attach(Request $request, Group $group)
     {
-        $group = $group->assignPermissions($request->input('permissions'));
+        $group = $group->assignUser($request->input('users'));
 
         return response()->json([
             'code'  => Response::HTTP_OK,
