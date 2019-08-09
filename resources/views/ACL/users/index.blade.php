@@ -13,6 +13,7 @@
 
 @section('js')
     <script src="{{ asset('js/ACL/users/index.js') }}"></script>
+    <script src="{{ asset('js/ACL/users/permissions/assign-permissions.js') }}"></script>
 @endsection
 
 @section('content')
@@ -60,4 +61,5 @@
             </table>
         </div>
     </div>
+    @include('_modals.users.assign-permission')
 @endsection
