@@ -1,6 +1,7 @@
 @extends('adminlte::page')
 @section('js')
     <script src="{{ asset('js/ACL/users/groups/index.js') }}"></script>
+    <script src="{{ asset('js/ACL/users/groups/remove-group.js') }}"></script>
 @endsection
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/ACL/users/groups/user-groups.css') }}">
@@ -34,13 +35,14 @@
                             <td>{{ $group->slug }}</td>
                             @can('users.revoke-group')
                                 <td>
-                                    <button class="btn btn-danger btn-sm"
+                                    <button class="btn btn-danger btn-sm delete"
                                             data-placement="top"
                                             data-route=""
                                             data-id="{{ $group->id }}"
                                             data-name="{{ $group->name }}"
                                             data-type="grupo"
                                             data-gender="o"
+                                            data-user_id="{{ $user->id }}"
                                             title="Remover grupo do usuário {{ $user->name }}"
                                             data-toggle="tooltip">
                                         <i class="fa fa-trash"></i>

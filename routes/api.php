@@ -23,6 +23,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::delete('users/{user}/permissions', [UsersPermissionsController::class, 'revoke'])->name('api.users.permissions.revoke');
     Route::post('users/{user}/assign-permissions', [UsersPermissionsController::class, 'attach'])->name('api.users.permissions.assign');
     Route::post('users/{user}/assign-groups', [UserGroupsController::class, 'attach'])->name('api.users.groups.attach-groups');
+    Route::delete('users/{user}/remove-group', [UserGroupsController::class, 'revoke'])->name('api.users.groups.remove-group');
 
     Route::get('groups', [GroupsController::class, 'all'])->name('api.groups.all');
     Route::post('groups/{group}/assign-permissions', [GroupsPermissionsController::class, 'attach']);
