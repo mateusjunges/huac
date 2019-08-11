@@ -82,6 +82,10 @@ class UsersDataController
                     $nestedData['Remover'] = "&emsp;<button class='btn btn-danger btn-sm delete'
                                                                 data-placement='top'
                                                                 data-toggle='tooltip'
+                                                                data-route='users'
+                                                                data-type='usuário'
+                                                                data-name='{$user->name}'
+                                                                data-gender='o'
                                                                 title='Remover este usuário' 
                                                                 name='delete' data-id='{$user->id}'
                                                                 type='button' id='delete{$user->id}'>

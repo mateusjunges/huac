@@ -15,6 +15,7 @@
     <script src="{{ asset('js/ACL/users/index.js') }}"></script>
     <script src="{{ asset('js/ACL/users/permissions/assign-permissions.js') }}"></script>
     <script src="{{ asset('js/ACL/users/groups/assign-groups.js') }}"></script>
+    <script src="{{ asset('js/CRUD/crud.js') }}"></script>
 @endsection
 
 @section('content')

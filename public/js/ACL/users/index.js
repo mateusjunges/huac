@@ -51,5 +51,5 @@ $(document).ready(function () {
            },
        },
        columns: JSON.parse(columns),
-   })
+   });
 });

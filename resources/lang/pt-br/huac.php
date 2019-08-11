@@ -4,6 +4,7 @@ return [
     'success'                               => 'Sucesso!',
     'user_saved_successfully'               => 'Usuário salvo com sucesso!',
     'user_updated_successfully'             => 'Usuário atualizado com sucesso!',
+    'user_successfully_deleted'             => 'Usuário removido com sucesso!',
     'permission_revoked_successfully'       => 'Permissão removida com sucesso!',
     'something_went_wrong'                  => 'Algo deu errado :(',
     'error'                                 => 'Ops...',

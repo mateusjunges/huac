@@ -16,7 +16,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware(['auth:api'])->group(function () {
-    Route::get('users', UsersController::class);
+    Route::get('users', [UsersController::class, 'index']);
+    Route::delete('users/{user}', [UsersController::class, 'destroy'])->name('api.users.delete');
     Route::get('users/data', UsersDataController::class)->name('api.users.data');
     Route::get('users/columns', UsersColumnsController::class)->name('api.users.columns');
     Route::delete('users/{user}/permissions', [UsersPermissionsController::class, 'revoke'])->name('api.users.permissions.revoke');
