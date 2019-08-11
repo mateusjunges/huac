@@ -149,7 +149,7 @@ return [
                     'route' => 'groups.index'
                 ]
             ]
-        ]
+        ],
         [
             'icon' => 'door-open',
             'text' => 'Salas',
