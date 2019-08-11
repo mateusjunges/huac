@@ -26,7 +26,7 @@ class GroupRequest extends FormRequest
     {
         $id = 'NULL';
         if (Route::getCurrentRoute()->parameters() != null)
-            $id = Route::getCurrentRoute()->parameters()['group'];
+            $id = Route::getCurrentRoute()->parameters()['group']['id'];
 
         return [
             'name' => 'required|min:3|string',

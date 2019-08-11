@@ -62,21 +62,31 @@ class UsersDataController
         if(!empty($users)){
             foreach ($users as $user){
                 $edit = route('users.edit', $user->id);
-                $userGroups = '';//route('groups.usergroups', $user->id);
-                $userPermissions = '';//route('permissoes.userPermissions', $user->id);
+                $userGroups = route('users.groups', $user->id);
+                $userPermissions = route('users.permissions', $user->id);
                 $token = csrf_token();
 
                 $nestedData['Nome'] = $user->name;
                 $nestedData['Username'] = $user->username;
                 $nestedData['Email'] = $user->email;
                 if (Gate::allows('users.edit'))
-                    $nestedData['Editar'] = "&emsp;<a href='{$edit}'>
-                                                            <button class='btn btn-primary btn-sm'>
+                    $nestedData['Editar'] = "<a href='{$edit}'>
+                                                            <button class='btn btn-primary btn-sm' 
+                                                                    data-toggle='tooltip'
+                                                                    title='Editar usuário'
+                                                                    data-placement='top'>
                                                                 <i class='fa fa-edit'></i>
                                                             </button>
                                                        </a>";
                 if (Gate::allows('users.remove'))
-                    $nestedData['Remover'] = "&emsp;<button class='btn btn-danger btn-sm delete' 
+                    $nestedData['Remover'] = "&emsp;<button class='btn btn-danger btn-sm delete'
+                                                                data-placement='top'
+                                                                data-toggle='tooltip'
+                                                                data-route='users'
+                                                                data-type='usuário'
+                                                                data-name='{$user->name}'
+                                                                data-gender='o'
+                                                                title='Remover este usuário' 
                                                                 name='delete' data-id='{$user->id}'
                                                                 type='button' id='delete{$user->id}'>
                                                             <i class='fa fa-trash'></i>
@@ -84,27 +94,39 @@ class UsersDataController
                 if (Gate::allows('users.view-permissions'))
                     $nestedData['Ver Permissões'] = "&emsp;<a href='{$userPermissions}'>
                                                                   <button class='btn btn-success btn-sm viewPermissions'
+                                                                          data-toggle='tooltip'
+                                                                          data-placement='top'
+                                                                          title='Ver permissões do usuário'
                                                                           data-id='{$user->id}}' value='{$token}'
                                                                           type='button' id='showpermissions{$user->id}'>
                                                                           <i class='fa fa-check'></i>                                                                    
                                                                   </button>
                                                               </a>";
                 if (Gate::allows('users.view-groups'))
-                    $nestedData['Ver grupos'] = "&emsp;<a href='{$userGroups}'>
+                    $nestedData['Ver grupos'] = "<a href='{$userGroups}'>
                                                                         <button class='btn btn-sm btn-info viewGroups'
+                                                                                data-toggle='tooltip'
+                                                                                data-placement='top'
+                                                                                title='Ver os grupos que este usuário pertence'
                                                                                 data-id='{$user->id}' value='{$token}'
                                                                                 type='button' id='viewGroups{$user->id}'>
                                                                             <i class='fa fa-tags'></i>        
                                                                         </button>  
                                                                   </a>";
                 if (Gate::allows('user.assign-group'))
-                    $nestedData['Atribuir grupo'] = "&emsp;<button class='btn btn-sm btn-default assignGroup'
+                    $nestedData['Atribuir grupo'] = "&emsp;<button class='btn btn-sm btn-default assign-group'
+                                                                          data-toggle='tooltip'
+                                                                          data-placement='top'
+                                                                          title='Atribuir este usuário a um grupo'  
                                                                           data-id='{$user->id}' type='button'
                                                                           id='user{$user->id}'>
                                                                         <i class='fa fa-plus'></i>      
                                                                   </button>";
                 if (Gate::allows('users.assign-permission'))
                     $nestedData['Atribuir permissão'] = "<button class='btn btn-sm btn-default assignPermission'
+                                                                          data-placement='top'
+                                                                          data-toggle='tooltip'
+                                                                          title='Atribuir permissões a este usuário'  
                                                                           data-id='{$user->id}' type='button'
                                                                           id='user{$user->id}'>
                                                                         <i class='fa fa-plus'></i>      
