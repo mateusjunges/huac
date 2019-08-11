@@ -26,4 +26,22 @@ class UsersPermissionsController
             'icon'  => 'success',
         ], Response::HTTP_OK);
     }
+
+    /**
+     * @param User $user
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function attach(User $user, Request $request)
+    {
+        $user = $user->assignPermissions($request->input('permissions'));
+
+        return response()->json([
+            'code'  => Response::HTTP_OK,
+            'title' => trans('huac.success'),
+            'text'  => trans('huac.permissions_successfully_attached'),
+            'timer' => 5000,
+            'icon'  => 'success',
+        ], Response::HTTP_OK);
+    }
 }
