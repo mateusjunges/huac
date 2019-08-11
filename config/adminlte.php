@@ -150,6 +150,16 @@ return [
                 ]
             ]
         ]
+        [
+            'icon' => 'door-open',
+            'text' => 'Salas',
+            'submenu' => [
+                [
+                    'text' => 'Nova sala',
+                    'route' => 'rooms.create'
+                ]
+            ]
+        ]
     ],
 
     /*
