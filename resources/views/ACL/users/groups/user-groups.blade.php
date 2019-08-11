@@ -3,11 +3,7 @@
     <script src="{{ asset('js/ACL/users/groups/index.js') }}"></script>
 @endsection
 @section('css')
-    <style>
-        table#user-groups {
-            width: 100% !important;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/ACL/users/groups/user-groups.css') }}">
 @endsection
 @section('content')
     <div class="row">

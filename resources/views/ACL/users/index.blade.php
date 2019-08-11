@@ -14,6 +14,7 @@
 @section('js')
     <script src="{{ asset('js/ACL/users/index.js') }}"></script>
     <script src="{{ asset('js/ACL/users/permissions/assign-permissions.js') }}"></script>
+    <script src="{{ asset('js/ACL/users/groups/assign-groups.js') }}"></script>
 @endsection
 
 @section('content')
@@ -62,4 +63,5 @@
         </div>
     </div>
     @include('_modals.users.assign-permission')
+    @include('_modals.users.assign-groups')
 @endsection

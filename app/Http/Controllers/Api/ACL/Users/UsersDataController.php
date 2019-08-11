@@ -110,7 +110,7 @@ class UsersDataController
                                                                         </button>  
                                                                   </a>";
                 if (Gate::allows('user.assign-group'))
-                    $nestedData['Atribuir grupo'] = "&emsp;<button class='btn btn-sm btn-default assignGroup'
+                    $nestedData['Atribuir grupo'] = "&emsp;<button class='btn btn-sm btn-default assign-group'
                                                                           data-toggle='tooltip'
                                                                           data-placement='top'
                                                                           title='Atribuir este usuário a um grupo'  

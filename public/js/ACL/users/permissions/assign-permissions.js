@@ -1,10 +1,22 @@
 $(document).ready(function () {
 
+    /**
+     * Datatable for users list.
+     * @type {*|jQuery.fn.init|jQuery|HTMLElement}
+     */
     const dataTable = $(".dataTable");
+
+    /**
+     * Ajax headers for API communication.
+     * @type {{"X-CSRF-TOKEN": (*|jQuery|undefined)}}
+     */
     const headers = {
         'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr('content'),
     };
 
+    /**
+     * Open modal for assign permissions to user.
+     */
     dataTable.on('click', 'button.assignPermission', function () {
 
         let user_id = $(this).data('id');
@@ -40,6 +52,9 @@ $(document).ready(function () {
         $("#assign-permissions-to-user-modal").modal('show');
     });
 
+    /**
+     * Store the selected permissions to the user_has_permissions table.
+     */
     $("#store-user-permissions").click(function() {
 
         let permissions = $("#permissions").val();

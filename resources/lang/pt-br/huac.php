@@ -13,4 +13,5 @@ return [
     'user_removed_successfully'             => 'Usuário removido com sucesso!',
     'group_updated_successfully'            => 'Grupo atualizado com sucesso!',
     'users_successfully_attached'           => 'Usuários adicionados com successo!',
+    'groups_successfully_attached'          => 'Grupos adicionados com sucesso!'
 ];
