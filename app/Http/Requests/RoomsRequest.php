@@ -29,17 +29,20 @@ class RoomsRequest extends FormRequest
             $id = Route::getCurrentRoute()->parameters()['room'];
         return [
             'name'                              => 'required|min:6|string',
-            'morning_reservation_starts_at'     => 'required',
-            'morning_reservation_ends_at'       => 'required',
-            'afternoon_reservation_starts_at'   => 'required',
-            'afternoon_reservation_ends_at'     => 'required',
+            'morning_reservation_starts_at'     => 'required_without:afternoon_reservation_starts_at',
+            'morning_reservation_ends_at'       => 'required_with:morning_reservation_starts_at',
+            'afternoon_reservation_starts_at'   => 'required_without:morning_reservation_starts_at',
+            'afternoon_reservation_ends_at'     => 'required_with:afternoon_reservation_starts_at',
         ];
     }
 
     public function messages()
     {
         return [
-            '*.required'     => 'O :attribute é obrigatório!'
+            'name.min' => 'O :attribute deve ter no mínimo :min letras!',
+            '*.required'     => 'O :attribute é obrigatório!',
+            '*.required_with' => 'Você deve selecionar um :attribute para o uso da sala!',
+            '*.required_without' => 'Você deve selecionar um :attribute para o uso da sala!'
         ];
     }
 
@@ -47,10 +50,10 @@ class RoomsRequest extends FormRequest
     {
         return [
             'name'                            => 'nome',
-            'morning_reservation_starts_at'   => 'morning_reservation_starts_at',
-            'morning_reservation_ends_at'     => 'morning_reservation_ends_at',
-            'afternoon_reservation_starts_at' => 'afternoon_reservation_starts_at',
-            'afternoon_reservation_ends_at'   => 'afternoon_reservation_ends_at'
+            'morning_reservation_starts_at'   => 'horário de início no período da manhã',
+            'morning_reservation_ends_at'     => 'horário de término no período da manhã',
+            'afternoon_reservation_starts_at' => 'horário de início no período da tarde',
+            'afternoon_reservation_ends_at'   => 'horário de término no período da tarde'
         ];
     }
 }
