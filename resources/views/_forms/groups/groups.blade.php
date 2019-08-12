@@ -34,9 +34,30 @@
                     multiple="multiple"
                     id="permissions"
                     class="form-control @error('permissions') validation-error @enderror">
-                @foreach($permissions as $permission)
-                    <option value="{{ $permission->id }}">{{ $permission->name }}</option>
-                @endforeach
+                @if(isset($group))
+                    @foreach($permissions as $permission)
+                        <option value="{{ $permission->id }}"
+                            @if($group->hasPermission($permission))
+                                selected
+                            @endif
+                            @if(!is_null(old('permissions')))
+                                @if(in_array($permission->id, old('permissions')))
+                                    selected
+                                @endif
+                            @endif
+                            >{{ $permission->name }}</option>
+                    @endforeach
+                @else
+                    @foreach($permissions as $permission)
+                        <option value="{{ $permission->id }}"
+                            @if(!is_null(old('permissions')))
+                                @if(in_array($permission->id, old('permissions')))
+                                    selected
+                                @endif
+                            @endif
+                        >{{ $permission->name }}</option>
+                    @endforeach
+                @endif
             </select>
             @if($errors->has('permissions'))
                 <span class="text-danger">{{ $errors->first('permissions') }}</span>

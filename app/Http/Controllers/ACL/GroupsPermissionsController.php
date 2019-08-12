@@ -24,16 +24,33 @@ class GroupsPermissionsController
         ]);
     }
 
+    /**
+     * Revoke group permissions
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function revoke(Request $request)
     {
-        $group = Group::find($request->input('group_id'));
+        try{
+            $group = Group::find($request->input('group_id'));
 
-        $group->revokePermissions($request->input('permissions'));
+            $group->revokePermissions($request->input('permissions'));
 
-        return response()->json([
-            'code'  => Response::HTTP_OK,
-            'text'  => trans('huac.permission_revoked_successfully'),
-            'title' => trans('')
-        ]);
+            return response()->json([
+                'code'  => Response::HTTP_OK,
+                'text'  => trans('huac.permission_revoked_successfully'),
+                'title' => trans('huac.success'),
+                'timer' => 5000,
+                'icon'  => 'success',
+            ]);
+        }catch (\Exception $exception) {
+            return response()->json([
+                'code'  => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'text'  => trans('huac.something_went_wrong'),
+                'title' => trans('huac.error'),
+                'timer' => 5000,
+                'icon'  => 'error',
+            ]);
+        }
     }
 }

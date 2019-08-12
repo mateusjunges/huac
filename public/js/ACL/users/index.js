@@ -1,14 +1,28 @@
 $(document).ready(function () {
-    $("#groups").dataTable({
+
+   let columns = null;
+
+   $.ajax({
+       url: '/api/users/columns',
+       async: false,
+       headers: {
+           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+       },
+       success: function (response) {
+           columns = response;
+       }
+   });
+
+   $("#users").dataTable({
         language: {
             "decimal":        "",
             "emptyTable":     "Não há dados cadastrados",
-            "info":           "Mostrando _START_ a _END_ de _TOTAL_ grupos",
+            "info":           "Mostrando _START_ a _END_ de _TOTAL_ usuários",
             "infoEmpty":      "Mostrando 0 to 0 of 0 registros",
             "infoFiltered":   "(filtrado de _MAX_ registros)",
             "infoPostFix":    "",
             "thousands":      ",",
-            "lengthMenu":     "Mostrando _MENU_ grupos",
+            "lengthMenu":     "Mostrando _MENU_ usuários",
             "loadingRecords": "Carregando...",
             "processing":     "Processando...",
             "search":         "Buscar:",
@@ -25,6 +39,17 @@ $(document).ready(function () {
             }
 
         },
-        scrollX: true,
-    });
+       scrollX: true,
+       processing: true,
+       serverSide: true,
+       ajax: {
+           'type': 'GET',
+           'url': '/api/users/data',
+           'dataType': 'json',
+           headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+           },
+       },
+       columns: JSON.parse(columns),
+   });
 });

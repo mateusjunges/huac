@@ -1,35 +1,36 @@
 <?php
 
+use HUAC\Http\Controllers\Api\ACL\Groups\GroupsUsersController;
+use HUAC\Http\Controllers\Api\ACL\Groups\GroupsController;
+use HUAC\Http\Controllers\Api\ACL\Groups\GroupsPermissionsController;
 use HUAC\Http\Controllers\Api\ACL\Permissions\PermissionsController;
+use HUAC\Http\Controllers\Api\ACL\Users\UserGroupsController;
+use HUAC\Http\Controllers\Api\ACL\Users\UsersController;
 use HUAC\Http\Controllers\Api\ACL\Users\UsersDataController;
-use HUAC\Http\Controllers\Api\SurgeryClassifications\SurgeryClassificationsController;
+use HUAC\Http\Controllers\Api\ACL\Users\UsersPermissionsController;
 use Illuminate\Http\Request;
-use HUAC\Http\Controllers\Api\Procedures\ProceduresController;
 use HUAC\Http\Controllers\Api\ACL\Users\UsersColumnsController;
-use HUAC\Http\Controllers\Api\Anesthetics\AnestheticsController;
-use HUAC\Http\Controllers\Api\Surgeons\SurgeonsController;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
 Route::middleware(['auth:api'])->group(function () {
-    Route::get('procedures', [ProceduresController::class, 'all'])->name('api.procedures.index');
-    Route::get('procedures/{procedure}', [ProceduresController::class, 'find'])->name('api.procedures.find');
-
-    Route::get('anesthetics', [AnestheticsController::class, 'all'])->name('api.anesthetics.all');
-    Route::get('anesthetics/{anesthesia}', [AnestheticsController::class, 'find'])->name('api.anesthetics.find');
-
-    Route::get('surgeons', [SurgeonsController::class, 'all'])->name('api.surgeons.all');
-    Route::get('surgeons/{surgeon}', [SurgeonsController::class, 'find'])->name('api.surgeons.find');
-
-    Route::get('classifications', [SurgeryClassificationsController::class, 'all'])
-        ->name('api.surgery-classifications.all');
-    Route::get('classifications/{classification}', [SurgeryClassificationsController::class, 'find'])
-        ->name('api.surgery-classifications.find');
-
-    Route::get('users', UsersDataController::class)->name('api.users.data');
+    Route::get('users', [UsersController::class, 'index']);
+    Route::delete('users/{user}', [UsersController::class, 'destroy'])->name('api.users.delete');
+    Route::get('users/data', UsersDataController::class)->name('api.users.data');
     Route::get('users/columns', UsersColumnsController::class)->name('api.users.columns');
+    Route::delete('users/{user}/permissions', [UsersPermissionsController::class, 'revoke'])->name('api.users.permissions.revoke');
+    Route::post('users/{user}/assign-permissions', [UsersPermissionsController::class, 'attach'])->name('api.users.permissions.assign');
+    Route::post('users/{user}/assign-groups', [UserGroupsController::class, 'attach'])->name('api.users.groups.attach-groups');
+    Route::delete('users/{user}/remove-group', [UserGroupsController::class, 'revoke'])->name('api.users.groups.remove-group');
 
-    Route::get('permissions', PermissionsController::class)->name('api.permissions.index');
+    Route::get('groups', [GroupsController::class, 'all'])->name('api.groups.all');
+    Route::post('groups/{group}/assign-permissions', [GroupsPermissionsController::class, 'attach']);
+    Route::post('groups/{group}/attach-users', [GroupsUsersController::class, 'attach'])->name('api.groups.users.attach');
+    Route::delete('groups/permissions', [GroupsPermissionsController::class, 'revoke'])->name('api.delete.groups.permissions');
+    Route::delete('groups/users', [GroupsUsersController::class, 'remove'])->name('groups.users.remove');
+    Route::delete('groups/{group}', [GroupsController::class, 'destroy'])->name('api.groups.delete');
+
+    Route::get('permissions', PermissionsController::class);
 });
