@@ -123,7 +123,7 @@ return [
             ],
         ],
         [
-            'icon'    => 'users',
+            'icon'    => 'user',
             'text'    => 'Usuários',
             'submenu' => [
                 [
@@ -145,14 +145,18 @@ return [
                     'route' => 'groups.create'
                 ]
             ]
-        ]
+        ],
         [
-            'icon' => 'door-open',
+            'icon' => 'door-close',
             'text' => 'Salas',
             'submenu' => [
                 [
                     'text' => 'Nova sala',
                     'route' => 'rooms.create'
+                ],
+                [
+                    'text'  => 'Listar salas',
+                    'route' => 'rooms.index',
                 ]
             ]
         ]
