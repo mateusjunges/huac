@@ -164,12 +164,16 @@ return [
             ]
         ],
         [
-            'icon' => 'door-open',
+            'icon' => 'door-close',
             'text' => 'Salas',
             'submenu' => [
                 [
                     'text' => 'Nova sala',
                     'route' => 'rooms.create'
+                ],
+                [
+                    'text'  => 'Listar salas',
+                    'route' => 'rooms.index',
                 ]
             ]
         ]
