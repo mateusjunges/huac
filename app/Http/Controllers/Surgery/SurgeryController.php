@@ -4,11 +4,29 @@ namespace HUAC\Http\Controllers\Surgery;
 
 use HUAC\Exceptions\ViewNotFoundException;
 use HUAC\Http\Controllers\Controller;
+use HUAC\Models\Anesthesia;
+use HUAC\Models\Procedure;
+use HUAC\Models\Surgeon;
+use HUAC\Models\Surgery;
+use HUAC\Models\SurgeryClassification;
+use HUAC\Services\CreateSurgeryService;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
 
 class SurgeryController extends Controller
 {
+
+    /**
+     * @var CreateSurgeryService
+     */
+    private $surgeryService;
+
+    public function __construct(CreateSurgeryService $surgeryService)
+    {
+
+        $this->surgeryService = $surgeryService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +45,17 @@ class SurgeryController extends Controller
     public function create()
     {
         try{
-            return view('surgeries.create');
+            $procedures = Procedure::all();
+            $classifications = SurgeryClassification::all();
+            $anesthetics = Anesthesia::all();
+            $surgeons = Surgeon::all();
+
+            return view('surgeries.create')->with([
+                'procedures'      => $procedures,
+                'classifications' => $classifications,
+                'anesthetics'     => $anesthetics,
+                'surgeons'        => $surgeons
+            ]);
         }catch (\Exception $exception){
             if ($exception instanceof InvalidArgumentException)
                 return ViewNotFoundException::forView();
@@ -42,7 +70,17 @@ class SurgeryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $surgery = $this->surgeryService->store($request);
+
+        $message = array(
+            'title' => 'Sucesso!',
+            'text'  => 'Cirurgia adicionada com sucesso!',
+            'type'  => 'success'
+        );
+
+        session()->flash('message', $message);
+
+        return redirect()->route('surgeries.index');
     }
 
     /**
@@ -62,9 +100,20 @@ class SurgeryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Surgery $surgery)
     {
-        //
+        $procedures = Procedure::all();
+        $classifications = SurgeryClassification::all();
+        $anesthetics = Anesthesia::all();
+        $surgeons = Surgeon::all();
+
+        return view('surgeries.edit')->with([
+            'procedures'      => $procedures,
+            'classifications' => $classifications,
+            'anesthetics'     => $anesthetics,
+            'surgeons'        => $surgeons,
+            'surgery'         => $surgery
+        ]);
     }
 
     /**
