@@ -27,7 +27,12 @@ class RoomsController extends Controller
      */
     public function create()
     {
-        return view('rooms.create');
+        try{
+            return view('rooms.create');
+        }catch (\Exception $exception){
+            if ($exception instanceof InvalidArgumentException)
+                return ViewNotFoundException::forView();
+        }
     }
 
     /**

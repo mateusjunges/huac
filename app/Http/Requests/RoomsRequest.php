@@ -33,6 +33,7 @@ class RoomsRequest extends FormRequest
             'morning_reservation_ends_at'       => 'required_with:morning_reservation_starts_at',
             'afternoon_reservation_starts_at'   => 'required_without:morning_reservation_starts_at',
             'afternoon_reservation_ends_at'     => 'required_with:afternoon_reservation_starts_at',
+            'available'                         => 'required'
         ];
     }
 
@@ -53,7 +54,8 @@ class RoomsRequest extends FormRequest
             'morning_reservation_starts_at'   => 'horário de início no período da manhã',
             'morning_reservation_ends_at'     => 'horário de término no período da manhã',
             'afternoon_reservation_starts_at' => 'horário de início no período da tarde',
-            'afternoon_reservation_ends_at'   => 'horário de término no período da tarde'
+            'afternoon_reservation_ends_at'   => 'horário de término no período da tarde',
+            'available'                       => 'campo disponibilidade'
         ];
     }
 }
