@@ -2,13 +2,15 @@
 @section('js')
     <script src="{{ asset('js/ACL/groups/index.js') }}"></script>
     <script src="{{ asset('js/CRUD/crud.js') }}"></script>
+    <script src="{{ asset('js/ACL/groups/permissions/assign-permissions.js') }}"></script>
+    <script src="{{ asset('js/ACL/groups/users/assign-to-user.js') }}"></script>
 @endsection
 @section('css')
     <style>
         table#groups {
             width: 100% !important;
         }
-    </style>
+      </style>
 @endsection
 @section('content')
 <div class="row">
@@ -18,7 +20,7 @@
 </div>
 <div class="row">
     <div class="col-md-10 col-md-pull-1 col-md-push-1">
-        <table class="table table-responsive table-hover" id="groups">
+        <table class="table table-responsive table-hover dataTable" id="groups">
             <thead>
                 <tr>
                     <th>Nome</th>
@@ -28,6 +30,12 @@
                     @endcan
                     @can('groups.assign-user')
                         <th>Atribuir a usuário</th>
+                    @endcan
+                    @can('groups.view-users')
+                        <th>Ver usuários</th>
+                    @endcan
+                    @can('groups.assign-permission')
+                        <th>Atribuir permissão</th>
                     @endcan
                     @can('groups.edit')
                         <th>Editar</th>
@@ -72,6 +80,29 @@
                             </button>
                         </td>
                     @endcan
+                    @can('groups.view-users')
+                        <td>
+                            <a href="{{ route('groups.users', $group->id) }}">
+                                <button class="btn btn-sm"
+                                        data-placement="top"
+                                        title="Ver usuários pertencentes ao grupo"
+                                        data-toggle="tooltip">
+                                    <i class="fa fa-group"></i>
+                                </button>
+                            </a>
+                        </td>
+                    @endcan
+                    @can('groups.assign-permission')
+                        <td>
+                            <button class="btn btn-sm btn-default assign-permission"
+                                    data-placement="top"
+                                    data-id="{{ $group->id }}"
+                                    title="Atribuir permissão ao grupo"
+                                    data-toggle="tooltip">
+                                <i class="fa fa-plus-circle"></i>
+                            </button>
+                        </td>
+                    @endcan
                     @can('groups.edit')
                         <td>
                             <a href="{{ route('groups.edit', $group->id) }}">
@@ -107,4 +138,6 @@
         </table>
     </div>
 </div>
+    @include('_modals.groups.assign-permissions')
+    @include('_modals.groups.attach-user')
 @endsection

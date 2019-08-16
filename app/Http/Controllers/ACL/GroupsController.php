@@ -3,11 +3,9 @@
 namespace HUAC\Http\Controllers\ACL;
 
 use HUAC\Http\Requests\GroupRequest;
-use Illuminate\Http\Request;
 use HUAC\Http\Controllers\Controller;
 use Junges\ACL\Http\Models\Group;
 use Junges\ACL\Http\Models\Permission;
-use Symfony\Component\HttpFoundation\Response;
 
 class GroupsController extends Controller
 {
@@ -79,9 +77,15 @@ class GroupsController extends Controller
      * @param  Group $group
      * @return \Illuminate\Http\Response
      */
-    public function edit($group)
+    public function edit(Group $group)
     {
-        //
+        $groupPermissions = $group->permissions()->get();
+        $permissions = Permission::all();
+        return view('ACL.groups.edit')->with([
+            'group' => $group,
+            'permissions' => $permissions,
+            'groupPermission' => $groupPermissions
+        ]);
     }
 
     /**
@@ -91,37 +95,17 @@ class GroupsController extends Controller
      * @param  Group $group
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Group $group)
+    public function update(GroupRequest $request, Group $group)
     {
-        //
-    }
+        $group = $group->syncPermissions($request->permissions);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  Group $group
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Group $group)
-    {
-        try{
-            $group->delete();
+        $message = array(
+            'title' => trans('huac.success'),
+            'text'  => trans('huac.group_updated_successfully'),
+            'type'  => 'success'
+        );
+        session()->flash('message', $message);
+        return redirect()->route('groups.index');
 
-            return response()->json([
-                'code' => Response::HTTP_OK,
-                'icon' => 'success',
-                'title' => trans('huac.success'),
-                'text'  => trans('huac.group_removed_successfully'),
-                'timer' => 5000,
-            ]);
-        }catch (\Exception $exception) {
-            return response()->json([
-                'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                'icon' => 'success',
-                'title' => trans('huac.error'),
-                'text'  => trans('huac.somenthing_went_wrong'),
-                'timer' => 5000,
-            ]);
-        }
     }
 }

@@ -1,0 +1,12 @@
+table#user-groups {
+    width: 100% !important;
+}
+.dataTables_length {
+    float: left;
+}
+@media (max-width: 433px) {
+    .dataTables_length {
+        margin-left: 25%;
+        margin-right: 25%;
+    }
+}

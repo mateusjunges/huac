@@ -44,12 +44,12 @@ $(document).ready(function () {
        serverSide: true,
        ajax: {
            'type': 'GET',
-           'url': '/api/users',
+           'url': '/api/users/data',
            'dataType': 'json',
            headers: {
                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
            },
        },
        columns: JSON.parse(columns),
-   })
+   });
 });

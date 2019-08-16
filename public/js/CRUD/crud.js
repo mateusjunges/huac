@@ -18,10 +18,14 @@ $(document).ready(function () {
             buttons: true,
         }).then((response) => {
             if (response === true){
+                // axios.delete()
                 $.ajax({
                     method: 'post',
-                    url: `/${route}/${id}`,
+                    url: `/api/${route}/${id}`,
                     async: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     data: {
                         '_token': token,
                         '_method': 'delete',
