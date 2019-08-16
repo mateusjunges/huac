@@ -6,6 +6,7 @@ use HUAC\Http\Requests\RoomsRequest;
 use HUAC\Models\Room;
 use Illuminate\Http\Request;
 use HUAC\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\Response;
 
 class RoomsController extends Controller
@@ -43,7 +44,28 @@ class RoomsController extends Controller
      */
     public function store(RoomsRequest $request)
     {
+        if (!is_null($request->input('morning_reservation_starts_at')))
+            $request->request->set(
+                'morning_reservation_starts_at',
+                Carbon::parse($request->input('morning_reservation_starts_at'))->format('H:m:s')
+            );
+        if (!is_null($request->input('morning_reservation_ends_at')))
+            $request->request->set(
+                'morning_reservation_ends_at',
+                Carbon::parse($request->input('morning_reservation_ends_at'))->format('H:m:s')
+            );
+        if (!is_null($request->input('afternoon_reservation_starts_at')))
+            $request->request->set(
+                'afternoon_reservation_starts_at',
+                Carbon::parse($request->input('afternoon_reservation_starts_at'))->format('H:m:s')
+            );
+        if (!is_null($request->input('afternoon_reservation_ends_at')))
+            $request->request->set(
+                'afternoon_reservation_ends_at',
+                Carbon::parse($request->input('afternoon_reservation_ends_at'))->format('H:m:s')
+            );
         $room = Room::create($request->all());
+
         $message = array(
             'title' => trans('huac.success'),
             'text'  => trans('huac.user_saved_successfully'),
