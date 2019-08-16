@@ -61,7 +61,7 @@
             <label for="gender">Gênero:</label>
             <select name="gender"
                     id="gender"
-                    class="form-control @error('name') validation-error @enderror ">
+                    class="form-control @error('gender') validation-error @enderror ">
                 <option value="">Selecione o gênero:</option>
                 <option value="M"
                     @if(isset($patient))
@@ -137,7 +137,7 @@
             <label for="estimated-duration">Tempo de duração estimado:</label>
             <select name="estimated_duration"
                     id="estimated-duration"
-                    class="form-control @error('name') validation-error @enderror ">
+                    class="form-control @error('estimated_duration') validation-error @enderror ">
                 <option value="">Selecione o tempo de duração estimado:</option>
                 @for($i = 1; $i <= 12; $i++)
                     <option value="{{ $i }}"
@@ -187,7 +187,7 @@
             <label for="anesthesia">Anestesia:</label>
             <select name="anesthesia_id"
                     id="anesthesia"
-                    class="form-control @error('name') validation-error @enderror ">
+                    class="form-control @error('anesthesia_id') validation-error @enderror ">
                 <option value="">Selecione a anestesia:</option>
                 @foreach($anesthetics as $anesthesia)
                     @if(isset($surgery))
@@ -212,7 +212,7 @@
         <div class="form-group">
             <label for="head-surgeon">Cirurgião principal:</label>
             <select name="head_surgeon"
-                    class="form-control @error('name') validation-error @enderror "
+                    class="form-control @error('head_surgeon') validation-error @enderror "
                     id="head-surgeon">
                 <option value="">Selecione o cirurgião principal:</option>
                 @if(isset($surgery))
@@ -238,7 +238,7 @@
         <div class="form-group">
             <label for="assistant-surgeon">Cirurgião auxiliar:</label>
             <select name="assistant_surgeon"
-                    class="form-control @error('name') validation-error @enderror "
+                    class="form-control @error('assistant_surgeon') validation-error @enderror "
                     id="assistant-surgeon">
                 <option value="">Selecione o cirurgião auxiliar:</option>
                 @if(isset($surgery) && $surgery->assistantSurgeon != null)
@@ -269,7 +269,7 @@
                       placeholder="Informe os materiais solicitados:"
                       rows="10"
                       class="form-control
-                      @error('name')
+                      @error('materials')
                         validation-error
                     @enderror ">{{ isset($surgery) ? $surgery->materials : old('materialss') }}</textarea>
             @component('_components.field-error', [
@@ -285,7 +285,7 @@
                 cols="30"
                 rows="5"
                 placeholder="Possui alguma observação?"
-                class="form-control @error('name') validation-error @enderror "
+                class="form-control @error('observation') validation-error @enderror "
                 name="observation">{{ isset($surgery) ? $surgery->observation : old('observation') }}</textarea>
             @component('_components.field-error', [
                 'errors' => $errors,
@@ -300,7 +300,7 @@
                 cols="30"
                 rows="5"
                 placeholder="Avaliação anestésica"
-                class="form-control @error('name') validation-error @enderror "
+                class="form-control @error('anesthetic_evaluation') validation-error @enderror "
                 name="anesthetic_evaluation">{{ isset($surgery) ? $surgery->anesthetic_evaluation : old('anesthetic_evaluation') }}</textarea>
             @component('_components.field-error', [
                 'errors' => $errors,

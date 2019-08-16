@@ -29,17 +29,18 @@ class SurgerySchedulingRequest extends FormRequest
             $id = Route::getCurrentRoute()->parameters()['surgery'];
 
         return [
-            'name'              => 'required|full_name|min:7',
-            'medical_record'    => 'required|unique:patients,medical_record,'.$id,
-            'mother_name'       => 'required|full_name|min:7',
-            'gender'            => 'required|in:M,F,O',
-            'birthday_at'       => 'required|date',
-            'procedure_id'      => 'required',
-            'classification_id' => 'required',
-            'anesthesia_id'     => 'required',
-            'head_surgeon'      => 'required|different:assistant_surgeon',
-            'assistant_surgeon' => 'different:head_surgeon',
-            'materials'         => 'required|min:10',
+            'name'               => 'required|full_name|min:7',
+            'medical_record'     => 'required|unique:patients,medical_record,'.$id,
+            'mother_name'        => 'required|full_name|min:7',
+            'gender'             => 'required|in:M,F,O',
+            'birthday_at'        => 'required|date',
+            'procedure_id'       => 'required',
+            'classification_id'  => 'required',
+            'anesthesia_id'      => 'required',
+            'head_surgeon'       => 'required|different:assistant_surgeon',
+            'assistant_surgeon'  => 'different:head_surgeon',
+            'materials'          => 'required|min:10',
+            'estimated_duration' => 'required|'
         ];
     }
 
