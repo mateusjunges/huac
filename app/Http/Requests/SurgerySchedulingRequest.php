@@ -3,6 +3,7 @@
 namespace HUAC\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Route;
 
 class SurgerySchedulingRequest extends FormRequest
 {

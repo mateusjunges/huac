@@ -4,6 +4,7 @@ namespace HUAC\Http\Controllers\Surgery;
 
 use HUAC\Exceptions\ViewNotFoundException;
 use HUAC\Http\Controllers\Controller;
+use HUAC\Http\Requests\SurgerySchedulingRequest;
 use HUAC\Models\Anesthesia;
 use HUAC\Models\Procedure;
 use HUAC\Models\Surgeon;
@@ -68,7 +69,7 @@ class SurgeryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SurgerySchedulingRequest $request)
     {
         $surgery = $this->surgeryService->store($request);
 

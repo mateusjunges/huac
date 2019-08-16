@@ -10,7 +10,7 @@ class SurgeryObserver
     /**
      * Handle the surgery "created" event.
      *
-     * @param  \HUAC\Surgery  $surgery
+     * @param  Surgery  $surgery
      * @return void
      */
     public function created(Surgery $surgery)
@@ -21,7 +21,7 @@ class SurgeryObserver
     /**
      * Handle the surgery "updated" event.
      *
-     * @param  \HUAC\Surgery  $surgery
+     * @param  Surgery  $surgery
      * @return void
      */
     public function updated(Surgery $surgery)
@@ -32,7 +32,7 @@ class SurgeryObserver
     /**
      * Handle the surgery "deleted" event.
      *
-     * @param  \HUAC\Surgery  $surgery
+     * @param  Surgery  $surgery
      * @return void
      */
     public function deleted(Surgery $surgery)
@@ -43,7 +43,7 @@ class SurgeryObserver
     /**
      * Handle the surgery "restored" event.
      *
-     * @param  \HUAC\Surgery  $surgery
+     * @param  Surgery  $surgery
      * @return void
      */
     public function restored(Surgery $surgery)
@@ -54,7 +54,7 @@ class SurgeryObserver
     /**
      * Handle the surgery "force deleted" event.
      *
-     * @param  \HUAC\Surgery  $surgery
+     * @param  Surgery  $surgery
      * @return void
      */
     public function forceDeleted(Surgery $surgery)
