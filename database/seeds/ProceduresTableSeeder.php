@@ -11054,4 +11054,4 @@ class ProceduresTableSeeder extends Seeder
 
 
     }
-}
+},
