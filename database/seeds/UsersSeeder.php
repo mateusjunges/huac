@@ -25,5 +25,6 @@ class UsersSeeder extends Seeder
            'email' => 'alceubrittoneto@gmail.com',
            'password' => Hash::make('alceubritto'),
         ]);
+        User::first()->assignPermissions('admin');
     }
 }

@@ -59,7 +59,8 @@ class SurgerySchedulingRequest extends FormRequest
             'anesthesia_id'     => 'anestesia',
             'head_surgeon'      => 'cirurgião principal',
             'assistant_surgeon' => 'cirurgião assistente',
-            'materials'         => 'materiais'
+            'materials'         => 'materiais',
+            'mother_name'       => 'nome da mãe'
         ];
     }
 
@@ -69,7 +70,7 @@ class SurgerySchedulingRequest extends FormRequest
     public function messages()
     {
         return [
-            '*.required'                  => 'O :attribute é obrigatório!',
+            '*.required'                  => 'O campo :attribute é obrigatório!',
             '*.date'                      => 'Por favor, informe uma data válida!',
             '*.full_name'                 => 'O :attribute requer o nome completo!',
             'head_surgeon.different'      => 'O cirurgião auxiliar e principal não podem ser os mesmos!',
