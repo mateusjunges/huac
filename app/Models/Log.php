@@ -53,7 +53,7 @@ class Log extends Model
             'surgery_id'  => $surgery->id,
             'user_id'     => Auth::id(),
             'observation' => 'Cirurgia adicionada pelo médico!',
-            'status_id'   => Status::SURGERY_CREATED
+            'status_id'   => Status::IN_PROCESS
         ]);
     }
 }

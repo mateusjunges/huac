@@ -24,23 +24,19 @@ class SurgerySchedulingRequest extends FormRequest
      */
     public function rules()
     {
-        $id = 'NULL';
-        if (Route::getCurrentRoute()->parameters() != null)
-            $id = Route::getCurrentRoute()->parameters()['surgery'];
-
         return [
-            'name'               => 'required|full_name|min:7',
-            'medical_record'     => 'required|unique:patients,medical_record,'.$id,
-            'mother_name'        => 'required|full_name|min:7',
-            'gender'             => 'required|in:M,F,O',
-            'birthday_at'        => 'required|date',
-            'procedure_id'       => 'required',
-            'classification_id'  => 'required',
-            'anesthesia_id'      => 'required',
-            'head_surgeon'       => 'required|different:assistant_surgeon',
-            'assistant_surgeon'  => 'different:head_surgeon',
-            'materials'          => 'required|min:10',
-            'estimated_duration' => 'required|'
+            'name'                      => 'required|full_name|min:7',
+            'medical_record'            => 'required',
+            'mother_name'               => 'required|full_name|min:7',
+            'gender'                    => 'required|in:M,F,O',
+            'birthday_at'               => 'required|date',
+            'procedure_id'              => 'required',
+            'surgery_classification_id' => 'required',
+            'anesthesia_id'             => 'required',
+            'head_surgeon'              => 'required|different:assistant_surgeon',
+            'assistant_surgeon'         => 'different:head_surgeon',
+            'materials'                 => 'required|min:10',
+            'estimated_duration_time'   => 'required|'
         ];
     }
 
@@ -50,17 +46,18 @@ class SurgerySchedulingRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name'              => 'nome',
-            'medical_record'    => 'prontuário',
-            'gender'            => 'gênero',
-            'birthday_at'       => 'data de nascimento',
-            'procedure_id'      => 'procedimento',
-            'classification_id' => 'classificação',
-            'anesthesia_id'     => 'anestesia',
-            'head_surgeon'      => 'cirurgião principal',
-            'assistant_surgeon' => 'cirurgião assistente',
-            'materials'         => 'materiais',
-            'mother_name'       => 'nome da mãe'
+            'name'                      => 'nome',
+            'medical_record'            => 'prontuário',
+            'gender'                    => 'gênero',
+            'birthday_at'               => 'data de nascimento',
+            'procedure_id'              => 'procedimento',
+            'surgery_classification_id' => 'classificação',
+            'anesthesia_id'             => 'anestesia',
+            'head_surgeon'              => 'cirurgião principal',
+            'assistant_surgeon'         => 'cirurgião assistente',
+            'materials'                 => 'materiais',
+            'mother_name'               => 'nome da mãe',
+            'estimated_duration_time'   => 'tempo de duração estimado'
         ];
     }
 

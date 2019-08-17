@@ -35,7 +35,7 @@ class SurgeryController extends Controller
      */
     public function index()
     {
-        //
+        return view('surgeries.index');
     }
 
     /**

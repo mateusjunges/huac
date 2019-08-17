@@ -34,7 +34,7 @@
             <input type="text"
                    id="mother-name"
                    name="mother_name"
-                   value="{{ isset($patient) ? $patient->mother_name : old('medical_record') }}"
+                   value="{{ isset($patient) ? $patient->mother_name : old('mother_name') }}"
                    placeholder="Informe o nome da mãe do paciente"
                    class="form-control @error('mother_name') validation-error @enderror ">
             @component('_components.field-error', [
@@ -120,7 +120,7 @@
                         </option>
                     @else
                         <option value="{{ $procedure->id }}"
-                            {{ old('procedure') == $procedure->id ? 'selected' : '' }}
+                            {{ old('procedure_id') == $procedure->id ? 'selected' : '' }}
                         >
                             {{ $procedure->name }}
                         </option>
@@ -135,7 +135,7 @@
         </div>
         <div class="form-group">
             <label for="estimated-duration">Tempo de duração estimado:</label>
-            <select name="estimated_duration"
+            <select name="estimated_duration_time"
                     id="estimated-duration"
                     class="form-control @error('estimated_duration') validation-error @enderror ">
                 <option value="">Selecione o tempo de duração estimado:</option>
@@ -146,7 +146,7 @@
                                 selected
                             @endif
                         @else
-                            @if(old('estimated_duration') == $i)
+                            @if(old('estimated_duration_time') == $i)
                                 selected
                             @endif
                         @endif
@@ -161,19 +161,19 @@
         </div>
         <div class="form-group">
             <label for="classification_id">Classificação:</label>
-            <select name="classification_id"
+            <select name="surgery_classification_id"
                     id="classification_id"
                     class="form-control @error('name') validation-error @enderror ">
                 <option value="">Classifique esta cirurgia:</option>
                 @foreach($classifications as $classification)
                     @if(isset($surgery))
-                        @if($surgery->classification_id == $classification->id)
+                        @if($surgery->surgery_classification_id == $classification->id)
                             <option value="{{ $classification->id }} selected">{{ $classification->name }}</option>
                         @else
                             <option value="{{ $classification->id }}"> {{ $classification->name }}</option>
                         @endif
                     @else
-                        @if(old('classification_id') == $classification->id)
+                        @if(old('surgery_classification_id') == $classification->id)
                             <option value="{{ $classification->id }}" selected> {{ $classification->name }}</option>
                         @else
                             <option value="{{ $classification->id }}"> {{ $classification->name }}</option>
@@ -183,7 +183,7 @@
             </select>
             @component('_components.field-error', [
                 'errors' => $errors,
-                'field'  => 'classification_id'
+                'field'  => 'surgery_classification_id'
             ])
             @endcomponent
         </div>
@@ -196,11 +196,15 @@
                 @foreach($anesthetics as $anesthesia)
                     @if(isset($surgery))
                         @if($surger->anesthesia_id == $anesthesia->id)
-                            selected
+                            <option value="{{ $anesthesia->id }}" selected> {{ $anesthesia->name }}</option>
+                        @else
+                            <option value="{{ $anesthesia->id }}"> {{ $anesthesia->name }}</option>
                         @endif
                     @else
                         @if($anesthesia->id == old('anesthesia_id'))
-                            selected
+                            <option value="{{ $anesthesia->id }}" selected> {{ $anesthesia->name }}</option>
+                        @else
+                            <option value="{{ $anesthesia->id }}"> {{ $anesthesia->name }}</option>
                         @endif
                     @endif
                 @endforeach
@@ -283,7 +287,7 @@
                       class="form-control
                       @error('materials')
                         validation-error
-                    @enderror ">{{ isset($surgery) ? $surgery->materials : old('materialss') }}</textarea>
+                    @enderror ">{{ isset($surgery) ? $surgery->materials : old('materials') }}</textarea>
             @component('_components.field-error', [
                 'errors' => $errors,
                 'field'  => 'materials'
