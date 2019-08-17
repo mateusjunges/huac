@@ -9,10 +9,22 @@ use Illuminate\Http\Request;
 
 class CreateSurgeryService
 {
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function store(Request $request)
-    {
+    {   dd($request->all());
         Patient::create($request->all());
+
         $surgery = Surgery::create($request->all());
+
+        $surgery->assignHeadSurgeon($request->head_surgeon);
+
+        if (! is_null($request->input('assistant_surgeon')))
+            $surgery->assignAssistantSurgeon($request->assitant_surgeon);
+
+        Log::surgeryCreated($surgery);
 
         return $surgery;
     }

@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="{{ asset('css/surgeries/create.css') }}">
 @endsection
 @section('js')
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/surgeries/create.js') }}"></script>
 @endsection
 @section('content')
     <div class="row">

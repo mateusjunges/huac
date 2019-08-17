@@ -15,7 +15,9 @@ class CreateSurgeonHasSurgeriesTable extends Migration
     {
         Schema::create('surgeon_has_surgeries', function (Blueprint $table) {
             $table->increments('id');
-            $table->boolean('head_surgeon')->nullable(false);
+            $table->boolean('head_surgeon')
+                ->nullable(false)
+                ->default(false);
             $table->bigInteger('surgeon_id', false, true);
             $table->bigInteger('surgery_id', false, true);
             $table->foreign('surgeon_id')

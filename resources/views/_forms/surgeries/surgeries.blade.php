@@ -168,11 +168,15 @@
                 @foreach($classifications as $classification)
                     @if(isset($surgery))
                         @if($surgery->classification_id == $classification->id)
-                            selected
+                            <option value="{{ $classification->id }} selected">{{ $classification->name }}</option>
+                        @else
+                            <option value="{{ $classification->id }}"> {{ $classification->name }}</option>
                         @endif
                     @else
                         @if(old('classification_id') == $classification->id)
-                            selected
+                            <option value="{{ $classification->id }}" selected> {{ $classification->name }}</option>
+                        @else
+                            <option value="{{ $classification->id }}"> {{ $classification->name }}</option>
                         @endif
                     @endif
                 @endforeach
@@ -214,17 +218,21 @@
             <select name="head_surgeon"
                     class="form-control @error('head_surgeon') validation-error @enderror "
                     id="head-surgeon">
-                <option value="">Selecione o cirurgião principal:</option>
+                <option value="0">Selecione o cirurgião principal:</option>
                 @if(isset($surgery))
                     @foreach($surgeons as $surgeon)
-                        @if($surgery->headSurgeon->surgeon_id == $surgeon->id)
-                            selected
+                        @if(($surgery->headSurgeon->surgeon_id == $surgeon->id) or (old('head_surgeon') == $surgeon->id))
+                            <option value="{{ $surgeon->id }}" selected>{{ $surgeon->name }}</option>
+                        @else
+                            <option value="{{ $surgeon->id }}">{{ $surgeon->name }}</option>
                         @endif
                     @endforeach
                 @else
                     @foreach($surgeons as $surgeon)
                         @if(old('head_surgeon') == $surgeon->id)
-                            selected
+                            <option value="{{ $surgeon->id }}" selected>{{ $surgeon->name }}</option>
+                        @else
+                            <option value="{{ $surgeon->id }}">{{ $surgeon->name }}</option>
                         @endif
                     @endforeach
                 @endif
@@ -240,17 +248,21 @@
             <select name="assistant_surgeon"
                     class="form-control @error('assistant_surgeon') validation-error @enderror "
                     id="assistant-surgeon">
-                <option value="">Selecione o cirurgião auxiliar:</option>
+                <option value="0">Selecione o cirurgião auxiliar:</option>
                 @if(isset($surgery) && $surgery->assistantSurgeon != null)
                     @foreach($surgeons as $surgeon)
                         @if($surgery->assistantSurgeon->surgeon_id == $surgeon->id)
-                            selected
+                            <option value="{{ $surgeon->id }}" selected>{{ $surgeon->name }}</option>
+                        @else
+                            <option value="{{ $surgeon->id }}">{{ $surgeon->name }}</option>
                         @endif
                     @endforeach
                 @else
                     @foreach($surgeons as $surgeon)
-                        @if(old('head_surgeon') == $surgeon->id)
-                            selected
+                        @if(old('assistant_surgeon') == $surgeon->id)
+                            <option value="{{ $surgeon->id }}" selected>{{ $surgeon->name }}</option>
+                        @else
+                            <option value="{{ $surgeon->id }}">{{ $surgeon->name }}</option>
                         @endif
                     @endforeach
                 @endif

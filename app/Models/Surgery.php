@@ -49,4 +49,55 @@ class Surgery extends Model
         return $this->hasOne(Log::class)
             ->orderBy('created_at', 'desc');
     }
+
+    /**
+     * Assign the head surgeon to the surgery.
+     * @param Surgeon $surgeon
+     * @return $this
+     */
+    public function assignHeadSurgeon(Surgeon $surgeon)
+    {
+        SurgeonHasSurgery::create([
+           'surgery_id'   => $this->id,
+           'surgeon_id'   => $surgeon->id,
+           'head_surgeon' => true,
+        ]);
+        return $this;
+    }
+
+    /**
+     * Assign the assistant surgeon to the surgery.
+     * @param Surgeon $surgeon
+     * @return $this
+     */
+    public function assignAssistantSurgeon(Surgeon $surgeon)
+    {
+        SurgeonHasSurgery::create([
+            'surgery_id'   => $this->id,
+            'surgeon_id'   => $surgeon->id,
+            'head_surgeon' => false
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * Return the surgery head surgeon.
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function headSurgeon()
+    {
+        return $this->hasOne(SurgeonHasSurgery::class, 'surgery_id')
+            ->where('head_surgeon', true);
+    }
+
+    /**
+     * Return the surgery assistant surgeon.
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function assistantSurgeon()
+    {
+        return $this->hasOne(SurgeonHasSurgery::class, 'surgery_id')
+            ->where('head_surgeon', false);
+    }
 }

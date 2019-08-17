@@ -41,7 +41,11 @@
             @endif
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="wrap-input100 validate-input m-b-16" data-validate = "Nome de usuário obrigatório!">
-                    <input class="input100" type="text" name="username" value="{{ old('username') }}" placeholder="Nome de usuário">
+                    <input class="input100"
+                           type="text"
+                           name="username"
+                           autofocus
+                           value="{{ old('username') }}" placeholder="Nome de usuário">
                     <span class="focus-input100"></span>
                 </div>
                 <div class="wrap-input100 validate-input m-b-16" data-validate = "Senha obrigatória!">
@@ -52,6 +56,13 @@
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
+                </div>
+                <div class="m-b-16">
+                    <label for="remember">
+                        <input type="checkbox" id="remember" name="remember">
+                        Mantenha-me conectado
+                    </label>
+
                 </div>
                 <div class="container-login100-form-btn m-t-17">
                     <button class="login100-form-btn">

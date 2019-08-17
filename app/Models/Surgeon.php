@@ -17,8 +17,29 @@ class Surgeon extends Model
         'user_id',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function scopeName()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Return the surgeon name.
+     * @return mixed
+     */
+    public function getNameAttribute()
+    {
+        return $this->user()->first()->name;
     }
 }
