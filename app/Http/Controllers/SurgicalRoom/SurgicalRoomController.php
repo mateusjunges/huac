@@ -1,15 +1,15 @@
 <?php
 
-namespace HUAC\Http\Controllers\Room;
+namespace HUAC\Http\Controllers\SurgicalRoom;
 
-use HUAC\Http\Requests\RoomsRequest;
-use HUAC\Models\Room;
+use HUAC\Http\Requests\SurgicalRoomRequest;
+use HUAC\Models\SurgicalRoom;
 use Illuminate\Http\Request;
 use HUAC\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\Response;
 
-class RoomsController extends Controller
+class SurgicalRoomController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -42,7 +42,7 @@ class RoomsController extends Controller
      * @param  UsersRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RoomsRequest $request)
+    public function store(SurgicalRoomRequest $request)
     {
         if (!is_null($request->input('morning_reservation_starts_at')))
             $request->request->set(
@@ -64,7 +64,7 @@ class RoomsController extends Controller
                 'afternoon_reservation_ends_at',
                 Carbon::parse($request->input('afternoon_reservation_ends_at'))->format('H:m:s')
             );
-        $room = Room::create($request->all());
+        $room = SurgicalRoom::create($request->all());
 
         $message = array(
             'title' => trans('huac.success'),
@@ -81,7 +81,7 @@ class RoomsController extends Controller
      * @param  User $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Room $room)
+    public function show(SurgicalRoom $room)
     {
         //
     }
@@ -92,7 +92,7 @@ class RoomsController extends Controller
      * @param User $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Room $room)
+    public function edit(SurgicalRoom $room)
     {
         return view('rooms.edit')->with([
             'room' => $room,
@@ -106,7 +106,7 @@ class RoomsController extends Controller
      * @param  User $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Room $room)
+    public function update(Request $request, SurgicalRoom $room)
     {
         $room->update($request->all());
         $message = array(

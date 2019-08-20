@@ -39,7 +39,6 @@
                     <tr>
                         <th>Nome da Sala</th>
                         <th>Disponível</th>
-                        <th>Indisponível</th>
                         @can('rooms.edit')
                             <th>Editar</th>
                         @endcan
