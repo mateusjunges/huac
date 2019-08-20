@@ -82,12 +82,15 @@ class SurgeriesDataController
                                                                 data-placement='top'
                                                                 data-toggle='tooltip'
                                                                 data-route='surgeries'
-                                                                data-type='usuário'
-                                                                data-name='{$surgery->name}'
-                                                                data-gender='o'
+                                                                data-type='cirurgia do paciente'
+                                                                data-name='{$surgery->patient_name}'
+                                                                data-gender='a'
+                                                                value='{$token}'
                                                                 title='Remover esta cirurgia' 
-                                                                name='delete' data-id='{$surgery->id}'
-                                                                type='button' id='delete{$surgery->id}'>
+                                                                name='delete' 
+                                                                data-id='{$surgery->surgery_id}'
+                                                                type='button' 
+                                                                id='delete{$surgery->surgery_id}'>
                                                             <i class='fa fa-trash'></i>
                                                         </button>";
                 $nestedData['Médico principal'] = $surgery->head_surgeon_name;

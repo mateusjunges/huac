@@ -9,6 +9,7 @@
 @endsection
 @section('js')
     <script src="{{ asset('js/surgeries/index.js') }}"></script>
+    <script src="{{ asset('js/CRUD/crud.js') }}"></script>
 @endsection
 @section('content')
     <div class="row">
