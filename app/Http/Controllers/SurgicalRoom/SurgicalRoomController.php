@@ -2,11 +2,13 @@
 
 namespace HUAC\Http\Controllers\SurgicalRoom;
 
+use HUAC\Exceptions\ViewNotFoundException;
 use HUAC\Http\Requests\SurgicalRoomRequest;
 use HUAC\Models\SurgicalRoom;
 use Illuminate\Http\Request;
 use HUAC\Http\Controllers\Controller;
 use Carbon\Carbon;
+use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Response;
 
 class SurgicalRoomController extends Controller
@@ -47,23 +49,25 @@ class SurgicalRoomController extends Controller
         if (!is_null($request->input('morning_reservation_starts_at')))
             $request->request->set(
                 'morning_reservation_starts_at',
-                Carbon::parse($request->input('morning_reservation_starts_at'))->format('H:m:s')
+                Carbon::parse($request->input('morning_reservation_starts_at'))->format('H:i:s')
             );
         if (!is_null($request->input('morning_reservation_ends_at')))
             $request->request->set(
                 'morning_reservation_ends_at',
-                Carbon::parse($request->input('morning_reservation_ends_at'))->format('H:m:s')
+                Carbon::parse($request->input('morning_reservation_ends_at'))->format('H:i:s')
             );
         if (!is_null($request->input('afternoon_reservation_starts_at')))
             $request->request->set(
                 'afternoon_reservation_starts_at',
-                Carbon::parse($request->input('afternoon_reservation_starts_at'))->format('H:m:s')
+                Carbon::parse($request->input('afternoon_reservation_starts_at'))->format('H:i:s')
             );
         if (!is_null($request->input('afternoon_reservation_ends_at')))
             $request->request->set(
                 'afternoon_reservation_ends_at',
-                Carbon::parse($request->input('afternoon_reservation_ends_at'))->format('H:m:s')
+                Carbon::parse($request->input('afternoon_reservation_ends_at'))->format('H:i:s')
             );
+        
+//        dd($request->all());
         $room = SurgicalRoom::create($request->all());
 
         $message = array(
