@@ -5,7 +5,7 @@ namespace HUAC\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Route;
 
-class SurgerySchedulingRequest extends FormRequest
+class SurgeryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

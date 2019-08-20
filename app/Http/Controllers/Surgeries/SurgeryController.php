@@ -1,15 +1,17 @@
 <?php
 
-namespace HUAC\Http\Controllers\Surgery;
+namespace HUAC\Http\Controllers\Surgeries;
 
 use HUAC\Exceptions\ViewNotFoundException;
 use HUAC\Http\Controllers\Controller;
-use HUAC\Http\Requests\SurgerySchedulingRequest;
+use HUAC\Http\Requests\SurgeryRequest;
 use HUAC\Models\Anesthesia;
+use HUAC\Models\Patient;
 use HUAC\Models\Procedure;
 use HUAC\Models\Surgeon;
 use HUAC\Models\Surgery;
 use HUAC\Models\SurgeryClassification;
+use HUAC\Models\Views\Surgeries;
 use HUAC\Services\CreateSurgeryService;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
@@ -69,7 +71,7 @@ class SurgeryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SurgerySchedulingRequest $request)
+    public function store(SurgeryRequest $request)
     {
         $surgery = $this->surgeryService->store($request);
 
@@ -107,13 +109,15 @@ class SurgeryController extends Controller
         $classifications = SurgeryClassification::all();
         $anesthetics = Anesthesia::all();
         $surgeons = Surgeon::all();
+        $patient = Patient::find($surgery->id);
 
         return view('surgeries.edit')->with([
             'procedures'      => $procedures,
             'classifications' => $classifications,
             'anesthetics'     => $anesthetics,
             'surgeons'        => $surgeons,
-            'surgery'         => $surgery
+            'surgery'         => $surgery,
+            'patient'         => $patient
         ]);
     }
 
@@ -124,9 +128,11 @@ class SurgeryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SurgeryRequest $request, Surgery $surgery)
     {
-        //
+        $surgery = $this->surgeryService->update($request, $surgery);
+
+        return redirect()->route('surgeries.index');
     }
 
     /**

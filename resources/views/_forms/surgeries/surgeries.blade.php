@@ -142,7 +142,7 @@
                 @for($i = 1; $i <= 12; $i++)
                     <option value="{{ $i }}"
                         @if(isset($surgery))
-                            @if($surgery->estimated_duration == $i)
+                            @if($surgery->estimated_duration_time == $i)
                                 selected
                             @endif
                         @else
@@ -165,21 +165,24 @@
                     id="classification_id"
                     class="form-control @error('name') validation-error @enderror ">
                 <option value="">Classifique esta cirurgia:</option>
-                @foreach($classifications as $classification)
-                    @if(isset($surgery))
+                @if(isset($surgery))
+                    @foreach($classifications as $classification)
                         @if($surgery->surgery_classification_id == $classification->id)
-                            <option value="{{ $classification->id }} selected">{{ $classification->name }}</option>
+                            <option value="{{ $classification->id }}" selected>{{ $classification->name }}</option>
                         @else
                             <option value="{{ $classification->id }}"> {{ $classification->name }}</option>
                         @endif
-                    @else
+                    @endforeach
+                @else
+                    @foreach($classifications as $classification)
                         @if(old('surgery_classification_id') == $classification->id)
                             <option value="{{ $classification->id }}" selected> {{ $classification->name }}</option>
                         @else
                             <option value="{{ $classification->id }}"> {{ $classification->name }}</option>
                         @endif
-                    @endif
-                @endforeach
+                    @endforeach
+                @endif
+
             </select>
             @component('_components.field-error', [
                 'errors' => $errors,
@@ -189,13 +192,14 @@
         </div>
         <div class="form-group">
             <label for="anesthesia">Anestesia:</label>
-            <select name="anesthesia_id"
+            <select name="anesthesia_id[]"
                     id="anesthesia"
+                    multiple="multiple"
                     class="form-control @error('anesthesia_id') validation-error @enderror ">
                 <option value="">Selecione a anestesia:</option>
                 @foreach($anesthetics as $anesthesia)
                     @if(isset($surgery))
-                        @if($surger->anesthesia_id == $anesthesia->id)
+                        @if($surgery->hasAnesthesia($anesthesia->id))
                             <option value="{{ $anesthesia->id }}" selected> {{ $anesthesia->name }}</option>
                         @else
                             <option value="{{ $anesthesia->id }}"> {{ $anesthesia->name }}</option>
@@ -225,7 +229,7 @@
                 <option value="0">Selecione o cirurgião principal:</option>
                 @if(isset($surgery))
                     @foreach($surgeons as $surgeon)
-                        @if(($surgery->headSurgeon->surgeon_id == $surgeon->id) or (old('head_surgeon') == $surgeon->id))
+                        @if(($surgery->headSurgeon()->first()->id == $surgeon->id) or (old('head_surgeon') == $surgeon->id))
                             <option value="{{ $surgeon->id }}" selected>{{ $surgeon->name }}</option>
                         @else
                             <option value="{{ $surgeon->id }}">{{ $surgeon->name }}</option>
@@ -253,9 +257,9 @@
                     class="form-control @error('assistant_surgeon') validation-error @enderror "
                     id="assistant-surgeon">
                 <option value="0">Selecione o cirurgião auxiliar:</option>
-                @if(isset($surgery) && $surgery->assistantSurgeon != null)
+                @if(isset($surgery) && $surgery->assistantSurgeon()->first() != null)
                     @foreach($surgeons as $surgeon)
-                        @if($surgery->assistantSurgeon->surgeon_id == $surgeon->id)
+                        @if($surgery->assistantSurgeon()->first()->id == $surgeon->id)
                             <option value="{{ $surgeon->id }}" selected>{{ $surgeon->name }}</option>
                         @else
                             <option value="{{ $surgeon->id }}">{{ $surgeon->name }}</option>

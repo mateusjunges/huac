@@ -5,7 +5,7 @@ use HUAC\Http\Controllers\ACL\GroupsController;
 use HUAC\Http\Controllers\ACL\UserGroupsController;
 use HUAC\Http\Controllers\ACL\UserPermissionsController;
 use HUAC\Http\Controllers\ACL\UsersController;
-use HUAC\Http\Controllers\Surgery\SurgeryController;
+use HUAC\Http\Controllers\Surgeries\SurgeryController;
 use HUAC\Http\Controllers\Room\RoomsController;
 use HUAC\Http\Controllers\HomeController;
 use HUAC\Http\Controllers\ACL\GroupsPermissionsController;

@@ -25,6 +25,10 @@ $(document).ready(function() {
             name: "assistant-surgeon",
             placeholder: "Selecione o cirurgião auxiliar",
         },
+        {
+            name: "anesthesia",
+            placeholder: "Selecione as anestesias desta cirurgia"
+        }
     ];
 
     select2_fields.forEach((field) => {
