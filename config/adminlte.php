@@ -109,6 +109,10 @@ return [
 
     'menu' => [
         [
+            'text'  => 'Agendar',
+            'route' => 'surgeries.scheduling'
+        ],
+        [
             'icon'    => 'list',
             'text'    => 'Cirurgias',
             'submenu' => [

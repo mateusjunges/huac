@@ -18,6 +18,9 @@ $(document).ready(function () {
 
     // Global consts
     const defaultRoom = 1;
+    const headers = {
+        'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr('content'),
+    };
     // End global consts
 
     /**
@@ -34,6 +37,7 @@ $(document).ready(function () {
                 'start': fullCalendar.fullCalendar('getView').intervalStart.format(),
                 'end': fullCalendar.fullCalendar('getView').intervalEnd.format()
             },
+            headers: headers,
             async: false,
             success: function (response) {
                 _events[room_id] = null;
@@ -90,6 +94,7 @@ $(document).ready(function () {
                     'cirurgia_id': surgery_id,
                     'event_id': event_id,
                 },
+                headers: headers,
                 success: function (response) {
                     if (response.code === 200){
                         if (response.availability === false)
@@ -129,6 +134,7 @@ $(document).ready(function () {
             url: '/verificar-reservas/mudar-sala',
             method: 'get',
             async: false,
+            headers: headers,
             success: function (response) {
                 if (response.code === 200){
                     if (response.can_schedule === true)
@@ -157,6 +163,7 @@ $(document).ready(function () {
                 'sala_id': eventConfig.data('room'),
             },
             async: false,
+            headers: headers,
             success: function (response) {
                 if (response.code === 200){
                     if (response.can_schedule === true)
@@ -182,6 +189,7 @@ $(document).ready(function () {
             url: '/store-event',
             async: false,
             method: 'post',
+            headers: headers,
             data: {
                 'start': event.start,
                 'event_end': event.end,
@@ -224,6 +232,7 @@ $(document).ready(function () {
                 '_method': 'put',
                 'newdate': start,
             },
+            headers: headers,
             success: function (response) {
                 swal({
                     icon: response.icon,
@@ -258,6 +267,7 @@ $(document).ready(function () {
             url: '/verifica-reagendamentos/'+eventId,
             method: 'get',
             async: false,
+            headers: headers,
             success: function (response) {
                 if (response.code == 200){
                     numberOfReschedules = parseInt(response.quantidade);
