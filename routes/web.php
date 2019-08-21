@@ -5,6 +5,7 @@ use HUAC\Http\Controllers\ACL\GroupsController;
 use HUAC\Http\Controllers\ACL\UserGroupsController;
 use HUAC\Http\Controllers\ACL\UserPermissionsController;
 use HUAC\Http\Controllers\ACL\UsersController;
+use HUAC\Http\Controllers\Scheduling\SchedulingController;
 use HUAC\Http\Controllers\Surgeries\SurgeryController;
 use HUAC\Http\Controllers\Room\RoomsController;
 use HUAC\Http\Controllers\HomeController;
@@ -37,6 +38,7 @@ Route::group(['middleware' => 'auth'], function (){
     ]);
     Route::get('groups/{group}/permissions', [GroupsPermissionsController::class, 'index'])->name('groups.permissions');
 
-
     Route::resource('waiting-list', WaitingListController::class);
+
+    Route::get('scheduling', SchedulingController::class)->name('surgeries.scheduling');
 });
