@@ -1,0 +1,78 @@
+.form-errors-change-status{
+    color: #ff0000;
+}
+
+/*
+Campo busca no calendário
+*/
+
+.box-1{
+    width: 100%;
+    height: 30px;
+    margin: 0 auto 1%;
+    float: right;
+    /*margin-bottom: 2%;*/
+}
+
+.row .col-md-9 .box-1 .container-1{
+    width: 100%;
+    margin: 0 auto;
+}
+.container-1 input#search{
+    width: 100%;
+    height: 30px;
+    background: #ffffff;
+    border: none;
+    margin-right: 20px;
+    font-size: 10pt;
+    float: left;
+    color: black;
+    padding-left: 45px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+
+    -webkit-transition: background .55s ease;
+    -moz-transition: background .55s ease;
+    -ms-transition: background .55s ease;
+    -o-transition: background .55s ease;
+    transition: background .55s ease;
+}
+.container-1 input#goToDate{
+    width: 100%;
+    height: 30px;
+    background: #ffffff;
+    border: none;
+    margin-right: 20px;
+    font-size: 10pt;
+    float: left;
+    color: black;
+    padding-left: 45px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+
+    -webkit-transition: background .55s ease;
+    -moz-transition: background .55s ease;
+    -ms-transition: background .55s ease;
+    -o-transition: background .55s ease;
+    transition: background .55s ease;
+}
+.container-1 .icon{
+    position: absolute;
+    margin-left: 7px;
+    margin-top: 5px;
+    z-index: 1;
+    white-space: nowrap;
+
+}
+.container-1 input#search:hover, .container-1 input#search:focus, .container-1 input#search:active{
+    outline:none;
+    border: 1px solid dodgerblue;
+    background: #ffffff;
+}
+.row .col-md-3 button{
+    margin: 0 auto;
+    width: 100%;
+
+}

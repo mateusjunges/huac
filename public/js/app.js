@@ -1688,167 +1688,15 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateSurgeryComponent.vue?vue&type=script&lang=js&":
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SurgeriesToBeScheduled.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CreateSurgeryComponent.vue?vue&type=script&lang=js& ***!
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/SurgeriesToBeScheduled.vue?vue&type=script&lang=js& ***!
   \*********************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(process) {//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -1888,316 +1736,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "CreateSurgeryComponent",
-  props: {},
+  name: "SurgeriesToBeScheduled",
+  props: {
+    surgeriesWithoutMaterials: Array
+  },
   data: function data() {
-    return {
-      //Environment variables:
-      APP_URL: process.env.APP_URL,
-      patientNameErrors: "",
-      medicalRecordErrors: "",
-      motherNameErrors: "",
-      birthdayAtErrors: "",
-      genderErrors: "",
-      procedureErrors: "",
-      estimatedDurationErrors: "",
-      classificationErrors: "",
-      anestheticsErrors: "",
-      headSurgeonErrors: "",
-      assistantSurgeonErrors: "",
-      materialsErrors: "",
-      observationErrors: "",
-      anestheticEvaluationErrors: "",
-      //Form variables for validation:
-      name: '',
-      medicalRecord: '',
-      birthdayAt: '',
-      motherName: '',
-      patientGender: '',
-      procedure: '',
-      duration: '',
-      classification: '',
-      anesthesia: '',
-      headSurgeon: '',
-      assistantSurgeon: '',
-      materials: '',
-      observation: '',
-      anestheticEvaluation: '',
-      validated: false,
-      estimatedDuration: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
-      genderList: [{
-        name: 'Masculino',
-        value: 'M'
-      }, {
-        name: 'Prefiro não dizer',
-        value: 'O'
-      }, {
-        name: 'Feminino',
-        value: 'F'
-      }],
-      procedures: [],
-      anesthetics: [],
-      surgeons: [],
-      classifications: []
-    };
+    return {};
   },
-  methods: {
-    validateFullName: function validateFullName(name) {
-      var regex = /^[a-zA-Z]+ [a-zA-Z]+.[a-zA-Z\s]*$/;
-      return regex.test(name);
-    },
-    getProcedures: function getProcedures() {
-      var _this = this;
-
-      axios.get('/api/procedures').then(function (response) {
-        _this.procedures = response.data.data;
-      });
-    },
-    getAnesthetics: function getAnesthetics() {
-      var _this2 = this;
-
-      axios.get('/api/anesthetics').then(function (response) {
-        _this2.anesthetics = response.data.data;
-      });
-    },
-    getSurgeons: function getSurgeons() {
-      var _this3 = this;
-
-      axios.get('/api/surgeons').then(function (response) {
-        _this3.surgeons = response.data.data;
-      });
-    },
-    getClassifications: function getClassifications() {
-      var _this4 = this;
-
-      axios.get('/api/classifications').then(function (response) {
-        _this4.classifications = response.data.data;
-      });
-    }
-  },
-  mounted: function mounted() {
-    this.getProcedures();
-    this.getAnesthetics();
-    this.getSurgeons();
-    this.getClassifications();
-  },
-  computed: {
-    /**
-     * Validate the patient name field.
-     * @returns {string}
-     */
-    patientNameClass: function patientNameClass() {
-      if (!this.validateFullName(this.name)) {
-        this.validated = false;
-        this.patientNameErrors = "Informe o nome completo, sem pontos ou traços!";
-        return 'validation-error';
-      } else {
-        if (this.name.length < 7) {
-          this.validated = false;
-          this.patientNameErrors = "Insira pelo menos 7 caracteres!";
-          return 'validation-error';
-        } else {
-          this.validated = true;
-          this.patientNameErrors = "";
-          return 'validated';
-        }
-      }
-    },
-
-    /**
-     * Validate the medical record field;
-     * @returns {string}
-     */
-    medicalRecordClass: function medicalRecordClass() {
-      if (this.medicalRecord.length < 3) {
-        this.validated = false;
-        this.medicalRecordErrors = "Insira pelo menos 3 caracteres";
-        return 'validation-error';
-      } else {
-        this.validated = true;
-        this.medicalRecordErrors = "";
-        return 'validated';
-      }
-    },
-
-    /**
-     * Validate the mother name field.
-     * @returns {string}
-     */
-    motherNameClass: function motherNameClass() {
-      if (!this.validateFullName(this.motherName)) {
-        this.validated = false;
-        return 'validation-error';
-      } else {
-        if (this.motherName.length < 5) {
-          this.validated = false;
-          return 'validation-error';
-        } else {
-          this.validated = true;
-          return 'validated';
-        }
-      }
-    },
-
-    /**
-     * Validate the patient birth date
-     * @returns {string}
-     */
-    birthdayAtClass: function birthdayAtClass() {
-      // TODO: Verify all possible validation rules
-      if (this.birthdayAt.length < 8) {
-        this.validated = false;
-        this.birthdayAtErrors = "Por favor, informe a data de nascimento completa!";
-        return 'validation-error';
-      } else {
-        this.validated = true;
-        this.birthdayAtErrors = "";
-        return 'validated';
-      }
-    },
-
-    /**
-     * Validate the patient gender.
-     * @returns {string}
-     */
-    genderClass: function genderClass() {
-      if (this.patientGender === "") {
-        this.validated = false;
-        this.genderErrors = "Por favor, selecione o gênero do paciente";
-        return 'validation-error';
-      } else {
-        this.validated = true;
-        this.genderErrors = "";
-        return 'validated';
-      }
-    },
-
-    /**
-     * Validate the surgical procedure.
-     * @returns {string}
-     */
-    surgicalProcedureClass: function surgicalProcedureClass() {
-      if (this.procedure === "") {
-        this.validated = false;
-        this.procedureErrors = "Por favor, selecione o procedimento cirúrgico a ser realizado!";
-        return 'validation-error';
-      } else {
-        this.validated = true;
-        this.procedureErrors = "";
-        return 'validated';
-      }
-    },
-
-    /**
-     * Validate the surgery estimated duration.
-     * @returns {string}
-     */
-    estimatedDurationClass: function estimatedDurationClass() {
-      if (this.duration === '') {
-        this.validated = false;
-        this.estimatedDurationErrors = "Por vafor, selecione a duração estimada da cirurgia!";
-        return 'validation-error';
-      } else {
-        this.validated = true;
-        this.estimatedDurationErrors = "";
-        return 'validated';
-      }
-    },
-
-    /**
-     * Validate the surgery classification.
-     * @returns {string}
-     */
-    classificationClass: function classificationClass() {
-      if (this.classification === "") {
-        this.validated = false;
-        this.classificationErrors = "Por favor, informe a classificação desta cirurgi!";
-        return 'validation-error';
-      } else {
-        this.validated = true;
-        this.classificationErrors = "";
-        return 'validated';
-      }
-    },
-
-    /**
-     * Validate the surgery anesthesia.
-     * @returns {string}
-     */
-    anestheticsClass: function anestheticsClass() {
-      if (this.anesthesia === "") {
-        this.validated = false;
-        this.anestheticsErrors = "Por favor, informe a anestesia para esta cirurgia!";
-        return 'validation-error';
-      } else {
-        this.validated = true;
-        this.anestheticsErrors = "";
-        return 'validated';
-      }
-    },
-
-    /**
-     * Validate the head surgeon field.
-     * @returns {string}
-     */
-    headSurgeonClass: function headSurgeonClass() {
-      if (this.headSurgeon === "") {
-        this.validated = false;
-        this.headSurgeonErrors = "Por favor, selecione o cirurgião principal!";
-        return 'validation-error';
-      } else {
-        this.validated = true;
-        this.headSurgeonErrors = "";
-        return 'validated';
-      }
-    },
-
-    /**
-     * Validate the assistant surgeon field.
-     * @returns {string}
-     */
-    assistantSurgeonClass: function assistantSurgeonClass() {
-      return 'validated';
-    },
-
-    /**
-     * Validate the materials field.
-     * @returns {string}
-     */
-    materialsClass: function materialsClass() {
-      if (this.materials === "") {
-        this.validated = false;
-        this.materialsErrors = "Por favor, informe os materiais necessários para esta cirurgia!";
-        return 'validation-error';
-      } else if (this.materials.length < 10) {
-        this.validated = false;
-        this.materialsErrors = "Informe pelo menos 10 caracteres!";
-        return 'validation-error';
-      } else {
-        this.validated = false;
-        this.materialsErrors = "";
-        return 'validated';
-      }
-    },
-
-    /**
-     * Validate the observation field.
-     * @returns {string}
-     */
-    observationClass: function observationClass() {
-      return 'validated';
-    },
-
-    /**
-     * Validate the anesthetic evaluation field
-     * @returns {string}
-     */
-    anestheticEvaluationClass: function anestheticEvaluationClass() {
-      if (this.anestheticEvaluation.length === 0) return 'validated';else {}
-    }
-  }
+  methods: {}
 });
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../node_modules/process/browser.js */ "./node_modules/process/browser.js")))
 
 /***/ }),
 
@@ -7417,25 +6964,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 }));
 //# sourceMappingURL=bootstrap.js.map
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=scss&":
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/lib/loader.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=scss& ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, ".validation-error[data-v-9aa55c62] {\n  border: solid 1px #ff0000;\n}\n.validated[data-v-9aa55c62] {\n  border: solid 1px #00a65a;\n}", ""]);
-
-// exports
 
 
 /***/ }),
@@ -38792,36 +38320,6 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=scss&":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/lib/loader.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=scss& ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(/*! !../../../node_modules/css-loader!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-2!../../../node_modules/sass-loader/lib/loader.js??ref--7-3!../../../node_modules/vue-loader/lib??vue-loader-options!./CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=scss& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=scss&");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/passport/AuthorizedClients.vue?vue&type=style&index=0&id=397d14ca&scoped=true&lang=css&":
 /*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/passport/AuthorizedClients.vue?vue&type=style&index=0&id=397d14ca&scoped=true&lang=css& ***!
@@ -39496,9 +38994,9 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateSurgeryComponent.vue?vue&type=template&id=9aa55c62&scoped=true&":
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SurgeriesToBeScheduled.vue?vue&type=template&id=66126472&scoped=true&":
 /*!*************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CreateSurgeryComponent.vue?vue&type=template&id=9aa55c62&scoped=true& ***!
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/SurgeriesToBeScheduled.vue?vue&type=template&id=66126472&scoped=true& ***!
   \*************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -39511,673 +39009,66 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "box box-success" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c("div", { staticClass: "box-body" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-6" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "patient-name" } }, [
-              _vm._v("Nome do paciente:")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.name,
-                  expression: "name"
-                }
-              ],
-              staticClass: "form-control",
-              class: _vm.patientNameClass,
-              attrs: {
-                type: "text",
-                id: "patient-name",
-                name: "name",
-                placeholder: "Informe o nome do paciente"
-              },
-              domProps: { value: _vm.name },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.name = $event.target.value
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "text-danger" }, [
-              _vm._v(_vm._s(this.patientNameErrors))
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "medical-record" } }, [
-              _vm._v("Número do prontuário:")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.medicalRecord,
-                  expression: "medicalRecord"
-                }
-              ],
-              staticClass: "form-control",
-              class: _vm.medicalRecordClass,
-              attrs: {
-                type: "text",
-                name: "medical_record",
-                id: "medical-record",
-                placeholder: "Informe o prontuário do paciente"
-              },
-              domProps: { value: _vm.medicalRecord },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.medicalRecord = $event.target.value
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "text-danger" }, [
-              _vm._v(_vm._s(this.medicalRecordErrors))
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "mother-name" } }, [
-              _vm._v("Nome da mãe:")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.motherName,
-                  expression: "motherName"
-                }
-              ],
-              staticClass: "form-control",
-              class: _vm.motherNameClass,
-              attrs: {
-                type: "text",
-                id: "mother-name",
-                name: "mother_name",
-                placeholder: "Informe o nome da mãe do paciente"
-              },
-              domProps: { value: _vm.motherName },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.motherName = $event.target.value
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "text-danger" }, [
-              _vm._v(_vm._s(this.motherNameErrors))
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "birthday-at" } }, [
-              _vm._v("Data de nascimento:")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.birthdayAt,
-                  expression: "birthdayAt"
-                }
-              ],
-              staticClass: "form-control",
-              class: _vm.birthdayAtClass,
-              attrs: {
-                type: "date",
-                name: "birthday_at",
-                placeholder: "Informe a data de nascimento:",
-                id: "birthday-at"
-              },
-              domProps: { value: _vm.birthdayAt },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.birthdayAt = $event.target.value
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "text-danger" }, [
-              _vm._v(_vm._s(this.birthdayAtErrors))
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "gender" } }, [_vm._v("Gênero:")]),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.patientGender,
-                    expression: "patientGender"
-                  }
-                ],
-                staticClass: "form-control",
-                class: _vm.genderClass,
-                attrs: { name: "gender", id: "gender" },
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.patientGender = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  }
-                }
-              },
-              [
-                _c("option", { attrs: { value: "" } }, [
-                  _vm._v("Selecione o gênero:")
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.genderList, function(gender) {
-                  return _c("option", { domProps: { value: gender.id } }, [
-                    _vm._v(_vm._s(gender.name))
-                  ])
-                })
-              ],
-              2
-            ),
-            _vm._v(" "),
-            _c("span", { staticClass: "text-danger" }, [
-              _vm._v(_vm._s(this.genderErrors))
-            ])
-          ]),
-          _vm._v(" "),
-          _vm._m(1),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "surgical-procedure" } }, [
-              _vm._v("Procedimento cirúrgico:")
-            ]),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.procedure,
-                    expression: "procedure"
-                  }
-                ],
-                staticClass: "form-control",
-                class: _vm.surgicalProcedureClass,
-                attrs: { name: "procedure_id", id: "surgical-procedure" },
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.procedure = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  }
-                }
-              },
-              [
-                _c("option", { attrs: { value: "" } }, [
-                  _vm._v("Selecione o procedimento cirúrgico:")
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.procedures, function(procedure) {
-                  return _c("option", { domProps: { value: procedure.id } }, [
-                    _vm._v(_vm._s(procedure.name))
-                  ])
-                })
-              ],
-              2
-            ),
-            _vm._v(" "),
-            _c("span", { staticClass: "text-danger" }, [
-              _vm._v(_vm._s(this.procedureErrors))
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "estimated-duration" } }, [
-              _vm._v("Tempo de duração estimado:")
-            ]),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.duration,
-                    expression: "duration"
-                  }
-                ],
-                staticClass: "form-control",
-                class: _vm.estimatedDurationClass,
-                attrs: { name: "estimated_duration", id: "estimated-duration" },
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.duration = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  }
-                }
-              },
-              [
-                _c("option", { attrs: { value: "" } }, [
-                  _vm._v("Selecione o tempo de duração estimado:")
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.estimatedDuration, function(duration) {
-                  return _c("option", { domProps: { value: duration } }, [
-                    _vm._v(_vm._s(duration))
-                  ])
-                })
-              ],
-              2
-            ),
-            _vm._v(" "),
-            _c("span", { staticClass: "text-danger" }, [
-              _vm._v(_vm._s(this.estimatedDurationErrors))
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "classification_id" } }, [
-              _vm._v("Classificação:")
-            ]),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.classification,
-                    expression: "classification"
-                  }
-                ],
-                staticClass: "form-control",
-                class: _vm.classificationClass,
-                attrs: { name: "classification_id", id: "classification_id" },
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.classification = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  }
-                }
-              },
-              [
-                _c("option", { attrs: { value: "" } }, [
-                  _vm._v("Classifique esta cirurgia:")
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.classifications, function(classification) {
-                  return _c(
-                    "option",
-                    { domProps: { value: classification.id } },
-                    [_vm._v(_vm._s(classification.name))]
-                  )
-                })
-              ],
-              2
-            ),
-            _vm._v(" "),
-            _c("span", { staticClass: "text-danger" }, [
-              _vm._v(_vm._s(this.classificationErrors))
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "anesthesia" } }, [
-              _vm._v("Anestesia:")
-            ]),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.anesthesia,
-                    expression: "anesthesia"
-                  }
-                ],
-                staticClass: "form-control",
-                class: _vm.anestheticsClass,
-                attrs: { name: "anesthesia_id", id: "anesthesia" },
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.anesthesia = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  }
-                }
-              },
-              [
-                _c("option", { attrs: { value: "" } }, [
-                  _vm._v("Selecione a anestesia:")
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.anesthetics, function(anesthesia) {
-                  return _c("option", { domProps: { value: anesthesia.id } }, [
-                    _vm._v(_vm._s(anesthesia.name))
-                  ])
-                })
-              ],
-              2
-            ),
-            _vm._v(" "),
-            _c("span", { staticClass: "text-danger" }, [
-              _vm._v(_vm._s(this.anestheticsErrors))
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-6" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "head-surgeon" } }, [
-              _vm._v("Cirurgião principal:")
-            ]),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.headSurgeon,
-                    expression: "headSurgeon"
-                  }
-                ],
-                staticClass: "form-control",
-                class: _vm.headSurgeonClass,
-                attrs: { name: "head_surgeon", id: "head-surgeon" },
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.headSurgeon = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  }
-                }
-              },
-              [
-                _c("option", { attrs: { value: "" } }, [
-                  _vm._v("Selecione o cirurgião principal:")
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.surgeons, function(surgeon) {
-                  return _c("option", { domProps: { value: surgeon.id } }, [
-                    _vm._v(_vm._s(surgeon.name))
-                  ])
-                })
-              ],
-              2
-            ),
-            _vm._v(" "),
-            _c("span", { staticClass: "text-danger" }, [
-              _vm._v(_vm._s(this.headSurgeonErrors))
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "assistant-surgeon" } }, [
-              _vm._v("Cirurgião auxiliar:")
-            ]),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.assistantSurgeon,
-                    expression: "assistantSurgeon"
-                  }
-                ],
-                staticClass: "form-control",
-                class: _vm.assistantSurgeonClass,
-                attrs: { name: "assistant_surgeon", id: "assistant-surgeon" },
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.assistantSurgeon = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  }
-                }
-              },
-              [
-                _c("option", { attrs: { value: "" } }, [
-                  _vm._v("Selecione o cirurgião auxiliar:")
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.surgeons, function(surgeon) {
-                  return _c("option", { domProps: { value: surgeon.id } }, [
-                    _vm._v(_vm._s(surgeon.name))
-                  ])
-                })
-              ],
-              2
-            ),
-            _vm._v(" "),
-            _c("span", { staticClass: "text-danger" }, [
-              _vm._v(_vm._s(this.assistantSurgeonErrors))
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "materials" } }, [
-              _vm._v("Materiais solicitados:")
-            ]),
-            _vm._v(" "),
-            _c("textarea", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.materials,
-                  expression: "materials"
-                }
-              ],
-              staticClass: "form-control",
-              class: _vm.materialsClass,
-              attrs: {
-                name: "materials",
-                id: "materials",
-                cols: "30",
-                placeholder: "Informe os materiais solicitados:",
-                rows: "10"
-              },
-              domProps: { value: _vm.materials },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.materials = $event.target.value
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "text-danger" }, [
-              _vm._v(_vm._s(this.materialsErrors))
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "observation" } }, [
-              _vm._v("Observação:")
-            ]),
-            _vm._v(" "),
-            _c("textarea", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.observation,
-                  expression: "observation"
-                }
-              ],
-              staticClass: "form-control",
-              class: _vm.observationClass,
-              attrs: {
-                id: "observation",
-                cols: "30",
-                rows: "5",
-                placeholder: "Possui alguma observação?",
-                name: "observation"
-              },
-              domProps: { value: _vm.observation },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.observation = $event.target.value
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "text-danger" }, [
-              _vm._v(_vm._s(this.observationErrors))
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "anesthetic-evaluation" } }, [
-              _vm._v("Avaliação anestésica:")
-            ]),
-            _vm._v(" "),
-            _c("textarea", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.anestheticEvaluation,
-                  expression: "anestheticEvaluation"
-                }
-              ],
-              staticClass: "form-control",
-              class: _vm.anestheticEvaluationClass,
-              attrs: {
-                id: "anesthetic-evaluation",
-                cols: "30",
-                rows: "5",
-                placeholder: "Avaliação anestésica",
-                name: "observation"
-              },
-              domProps: { value: _vm.anestheticEvaluation },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.anestheticEvaluation = $event.target.value
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "text-danger" }, [
-              _vm._v(_vm._s(this.anestheticEvaluationErrors))
-            ])
-          ])
-        ])
-      ]),
+  return _c("div", [
+    _c("div", { staticClass: "box box-solid" }, [
+      _vm._m(0),
       _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "box-body" }, [
         _c(
-          "button",
-          {
-            staticClass: "btn btn-success btn-lg btn-block",
-            attrs: { disabled: !_vm.validated }
-          },
-          [_vm._v("Cadastrar")]
+          "div",
+          { attrs: { id: "external-events" } },
+          [
+            _vm._l(_vm.surgeriesWithoutMaterials, function(surgery) {
+              return _c(
+                "div",
+                {
+                  staticClass:
+                    "fc-event newCirurgia external-event\n                                    bg-red ui-draggable\n                                    ui-draggable-handle",
+                  staticStyle: { border: "none" },
+                  attrs: {
+                    "data-id": surgery.id,
+                    "data-title": surgery._paciente.nome,
+                    "data-color": "#ff0000",
+                    "data-estimated": surgery.estimated_duration_time,
+                    id: "surgery" + surgery.id
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(surgery.patient.name) +
+                      "\n                "
+                  )
+                ]
+              )
+            }),
+            _vm._v(" "),
+            _vm._l(this.$attrs.surgeries, function(surgery) {
+              return _c(
+                "div",
+                {
+                  staticClass:
+                    "fc-event new-surgery external-event\n                                    bg-yellow ui-draggable\n                                    ui-draggable-handle",
+                  staticStyle: { border: "none" },
+                  attrs: {
+                    "data-id": surgery.id,
+                    "data-title": surgery.patient.name,
+                    "data-color": "#ff0000",
+                    "data-estimado": surgery.estimated_duration_time,
+                    id: "surgery" + surgery.id
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(surgery.patient.name) +
+                      "\n                "
+                  )
+                ]
+              )
+            })
+          ],
+          2
         )
       ])
     ])
@@ -40188,16 +39079,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "box-header" }, [
-      _c("h4", [_vm._v("Nova cirurgia")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-center" }, [
-      _c("b", [_vm._v("Dados da cirurgia")])
+    return _c("div", { staticClass: "box-header with-border" }, [
+      _c("h4", { staticClass: "box-title" }, [_vm._v("Novas Cirurgias")])
     ])
   }
 ]
@@ -53435,7 +52318,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 dotenv__WEBPACK_IMPORTED_MODULE_1___default.a.config();
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('create-surgery', __webpack_require__(/*! @components/CreateSurgeryComponent.vue */ "./resources/js/components/CreateSurgeryComponent.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('schedule-surgeries', __webpack_require__(/*! @components/SurgeriesToBeScheduled.vue */ "./resources/js/components/SurgeriesToBeScheduled.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('passport-clients', __webpack_require__(/*! @passport/Clients.vue */ "./resources/js/components/passport/Clients.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('passport-authorized-clients', __webpack_require__(/*! @passport/AuthorizedClients.vue */ "./resources/js/components/passport/AuthorizedClients.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('passport-personal-access-tokens', __webpack_require__(/*! @passport/PersonalAccessTokens.vue */ "./resources/js/components/passport/PersonalAccessTokens.vue")["default"]);
@@ -53503,20 +52386,18 @@ if (token) {
 
 /***/ }),
 
-/***/ "./resources/js/components/CreateSurgeryComponent.vue":
+/***/ "./resources/js/components/SurgeriesToBeScheduled.vue":
 /*!************************************************************!*\
-  !*** ./resources/js/components/CreateSurgeryComponent.vue ***!
+  !*** ./resources/js/components/SurgeriesToBeScheduled.vue ***!
   \************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _CreateSurgeryComponent_vue_vue_type_template_id_9aa55c62_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateSurgeryComponent.vue?vue&type=template&id=9aa55c62&scoped=true& */ "./resources/js/components/CreateSurgeryComponent.vue?vue&type=template&id=9aa55c62&scoped=true&");
-/* harmony import */ var _CreateSurgeryComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateSurgeryComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/CreateSurgeryComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _CreateSurgeryComponent_vue_vue_type_style_index_0_id_9aa55c62_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=scss& */ "./resources/js/components/CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=scss&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
+/* harmony import */ var _SurgeriesToBeScheduled_vue_vue_type_template_id_66126472_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SurgeriesToBeScheduled.vue?vue&type=template&id=66126472&scoped=true& */ "./resources/js/components/SurgeriesToBeScheduled.vue?vue&type=template&id=66126472&scoped=true&");
+/* harmony import */ var _SurgeriesToBeScheduled_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SurgeriesToBeScheduled.vue?vue&type=script&lang=js& */ "./resources/js/components/SurgeriesToBeScheduled.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -53524,67 +52405,51 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _CreateSurgeryComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _CreateSurgeryComponent_vue_vue_type_template_id_9aa55c62_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _CreateSurgeryComponent_vue_vue_type_template_id_9aa55c62_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _SurgeriesToBeScheduled_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SurgeriesToBeScheduled_vue_vue_type_template_id_66126472_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SurgeriesToBeScheduled_vue_vue_type_template_id_66126472_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "9aa55c62",
+  "66126472",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/CreateSurgeryComponent.vue"
+component.options.__file = "resources/js/components/SurgeriesToBeScheduled.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/CreateSurgeryComponent.vue?vue&type=script&lang=js&":
+/***/ "./resources/js/components/SurgeriesToBeScheduled.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************!*\
-  !*** ./resources/js/components/CreateSurgeryComponent.vue?vue&type=script&lang=js& ***!
+  !*** ./resources/js/components/SurgeriesToBeScheduled.vue?vue&type=script&lang=js& ***!
   \*************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateSurgeryComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./CreateSurgeryComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateSurgeryComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateSurgeryComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SurgeriesToBeScheduled_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./SurgeriesToBeScheduled.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SurgeriesToBeScheduled.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SurgeriesToBeScheduled_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=scss&":
-/*!**********************************************************************************************************************!*\
-  !*** ./resources/js/components/CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=scss& ***!
-  \**********************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateSurgeryComponent_vue_vue_type_style_index_0_id_9aa55c62_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-2!../../../node_modules/sass-loader/lib/loader.js??ref--7-3!../../../node_modules/vue-loader/lib??vue-loader-options!./CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=scss& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateSurgeryComponent.vue?vue&type=style&index=0&id=9aa55c62&scoped=true&lang=scss&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateSurgeryComponent_vue_vue_type_style_index_0_id_9aa55c62_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateSurgeryComponent_vue_vue_type_style_index_0_id_9aa55c62_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateSurgeryComponent_vue_vue_type_style_index_0_id_9aa55c62_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateSurgeryComponent_vue_vue_type_style_index_0_id_9aa55c62_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateSurgeryComponent_vue_vue_type_style_index_0_id_9aa55c62_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
-
-/***/ }),
-
-/***/ "./resources/js/components/CreateSurgeryComponent.vue?vue&type=template&id=9aa55c62&scoped=true&":
+/***/ "./resources/js/components/SurgeriesToBeScheduled.vue?vue&type=template&id=66126472&scoped=true&":
 /*!*******************************************************************************************************!*\
-  !*** ./resources/js/components/CreateSurgeryComponent.vue?vue&type=template&id=9aa55c62&scoped=true& ***!
+  !*** ./resources/js/components/SurgeriesToBeScheduled.vue?vue&type=template&id=66126472&scoped=true& ***!
   \*******************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateSurgeryComponent_vue_vue_type_template_id_9aa55c62_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./CreateSurgeryComponent.vue?vue&type=template&id=9aa55c62&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateSurgeryComponent.vue?vue&type=template&id=9aa55c62&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateSurgeryComponent_vue_vue_type_template_id_9aa55c62_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SurgeriesToBeScheduled_vue_vue_type_template_id_66126472_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./SurgeriesToBeScheduled.vue?vue&type=template&id=66126472&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SurgeriesToBeScheduled.vue?vue&type=template&id=66126472&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SurgeriesToBeScheduled_vue_vue_type_template_id_66126472_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateSurgeryComponent_vue_vue_type_template_id_9aa55c62_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SurgeriesToBeScheduled_vue_vue_type_template_id_66126472_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -53869,8 +52734,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\alceu\projeto-software-2019\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\alceu\projeto-software-2019\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/mateus/Documents/Projetos/projeto-software-2019/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/mateus/Documents/Projetos/projeto-software-2019/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
