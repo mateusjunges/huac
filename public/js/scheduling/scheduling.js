@@ -745,33 +745,14 @@ $(document).ready(function () {
         }
     });
 
-    $("#sala-1").click(function () {
-        eventConfig.data('room', 1);
-        eventConfig.data('color', '#24872c');
-        getEvents(eventConfig.data('room'));
-        refetchEvents(eventConfig.data('room'));
-        $("#current-room").html("Sala 1");
-    });
-    $("#sala-2").click(function () {
-        eventConfig.data('room', 2);
-        eventConfig.data('color', '#24872c');
-        getEvents(eventConfig.data('room'));
-        refetchEvents(eventConfig.data('room'));
-        $("#current-room").html("Sala 2");
-    });
-    $("#sala-3").click(function () {
-        eventConfig.data('room', 3);
-        eventConfig.data('color', '#24872c');
-        getEvents(eventConfig.data('room'));
-        refetchEvents(eventConfig.data('room'));
-        $("#current-room").html("Sala 3");
-    });
-    $("#sala-4").click(function () {
-        eventConfig.data('room', 4);
-        eventConfig.data('color', '#24872c');
-        getEvents(eventConfig.data('room'));
-        refetchEvents(eventConfig.data('room'));
-        $("#current-room").html("Sala 4");
+    window.surgicalRooms.forEach(function (surgicalRoom) {
+       $("#surgical-room-"+surgicalRoom.id).click(function () {
+           console.log('Room '+surgicalRoom.id);
+           eventConfig.data('room', surgicalRoom.id);
+           eventConfig.data('color', surgicalRoom.color);
+           getEvents(eventConfig.data('room'));
+           refetchEvents(eventConfig.data('room'));
+       });
     });
 
     /**

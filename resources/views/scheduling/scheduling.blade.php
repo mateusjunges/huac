@@ -13,6 +13,10 @@
 
 @endsection
 @section('js')
+    <script>
+        json = document.getElementById('surgical-rooms-json');
+        window.surgicalRooms = JSON.parse(json.value);
+    </script>
     <script src="{{ asset('js/app.js') }}"></script>
     <script src='{{ asset('vendor/fullcalendar/lib/moment.min.js')}}'></script>
     <script src='{{ asset('vendor/fullcalendar/lib/jquery-ui.min.js')}}'></script>
@@ -21,7 +25,7 @@
 @endsection
 
 @section('content')
-
+    <input type="hidden" id="surgical-rooms-json" value="{{ $surgicalRoomsJSON }}">
     <div id="app">
         <input type="hidden" id="csrf" value="{{ csrf_token() }}">
         {{-- Events config --}}
@@ -69,40 +73,37 @@
             </div>
         </div>
         <br>
-{{--        @if(\App\Sala::find(1)->disponivel == false--}}
-{{--            && \App\Sala::find(2)->disponivel == false--}}
-{{--            && \App\Sala::find(3)->disponivel == false--}}
-{{--            && \App\Sala::find(4)->disponivel == false)--}}
-{{--            <div class="row">--}}
-{{--                <div class="col-md-12">--}}
-{{--                    <div class="alert alert-danger box box-danger">--}}
-{{--                        Não existem salas disponíveis para agendamento!--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        @endif--}}
-{{--        <div class="row" id="escolhaSalas">--}}
+        @if(count($surgicalRooms) == 0)
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-danger box box-danger">
+                        Não existem salas disponíveis para agendamento
+                    </div>
+                </div>
+            </div>
+        @endif
+
         <div class="row">
             @for($i = 1; $i <= count($surgicalRooms); $i++)
-                @if($i%4 == 0)
+                @if($i%5 == 0)
                     <div class="row">
                 @endif
                     <div class="col-md-3">
                         <button type="button"
                                 class="btn btn-block"
-                                id="surgical-room-{{$surgicalRooms[$i-1]->id}}"
+                                id="surgical-room-{{ $surgicalRooms[$i-1]->id }}"
                                 data-toggle="tooltip"
+                                data-id="{{ $surgicalRooms[$i-1]->id }}"
                                 data-placement="top"
                                 title="{{ $surgicalRooms[$i-1]->name }}">
                             {{ $surgicalRooms[$i-1]->name }}
                         </button>
                     </div>
-                @if($i%4 == 0)
+                @if($i%5 == 0)
                     </div>
                 @endif
             @endfor
         </div>
-    </div>
     <hr>
         <div class="row">
             <div class="col-md-3">
@@ -110,11 +111,11 @@
                     Adicionar cirurgia de emergência
                 </button>
                 {{-- Vue component --}}
-                <surgeries-to-be-scheduled
-                    :surgeries-without-materials="{{ $surgeriesWithDeniedMaterials }}"
+                <schedule-surgeries
+                    :surgeries-with-denied-materials="{{ $surgeriesWithDeniedMaterials }}"
                     :surgeries="{{ $surgeries }}"
-                    :surgeries-waiting-list="{{ $surgeriesInWaitingList }}"
-                ></surgeries-to-be-scheduled>
+                    :surgeries-in-waiting-list="{{ $surgeriesInWaitingList }}"
+                ></schedule-surgeries>
 
                 <div class="box box-solid">
                     <div class="box-header with-border">
@@ -123,18 +124,16 @@
                     <div class="box-body">
                         <!-- the events -->
                         <div id="external-events" class="listaEspera custom-overflow">
-                            @foreach($surgeriesInWaitingList as $cirurgia_e)
+                            @foreach($surgeriesInWaitingList as $surgeryInWaitingList)
                                 <div class="fc-event newCirurgia external-event
                                         bg-blue ui-draggable
                                         ui-draggable-handle"
                                      style="border: none"
-                                     data-id="{{ $cirurgia_e->id }}"
-                                     data-title="{{ \HUAC\Models\Patient::where('id', '=', $cirurgia_e->paciente_id)->first()->nome }}"
+                                     data-id="{{ $surgeryInWaitingList->id }}"
+                                     data-title="{{ $surgeryInWaitingList->patient->name  }}"
                                      data-color="#ff0000"
-                                     data-start="{{ $cirurgia_e->hora_inicio != null ? $cirurgia_e->hora_inicio : null }}"
-                                     data-estimado="{{ $cirurgia_e->tempo_estimado }}"
-                                     id="cirurgia{{ $cirurgia_e->id }}">
-                                    {{ \HUAC\Models\Patient::where('id', '=', $cirurgia_e->paciente_id)->first()->nome}}
+                                     id="cirurgia{{ $surgeryInWaitingList->id }}">
+                                    {{ $surgeryInWaitingList->patient->name}}
                                 </div>
                             @endforeach
                         </div>

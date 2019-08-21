@@ -22,11 +22,11 @@
                                         bg-yellow ui-draggable
                                         ui-draggable-handle"
                          style="border: none"
-                         v-for="surgery in this.$attrs.surgeries"
+                         v-for="surgery in this.surgeries"
                          :data-id="surgery.id"
                          :data-title="surgery.patient.name"
                          data-color="#ff0000"
-                         :data-estimado="surgery.estimated_duration_time"
+                         :data-estimated="surgery.estimated_duration_time"
                          :id="'surgery'+surgery.id">
                         {{ surgery.patient.name }}
                     </div>
@@ -41,6 +41,8 @@
         name: "SurgeriesToBeScheduled",
         props: {
             surgeriesWithoutMaterials: Array,
+            surgeries: Array,
+            surgeriesInWaitingList: Array
 
         },
         data() {

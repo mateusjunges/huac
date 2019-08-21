@@ -1738,7 +1738,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SurgeriesToBeScheduled",
   props: {
-    surgeriesWithoutMaterials: Array
+    surgeriesWithoutMaterials: Array,
+    surgeries: Array,
+    surgeriesInWaitingList: Array
   },
   data: function data() {
     return {};
@@ -39043,7 +39045,7 @@ var render = function() {
               )
             }),
             _vm._v(" "),
-            _vm._l(this.$attrs.surgeries, function(surgery) {
+            _vm._l(this.surgeries, function(surgery) {
               return _c(
                 "div",
                 {
@@ -39054,7 +39056,7 @@ var render = function() {
                     "data-id": surgery.id,
                     "data-title": surgery.patient.name,
                     "data-color": "#ff0000",
-                    "data-estimado": surgery.estimated_duration_time,
+                    "data-estimated": surgery.estimated_duration_time,
                     id: "surgery" + surgery.id
                   }
                 },
