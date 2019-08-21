@@ -1,0 +1,19 @@
+.table {
+    overflow: scroll;
+    width: 100%;
+}
+.new-user {
+    margin-bottom: 1em;
+    background: #c2c8c2;
+    border-radius: 40px;
+    width: 3em;
+    display: flex;
+    height: 3em;
+    flex-direction: column;
+    justify-content: center;
+}
+.new-user > a {
+    display: inline-block;
+    text-decoration: none;
+    color: #ffffff;
+}

@@ -5,9 +5,9 @@ use HUAC\Http\Controllers\ACL\GroupsController;
 use HUAC\Http\Controllers\ACL\UserGroupsController;
 use HUAC\Http\Controllers\ACL\UserPermissionsController;
 use HUAC\Http\Controllers\ACL\UsersController;
+use HUAC\Http\Controllers\SurgicalRoom\SurgicalRoomController;
 use HUAC\Http\Controllers\Scheduling\SchedulingController;
 use HUAC\Http\Controllers\Surgeries\SurgeryController;
-use HUAC\Http\Controllers\Room\RoomsController;
 use HUAC\Http\Controllers\HomeController;
 use HUAC\Http\Controllers\ACL\GroupsPermissionsController;
 use HUAC\Http\Controllers\WaitingList\WaitingListController;
@@ -30,7 +30,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('users/{user}/groups', [UserGroupsController::class, 'index'])->name('users.groups');
     Route::resource('users', UsersController::class);
     Route::resource('groups', GroupsController::class);
-    Route::resource('rooms', RoomsController::class);
+    Route::resource('rooms', SurgicalRoomController::class);
 
     Route::get('groups/{group}/users', [GroupsUsersController::class, 'users'])->name('groups.users');
     Route::resource('groups', GroupsController::class)->except([

@@ -63,6 +63,29 @@
                 <span>{{ $errors->first('afternoon_reservation_ends_at') }}</span>
             @endif
         </div>
+      <div>
+        <label>Disponibilidade:</label>
+      </div>
+      <div>
+        <input type="radio"
+               id="disponivel" 
+               name="available"
+               value="true">
+        <label for="disponivel">Disponível</label>
+        @if($errors->has('available'))
+                <span>{{ $errors->first('available') }}</span>
+        @endif
+      </div>
+      <div>
+        <input type="radio" 
+               id="bloqueada" 
+               name="available"
+               value="false">
+        <label for="bloqueada">Bloqueada</label>
+        @if($errors->has('available'))
+                <span>{{ $errors->first('available') }}</span>
+        @endif
+      </div>
       <div class="form-group">
           <button class="btn btn-success btn-block">
             @yield('buttonTitle')

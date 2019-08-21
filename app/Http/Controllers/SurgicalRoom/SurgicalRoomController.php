@@ -1,14 +1,17 @@
 <?php
 
-namespace HUAC\Http\Controllers\Room;
+namespace HUAC\Http\Controllers\SurgicalRoom;
 
-use HUAC\Http\Requests\RoomsRequest;
-use HUAC\Models\Room;
+use HUAC\Exceptions\ViewNotFoundException;
+use HUAC\Http\Requests\SurgicalRoomRequest;
+use HUAC\Models\SurgicalRoom;
 use Illuminate\Http\Request;
 use HUAC\Http\Controllers\Controller;
+use Carbon\Carbon;
+use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Response;
 
-class RoomsController extends Controller
+class SurgicalRoomController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +30,12 @@ class RoomsController extends Controller
      */
     public function create()
     {
-        return view('rooms.create');
+        try{
+            return view('rooms.create');
+        }catch (\Exception $exception){
+            if ($exception instanceof InvalidArgumentException)
+                return ViewNotFoundException::forView();
+        }
     }
 
     /**
@@ -36,9 +44,32 @@ class RoomsController extends Controller
      * @param  UsersRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RoomsRequest $request)
+    public function store(SurgicalRoomRequest $request)
     {
-        $room = Room::create($request->all());
+        if (!is_null($request->input('morning_reservation_starts_at')))
+            $request->request->set(
+                'morning_reservation_starts_at',
+                Carbon::parse($request->input('morning_reservation_starts_at'))->format('H:i:s')
+            );
+        if (!is_null($request->input('morning_reservation_ends_at')))
+            $request->request->set(
+                'morning_reservation_ends_at',
+                Carbon::parse($request->input('morning_reservation_ends_at'))->format('H:i:s')
+            );
+        if (!is_null($request->input('afternoon_reservation_starts_at')))
+            $request->request->set(
+                'afternoon_reservation_starts_at',
+                Carbon::parse($request->input('afternoon_reservation_starts_at'))->format('H:i:s')
+            );
+        if (!is_null($request->input('afternoon_reservation_ends_at')))
+            $request->request->set(
+                'afternoon_reservation_ends_at',
+                Carbon::parse($request->input('afternoon_reservation_ends_at'))->format('H:i:s')
+            );
+        
+//        dd($request->all());
+        $room = SurgicalRoom::create($request->all());
+
         $message = array(
             'title' => trans('huac.success'),
             'text'  => trans('huac.user_saved_successfully'),
@@ -54,7 +85,7 @@ class RoomsController extends Controller
      * @param  User $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Room $room)
+    public function show(SurgicalRoom $room)
     {
         //
     }
@@ -65,7 +96,7 @@ class RoomsController extends Controller
      * @param User $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Room $room)
+    public function edit(SurgicalRoom $room)
     {
         return view('rooms.edit')->with([
             'room' => $room,
@@ -79,7 +110,7 @@ class RoomsController extends Controller
      * @param  User $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Room $room)
+    public function update(Request $request, SurgicalRoom $room)
     {
         $room->update($request->all());
         $message = array(
