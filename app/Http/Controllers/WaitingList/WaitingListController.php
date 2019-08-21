@@ -1,13 +1,15 @@
 <?php
 
-namespace HUAC\Http\Controllers\Surgery;
+namespace HUAC\Http\Controllers\WaitingList;
 
-use HUAC\Exceptions\ViewNotFoundException;
-use HUAC\Http\Controllers\Controller;
+use HUAC\Models\Anesthesia;
+use HUAC\Models\Procedure;
+use HUAC\Models\Surgeon;
+use HUAC\Models\Surgery;
 use Illuminate\Http\Request;
-use InvalidArgumentException;
+use HUAC\Http\Controllers\Controller;
 
-class SurgeryController extends Controller
+class WaitingListController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +18,7 @@ class SurgeryController extends Controller
      */
     public function index()
     {
-        //
+        return view('waiting-list.index');
     }
 
     /**
@@ -26,12 +28,15 @@ class SurgeryController extends Controller
      */
     public function create()
     {
-        try{
-            return view('surgeries.create');
-        }catch (\Exception $exception){
-            if ($exception instanceof InvalidArgumentException)
-                return ViewNotFoundException::forView();
-        }
+        $procedures = Procedure::all();
+        $surgeons = Surgeon::all();
+        $anesthetics = Anesthesia::all();
+
+        return view('waiting-list.create')->with([
+            'procedures' => $procedures,
+            'surgeons' => $surgeons,
+            'anesthetics' => $anesthetics
+        ]);
     }
 
     /**
@@ -62,9 +67,18 @@ class SurgeryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Surgery $surgery)
     {
-        //
+        $procedures = Procedure::all();
+        $surgeons = Surgeon::all();
+        $anesthetics = Anesthesia::all();
+
+        return view('waiting-list.edit')->with([
+            'procedures' => $procedures,
+            'surgeons' => $surgeons,
+            'anesthetics' => $anesthetics,
+            'surgery' => $surgery
+        ]);
     }
 
     /**

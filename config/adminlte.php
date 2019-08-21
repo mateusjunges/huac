@@ -123,7 +123,20 @@ return [
             ],
         ],
         [
-            'icon'    => 'user',
+            'text' => 'Lista de espera',
+            'submenu' => [
+                [
+                    'text' => 'Incluir cirurgia',
+                    'route' => 'waiting-list.create',
+                ],
+                [
+                    'text' => 'Ver cirurgias',
+                    'route' => 'waiting-list.index',
+                ]
+            ]
+        ],
+        [
+            'icon'    => 'users',
             'text'    => 'Usuários',
             'submenu' => [
                 [

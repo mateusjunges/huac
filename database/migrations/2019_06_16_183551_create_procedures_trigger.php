@@ -27,9 +27,9 @@ class CreateProceduresTrigger extends Migration
                 
                 -- Check for max string length:
                 stringLength := LENGTH(NEW.name);
-                IF (stringLength NOT BETWEEN 1 AND 60)
+                IF (stringLength NOT BETWEEN 1 AND 150)
                 THEN
-                    RAISE EXCEPTION 'The \"name\" column length must be between 1 and 60 characters!';
+                    RAISE EXCEPTION 'The \"name\" column length must be between 1 and 150 characters!';
                     RETURN NULL;
                 END IF;
                 stringLength := 0;
@@ -71,9 +71,9 @@ class CreateProceduresTrigger extends Migration
         
             -- Check for max string length:
             stringLength := LENGTH(NEW.name);
-            IF (stringLength NOT BETWEEN 1 AND 60)
+            IF (stringLength NOT BETWEEN 1 AND 150)
             THEN
-                RAISE NOTICE 'The name column length must be between 1 and 60 characters!';
+                RAISE NOTICE 'The name column length must be between 1 and 150 characters!';
                 RETURN NULL;
             END IF;
             stringLength := 0;

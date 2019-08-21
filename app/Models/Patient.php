@@ -20,7 +20,7 @@ class Patient extends Model
         'medical_record',
     ];
 
-    protected $dates = ['birthday_at'];
+    protected $dates = ['deleted_at'];
 
     /**
      * @return HasMany

@@ -2,12 +2,18 @@
 
 namespace HUAC\Models;
 
+use HUAC\Traits\HasAnesthetics;
+use HUAC\Traits\HasStatus;
+use HUAC\Traits\HasSurgeons;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Surgery extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes,
+        HasAnesthetics,
+        HasSurgeons,
+        HasStatus;
 
     protected $table = 'surgeries';
 
@@ -31,22 +37,5 @@ class Surgery extends Model
     public function events()
     {
         return $this->hasMany(Event::class, 'surgery_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function status()
-    {
-        return $this->hasMany(Log::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function latestStatus()
-    {
-        return $this->hasOne(Log::class)
-            ->orderBy('created_at', 'desc');
     }
 }
