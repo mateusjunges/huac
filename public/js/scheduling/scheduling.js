@@ -17,7 +17,7 @@ $(document).ready(function () {
     // Global const
     const defaultRoom = 1;
     const headers = {
-        'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr('content'),
+        'X-CSRF-TOKEN': _token,
     };
     // End global const
 
@@ -47,18 +47,18 @@ $(document).ready(function () {
 
     /**
      * Update fullCalendar displayed events
-     * @param room_id
+     * @param room
      */
-    function refetchEvents(room_id) {
+    function refetchEvents(room) {
         fullCalendar.fullCalendar('removeEvents');
         fullCalendar.fullCalendar('rerenderEvents');
         fullCalendar.fullCalendar('refetchEvents');
-        fullCalendar.fullCalendar('addEventSource', _events[room_id]);
+        fullCalendar.fullCalendar('addEventSource', _events[room]);
     }
 
     /**
      * Get surgery observation and open modal to edit it.
-     * @param event_id
+     * @param surgery
      */
     async function getObservationData(surgery) {
         $.ajax({
@@ -89,8 +89,8 @@ $(document).ready(function () {
                 data:{
                     'start': start,
                     'end': end,
-                    'tempo_estimado': estimated_time,
-                    'cirurgia_id': surgery_id,
+                    'estimated_time': estimated_time,
+                    'surgery_id': surgery_id,
                     'event_id': event_id,
                 },
                 headers: headers,
@@ -185,7 +185,7 @@ $(document).ready(function () {
     function saveEvent(event, color, room_id, surgery_id)
     {
         $.ajax({
-            url: '/store-event',
+            url: '/api/events/',
             async: false,
             method: 'post',
             headers: headers,
@@ -193,11 +193,11 @@ $(document).ready(function () {
                 'start': event.start,
                 'event_end': event.end,
                 'color': color,
-                'tempo_estimado': event.tempo_estimado,
+                'estimated_time': event.tempo_estimado,
                 'event_id': event.id,
                 'title': event.title,
-                'sala_id': room_id,
-                'cirurgia_id': surgery_id,
+                'room_id': room_id,
+                'surgery_id': surgery_id,
                 '_token': _token,
             },
             success: function (response) {
@@ -467,9 +467,9 @@ $(document).ready(function () {
             right: 'month,agendaWeek,agendaDay',
         },
         viewRender: function(view, element) {
-            let room_id = eventConfig.data('room');
+            let room = eventConfig.data('room');
             $.ajax({
-                url: '/agendamentos/' + room_id,
+                url: '/agendamentos/' + room,
                 method: 'post',
                 data: {
                     '_token': _token,
@@ -478,11 +478,11 @@ $(document).ready(function () {
                 },
                 async: false,
                 success: function (response) {
-                    _events[room_id] = response.data;
+                    _events[room] = response.data;
                     fullCalendar.fullCalendar('removeEvents');
                     fullCalendar.fullCalendar('rerenderEvents');
                     fullCalendar.fullCalendar('refetchEvents');
-                    fullCalendar.fullCalendar('addEventSource', _events[room_id]);
+                    fullCalendar.fullCalendar('addEventSource', _events[room]);
                 }
             });
         },
@@ -501,7 +501,7 @@ $(document).ready(function () {
         },
 
         /**
-         * Change the default calendar view
+         * Change the default calendar view to the dayView
          *
          * @param date
          * @param jsEvent
@@ -511,6 +511,7 @@ $(document).ready(function () {
             fullCalendar.fullCalendar('changeView', 'agendaDay');
             fullCalendar.fullCalendar('gotoDate', moment(date.format()));
         },
+
         /**
          * Handle fullCalendar resize events
          *
@@ -531,11 +532,12 @@ $(document).ready(function () {
                 }).then(async (response) => {
                     if (response){
                         notOnReservedPeriod = null;
-                        await verifyReservedPeriodOnUpdate(eventConfig.data('room'), event.id, event.start.format(), event.end.format());
+                        await verifyReservedPeriodOnUpdate(eventConfig.data('room'),
+                            event.id, event.start.format(), event.end.format());
 
                         if (notOnReservedPeriod){
                             $.ajax({
-                                url: '/update-event/'+currentEventId,
+                                url: '/api/events/'+currentEventId,
                                 method: 'post',
                                 async: false,
                                 data: {
@@ -596,7 +598,7 @@ $(document).ready(function () {
             let _name = $(this).data('event').title;
             let _id = $(this).data('id').toString();
 
-            let _event = new Object();
+            let _event = {};
 
             _event = {
                 id: _id,
@@ -604,7 +606,7 @@ $(document).ready(function () {
                 start: date.format(),
                 end: date.format(),
                 tempo_estimado: $(this).data('estimado'),
-            }
+            };
             currentSurgeryId = $(this).data('id');
 
             //Check if the surgeon is availabe:
@@ -620,7 +622,6 @@ $(document).ready(function () {
                     await saveEvent(_event, eventConfig.data('color').toString(), eventConfig.data('room').toString(), currentSurgeryId);
                     $("#cirurgia"+currentSurgeryId).remove();
                     await getAnestheticEvaluationData(currentSurgeryId);
-                    // getObservationData(currentSurgeryId);
                 }else{// If the period is reserved for emergencies:
                     swal({
                         icon: 'warning',
@@ -754,13 +755,15 @@ $(document).ready(function () {
         }
     });
 
+    /**
+     * This function add a event listener for the `click` action, foreach room stored in the database.
+     */
     window.surgicalRooms.forEach(function (surgicalRoom) {
        $("#surgical-room-"+surgicalRoom.id).click(function () {
-           console.log('Room '+surgicalRoom.id);
-           eventConfig.data('room', surgicalRoom.id);
-           eventConfig.data('color', surgicalRoom.color);
-           getEvents(eventConfig.data('room'));
-           refetchEvents(eventConfig.data('room'));
+           eventConfig.data('room', surgicalRoom.id); // Set the configuration to the current surgical room id.
+           eventConfig.data('color', surgicalRoom.color); // Set the configuration to the current surgical room color.
+           getEvents(eventConfig.data('room')); // Get all events to the specified room.
+           refetchEvents(eventConfig.data('room')); // Add this events to the calendar.
        });
     });
 
@@ -1052,7 +1055,7 @@ $(document).ready(function () {
      * @param data
      */
     function refetchByBroadcast(data){
-        if (eventConfig.data('room') == data.oldRoom){
+        if (eventConfig.data('room') === data.oldRoom){
             getEvents(eventConfig.data('room'));
             refetchEvents(eventConfig.data('room'));
         }
@@ -1062,7 +1065,7 @@ $(document).ready(function () {
      * Pushser JS
      */
     Pusher.logToConsole = true;
-    var pusher = new Pusher('8761bad23068a10a3e5f', {
+    var pusher = new Pusher('81d1a717599e253f378e', {
         cluster: 'us2',
         forceTLS: true,
     });

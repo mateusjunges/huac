@@ -17,30 +17,30 @@ class PermissionsSeeder extends Seeder
            'slug' => 'admin',
            'description' => 'Administrador do sistema'
         ]);
-        Permission::create([
-            'name' => 'Editar usuários',
-            'slug' => 'users.edit',
-            'description' => 'Permite editar os usuários cadastrados'
-        ]);
-        Permission::create([
-            'name' => 'Remover usuários',
-            'slug' => 'users.remove',
-            'description' => 'Permite remover um usuário do sistema'
-        ]);
-        Permission::create([
-            'name' => 'Adicionar usuários',
-            'slug' => 'users.create',
-            'description' => 'Permite adicionar um usuário'
-        ]);
-        Permission::create([
-            'name' => 'Remover um usuário permanentemente',
-            'slug' => 'users.remove.permanently',
-            'description' => 'Permite remover um usuário permanentemente'
-        ]);
-        Permission::create([
-            'name' => 'Restaurar usuário removido',
-            'slug' => 'users.restore',
-            'description' => 'Permite restarurar um usuário previamente deletado'
-        ]);
+//        Permission::create([
+//            'name' => 'Editar usuários',
+//            'slug' => 'users.edit',
+//            'description' => 'Permite editar os usuários cadastrados'
+//        ]);
+//        Permission::create([
+//            'name' => 'Remover usuários',
+//            'slug' => 'users.remove',
+//            'description' => 'Permite remover um usuário do sistema'
+//        ]);
+//        Permission::create([
+//            'name' => 'Adicionar usuários',
+//            'slug' => 'users.create',
+//            'description' => 'Permite adicionar um usuário'
+//        ]);
+//        Permission::create([
+//            'name' => 'Remover um usuário permanentemente',
+//            'slug' => 'users.remove.permanently',
+//            'description' => 'Permite remover um usuário permanentemente'
+//        ]);
+//        Permission::create([
+//            'name' => 'Restaurar usuário removido',
+//            'slug' => 'users.restore',
+//            'description' => 'Permite restarurar um usuário previamente deletado'
+//        ]);
     }
 }
