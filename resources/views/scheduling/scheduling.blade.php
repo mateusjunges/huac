@@ -22,6 +22,7 @@
     <script src='{{ asset('vendor/fullcalendar/lib/jquery-ui.min.js')}}'></script>
     <script src='{{ asset('vendor/fullcalendar/fullcalendar.min.js')}}'></script>
     <script src="{{ asset('js/scheduling/scheduling.js') }}"></script>
+    <script src="{{ asset('js/scheduling/make-events-draggable.js') }}"></script>
 @endsection
 
 @section('content')

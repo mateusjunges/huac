@@ -1,27 +1,26 @@
 $(document).ready(function () {
     // Global variables
-    var _token = $("#csrf").val();
-    var numberOfRooms = 5;
-    var _events = {1: '', 2: '', 3: '', 4: '', 5: ''};
+    var _token = $("meta[name='csrf-token']").attr('content');
+    var _events = {} * window.surgicalRooms.length;
     var fullCalendar = $("#fullcalendar");
-    var _slotDuration = '00:15:00';
+    var _slotDuration = '00:30:00';
     var eventConfig = $("#event-config");
-
     var globalEvent = null;
     var currentEventId = null;
     var currentSurgeryId = null;
     var surgeonIsAvailable = false;
     var numberOfReschedules = 0;
-    var cirurgia_log_id = -1;
+    var surgeryLogId = -1;
     var notOnReservedPeriod = null;
     // End global variables
 
-    // Global consts
+    // Global const
     const defaultRoom = 1;
     const headers = {
         'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr('content'),
     };
-    // End global consts
+    // End global const
+
 
     /**
      * Function to retrieve the events scheduled in the specified room
@@ -30,7 +29,7 @@ $(document).ready(function () {
     function getEvents(room_id)
     {
         $.ajax({
-            url: '/agendamentos/'+room_id,
+            url: '/api/scheduling/'+room_id,
             method: 'post',
             data: {
                 '_token': _token,
@@ -84,7 +83,7 @@ $(document).ready(function () {
     {
         try{
             $.ajax({
-                url: '/events/verificar-cirurgiao',
+                url: '/api/verify-surgeon-availability',
                 method: 'get',
                 async: false,
                 data:{
@@ -264,7 +263,7 @@ $(document).ready(function () {
     function verifyReschedules(eventId)
     {
         $.ajax({
-            url: '/verifica-reagendamentos/'+eventId,
+            url: '/verify-rescheduling/'+eventId,
             method: 'get',
             async: false,
             headers: headers,
@@ -324,7 +323,7 @@ $(document).ready(function () {
     function updateEvent(event, id)
     {
         $.ajax({
-            url: '/update-event/'+id,
+            url: '/api/evens/update/'+id,
             method: 'post',
             async: false,
             data: {
@@ -338,7 +337,7 @@ $(document).ready(function () {
             },
             success: function (response) {
                 if (response.code == 200) {
-                    cirurgia_log_id = response.cirurgia_log_id;
+                    surgeryLogId = response.cirurgia_log_id;
                     getEvents(eventConfig.data('room'));
                     refetchEvents(eventConfig.data('room'));
                     swal({
@@ -422,7 +421,7 @@ $(document).ready(function () {
             '_token': _token,
             'motivo': $("#select-motivo").val(),
             'event_id': event_id,
-            'cirurgia_log_id': cirurgia_log_id,
+            'surgeryLogId': cirurgia_log_id,
         },
         success: function (response) {
             if (response.code == 200)
@@ -772,7 +771,7 @@ $(document).ready(function () {
      * Salvar motivo para um reagendamento de cirurgia
      */
     $("#salvar-motivo-reagendamento").click(function () {
-        saveReschedulingReason(cirurgia_log_id, currentEventId);
+        saveReschedulingReason(surgeryLogId, currentEventId);
     });
 
     /**

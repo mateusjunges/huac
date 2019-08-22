@@ -11,6 +11,7 @@ use HUAC\Http\Controllers\Api\ACL\Users\UsersPermissionsController;
 use HUAC\Http\Controllers\Api\Surgeries\SurgeriesColumnsController;
 use HUAC\Http\Controllers\Api\Surgeries\SurgeriesController;
 use HUAC\Http\Controllers\Api\Surgeries\SurgeriesDataController;
+use HUAC\Http\Controllers\Scheduling\SchedulingController;
 use Illuminate\Http\Request;
 use HUAC\Http\Controllers\Api\ACL\Users\UsersColumnsController;
 
@@ -41,4 +42,9 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('surgeries/columns', SurgeriesColumnsController::class);
 
     Route::delete('surgeries/{surgery}', [SurgeriesController::class, 'destroy'])->name('api.surgeries.delete');
+
+    /**
+     * FullCalendar Routes
+     */
+    Route::get('/api/scheduling/{room}', SchedulingController::class)->name('api.scheduling.index');
 });

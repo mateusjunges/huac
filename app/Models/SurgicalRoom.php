@@ -37,4 +37,16 @@ class SurgicalRoom extends Model
         return $query->where('available', true);
     }
 
+    /**
+     * Return all events scheduled to the specified room.
+     *
+     * @param Builder $query
+     * @param $room
+     * @return Builder
+     */
+    public function room(Builder $query, $room)
+    {
+        return $query->where('room_id', $room);
+    }
+
 }
