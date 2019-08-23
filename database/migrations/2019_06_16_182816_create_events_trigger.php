@@ -89,6 +89,7 @@ class CreateEventsTrigger extends Migration
                     RAISE EXCEPTION 'The \"color\" attribute must have exactly 7 characters!';
                     RETURN NULL;
                 END IF;
+                RETURN NEW;
             END;
             \$BODY\$
             LANGUAGE plpgsql;

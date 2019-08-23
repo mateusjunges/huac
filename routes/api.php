@@ -8,10 +8,11 @@ use HUAC\Http\Controllers\Api\ACL\Users\UserGroupsController;
 use HUAC\Http\Controllers\Api\ACL\Users\UsersController;
 use HUAC\Http\Controllers\Api\ACL\Users\UsersDataController;
 use HUAC\Http\Controllers\Api\ACL\Users\UsersPermissionsController;
+use HUAC\Http\Controllers\Api\Scheduling\GetEventsPerRoomController;
 use HUAC\Http\Controllers\Api\Surgeries\SurgeriesColumnsController;
 use HUAC\Http\Controllers\Api\Surgeries\SurgeriesController;
 use HUAC\Http\Controllers\Api\Surgeries\SurgeriesDataController;
-use HUAC\Http\Controllers\Scheduling\SchedulingController;
+
 use Illuminate\Http\Request;
 use HUAC\Http\Controllers\Api\ACL\Users\UsersColumnsController;
 
@@ -46,5 +47,5 @@ Route::middleware(['auth:api'])->group(function () {
     /**
      * FullCalendar Routes
      */
-    Route::get('/api/scheduling/{room}', SchedulingController::class)->name('api.scheduling.index');
+    Route::get('scheduling/{room}', GetEventsPerRoomController::class)->name('api.scheduling.index');
 });

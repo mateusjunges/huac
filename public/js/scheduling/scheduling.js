@@ -1,7 +1,7 @@
 $(document).ready(function () {
     // Global variables
     var _token = $("meta[name='csrf-token']").attr('content');
-    var _events = {} * window.surgicalRooms.length;
+    var _events = [];
     var fullCalendar = $("#fullcalendar");
     var _slotDuration = '00:30:00';
     var eventConfig = $("#event-config");
@@ -20,7 +20,6 @@ $(document).ready(function () {
         'X-CSRF-TOKEN': _token,
     };
     // End global const
-
 
     /**
      * Function to retrieve the events scheduled in the specified room
@@ -469,16 +468,25 @@ $(document).ready(function () {
         viewRender: function(view, element) {
             let room = eventConfig.data('room');
             $.ajax({
-                url: '/agendamentos/' + room,
-                method: 'post',
+                url: '/api/scheduling/' + room,
+                method: 'get',
+                headers: headers,
                 data: {
                     '_token': _token,
                     'start': view.start.format(),
                     'end': view.end.format(),
                 },
                 async: false,
-                success: function (response) {
+                success: function (response, textStatus, xhr) {
+                    if (xhr.status !== 200)
+                        swal({
+                            icon: 'error',
+                            title: 'Ops...',
+                            text: 'Desculpe, não conseguimos recuperar os agendamentos. Entre em contato com o administrador do sistema.'
+                        });
+
                     _events[room] = response.data;
+                    console.log(_events[room]);
                     fullCalendar.fullCalendar('removeEvents');
                     fullCalendar.fullCalendar('rerenderEvents');
                     fullCalendar.fullCalendar('refetchEvents');
