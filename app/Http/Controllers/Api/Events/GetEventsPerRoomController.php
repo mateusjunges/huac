@@ -1,6 +1,6 @@
 <?php
 
-namespace HUAC\Http\Controllers\Api\Scheduling;
+namespace HUAC\Http\Controllers\Api\Events;
 
 use HUAC\Models\Event;
 use HUAC\Models\SurgicalRoom;
@@ -17,10 +17,12 @@ class GetEventsPerRoomController
     public function __invoke(Request $request, SurgicalRoom $room)
     {
         $events = Event::room($room->id)
-            ->select('start_at as start', 'end_at as end', 'color', 'title')->get();
+            ->select('id', 'start_at as start', 'end_at as end', 'color', 'title')->get();
 
         return response()->json([
-            'data' => $events,
+            'data' => [
+                'events' => $events,
+            ]
         ], Response::HTTP_OK);
     }
 }
