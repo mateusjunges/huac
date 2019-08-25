@@ -42,9 +42,22 @@ class Surgery extends Model
         return $this->hasMany(Event::class, 'surgery_id');
     }
 
+    /**
+     * Return the surgery patient.
+     * @return BelongsTo
+     */
     public function patient() : BelongsTo
     {
         return $this->belongsTo(Patient::class, 'patient_id');
+    }
+
+    /**
+     * Return the procedure of the surgery.
+     * @return BelongsTo
+     */
+    public function procedure() : BelongsTo
+    {
+        return $this->belongsTo(Procedure::class, 'procedure_id');
     }
 
     /**

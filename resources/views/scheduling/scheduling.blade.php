@@ -9,6 +9,10 @@
             overflow-y: scroll;
             max-height: 388px;
         }
+        .modal-backdrop
+        {
+            opacity:0.5 !important;
+        }
     </style>
 
 @endsection
@@ -146,4 +150,5 @@
             </div>
         </div>
     </div>
+    @include('_modals.scheduling.event-click-modal')
 @endsection

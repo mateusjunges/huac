@@ -9,6 +9,7 @@ use HUAC\Http\Controllers\Api\ACL\Users\UsersController;
 use HUAC\Http\Controllers\Api\ACL\Users\UsersDataController;
 use HUAC\Http\Controllers\Api\ACL\Users\UsersPermissionsController;
 use HUAC\Http\Controllers\Api\Events\EventController;
+use HUAC\Http\Controllers\Api\Events\EventDetailsController;
 use HUAC\Http\Controllers\Api\Events\GetEventsPerRoomController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyReservedPeriodController;
 use HUAC\Http\Controllers\Api\Surgeons\VerifySurgeonAvailabilityController;
@@ -51,7 +52,10 @@ Route::middleware(['auth:api'])->group(function () {
      * FullCalendar Routes
      */
     Route::prefix('events')->group(function() {
-        Route::put('{event}', [EventController::class, 'update']);
+        Route::prefix('{event}')->group(function() {
+            Route::put('/', [EventController::class, 'update']);
+            Route::get('details', EventDetailsController::class);
+        });
         Route::get('{room}', GetEventsPerRoomController::class)->name('api.events.per-room');
     });
 
