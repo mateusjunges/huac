@@ -8,13 +8,19 @@ use HUAC\Http\Controllers\Api\ACL\Users\UserGroupsController;
 use HUAC\Http\Controllers\Api\ACL\Users\UsersController;
 use HUAC\Http\Controllers\Api\ACL\Users\UsersDataController;
 use HUAC\Http\Controllers\Api\ACL\Users\UsersPermissionsController;
+use HUAC\Http\Controllers\Api\Events\EventController;
+use HUAC\Http\Controllers\Api\Events\EventDetailsController;
+use HUAC\Http\Controllers\Api\Events\GetEventsPerRoomController;
+use HUAC\Http\Controllers\Api\Scheduling\VerifyReservedPeriodController;
+use HUAC\Http\Controllers\Api\Surgeons\VerifySurgeonAvailabilityController;
 use HUAC\Http\Controllers\Api\Surgeries\SurgeriesColumnsController;
 use HUAC\Http\Controllers\Api\Surgeries\SurgeriesController;
 use HUAC\Http\Controllers\Api\Surgeries\SurgeriesDataController;
+
 use Illuminate\Http\Request;
 use HUAC\Http\Controllers\Api\ACL\Users\UsersColumnsController;
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('s/user', function (Request $request) {
     return $request->user();
 });
 
@@ -41,4 +47,24 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('surgeries/columns', SurgeriesColumnsController::class);
 
     Route::delete('surgeries/{surgery}', [SurgeriesController::class, 'destroy'])->name('api.surgeries.delete');
+
+    /**
+     * FullCalendar Routes
+     */
+    Route::prefix('events')->group(function() {
+        Route::prefix('{event}')->group(function() {
+            Route::put('/', [EventController::class, 'update']);
+            Route::get('details', EventDetailsController::class);
+        });
+        Route::get('{room}', GetEventsPerRoomController::class)->name('api.events.per-room');
+    });
+
+    Route::prefix('scheduling')->group(function () {
+       Route::get('verify-reserved-period-before-store', [VerifyReservedPeriodController::class, 'beforeStore']);
+       Route::get('verify-reserved-period-before-update', [VerifyReservedPeriodController::class, 'beforeUpdate']);
+    });
+
+    Route::prefix('surgeons')->group(function() {
+       Route::get('availability', VerifySurgeonAvailabilityController::class);
+    });
 });

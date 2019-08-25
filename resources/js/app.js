@@ -5,7 +5,7 @@ import dotenv from 'dotenv'
 
 dotenv.config();
 
-Vue.component('create-surgery', require('@components/CreateSurgeryComponent.vue').default);
+Vue.component('schedule-surgeries', require('@components/SurgeriesToBeScheduled.vue').default);
 
 Vue.component('passport-clients', require('@passport/Clients.vue').default);
 Vue.component('passport-authorized-clients', require('@passport/AuthorizedClients.vue').default);

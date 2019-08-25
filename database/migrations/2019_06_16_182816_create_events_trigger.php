@@ -69,14 +69,6 @@ class CreateEventsTrigger extends Migration
                 THEN
                     RAISE EXCEPTION 'The \"end_at\" attribute is required!';
                     RETURN NULL;
-                ELSIF (NEW.surgeon_start_at IS NULL)
-                THEN
-                    RAISE EXCEPTION 'The \"surgeon_star_at\" attribute is required!';
-                    RETURN NULL;
-                ELSIF (NEW.surgeon_end_at IS NULL)
-                THEN
-                    RAISE EXCEPTION 'The \"surgeon_end_at\" attribute is required!';
-                    RETURN NULL;
                 ELSIF (NEW.surgery_id IS NULL)
                 THEN
                     RAISE EXCEPTION 'The \"surgery_id\" attribute is required!';
@@ -97,6 +89,7 @@ class CreateEventsTrigger extends Migration
                     RAISE EXCEPTION 'The \"color\" attribute must have exactly 7 characters!';
                     RETURN NULL;
                 END IF;
+                RETURN NEW;
             END;
             \$BODY\$
             LANGUAGE plpgsql;

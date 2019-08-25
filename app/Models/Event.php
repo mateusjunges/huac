@@ -2,6 +2,7 @@
 
 namespace HUAC\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -50,5 +51,17 @@ class Event extends Model
                     ->latestStatus
                     ->status_id == env('CONFIRMED');
             });
+    }
+
+    /**
+     * Return all events scheduled to the specified room.
+     *
+     * @param Builder $query
+     * @param $room
+     * @return Builder
+     */
+    public function scopeRoom(Builder $query, $room)
+    {
+        return $query->where('surgical_room_id', $room);
     }
 }

@@ -3,6 +3,7 @@
 namespace HUAC\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -24,4 +25,15 @@ class SurgicalRoom extends Model
     protected $dates = ['deleted_at'];
 
     protected $guarded = ['id'];
+
+    /**
+     * Local available scope.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeAvailable(Builder $query)
+    {
+        return $query->where('available', true);
+    }
 }

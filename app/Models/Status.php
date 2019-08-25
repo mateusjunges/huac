@@ -9,7 +9,7 @@ class Status extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'false';
+    protected $table = 'status';
 
     protected $fillable = [
         'name',
