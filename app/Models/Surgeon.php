@@ -59,10 +59,10 @@ class Surgeon extends Model
     {
         $surgeries = $this->surgeries()->get();
         $currentSurgery = $surgery->id;
-
+//        dd($start." ==== ".$end);
         foreach ($surgeries as $surgery) {
             if ($surgery->id != $currentSurgery) {
-                $event = $surgery->events()->last();
+                $event = $surgery->events()->orderBy('created_at', 'desc')->first();
                 if (! is_null($event)) {
                     $eventStartAt = Carbon::parse($event->start_at);
                     $eventEndAt = Carbon::parse($event->end_at);
@@ -70,9 +70,7 @@ class Surgeon extends Model
                     // The surgeon is available if the start of the surgery isn't between the
                     // Start and End of a scheduled surgery, and if the next surgery is not between
                     // The start and end a scheduled surgery.
-                    if ($start->greaterThan($eventStartAt) and $start->lessThan($eventEndAt))
-                        return false;
-                    else if ($end->greaterThan($eventStartAt) and $end->lessThan($eventEndAt))
+                    if ($start->between($eventStartAt, $eventEndAt) or $end->between($eventStartAt, $eventEndAt))
                         return false;
                 }
             }

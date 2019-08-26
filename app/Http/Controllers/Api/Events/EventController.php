@@ -32,8 +32,8 @@ class EventController
         if ($sameDay)
             $log = Log::createFor($surgery, "Cirurgia reagendada.", Status::RESCHEDULED);
         else {
-            if ($surgery->status() == Status::MATERIALS_CONFIRMED_BY_CME
-                || $surgery->status() == Status::MATERIALS_CONFIRMED_SURGERY_CENTER)
+            if ($surgery->latestStatus->status_id == Status::MATERIALS_CONFIRMED_BY_CME
+                || $surgery->latestStatus->status_id == Status::MATERIALS_CONFIRMED_SURGERY_CENTER)
                 $log = Log::createFor($surgery,
                     "Cirurgia reagendada após confirmação de materiais.",
                     Status::RESCHEDULED_AFTER_MATERIALS_CONFIRMATION
