@@ -109,7 +109,7 @@ class SurgeryController extends Controller
         $classifications = SurgeryClassification::all();
         $anesthetics = Anesthesia::all();
         $surgeons = Surgeon::all();
-        $patient = Patient::find($surgery->id);
+        $patient = Patient::find($surgery->patient_id);
 
         return view('surgeries.edit')->with([
             'procedures'      => $procedures,

@@ -3,7 +3,6 @@
 namespace HUAC\Actions;
 
 use Carbon\Carbon;
-use HUAC\Models\Event;
 use HUAC\Models\Surgery;
 
 class VerifyExistingSchedulesAtRoom
@@ -16,22 +15,19 @@ class VerifyExistingSchedulesAtRoom
         //
     }
 
-    public function execute(Event $event, $room)
+    public static function execute($room, $start, $end, $surgery)
     {
-        $_surgery = $event->surgery()->first();
+        $_surgery = Surgery::find($surgery);
 
         $surgeries = Surgery::room($room)->get();
 
-        $event_start_at = Carbon::parse($event->start_at);
-        $event_end_at   = Carbon::parse($event->end_at);
-
         foreach ($surgeries as $surgery) {
             if ($surgery->id != $_surgery->id) {
-                $surgeryEvent = $surgery->events()->orderBy('desc', 'created_at')->first();
+                $surgeryEvent = $surgery->events()->orderBy('created_at', 'desc')->first();
                 $surgery_event_start_at = Carbon::parse($surgeryEvent->start_at);
                 $surgery_event_end_at = Carbon::parse($surgeryEvent->end_at);
-                if ($event_start_at->between($surgery_event_start_at, $surgery_event_end_at)
-                    or $event_end_at->between($surgery_event_start_at, $surgery_event_end_at)
+                if ($start->between($surgery_event_start_at, $surgery_event_end_at)
+                    or $end->between($surgery_event_start_at, $surgery_event_end_at)
                 )
                     return true;
             }

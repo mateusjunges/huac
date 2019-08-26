@@ -11,6 +11,7 @@ $(document).ready(function() {
     var currentEventId = null;
     var currentSurgeryId = null;
     var surgeonIsAvailable = false;
+    var existEventsAtSameTime = false;
     var logId = -1;
     var usingReservedPeriod = null;
     var config = $("#event-config");
@@ -264,6 +265,33 @@ $(document).ready(function() {
         })
     }
 
+    async function verifySchedulesBeforeUpdate(event) {
+        $.ajax({
+            url: '/api/scheduling/verify-existing-schedules',
+            method: 'get',
+            async: false,
+            headers: headers,
+            data: {
+                room: config.data('room'),
+                start: event.start.format(),
+                end: event.end.format(),
+                event: event.id,
+            },
+            success: function (response, status, xhr) {
+                if (xhr.status === HTTP_OK) {
+                    existEventsAtSameTime = response.data.events_at_same_time;
+                } else {
+                    swal({
+                        icon: 'error',
+                        title: 'Ops...',
+                        text: 'Ocorreu um erro ao verificar os agendamentos. Entre em contato com o responsável pelo sistema.',
+                        timer: 5000,
+                    })
+                }
+            },
+        })
+    }
+
 
     /**
      * Instantiate and configure the fullCalendar plugin.
@@ -407,33 +435,45 @@ $(document).ready(function() {
                     null, event.id
                 );
 
-                if (surgeonIsAvailable) { // If the surgeon is available:
-                    usingReservedPeriod = null;
-                    await verifyReservedPeriodBeforeUpdate(event, config.data('room')); // Check if the reschedule are
-                                                                                        // using the emergency range
-                    console.log(usingReservedPeriod);
-                    if (! usingReservedPeriod) { //The reschedule does not use the reserved period
-                        update(event, event.id);
-                    } else { // The reschedule use the reserved period:
-                        swal({
+                await verifySchedulesBeforeUpdate(event);
+
+                if (! existEventsAtSameTime) {
+                    if (surgeonIsAvailable) { // If the surgeon is available:
+                        usingReservedPeriod = null;
+                        await verifyReservedPeriodBeforeUpdate(event, config.data('room')); // Check if the reschedule are
+                                                                                            // using the emergency range
+                        console.log(usingReservedPeriod);
+                        if (! usingReservedPeriod) { //The reschedule does not use the reserved period
+                            update(event, event.id);
+                        } else { // The reschedule use the reserved period:
+                            swal({
                                 icon: 'warning',
                                 title: 'Período reservado para emergência!',
                                 text: 'Se você colocar esta cirurgia neste horário, estará ' +
                                     'utilizando o período reservado para emergências! Deseja continuar?',
                                 buttons: ["Não", "Sim, quero continuar."],
                             })
-                            .then((response) => {
-                                if (response) update(event, event.id);
-                                else revertFunc();
-                            });
+                                .then((response) => {
+                                    if (response) update(event, event.id);
+                                    else revertFunc();
+                                });
+                        }
+                    } else {
+                        revertFunc();
+                        swal({
+                            icon: 'warning',
+                            title: 'Conflito de horário!',
+                            text: 'O cirurgião designado para esta cirurgia já possui ' +
+                                'agendamentos neste horário. Verifique e tente novamente.',
+                            timer: 5000,
+                        });
                     }
                 } else {
                     revertFunc();
                     swal({
-                        icon: 'warning',
+                        icon: 'error',
+                        text: 'Você não pode agendar esta cirurgia no período desejado, pois já existe uma cirurgia ocuplando este horário nesta sala.',
                         title: 'Conflito de horário!',
-                        text: 'O cirurgião designado para esta cirurgia já possui ' +
-                            'agendamentos neste horário. Verifique e tente novamente.',
                         timer: 5000,
                     });
                 }
