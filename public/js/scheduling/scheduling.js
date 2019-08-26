@@ -521,7 +521,7 @@ $(document).ready(function() {
     });
 
     /**
-     *
+     * Callback to handle the change room button.
      */
     $("#save-new-room").click(async function () {
 
@@ -545,7 +545,6 @@ $(document).ready(function() {
                     surgical_room_id: newRoom.val(),
                 },
                 success: function (response, status, xhr) {
-                    console.log(response);
                     swal({
                         icon: response.data.swal.icon,
                         title: response.data.swal.title,
