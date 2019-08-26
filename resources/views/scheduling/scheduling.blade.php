@@ -151,4 +151,5 @@
         </div>
     </div>
     @include('_modals.scheduling.event-click-modal')
+    @include('_modals.scheduling.change-room-modal')
 @endsection

@@ -79,7 +79,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <button type="button" class="btn btn-default  btn-block" data-dismiss="modal">
-                            <i class="fa fa-times"></i>
+                            <i class="fa fa-times"></i> Fechar
                         </button>
                     </div>
                 </div>

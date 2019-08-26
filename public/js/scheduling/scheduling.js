@@ -164,6 +164,11 @@ $(document).ready(function() {
     }
 
 
+    /**
+     * Verify the reserved period before update an event.
+     * @param _event
+     * @param _room
+     */
     function verifyReservedPeriodBeforeUpdate(_event, _room) {
         let id = _event.id;
 
@@ -260,6 +265,9 @@ $(document).ready(function() {
     }
 
 
+    /**
+     * Instantiate and configure the fullCalendar plugin.
+     */
     fullCalendar.fullCalendar({
        header: {
            left: 'prev, next, today',
@@ -442,4 +450,31 @@ $(document).ready(function() {
         }
 
     });
+
+    /**
+     * Callback function for each surgical room.
+     */
+    window.surgicalRooms.forEach(function(surgicalRoom) {
+        $("#surgical-room-"+surgicalRoom.id).click(function() {
+            config.data('room', surgicalRoom.id);
+            config.data('color', surgicalRoom.color);
+            getEvents(config.data('room'));
+            refetchEvents(config.data('room'));
+        })
+    });
+
+    /**
+     * Change surgical room for a specified event.
+     */
+    $(".change-room").click(function() {
+        $("#event-click-modal").modal("hide");
+        newRoom = $("#new-room");
+        newRoom.html("");
+        newRoom.append(new Option("Selecione a nova sala de cirurgia", null));
+        window.surgicalRooms.forEach(function(surgicalRoom) {
+            newRoom.append(new Option(surgicalRoom.name, surgicalRoom.id));
+        });
+        $("#change-room-modal").modal('show');
+    });
+
 });
