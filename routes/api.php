@@ -8,6 +8,7 @@ use HUAC\Http\Controllers\Api\ACL\Users\UserGroupsController;
 use HUAC\Http\Controllers\Api\ACL\Users\UsersController;
 use HUAC\Http\Controllers\Api\ACL\Users\UsersDataController;
 use HUAC\Http\Controllers\Api\ACL\Users\UsersPermissionsController;
+use HUAC\Http\Controllers\Api\Events\ChangeRoomController;
 use HUAC\Http\Controllers\Api\Events\EventController;
 use HUAC\Http\Controllers\Api\Events\EventDetailsController;
 use HUAC\Http\Controllers\Api\Events\GetEventsPerRoomController;
@@ -56,6 +57,7 @@ Route::middleware(['auth:api'])->group(function () {
         Route::prefix('{event}')->group(function() {
             Route::put('/', [EventController::class, 'update']);
             Route::get('details', EventDetailsController::class);
+            Route::put('change-room', ChangeRoomController::class);
         });
         Route::get('{room}', GetEventsPerRoomController::class)->name('api.events.per-room');
     });

@@ -10,6 +10,7 @@ $(document).ready(function() {
     var events = [];
     var currentEventId = null;
     var currentSurgeryId = null;
+    var currentEvent = null;
     var surgeonIsAvailable = false;
     var existEventsAtSameTime = false;
     var logId = -1;
@@ -486,6 +487,7 @@ $(document).ready(function() {
 
         eventClick: function (calEvent, jsEvent, view) {
             currentEventId = calEvent.id;
+            currentEvent = calEvent;
             information(calEvent.id);
         }
 
@@ -498,9 +500,10 @@ $(document).ready(function() {
         $("#surgical-room-"+surgicalRoom.id).click(function() {
             config.data('room', surgicalRoom.id);
             config.data('color', surgicalRoom.color);
+            $("#current-room").html("Sala " + surgicalRoom.id);
             getEvents(config.data('room'));
             refetchEvents(config.data('room'));
-        })
+        });
     });
 
     /**
@@ -508,13 +511,63 @@ $(document).ready(function() {
      */
     $(".change-room").click(function() {
         $("#event-click-modal").modal("hide");
-        newRoom = $("#new-room");
+        let newRoom = $("#new-room");
         newRoom.html("");
-        newRoom.append(new Option("Selecione a nova sala de cirurgia", null));
+        newRoom.append(new Option("Selecione a nova sala de cirurgia", ''));
         window.surgicalRooms.forEach(function(surgicalRoom) {
             newRoom.append(new Option(surgicalRoom.name, surgicalRoom.id));
         });
         $("#change-room-modal").modal('show');
+    });
+
+    /**
+     *
+     */
+    $("#save-new-room").click(async function () {
+
+        await verifySchedulesBeforeUpdate(currentEvent);
+        if (existEventsAtSameTime) {
+            swal({
+                icon: 'error',
+                text: 'Você não pode trocar esta cirurgia para a sala desejada, ' +
+                    'pois já existe uma cirurgia ocuplando este horário nesta sala.',
+                title: 'Conflito de horário!',
+                timer: 5000,
+            });
+        } else {
+            let newRoom = $("#new-room");
+            $.ajax({
+                url: `/api/events/${currentEventId}/change-room`,
+                method: 'post',
+                headers: headers,
+                data: {
+                    _method: 'put',
+                    surgical_room_id: newRoom.val(),
+                },
+                success: function (response, status, xhr) {
+                    console.log(response);
+                    swal({
+                        icon: response.data.swal.icon,
+                        title: response.data.swal.title,
+                        text: response.data.swal.text,
+                        timer: response.data.swal.timer,
+                    });
+                    if (xhr.status === HTTP_OK){ // Response code = 200
+                        $("#change-room-modal").modal('hide');
+                        getEvents(config.data('room'));
+                        refetchEvents(config.data('room'));
+                    }
+                },
+                error: function (response, status, xhr) {
+                    swal({
+                        icon: response.data.swal.icon,
+                        title: response.data.swal.title,
+                        text: response.data.swal.text,
+                        timer: response.data.swal.timer,
+                    });
+                }
+            });
+        }
     });
 
 });

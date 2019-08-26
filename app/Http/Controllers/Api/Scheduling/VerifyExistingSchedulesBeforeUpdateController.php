@@ -10,6 +10,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class VerifyExistingSchedulesBeforeUpdateController
 {
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function __invoke(Request $request)
     {
         $room = $request->input('room');

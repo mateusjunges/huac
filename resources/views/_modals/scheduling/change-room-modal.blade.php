@@ -25,7 +25,7 @@
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-md-6">
-                        <button class="btn btn-success btn-block" data-event="">
+                        <button class="btn btn-success btn-block" data-event="" id="save-new-room">
                             <i class="fa fa-save"></i> Alterar sala
                         </button>
                     </div>
