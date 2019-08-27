@@ -521,7 +521,7 @@ $(document).ready(function() {
     });
 
     /**
-     * Callback to handle the change room button.
+     * Update the surgical room where the surgery might be realized.
      */
     $("#save-new-room").click(async function () {
 
@@ -569,7 +569,9 @@ $(document).ready(function() {
         }
     });
 
-
+    /**
+     * Open the modal to update the surgery status.
+     */
     $("#update-status").click(function() {
         $.ajax({
             url: '/api/status',
@@ -597,5 +599,60 @@ $(document).ready(function() {
                 })
             }
         })
+    });
+
+    /**
+     * Store the new surgery status.
+     */
+    $("#save-new-status").click(function () {
+        let newStatus = $("#new-status");
+
+        if (newStatus.val() === 0
+            || newStatus.val() == null
+            || newStatus.val() === '0'
+            || newStatus.val() === '') {
+            swal({
+                icon: 'warning',
+                title: 'Informe o status!',
+                text: 'Informe o novo status para esta cirurgia!',
+                timer: 5000,
+            });
+        } else {
+            $.ajax({
+                url: `/api/surgeries/status/update`,
+                method: 'post',
+                headers: headers,
+                data: {
+                    _method: 'put',
+                    event_id: currentEventId,
+                    status: newStatus.val(),
+                },
+                success: function (response, status, xhr) {
+                    if (xhr.status === HTTP_OK) {
+                        $("#change-status-modal").modal('hide');
+                        swal({
+                            icon: response.data.swal.icon,
+                            title: response.data.swal.title,
+                            text: response.data.swal.text,
+                            timer: response.data.swal.timer,
+                        });
+
+                        let room = config.data('room');
+
+                        getEvents(room);
+                        refetchEvents(room);
+                    }
+                },
+
+                error: function (response) {
+                    swal({
+                        icon: response.data.swal.icon,
+                        title: response.data.swal.title,
+                        text: response.data.swal.text,
+                        timer: response.data.swal.timer,
+                    });
+                }
+            })
+        }
     });
 });
