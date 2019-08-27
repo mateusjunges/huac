@@ -655,4 +655,8 @@ $(document).ready(function() {
             })
         }
     });
+
+    $(".edit-surgery").click(function () {
+        window.location.replace(`/surgeries/${currentEvent.surgery_id}/edit`)
+    })
 });
