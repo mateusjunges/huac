@@ -11,6 +11,8 @@ use HUAC\Http\Controllers\Surgeries\SurgeryController;
 use HUAC\Http\Controllers\HomeController;
 use HUAC\Http\Controllers\ACL\GroupsPermissionsController;
 use HUAC\Http\Controllers\WaitingList\WaitingListController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 Route::group(['namespace' => 'HUAC\Http\Controllers'], function () {
     Auth::routes();

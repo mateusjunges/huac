@@ -658,5 +658,51 @@ $(document).ready(function() {
 
     $(".edit-surgery").click(function () {
         window.location.replace(`/surgeries/${currentEvent.surgery_id}/edit`)
-    })
+    });
+
+    $("#change-date").click(function() {
+       let modal = $("#change-event-date-modal");
+       $("#event-click-modal").modal('hide');
+       modal.modal('show');
+    });
+
+    $("#save-new-date").click(function () {
+       let newDate = $("#new-date");
+       $.ajax({
+           url: `/api/events/${currentEventId}/change-date`,
+           method: 'post',
+           headers: headers,
+           data: {
+               _method: 'put',
+               date: newDate.val(),
+               room: config.data('room'),
+           },
+
+           success: function(response, status, xhr) {
+               swal({
+                   icon: response.data.swal.icon,
+                   title: response.data.swal.title,
+                   text: response.data.swal.text,
+                   timer: response.data.swal.timer,
+               });
+               if (xhr.status === HTTP_OK) {
+                    $("#change-event-date-modal").modal('hide');
+                    let room = config.data('room');
+                    getEvents(room);
+                    refetchEvents(room);
+               }
+           },
+
+           // error: function(response) {
+           //     console.log(response);
+           //      swal({
+           //          icon: response.data.swal.icon,
+           //          title: response.data.swal.title,
+           //          text: response.data.swal.text,
+           //          timer: response.data.swal.timer,
+           //      });
+           // },
+
+       })
+    });
 });
