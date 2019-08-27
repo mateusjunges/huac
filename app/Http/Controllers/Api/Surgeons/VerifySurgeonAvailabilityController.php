@@ -24,6 +24,7 @@ class VerifySurgeonAvailabilityController
         $start = str_replace('T', ' ', $request->input('start'));
         $start = Carbon::parse($start);
         $end = $request->input('end');
+        $end = Carbon::parse($end);
         $estimatedTime = $request->input('estimated_time');
 
 

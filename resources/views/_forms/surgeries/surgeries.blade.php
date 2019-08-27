@@ -226,7 +226,6 @@
             <select name="head_surgeon"
                     class="form-control @error('head_surgeon') validation-error @enderror "
                     id="head-surgeon">
-                <option value="0">Selecione o cirurgião principal:</option>
                 @if(isset($surgery))
                     @foreach($surgeons as $surgeon)
                         @if(($surgery->headSurgeon()->first()->id == $surgeon->id) or (old('head_surgeon') == $surgeon->id))
@@ -256,7 +255,7 @@
             <select name="assistant_surgeon"
                     class="form-control @error('assistant_surgeon') validation-error @enderror "
                     id="assistant-surgeon">
-                <option value="0">Selecione o cirurgião auxiliar:</option>
+                <option value="0">Esta cirurgia não possui cirurgião auxiliar</option>
                 @if(isset($surgery) && $surgery->assistantSurgeon()->first() != null)
                     @foreach($surgeons as $surgeon)
                         @if($surgery->assistantSurgeon()->first()->id == $surgeon->id)

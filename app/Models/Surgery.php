@@ -73,4 +73,17 @@ class Surgery extends Model
            ]);
         });
     }
+
+    /**
+     * Return all surgeries scheduled to the specified room.
+     * @param Builder $query
+     * @param $room
+     * @return Builder
+     */
+    public function scopeRoom(Builder $query, $room)
+    {
+        return $query->whereHas('events', function ($query) use ($room) {
+            $query->where('surgical_room_id', $room);
+        });
+    }
 }

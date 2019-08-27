@@ -8,45 +8,75 @@ use HUAC\Http\Controllers\Api\ACL\Users\UserGroupsController;
 use HUAC\Http\Controllers\Api\ACL\Users\UsersController;
 use HUAC\Http\Controllers\Api\ACL\Users\UsersDataController;
 use HUAC\Http\Controllers\Api\ACL\Users\UsersPermissionsController;
+use HUAC\Http\Controllers\Api\Events\ChangeRoomController;
 use HUAC\Http\Controllers\Api\Events\EventController;
 use HUAC\Http\Controllers\Api\Events\EventDetailsController;
 use HUAC\Http\Controllers\Api\Events\GetEventsPerRoomController;
+use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeUpdateController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyReservedPeriodController;
+use HUAC\Http\Controllers\Api\Status\StatusController;
 use HUAC\Http\Controllers\Api\Surgeons\VerifySurgeonAvailabilityController;
 use HUAC\Http\Controllers\Api\Surgeries\SurgeriesColumnsController;
 use HUAC\Http\Controllers\Api\Surgeries\SurgeriesController;
 use HUAC\Http\Controllers\Api\Surgeries\SurgeriesDataController;
-
+use HUAC\Http\Controllers\Api\Surgeries\SurgeryStatusController;
 use Illuminate\Http\Request;
 use HUAC\Http\Controllers\Api\ACL\Users\UsersColumnsController;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->get('s/user', function (Request $request) {
     return $request->user();
 });
 
 Route::middleware(['auth:api'])->group(function () {
-    Route::get('users', [UsersController::class, 'index']);
-    Route::delete('users/{user}', [UsersController::class, 'destroy'])->name('api.users.delete');
-    Route::get('users/data', UsersDataController::class)->name('api.users.data');
-    Route::get('users/columns', UsersColumnsController::class)->name('api.users.columns');
-    Route::delete('users/{user}/permissions', [UsersPermissionsController::class, 'revoke'])->name('api.users.permissions.revoke');
-    Route::post('users/{user}/assign-permissions', [UsersPermissionsController::class, 'attach'])->name('api.users.permissions.assign');
-    Route::post('users/{user}/assign-groups', [UserGroupsController::class, 'attach'])->name('api.users.groups.attach-groups');
-    Route::delete('users/{user}/remove-group', [UserGroupsController::class, 'revoke'])->name('api.users.groups.remove-group');
+    /**
+     * User routes
+     */
+    Route::prefix('users')->group(function() {
+        Route::get('/', [UsersController::class, 'index']);
+        Route::get('data', UsersDataController::class)->name('api.users.data');
+        Route::get('columns', UsersColumnsController::class)->name('api.users.columns');
+        Route::prefix('{user}')->group(function() {
+            Route::delete('/', [UsersController::class, 'destroy'])->name('api.users.delete');
+            Route::delete('permissions', [UsersPermissionsController::class, 'revoke'])->name('api.users.permissions.revoke');
+            Route::post('assign-permissions', [UsersPermissionsController::class, 'attach'])->name('api.users.permissions.assign');
+            Route::post('assign-groups', [UserGroupsController::class, 'attach'])->name('api.users.groups.attach-groups');
+            Route::delete('remove-group', [UserGroupsController::class, 'revoke'])->name('api.users.groups.remove-group');
+        });
+    });
 
-    Route::get('groups', [GroupsController::class, 'all'])->name('api.groups.all');
-    Route::post('groups/{group}/assign-permissions', [GroupsPermissionsController::class, 'attach']);
-    Route::post('groups/{group}/attach-users', [GroupsUsersController::class, 'attach'])->name('api.groups.users.attach');
-    Route::delete('groups/permissions', [GroupsPermissionsController::class, 'revoke'])->name('api.delete.groups.permissions');
-    Route::delete('groups/users', [GroupsUsersController::class, 'remove'])->name('groups.users.remove');
-    Route::delete('groups/{group}', [GroupsController::class, 'destroy'])->name('api.groups.delete');
+    /**
+     * Group routes
+     */
+    Route::prefix('groups')->group(function() {
+        Route::get('/', [GroupsController::class, 'all'])->name('api.groups.all');
+        Route::prefix('{group}')->group(function() {
+            Route::delete('/', [GroupsController::class, 'destroy'])->name('api.groups.delete');
+            Route::post('assign-permissions', [GroupsPermissionsController::class, 'attach']);
+            Route::post('attach-users', [GroupsUsersController::class, 'attach'])->name('api.groups.users.attach');
+        });
+        Route::delete('permissions', [GroupsPermissionsController::class, 'revoke'])->name('api.delete.groups.permissions');
+        Route::delete('users', [GroupsUsersController::class, 'remove'])->name('groups.users.remove');
+    });
 
+    /**
+     * Permission routes
+     */
     Route::get('permissions', PermissionsController::class);
 
-    Route::get('surgeries/data', SurgeriesDataController::class);
-    Route::get('surgeries/columns', SurgeriesColumnsController::class);
-
-    Route::delete('surgeries/{surgery}', [SurgeriesController::class, 'destroy'])->name('api.surgeries.delete');
+    /**
+     * Surgery routes
+     */
+    Route::prefix('surgeries')->group(function() {
+        Route::get('data', SurgeriesDataController::class);
+        Route::get('columns', SurgeriesColumnsController::class);
+        Route::prefix('{surgery}')->group(function() {
+            Route::delete('/', [SurgeriesController::class, 'destroy'])->name('api.surgeries.delete');
+        });
+        Route::prefix('status')->group(function() {
+            Route::put('update', [SurgeryStatusController::class, 'update']);
+        });
+    });
 
     /**
      * FullCalendar Routes
@@ -55,6 +85,7 @@ Route::middleware(['auth:api'])->group(function () {
         Route::prefix('{event}')->group(function() {
             Route::put('/', [EventController::class, 'update']);
             Route::get('details', EventDetailsController::class);
+            Route::put('change-room', ChangeRoomController::class);
         });
         Route::get('{room}', GetEventsPerRoomController::class)->name('api.events.per-room');
     });
@@ -62,9 +93,12 @@ Route::middleware(['auth:api'])->group(function () {
     Route::prefix('scheduling')->group(function () {
        Route::get('verify-reserved-period-before-store', [VerifyReservedPeriodController::class, 'beforeStore']);
        Route::get('verify-reserved-period-before-update', [VerifyReservedPeriodController::class, 'beforeUpdate']);
+       Route::get('verify-existing-schedules', VerifyExistingSchedulesBeforeUpdateController::class);
     });
 
     Route::prefix('surgeons')->group(function() {
        Route::get('availability', VerifySurgeonAvailabilityController::class);
     });
+
+    Route::get('status', [StatusController::class, 'index']);
 });
