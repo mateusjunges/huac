@@ -14,13 +14,14 @@ use HUAC\Http\Controllers\Api\Events\EventDetailsController;
 use HUAC\Http\Controllers\Api\Events\GetEventsPerRoomController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeUpdateController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyReservedPeriodController;
+use HUAC\Http\Controllers\Api\Status\StatusController;
 use HUAC\Http\Controllers\Api\Surgeons\VerifySurgeonAvailabilityController;
 use HUAC\Http\Controllers\Api\Surgeries\SurgeriesColumnsController;
 use HUAC\Http\Controllers\Api\Surgeries\SurgeriesController;
 use HUAC\Http\Controllers\Api\Surgeries\SurgeriesDataController;
-
 use Illuminate\Http\Request;
 use HUAC\Http\Controllers\Api\ACL\Users\UsersColumnsController;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->get('s/user', function (Request $request) {
     return $request->user();
@@ -71,4 +72,6 @@ Route::middleware(['auth:api'])->group(function () {
     Route::prefix('surgeons')->group(function() {
        Route::get('availability', VerifySurgeonAvailabilityController::class);
     });
+
+    Route::get('status', [StatusController::class, 'index']);
 });

@@ -569,4 +569,33 @@ $(document).ready(function() {
         }
     });
 
+
+    $("#update-status").click(function() {
+        $.ajax({
+            url: '/api/status',
+            method: 'get',
+            headers:headers,
+            success: function (response, status, xhr) {
+               $("#event-click-modal").modal('hide');
+
+               let newStatus = $("#new-status");
+
+               newStatus.html("");
+               newStatus.append(new Option('Selecione o novo status:', ''));
+
+               response.data.status.forEach(function(status) {
+                   newStatus.append(new Option(status.name, status.id));
+               });
+               $("#change-status-modal").modal('show');
+            },
+            error: function (response) {
+                swal({
+                    icon: response.data.swal.icon,
+                    title: response.data.swal.title,
+                    text: response.data.swal.text,
+                    timer: response.data.swal.timer,
+                })
+            }
+        })
+    });
 });
