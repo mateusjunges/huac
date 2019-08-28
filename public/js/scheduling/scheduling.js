@@ -363,36 +363,50 @@ $(document).ready(function() {
             );
 
             if (surgeonIsAvailable) { // The surgeon is available
-                swal({
-                    icon: 'warning',
-                    title: 'Tem certeza?',
-                    text: 'A duração do evento será alterada conforme o desejado.',
-                    timer: 5000,
-                    buttons: ["Cancelar", "Sim, tenho certeza."],
-                }).then(async (response) => {
-                    if (response) { // If the user says "Yes":
-                        usingReservedPeriod = null;
 
-                        await verifyReservedPeriodBeforeUpdate(event, config.data('room'));
+                await verifySchedulesBeforeUpdate(event);
 
-                        if (! usingReservedPeriod) { // The reschedule is not using the reserved period
-                            update(event, currentEventId);
-                        } else { // The reschedule is using the reserved period
-                            swal({
-                                icon: 'warning',
-                                title: 'Período reservado para emergência!',
-                                text: 'Se você colocar esta cirurgia neste horário, estará ' +
-                                    'utilizando o período reservado para emergências! Deseja continuar?',
-                                buttons: ["Não", "Sim, quero continuar."],
-                            }).then((response) => {
-                               if (response)
-                                   update(event, currentEventId);
-                               else revertFunc();
-                            });
+                if (!existEventsAtSameTime) {
+                    swal({
+                        icon: 'warning',
+                        title: 'Tem certeza?',
+                        text: 'A duração do evento será alterada conforme o desejado.',
+                        timer: 5000,
+                        buttons: ["Cancelar", "Sim, tenho certeza."],
+                    }).then(async (response) => {
+                        if (response) { // If the user says "Yes":
+                            usingReservedPeriod = null;
+
+                            await verifyReservedPeriodBeforeUpdate(event, config.data('room'));
+
+                            if (! usingReservedPeriod) { // The reschedule is not using the reserved period
+                                update(event, currentEventId);
+                            } else { // The reschedule is using the reserved period
+                                swal({
+                                    icon: 'warning',
+                                    title: 'Período reservado para emergência!',
+                                    text: 'Se você colocar esta cirurgia neste horário, estará ' +
+                                        'utilizando o período reservado para emergências! Deseja continuar?',
+                                    buttons: ["Não", "Sim, quero continuar."],
+                                }).then((response) => {
+                                    if (response)
+                                        update(event, currentEventId);
+                                    else revertFunc();
+                                });
+                            }
                         }
-                    }
-                    else revertFunc();
-                });
+                        else revertFunc();
+                    });
+                } else {
+                    revertFunc();
+                    swal({
+                        icon: 'error',
+                        text: 'Você não pode agendar esta cirurgia no período desejado, pois já existe uma cirurgia ocupando este horário nesta sala.',
+                        title: 'Conflito de horário!',
+                        timer: 5000,
+                    });
+                }
+
             } else {
                 revertFunc();
                 swal({
@@ -473,7 +487,7 @@ $(document).ready(function() {
                     revertFunc();
                     swal({
                         icon: 'error',
-                        text: 'Você não pode agendar esta cirurgia no período desejado, pois já existe uma cirurgia ocuplando este horário nesta sala.',
+                        text: 'Você não pode agendar esta cirurgia no período desejado, pois já existe uma cirurgia ocupando este horário nesta sala.',
                         title: 'Conflito de horário!',
                         timer: 5000,
                     });
@@ -530,7 +544,7 @@ $(document).ready(function() {
             swal({
                 icon: 'error',
                 text: 'Você não pode trocar esta cirurgia para a sala desejada, ' +
-                    'pois já existe uma cirurgia ocuplando este horário nesta sala.',
+                    'pois já existe uma cirurgia ocupando este horário nesta sala.',
                 title: 'Conflito de horário!',
                 timer: 5000,
             });
@@ -654,5 +668,69 @@ $(document).ready(function() {
                 }
             })
         }
+    });
+
+    $(".edit-surgery").click(function () {
+        window.location.replace(`/surgeries/${currentEvent.surgery_id}/edit`)
+    });
+
+    $("#change-date").click(function() {
+       let modal = $("#change-event-date-modal");
+       $("#event-click-modal").modal('hide');
+       modal.modal('show');
+    });
+
+    $("#save-new-date").click(function () {
+       let newDate = $("#new-date");
+       $.ajax({
+           url: `/api/events/${currentEventId}/change-date`,
+           method: 'post',
+           headers: headers,
+           data: {
+               _method: 'put',
+               date: newDate.val(),
+               room: config.data('room'),
+           },
+
+           success: function(response, status, xhr) {
+               swal({
+                   icon: response.data.swal.icon,
+                   title: response.data.swal.title,
+                   text: response.data.swal.text,
+                   timer: response.data.swal.timer,
+               });
+               if (xhr.status === HTTP_OK) {
+                    $("#change-event-date-modal").modal('hide');
+                    let room = config.data('room');
+                    getEvents(room);
+                    refetchEvents(room);
+               }
+           },
+       });
+    });
+
+    $("#history-button").click(function () {
+        $.ajax({
+            url: `/api/events/${currentEventId}/history`,
+            method: 'get',
+            headers:headers,
+            success: function(response, status, xhr) {
+                if (xhr.status === HTTP_OK) {
+                    $("#history-table-body").html("");
+                    response.data.history.forEach(function(history) {
+                        $("#history-table-body").append(""+
+                          "<tr>" +
+                            "<td>"+ history.status_name +"</td>"+
+                            "<td>"+ history.user_name +"</td>"+
+                            "<td>"+ moment(history.created_at).format('DD/MM/YYYY hh:mm:ss') +"</td>"+
+                            "<td>"+ history.observation +"</td>"+
+                          "</tr>"
+                        +"");
+                    });
+                    $("#event-click-modal").modal('hide');
+                    $("#history-modal").modal('show');
+                }
+            }
+        });
     });
 });

@@ -63,7 +63,7 @@
                                 </button>
                             </div>
                             <div class="col-md-4">
-                                <button type="button" class="btn btn-primary btn-block" id="edit">
+                                <button type="button" class="btn btn-primary btn-block edit-surgery">
                                     <i class="fa fa-edit"></i> Editar
                                 </button>
                             </div>

@@ -25,7 +25,7 @@ class CreateEventsTrigger extends Migration
             
             SELECT count(DISTINCT surgeon_has_surgeries.surgeon_id) INTO busySurgeons
                     FROM events
-                    inner join surgeon_has_surgeries ON surgeon_has_surgeries.surgery_id = NEW.surgery_id
+                    inner join surgeon_has_surgeries ON surgeon_has_surgeries.surgery_id = events.surgery_id
                     AND surgeon_has_surgeries.surgeon_id IN (
                         SELECT surgeon_has_surgeries.surgeon_id FROM surgeon_has_surgeries WHERE surgery_id = NEW.surgery_id
                     )

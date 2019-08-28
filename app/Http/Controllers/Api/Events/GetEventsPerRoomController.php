@@ -17,7 +17,7 @@ class GetEventsPerRoomController
     public function __invoke(Request $request, SurgicalRoom $room)
     {
         $events = Event::room($room->id)
-            ->select('id', 'start_at as start', 'end_at as end', 'color', 'title')->get();
+            ->select('id', 'start_at as start', 'end_at as end', 'color', 'title', 'surgery_id')->get();
 
         return response()->json([
             'data' => [

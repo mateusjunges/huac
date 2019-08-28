@@ -153,4 +153,6 @@
     @include('_modals.scheduling.event-click-modal')
     @include('_modals.scheduling.change-room-modal')
     @include('_modals.scheduling.change-status-modal')
+    @include('_modals.scheduling.change-event-date-modal')
+    @include('_modals.scheduling.history-modal')
 @endsection
