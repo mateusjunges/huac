@@ -88,6 +88,7 @@ Route::middleware(['auth:api'])->group(function () {
             Route::get('details', EventDetailsController::class);
             Route::put('change-room', ChangeRoomController::class);
             Route::put('change-date', [EventDateController::class, 'update']);
+            Route::get('history', \HUAC\Http\Controllers\Api\Events\EventHistoryController::class);
         });
         Route::get('{room}', GetEventsPerRoomController::class)->name('api.events.per-room');
     });

@@ -706,17 +706,31 @@ $(document).ready(function() {
                     refetchEvents(room);
                }
            },
+       });
+    });
 
-           // error: function(response) {
-           //     console.log(response);
-           //      swal({
-           //          icon: response.data.swal.icon,
-           //          title: response.data.swal.title,
-           //          text: response.data.swal.text,
-           //          timer: response.data.swal.timer,
-           //      });
-           // },
-
-       })
+    $("#history-button").click(function () {
+        $.ajax({
+            url: `/api/events/${currentEventId}/history`,
+            method: 'get',
+            headers:headers,
+            success: function(response, status, xhr) {
+                if (xhr.status === HTTP_OK) {
+                    $("#history-table-body").html("");
+                    response.data.history.forEach(function(history) {
+                        $("#history-table-body").append(""+
+                          "<tr>" +
+                            "<td>"+ history.status_name +"</td>"+
+                            "<td>"+ history.user_name +"</td>"+
+                            "<td>"+ moment(history.created_at).format('DD/MM/YYYY hh:mm:ss') +"</td>"+
+                            "<td>"+ history.observation +"</td>"+
+                          "</tr>"
+                        +"");
+                    });
+                    $("#event-click-modal").modal('hide');
+                    $("#history-modal").modal('show');
+                }
+            }
+        });
     });
 });
