@@ -18,19 +18,19 @@ class EventDateController
         $event_start_at = Carbon::parse($event_start_at);
         $event_end_at = Carbon::parse($event_end_at);
 
-        $duration = $event_start_at->diffInSeconds($event_end_at);
+        $duration = $event_end_at->diffInSeconds($event_start_at);
 
         $new_start = $request->input('date');
         $new_start = str_replace('T', ' ', $new_start);
-        $new_start = Carbon::parse($new_start);
+        $start = Carbon::parse($new_start);
 
-        $new_end = $new_start->addSeconds($duration);
+        $new_end = Carbon::parse($new_start)->addSeconds($duration);
 
         $room = $request->input('room');
 
         $surgery = $event->surgery_id;
 
-        $existing_schedules = VerifyExistingSchedulesAtRoom::execute($room, $new_start, $new_end, $surgery);
+        $existing_schedules = VerifyExistingSchedulesAtRoom::execute($room, $start, $new_end, $surgery);
 
         if ($existing_schedules) {
             return response()->json([
@@ -49,7 +49,7 @@ class EventDateController
             ], Response::HTTP_ACCEPTED);
         }
 
-        $event->start_at = $new_start;
+        $event->start_at = $start;
         $event->end_at = $new_end;
 
         $event->save();
