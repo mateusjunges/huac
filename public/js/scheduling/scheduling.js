@@ -618,12 +618,29 @@ $(document).ready(function() {
                  surgeonIsAvailable = null;
                  await verifySurgeonAvailability(event.start, event.end, event.estimated_duration, currentSurgeryId, null);
                  if (surgeonIsAvailable) {
-                    // TODO: the surgeon is available. Now, we need to check for the reserved period.
                      await verifyReservedPeriodBeforeStore(event, config.data('room'));
+
                      if (usingReservedPeriod) {
                          // If the surgery will use the reserved period:
+                         swal({
+                             icon: 'warning',
+                             title: 'Período reservado para emergência!',
+                             text: 'Se você colocar esta cirurgia neste horário, estará ' +
+                                 'utilizando o período reservado para emergências! Deseja continuar?',
+                             buttons: ["Não", "Sim, quero continuar."],
+                         }).then((response) => {
+                             if (response)
+                                 store(event);
+                                // TODO: What happens after save the event?
+                             else {
+                                 let room = config.data('room');
+                                 getEvents(room);
+                                 refetchEvents(room);
+                             }
+                         });
                      } else {
                          // the surgery will not use the reserved period:
+                         // TODO: implement the store method here
                      }
                  } else {
                      let room = config.data('room');
