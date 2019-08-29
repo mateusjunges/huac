@@ -204,6 +204,42 @@ $(document).ready(function() {
     }
 
     /**
+     * Verify the reserved period for the specified room before schedule a surgery.
+     * @param event
+     * @param room
+     */
+    function verifyReservedPeriodBeforeStore(event, room) {
+        $.ajax({
+            url: '/api/scheduling/verify-reserved-period-before-store',
+            method: 'get',
+            async: false,
+            headers: headers,
+            data: {
+                room: room,
+                event: {
+                    start: event.start,
+                    end: event.end,
+                    duration: event.estimated_duration
+                }
+            },
+            success: function (response, status, xhr) {
+                if (xhr.status === HTTP_OK) {
+                    usingReservedPeriod = !!response.data.reserved_period;
+                } else {
+                    console.log(xhr.status);
+                    swal({
+                        icon: 'error',
+                        title: 'Ops...',
+                        text: 'Algo deu errado. Tente novamente mais tarde!',
+                        timer: 5000
+                    });
+                    usingReservedPeriod = true;
+                }
+            }
+        });
+    }
+
+    /**
      * Get all event information.
      * @param eventId
      */
@@ -314,6 +350,7 @@ $(document).ready(function() {
                 start: event.start,
                 end: event.end,
                 surgery_id: event.surgery_id,
+                estimated_duration: event.estimated_duration,
             },
             success: function(response, status, xhr) {
                 if (xhr.status === HTTP_OK) {
@@ -574,9 +611,45 @@ $(document).ready(function() {
              currentSurgeryId = event.surgery_id;
              // Check if the desired time interval at the specified room is available
              // and does not has any surgeries already scheduled to cause time conflict:
+             existEventsAtSameTime = null;
              await verifySchedulesBeforeCreate(event);
              console.log(existEventsAtSameTime); // TODO: Remove this line
+             if (existEventsAtSameTime === false) { //There is no events schedule to this period
+                 surgeonIsAvailable = null;
+                 await verifySurgeonAvailability(event.start, event.end, event.estimated_duration, currentSurgeryId, null);
+                 if (surgeonIsAvailable) {
+                    // TODO: the surgeon is available. Now, we need to check for the reserved period.
+                     await verifyReservedPeriodBeforeStore(event, config.data('room'));
+                     if (usingReservedPeriod) {
+                         // If the surgery will use the reserved period:
+                     } else {
+                         // the surgery will not use the reserved period:
+                     }
+                 } else {
+                     let room = config.data('room');
+                     getEvents(room);
+                     refetchEvents(room);
 
+                     swal({
+                         icon: 'warning',
+                         title: 'Conflito de horário!',
+                         text: 'O cirurgião designado para esta cirurgia já possui ' +
+                             'agendamentos neste horário. Verifique e tente novamente.',
+                         timer: 5000,
+                     });
+                 }
+             } else {
+                 let room = config.data('room');
+                 getEvents(room);
+                 refetchEvents(room);
+
+                 swal({
+                     icon: 'error',
+                     text: 'Você não pode agendar esta cirurgia no período desejado, pois já existe uma cirurgia ocupando este horário nesta sala.',
+                     title: 'Conflito de horário!',
+                     timer: 5000,
+                 });
+             }
              // Check if the surgeon is available before schedule the surgery
         },
 
