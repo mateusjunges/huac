@@ -85,8 +85,9 @@ Route::middleware(['auth:api'])->group(function () {
      * FullCalendar Routes
      */
     Route::prefix('events')->group(function() {
+        Route::post('/', [EventController::class, 'store'])->name('api.events.store');
         Route::prefix('{event}')->group(function() {
-            Route::put('/', [EventController::class, 'update']);
+            Route::put('/', [EventController::class, 'update'])->name('api.events.update');
             Route::get('details', EventDetailsController::class);
             Route::put('change-room', ChangeRoomController::class);
             Route::put('change-date', [EventDateController::class, 'update']);

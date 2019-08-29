@@ -46,6 +46,12 @@ $(document).ready(function() {
         });
     }
 
+    function refreshEvents() {
+        let room = config.data('room');
+        getEvents(room);
+        refetchEvents(room);
+    }
+
     /**
      * Update the displayed events.
      * @param room
@@ -115,16 +121,20 @@ $(document).ready(function() {
             method: 'post',
             headers: headers,
             data: {
+                _method: 'post',
                 event: event,
             },
             success: function (response, status, xhr) {
                 swal({
-                    icon:  response.data.icon,
-                    title: response.data.title,
-                    text:  response.data.text,
-                    timer: response.data.timer,
+                    icon:  response.data.swal.icon,
+                    title: response.data.swal.title,
+                    text:  response.data.swal.text,
+                    timer: response.data.swal.timer,
                 });
                 return xhr.status === HTTP_OK;
+            },
+            error: function (response) {
+                console.log(response);
             }
         })
     }
@@ -154,9 +164,7 @@ $(document).ready(function() {
                     timer: response.data.timer,
                 });
 
-                let room = config.data('room');
-                getEvents(room);
-                refetchEvents(room);
+                refreshEvents();
 
                 if (xhr.status === HTTP_OK) {
                     logId = response.data.log_id;
@@ -601,6 +609,8 @@ $(document).ready(function() {
 
             event = {
                 surgery_id: id,
+                color: config.data('color'),
+                surgical_room: config.data('room'),
                 title: name,
                 start: date.format(),
                 end: date.format(),
@@ -613,7 +623,7 @@ $(document).ready(function() {
              // and does not has any surgeries already scheduled to cause time conflict:
              existEventsAtSameTime = null;
              await verifySchedulesBeforeCreate(event);
-             console.log(existEventsAtSameTime); // TODO: Remove this line
+             console.log("Events at same time: "+existEventsAtSameTime); // TODO: Remove this line
              if (existEventsAtSameTime === false) { //There is no events schedule to this period
                  surgeonIsAvailable = null;
                  await verifySurgeonAvailability(event.start, event.end, event.estimated_duration, currentSurgeryId, null);
@@ -628,24 +638,24 @@ $(document).ready(function() {
                              text: 'Se você colocar esta cirurgia neste horário, estará ' +
                                  'utilizando o período reservado para emergências! Deseja continuar?',
                              buttons: ["Não", "Sim, quero continuar."],
-                         }).then((response) => {
-                             if (response)
-                                 store(event);
-                                // TODO: What happens after save the event?
-                             else {
-                                 let room = config.data('room');
-                                 getEvents(room);
-                                 refetchEvents(room);
+                         }).then(async (response) => {
+                             if (response){
+                                 // Schedule the event using the reserved period:
+                                 if (await store(event)) {
+                                     refreshEvents();
+                                 }
+                             } else {
+                                 refreshEvents();
                              }
                          });
                      } else {
                          // the surgery will not use the reserved period:
-                         // TODO: implement the store method here
+                         if (await store(event)) {
+                            refreshEvents();
+                         }
                      }
                  } else {
-                     let room = config.data('room');
-                     getEvents(room);
-                     refetchEvents(room);
+                     refreshEvents();
 
                      swal({
                          icon: 'warning',
@@ -656,9 +666,7 @@ $(document).ready(function() {
                      });
                  }
              } else {
-                 let room = config.data('room');
-                 getEvents(room);
-                 refetchEvents(room);
+                 refreshEvents();
 
                  swal({
                      icon: 'error',
@@ -678,7 +686,7 @@ $(document).ready(function() {
     window.surgicalRooms.forEach(function(surgicalRoom) {
         $("#surgical-room-"+surgicalRoom.id).click(function() {
             config.data('room', surgicalRoom.id);
-            config.data('color', surgicalRoom.color);
+            config.data('color', '#24872c');
             $("#current-room").html("Sala " + surgicalRoom.id);
             getEvents(config.data('room'));
             refetchEvents(config.data('room'));
