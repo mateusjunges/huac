@@ -5,7 +5,7 @@ namespace HUAC\Actions;
 use Carbon\Carbon;
 use HUAC\Models\SurgicalRoom;
 
-class VerifyReservedPeriodBeforeUpdate
+class VerifyReservedPeriod
 {
     /**
     * VerifyReservedPeriodBeforeUpdate constructor

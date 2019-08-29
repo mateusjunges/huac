@@ -78,7 +78,7 @@ class SurgeriesDataController
                                                             </button>
                                                        </a>";
                 if (Gate::allows('surgeries.delete'))
-                    $nestedData['Excluir'] = "&emsp;<button class='btn btn-danger btn-sm delete'
+                    $nestedData['Excluir'] = "<button class='btn btn-danger btn-sm delete'
                                                                 data-placement='top'
                                                                 data-toggle='tooltip'
                                                                 data-route='surgeries'

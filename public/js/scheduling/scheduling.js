@@ -204,6 +204,42 @@ $(document).ready(function() {
     }
 
     /**
+     * Verify the reserved period for the specified room before schedule a surgery.
+     * @param event
+     * @param room
+     */
+    function verifyReservedPeriodBeforeStore(event, room) {
+        $.ajax({
+            url: '/api/scheduling/verify-reserved-period-before-store',
+            method: 'get',
+            async: false,
+            headers: headers,
+            data: {
+                room: room,
+                event: {
+                    start: event.start,
+                    end: event.end,
+                    duration: event.estimated_duration
+                }
+            },
+            success: function (response, status, xhr) {
+                if (xhr.status === HTTP_OK) {
+                    usingReservedPeriod = !!response.data.reserved_period;
+                } else {
+                    console.log(xhr.status);
+                    swal({
+                        icon: 'error',
+                        title: 'Ops...',
+                        text: 'Algo deu errado. Tente novamente mais tarde!',
+                        timer: 5000
+                    });
+                    usingReservedPeriod = true;
+                }
+            }
+        });
+    }
+
+    /**
      * Get all event information.
      * @param eventId
      */
@@ -266,9 +302,14 @@ $(document).ready(function() {
         })
     }
 
+    /**
+     * Verify all schedules for the specified time interval checking for schedule conflicts.
+     * @param event
+     * @returns {Promise<void>}
+     */
     async function verifySchedulesBeforeUpdate(event) {
         $.ajax({
-            url: '/api/scheduling/verify-existing-schedules',
+            url: '/api/scheduling/verify-existing-schedules-before-update',
             method: 'get',
             async: false,
             headers: headers,
@@ -287,23 +328,58 @@ $(document).ready(function() {
                         title: 'Ops...',
                         text: 'Ocorreu um erro ao verificar os agendamentos. Entre em contato com o responsável pelo sistema.',
                         timer: 5000,
-                    })
+                    });
                 }
             },
         })
     }
 
-
     /**
-     * Instantiate and configure the fullCalendar plugin.
+     * Verify all schedules for the specified time interval checking for schedule conflicts.
+     * @param event
+     * @returns {Promise<void>}
      */
-    fullCalendar.fullCalendar({
-       header: {
+    async function verifySchedulesBeforeCreate(event) {
+        $.ajax({
+            url: '/api/scheduling/verify-existing-schedules-before-create',
+            method: 'get',
+            async: false,
+            headers: headers,
+            data: {
+                room: config.data('room'),
+                start: event.start,
+                end: event.end,
+                surgery_id: event.surgery_id,
+                estimated_duration: event.estimated_duration,
+            },
+            success: function(response, status, xhr) {
+                if (xhr.status === HTTP_OK) {
+                    existEventsAtSameTime = response.data.events_at_same_time;
+                }
+            },
+            error: function(response) {
+                console.log(response);
+                swal({
+                    icon: 'error',
+                    title: 'Ops...',
+                    text: 'Ocorreu um erro ao verificar os agendamentos. Entre em contato com o responsável pelo sistema.',
+                    timer: 5000,
+                });
+            }
+        })
+    }
+
+
+     /**
+      * Instantiate and configure the fullCalendar plugin.
+      */
+     fullCalendar.fullCalendar({
+        header: {
            left: 'prev, next, today',
            center: 'title',
            right: 'month,agendaWeek,agendaDay',
-       },
-       viewRender: function (view, element) {
+        },
+        viewRender: function (view, element) {
            let room = config.data('room');
            $.ajax({
                url: `/api/events/${room}`,
@@ -324,10 +400,10 @@ $(document).ready(function() {
                    refetchEvents(room);
                }
            });
-       },
-       slotDuration: _slotDuration,
-       droppable: true,
-       editable: true,
+        },
+        slotDuration: _slotDuration,
+        droppable: true,
+        editable: true,
         eventConstraint: {
             start: moment().startOf('day'),
             end: moment(moment().startOf('day'), 'MM-DD-YYY').add('days', 365)
@@ -498,12 +574,101 @@ $(document).ready(function() {
             }
         },
 
-
+        /**
+         * Handle the event click event.
+         * @param calEvent
+         * @param jsEvent
+         * @param view
+         */
         eventClick: function (calEvent, jsEvent, view) {
             currentEventId = calEvent.id;
             currentEvent = calEvent;
             information(calEvent.id);
-        }
+        },
+
+         /**
+          * Handle drop of external events within the fullCalendar.
+          * @param date
+          * @param jsEvent
+          * @param resourceId
+          * @param events
+          * @param revertFunc
+          */
+        drop: async function(date, jsEvent, resourceId, events, revertFunc) {
+            let name = $(this).data('event').title;
+            let id = $(this).data('id').toString();
+            let estimated_duration = $(this).data('estimated');
+
+            event = {
+                surgery_id: id,
+                title: name,
+                start: date.format(),
+                end: date.format(),
+                estimated_duration: estimated_duration,
+            };
+
+             console.log(event); // TODO: Remove this line
+             currentSurgeryId = event.surgery_id;
+             // Check if the desired time interval at the specified room is available
+             // and does not has any surgeries already scheduled to cause time conflict:
+             existEventsAtSameTime = null;
+             await verifySchedulesBeforeCreate(event);
+             console.log(existEventsAtSameTime); // TODO: Remove this line
+             if (existEventsAtSameTime === false) { //There is no events schedule to this period
+                 surgeonIsAvailable = null;
+                 await verifySurgeonAvailability(event.start, event.end, event.estimated_duration, currentSurgeryId, null);
+                 if (surgeonIsAvailable) {
+                     await verifyReservedPeriodBeforeStore(event, config.data('room'));
+
+                     if (usingReservedPeriod) {
+                         // If the surgery will use the reserved period:
+                         swal({
+                             icon: 'warning',
+                             title: 'Período reservado para emergência!',
+                             text: 'Se você colocar esta cirurgia neste horário, estará ' +
+                                 'utilizando o período reservado para emergências! Deseja continuar?',
+                             buttons: ["Não", "Sim, quero continuar."],
+                         }).then((response) => {
+                             if (response)
+                                 store(event);
+                                // TODO: What happens after save the event?
+                             else {
+                                 let room = config.data('room');
+                                 getEvents(room);
+                                 refetchEvents(room);
+                             }
+                         });
+                     } else {
+                         // the surgery will not use the reserved period:
+                         // TODO: implement the store method here
+                     }
+                 } else {
+                     let room = config.data('room');
+                     getEvents(room);
+                     refetchEvents(room);
+
+                     swal({
+                         icon: 'warning',
+                         title: 'Conflito de horário!',
+                         text: 'O cirurgião designado para esta cirurgia já possui ' +
+                             'agendamentos neste horário. Verifique e tente novamente.',
+                         timer: 5000,
+                     });
+                 }
+             } else {
+                 let room = config.data('room');
+                 getEvents(room);
+                 refetchEvents(room);
+
+                 swal({
+                     icon: 'error',
+                     text: 'Você não pode agendar esta cirurgia no período desejado, pois já existe uma cirurgia ocupando este horário nesta sala.',
+                     title: 'Conflito de horário!',
+                     timer: 5000,
+                 });
+             }
+             // Check if the surgeon is available before schedule the surgery
+        },
 
     });
 
@@ -670,16 +835,25 @@ $(document).ready(function() {
         }
     });
 
+    /**
+     * Redirect to the surgeries edit route.
+     */
     $(".edit-surgery").click(function () {
         window.location.replace(`/surgeries/${currentEvent.surgery_id}/edit`)
     });
 
+    /**
+     * Open the modal to reschedule a surgery.
+     */
     $("#change-date").click(function() {
        let modal = $("#change-event-date-modal");
        $("#event-click-modal").modal('hide');
        modal.modal('show');
     });
 
+    /**
+     * Restore the surgery to the specified date.
+     */
     $("#save-new-date").click(function () {
        let newDate = $("#new-date");
        $.ajax({
@@ -709,6 +883,10 @@ $(document).ready(function() {
        });
     });
 
+
+    /**
+     * Load and show a modal with the surgery history.
+     */
     $("#history-button").click(function () {
         $.ajax({
             url: `/api/events/${currentEventId}/history`,

@@ -16,6 +16,8 @@ class VerifySurgeonAvailabilityController
         if (! is_null($request->input('surgery_id'))) {
             $surgery = Surgery::find($request->input('surgery_id'));
             $event = $surgery->events->last();
+            if (is_null($event))
+                $event = $surgery->id;
         } else if (! is_null($request->input('event_id'))) {
             $event = Event::find($request->input('event_id'));
             $surgery = $event->surgery()->first();

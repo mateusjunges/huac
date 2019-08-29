@@ -4,6 +4,7 @@ namespace HUAC\Actions;
 
 use Carbon\Carbon;
 use HUAC\Models\Event;
+use HUAC\Models\Surgery;
 
 class VerifySurgeonAvailability
 {
@@ -21,14 +22,16 @@ class VerifySurgeonAvailability
      * @param $start
      * @param $end
      */
-    public static function execute(Event $event, $start, $end, $estimatedTime = 0)
+    public static function execute($event, $start, $end, $estimatedTime = 0)
     {
 
-        if ($end == null and $estimatedTime != 0) {
-            $end = Carbon::parse($start)->addHours($estimatedTime);
+        if ($end == $start and $estimatedTime != 0) {
+            $end = Carbon::parse($end)->addHours($estimatedTime);
         }
 
-        $surgery = $event->surgery()->first();
+        if ($event instanceof Event)
+            $surgery = $event->surgery()->first();
+        else $surgery = Surgery::find($event);
 
         if ($surgery == null)
             return false;

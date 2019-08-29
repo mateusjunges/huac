@@ -12,7 +12,9 @@ use HUAC\Http\Controllers\Api\Events\ChangeRoomController;
 use HUAC\Http\Controllers\Api\Events\EventController;
 use HUAC\Http\Controllers\Api\Events\EventDateController;
 use HUAC\Http\Controllers\Api\Events\EventDetailsController;
+use HUAC\Http\Controllers\Api\Events\EventHistoryController;
 use HUAC\Http\Controllers\Api\Events\GetEventsPerRoomController;
+use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeCreateController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeUpdateController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyReservedPeriodController;
 use HUAC\Http\Controllers\Api\Status\StatusController;
@@ -88,7 +90,7 @@ Route::middleware(['auth:api'])->group(function () {
             Route::get('details', EventDetailsController::class);
             Route::put('change-room', ChangeRoomController::class);
             Route::put('change-date', [EventDateController::class, 'update']);
-            Route::get('history', \HUAC\Http\Controllers\Api\Events\EventHistoryController::class);
+            Route::get('history', EventHistoryController::class);
         });
         Route::get('{room}', GetEventsPerRoomController::class)->name('api.events.per-room');
     });
@@ -96,7 +98,8 @@ Route::middleware(['auth:api'])->group(function () {
     Route::prefix('scheduling')->group(function () {
        Route::get('verify-reserved-period-before-store', [VerifyReservedPeriodController::class, 'beforeStore']);
        Route::get('verify-reserved-period-before-update', [VerifyReservedPeriodController::class, 'beforeUpdate']);
-       Route::get('verify-existing-schedules', VerifyExistingSchedulesBeforeUpdateController::class);
+       Route::get('verify-existing-schedules-before-update', VerifyExistingSchedulesBeforeUpdateController::class);
+       Route::get('verify-existing-schedules-before-create', VerifyExistingSchedulesBeforeCreateController::class);
     });
 
     Route::prefix('surgeons')->group(function() {
