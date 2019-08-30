@@ -2,8 +2,8 @@
 
 namespace HUAC\Http\Controllers\Api\Surgeries;
 
+use HUAC\Events\SurgeryDeletedEvent;
 use HUAC\Models\Surgery;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class SurgeriesController
@@ -16,6 +16,9 @@ class SurgeriesController
     public function destroy(Surgery $surgery)
     {
         $surgery->events()->delete();
+
+        event(new SurgeryDeletedEvent($surgery));
+
         $surgery->delete();
         return response()->json([
             'code'  => Response::HTTP_OK,

@@ -129,6 +129,5 @@ Route::middleware(['auth:api'])->group(function () {
         Route::prefix('surgeries')->group(function() {
             Route::delete('{surgery}', DeletePatientSurgeryController::class);
         });
-
     });
 });

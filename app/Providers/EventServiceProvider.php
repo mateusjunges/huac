@@ -2,6 +2,7 @@
 
 namespace HUAC\Providers;
 
+use HUAC\Events\SurgeryDeletedEvent;
 use HUAC\Events\SurgeryScheduledEvent;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
@@ -22,6 +23,9 @@ class EventServiceProvider extends ServiceProvider
         SurgeryScheduledEvent::class => [
             // Event listeners here.
         ],
+        SurgeryDeletedEvent::class => [
+            // Event listeners here.
+        ]
     ];
 
     /**
