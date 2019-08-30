@@ -26,6 +26,10 @@ php artisan key:generate
 ```bash
 php artisan migrate
 ```
+- Configure a comunicação com api:
+```bash
+php artisan passport:install
+```
 - Adicione os dados pré cadastrados ao banco de dados:
 ```bash
 php artisan db:seed
