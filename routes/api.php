@@ -14,6 +14,9 @@ use HUAC\Http\Controllers\Api\Events\EventDateController;
 use HUAC\Http\Controllers\Api\Events\EventDetailsController;
 use HUAC\Http\Controllers\Api\Events\EventHistoryController;
 use HUAC\Http\Controllers\Api\Events\GetEventsPerRoomController;
+use HUAC\Http\Controllers\Api\Patients\PatientsColumnsController;
+use HUAC\Http\Controllers\Api\Patients\PatientsController;
+use HUAC\Http\Controllers\Api\Patients\PatientsDataController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeCreateController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeUpdateController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyReservedPeriodController;
@@ -109,4 +112,12 @@ Route::middleware(['auth:api'])->group(function () {
     });
 
     Route::get('status', [StatusController::class, 'index']);
+
+    Route::prefix('patients')->group(function() {
+        Route::get('columns', PatientsColumnsController::class);
+        Route::get('data', PatientsDataController::class);
+        Route::prefix('{patient}')->group(function() {
+           Route::delete('/', [PatientsController::class, 'destroy']);
+        });
+    });
 });
