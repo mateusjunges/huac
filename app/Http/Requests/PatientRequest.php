@@ -23,13 +23,12 @@ class PatientRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
-        $id = 'NULL';
+    {   $patient = 'NULL';
         if (Route::getCurrentRoute()->parameters() != null)
-            $id = Route::getCurrentRoute()->parameters()['patient'];
+            $patient = Route::getCurrentRoute()->parameters()['patient'];
         return [
             'name'           => 'required|min:7|full_name',
-            'medical_record' => 'required|unique:patients,medical_record,'.$id,
+            'medical_record' => 'required|unique:patients,medical_record,'.$patient->id,
             'mother_name'    => 'required|min:7|full_name',
             'birthday_at'    => 'required|date',
             'gender'         => 'required|in:M,O,F'

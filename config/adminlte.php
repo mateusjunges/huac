@@ -119,6 +119,10 @@ return [
                 [
                     'text'  => 'Ver pacientes',
                     'route' => 'patients.index'
+                ],
+                [
+                    'text' => 'Novo paciente',
+                    'route' => 'patients.create'
                 ]
             ],
         ],
