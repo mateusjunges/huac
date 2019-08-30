@@ -61,7 +61,8 @@ class PatientsDataController
                 $edit = route('patients.edit', $patient->id);
                 $token = csrf_token();
                 $gender = $patient->gender == "M" or $patient->gender == "O" ? 'o' : 'a';
-                $view_surgeries = route('patients.view-surgeries', $patient->id);
+                $view_surgeries = route('patients.surgeries', $patient->id);
+
                 $nestedData['Nome'] = $patient->name;
                 if (Gate::allows('patients.update'))
                     $nestedData['Editar'] = "<a href='{$edit}'>

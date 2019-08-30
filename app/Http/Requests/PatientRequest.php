@@ -27,7 +27,7 @@ class PatientRequest extends FormRequest
         if (Route::getCurrentRoute()->parameters() != null)
             $patient = Route::getCurrentRoute()->parameters()['patient'];
         $patient = $patient != 'NULL' ? $patient->id : 'NULL';
-        
+
         return [
             'name'           => 'required|min:7|full_name',
             'medical_record' => 'required|unique:patients,medical_record,'.$patient->id,

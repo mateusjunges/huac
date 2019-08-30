@@ -46,6 +46,8 @@ Route::group(['middleware' => 'auth'], function (){
 
     Route::get('scheduling', SchedulingController::class)->name('surgeries.scheduling');
 
-    Route::resource('patients', PatientController::class);
-    Route::get('patients/view-surgeries', PatientSurgeryController::class)->name('patients.view-surgeries');
+    Route::resource('patients', PatientController::class)->except([
+        'show'
+    ]);
+    Route::get('patients/{patient}/surgeries', PatientSurgeryController::class)->name('patients.surgeries');
 });

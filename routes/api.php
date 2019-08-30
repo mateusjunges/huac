@@ -17,6 +17,9 @@ use HUAC\Http\Controllers\Api\Events\GetEventsPerRoomController;
 use HUAC\Http\Controllers\Api\Patients\PatientsColumnsController;
 use HUAC\Http\Controllers\Api\Patients\PatientsController;
 use HUAC\Http\Controllers\Api\Patients\PatientsDataController;
+use HUAC\Http\Controllers\Api\Patients\Surgeries\DeletePatientSurgeryController;
+use HUAC\Http\Controllers\Api\Patients\Surgeries\PatientSurgeriesColumnsController;
+use HUAC\Http\Controllers\Api\Patients\Surgeries\PatientSurgeriesDataController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeCreateController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeUpdateController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyReservedPeriodController;
@@ -117,7 +120,15 @@ Route::middleware(['auth:api'])->group(function () {
         Route::get('columns', PatientsColumnsController::class);
         Route::get('data', PatientsDataController::class);
         Route::prefix('{patient}')->group(function() {
-           Route::delete('/', [PatientsController::class, 'destroy']);
+            Route::delete('/', [PatientsController::class, 'destroy']);
+            Route::prefix('surgeries')->group(function() {
+                Route::get('columns', PatientSurgeriesColumnsController::class);
+                Route::get('data', PatientSurgeriesDataController::class);
+            });
         });
+        Route::prefix('surgeries')->group(function() {
+            Route::delete('{surgery}', DeletePatientSurgeryController::class);
+        });
+
     });
 });
