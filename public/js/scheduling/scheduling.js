@@ -125,6 +125,9 @@ $(document).ready(function() {
                 event: event,
             },
             success: function (response, status, xhr) {
+
+                $("#surgery"+currentSurgeryId).remove();
+
                 swal({
                     icon:  response.data.swal.icon,
                     title: response.data.swal.title,
@@ -918,5 +921,41 @@ $(document).ready(function() {
                 }
             }
         });
+    });
+
+    /**
+     * Cancel the clicked surgery.
+     */
+    $("#delete").click(function () {
+        swal({
+            icon: 'warning',
+            title: 'Tem certeza?',
+            text: 'Deseja realmente cancelar o agendamento desta cirrugia?',
+            buttons: ["Não", "Sim, quero cancelar o agendamento"],
+        }).then((response) => {
+            if (response) {
+                $("#event-click-modal").modal('hide');
+
+                $.ajax({
+                    url: `/api/events/${currentEventId}`,
+                    headers: headers,
+                    method: 'post',
+                    data: {
+                        _method: 'delete',
+                    },
+                    success: function (response, status, xhr) {
+                        if (xhr.status === HTTP_OK) {
+                            swal({
+                                icon: response.data.swal.icon,
+                                title: response.data.swal.title,
+                                text: response.data.swal.text,
+                                timer: response.data.swal.timer,
+                            });
+                            refreshEvents();
+                        }
+                    },
+                });
+            }
+        })
     });
 });

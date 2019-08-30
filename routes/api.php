@@ -88,6 +88,7 @@ Route::middleware(['auth:api'])->group(function () {
         Route::post('/', [EventController::class, 'store'])->name('api.events.store');
         Route::prefix('{event}')->group(function() {
             Route::put('/', [EventController::class, 'update'])->name('api.events.update');
+            Route::delete('/', [EventController::class, 'destroy'])->name('api.events.destroy');
             Route::get('details', EventDetailsController::class);
             Route::put('change-room', ChangeRoomController::class);
             Route::put('change-date', [EventDateController::class, 'update']);

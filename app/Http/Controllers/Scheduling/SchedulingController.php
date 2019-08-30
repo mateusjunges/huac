@@ -26,7 +26,8 @@ class SchedulingController
 
         $surgeries = Surgery::withStatus(Status::IN_PROCESS)->with('patient')->get()
             ->filter(function ($surgery) {
-                return $surgery->latestStatus->status_id === Status::IN_PROCESS;
+                return $surgery->latestStatus->status_id === Status::IN_PROCESS
+                    or $surgery->latestStatus->status_id === Status::DELETED;
             });
 
         $surgeriesInWaitingList = Surgery::withStatus(Status::WAITING_LIST)->with('patient')->get()

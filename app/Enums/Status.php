@@ -22,5 +22,5 @@ class Status
     const MATERIALS_DENIED_BY_SURGERY_CENTER       = 16;
     const RESCHEDULED_AFTER_MATERIALS_CONFIRMATION = 17;
     const SURGICAL_COMPLICATIONS                   = 18;
-
+    const DELETED                                  = 19;
 }

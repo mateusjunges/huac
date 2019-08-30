@@ -145,4 +145,28 @@ class EventController
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    /**
+     * @param Event $event
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
+    public function destroy(Event $event)
+    {
+         $surgery = $event->surgery;
+         $event->delete();
+
+         Log::createFor($surgery, 'Agendamento removido.', Status::DELETED);
+
+         return response()->json([
+             'data' => [
+                 'swal' => [
+                     'icon'   => 'success',
+                     'title'  => 'Sucesso!',
+                     'text'   => 'Evento removido com sucesso. Se necessário, a cirurgia pode ser agendada novamente!',
+                     'timer'  => 5000,
+                 ]
+             ]
+         ], Response::HTTP_OK);
+    }
 }
