@@ -15,6 +15,7 @@ class SurgeriesController
      */
     public function destroy(Surgery $surgery)
     {
+        $surgery->events()->delete();
         $surgery->delete();
         return response()->json([
             'code'  => Response::HTTP_OK,
