@@ -69,7 +69,7 @@
                             </div>
                             <div class="col-md-4">
                                 <button type="button" class="btn btn-primary btn-block" id="delete">
-                                    <i class="fa fa-trash"></i> Remover
+                                    <i class="fa fa-trash"></i> Cancelar
                                 </button>
                             </div>
                         </div>

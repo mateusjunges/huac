@@ -14,6 +14,12 @@ use HUAC\Http\Controllers\Api\Events\EventDateController;
 use HUAC\Http\Controllers\Api\Events\EventDetailsController;
 use HUAC\Http\Controllers\Api\Events\EventHistoryController;
 use HUAC\Http\Controllers\Api\Events\GetEventsPerRoomController;
+use HUAC\Http\Controllers\Api\Patients\PatientsColumnsController;
+use HUAC\Http\Controllers\Api\Patients\PatientsController;
+use HUAC\Http\Controllers\Api\Patients\PatientsDataController;
+use HUAC\Http\Controllers\Api\Patients\Surgeries\DeletePatientSurgeryController;
+use HUAC\Http\Controllers\Api\Patients\Surgeries\PatientSurgeriesColumnsController;
+use HUAC\Http\Controllers\Api\Patients\Surgeries\PatientSurgeriesDataController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeCreateController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeUpdateController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyReservedPeriodController;
@@ -85,8 +91,10 @@ Route::middleware(['auth:api'])->group(function () {
      * FullCalendar Routes
      */
     Route::prefix('events')->group(function() {
+        Route::post('/', [EventController::class, 'store'])->name('api.events.store');
         Route::prefix('{event}')->group(function() {
-            Route::put('/', [EventController::class, 'update']);
+            Route::put('/', [EventController::class, 'update'])->name('api.events.update');
+            Route::delete('/', [EventController::class, 'destroy'])->name('api.events.destroy');
             Route::get('details', EventDetailsController::class);
             Route::put('change-room', ChangeRoomController::class);
             Route::put('change-date', [EventDateController::class, 'update']);
@@ -107,4 +115,19 @@ Route::middleware(['auth:api'])->group(function () {
     });
 
     Route::get('status', [StatusController::class, 'index']);
+
+    Route::prefix('patients')->group(function() {
+        Route::get('columns', PatientsColumnsController::class);
+        Route::get('data', PatientsDataController::class);
+        Route::prefix('{patient}')->group(function() {
+            Route::delete('/', [PatientsController::class, 'destroy']);
+            Route::prefix('surgeries')->group(function() {
+                Route::get('columns', PatientSurgeriesColumnsController::class);
+                Route::get('data', PatientSurgeriesDataController::class);
+            });
+        });
+        Route::prefix('surgeries')->group(function() {
+            Route::delete('{surgery}', DeletePatientSurgeryController::class);
+        });
+    });
 });

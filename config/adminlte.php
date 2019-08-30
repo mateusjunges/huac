@@ -113,6 +113,20 @@ return [
             'route' => 'surgeries.scheduling'
         ],
         [
+            'icon' => 'user',
+            'text' => 'Pacientes',
+            'submenu' => [
+                [
+                    'text'  => 'Ver pacientes',
+                    'route' => 'patients.index'
+                ],
+                [
+                    'text' => 'Novo paciente',
+                    'route' => 'patients.create'
+                ]
+            ],
+        ],
+        [
             'icon'    => 'list',
             'text'    => 'Cirurgias',
             'submenu' => [

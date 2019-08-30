@@ -120,6 +120,12 @@ class StatusTableSeeder extends Seeder
                 'description' => 'Ocorreu um problema durante a realização do procedimento.',
                 'created_at'  => Carbon::now(),
                 'updated_at'  => Carbon::now(),
+            ],
+            [
+                'name'        => 'Agendamento removido.',
+                'description' => 'O agendamento desta cirurgia foi cancelado.',
+                'created_at'  => Carbon::now(),
+                'updated_at'  => Carbon::now(),
             ]
         ]);
 

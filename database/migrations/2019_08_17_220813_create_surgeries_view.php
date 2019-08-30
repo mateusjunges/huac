@@ -15,7 +15,7 @@ class CreateSurgeriesView extends Migration
     {
         DB::statement("
         CREATE OR REPLACE VIEW show_surgeries AS
-            SELECT surgeries.id as surgery_id, patients.name as patient_name, patients.medical_record as medical_record,
+            SELECT surgeries.id as surgery_id, patients.name as patient_name, patients.id as patient_id, patients.medical_record as medical_record,
                 users.name as head_surgeon_name, status.name as status_name, status.id as status_id, 
                 procedures.name as procedure_name, procedures.id as procedure_id,
                 surgeon_has_surgeries.surgeon_id as head_surgeon_id,

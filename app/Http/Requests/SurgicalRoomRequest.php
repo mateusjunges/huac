@@ -24,9 +24,10 @@ class SurgicalRoomRequest extends FormRequest
      */
     public function rules()
     {
-        $id = 'NULL';
+        $room = 'NULL';
         if (Route::getCurrentRoute()->parameters() != null)
-            $id = Route::getCurrentRoute()->parameters()['room'];
+            $room = Route::getCurrentRoute()->parameters()['room'];
+        $room = $room != 'NULL' ? $room->id : 'NULL';
         return [
             'name'                              => 'required|min:6|string',
             'morning_reservation_starts_at'     => 'required_without:afternoon_reservation_starts_at',
