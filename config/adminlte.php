@@ -108,12 +108,15 @@ return [
     */
 
     'menu' => [
+        // Scheduling
         [
+            'icon'  => 'clock',
             'text'  => 'Agendar',
             'route' => 'surgeries.scheduling'
         ],
+        // Patients
         [
-            'icon' => 'user',
+            'icon' => 'user-injured',
             'text' => 'Pacientes',
             'submenu' => [
                 [
@@ -126,6 +129,7 @@ return [
                 ]
             ],
         ],
+        // Surgeries
         [
             'icon'    => 'list',
             'text'    => 'Cirurgias',
@@ -140,6 +144,7 @@ return [
                 ]
             ],
         ],
+        // Waiting list
         [
             'text' => 'Lista de espera',
             'submenu' => [
@@ -153,6 +158,22 @@ return [
                 ]
             ]
         ],
+        // Confirm materials
+        [
+            'text' => 'Confirmar materiais',
+            'icon' => 'calendar-check',
+            'submenu' => [
+                [
+                    'text' => 'CME',
+                    'route' => 'confirm-materials.cme',
+                ],
+                [
+                    'text' => 'Centro cirúrgico',
+                    'route' => 'confirm-materials.surgery-center'
+                ]
+            ]
+        ],
+        // Users
         [
             'icon'    => 'users-cog',
             'text'    => 'Usuários',
@@ -167,6 +188,7 @@ return [
                 ],
             ]
         ],
+        // Groups
         [
             'icon' => 'group',
             'text' => 'Grupos',
@@ -181,6 +203,7 @@ return [
                 ]
             ]
         ],
+        // Surgical Rooms
         [
             'icon' => 'door-closed',
             'text' => 'Salas',

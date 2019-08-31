@@ -1,12 +1,12 @@
 <?php
 
-namespace HUAC\Http\Controllers\Api\Surgeries;
+namespace HUAC\Http\Controllers\Api\CME;
 
 use Illuminate\Http\Request;
-use Gate;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Gate;
 
-class SurgeriesColumnsController
+class CMESurgeriesColumnsController
 {
     public function __invoke(Request $request)
     {
@@ -16,12 +16,14 @@ class SurgeriesColumnsController
 
         $columns = array();
         $columns += array(++$i => 'Paciente', ++$i => 'Prontuário');
-        if(Gate::allows('surgeries.update'))
+        if (Gate::allows('surgeries.update'))
             $columns += array(++$i => 'Editar');
-        if(Gate::allows('surgeries.delete'))
-            $columns += array(++$i => 'Excluir');
+        if (Gate::allows('cme.confirm-materials'))
+            $columns += array(++$i => 'Confirmar');
+        if (Gate::allows('cme.deny-materials'))
+            $columns += array(++$i => 'Negar');
         $columns += array(
-            ++$i => 'Médico principal',
+            ++$i => 'Materiais',
             ++$i => 'Procedimento',
             ++$i => 'Status',
             ++$i => 'Agendamento',
@@ -29,8 +31,7 @@ class SurgeriesColumnsController
 
 
         return response(collect($columns)->map(function ($item){
-            if($item == 'Editar'
-                || $item == 'Excluir')
+            if($item == 'Editar')
                 return ['data' => $item, 'searchable' => false, 'orderable' => false];
             return ['data' => $item];
         })->toJson(JSON_UNESCAPED_UNICODE));
