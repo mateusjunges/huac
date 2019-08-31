@@ -18,7 +18,7 @@ $(document).ready(function() {
             buttons: ["Não.", "Sim, não tenho os materiais."],
         }).then((response) => {
             if (response) {
-                $("#deny-materials-modal").modal('show');
+                $("#deny-surgery-center-materials-modal").modal('show');
             }
         })
     });
@@ -43,7 +43,7 @@ $(document).ready(function() {
                     element.fadeOut(400, function() {
                         element.remove();
                     });
-                    $("#deny-materials-modal").modal('hide');
+                    $("#deny-surgery-center-materials-modal").modal('hide');
                 }
             },
         });

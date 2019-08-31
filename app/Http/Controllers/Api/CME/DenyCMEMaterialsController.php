@@ -29,8 +29,7 @@ class DenyCMEMaterialsController
             }
 
             DenyCMEMaterials::execute($surgery,
-                $request->input('observation'),
-                Status::MATERIALS_DENIED_BY_CME
+                $request->input('observation')
             );
 
             event(new MaterialsDeniedByCME($surgery));

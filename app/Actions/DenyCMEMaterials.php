@@ -2,6 +2,7 @@
 
 namespace HUAC\Actions;
 
+use HUAC\Enums\Status;
 use HUAC\Models\Log;
 use HUAC\Models\Surgery;
 
@@ -13,9 +14,9 @@ class DenyCMEMaterials
      * @param $status
      * @return mixed
      */
-    public static function execute(Surgery $surgery, $observation, $status)
+    public static function execute(Surgery $surgery, $observation)
     {
         $surgery->events()->delete();
-        return Log::createFor($surgery, $observation, $status);
+        return Log::createFor($surgery, $observation, Status::MATERIALS_DENIED_BY_CME);
     }
 }

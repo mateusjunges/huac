@@ -2,6 +2,7 @@
 
 namespace HUAC\Actions;
 
+use HUAC\Enums\Status;
 use HUAC\Models\Log;
 use HUAC\Models\Surgery;
 
@@ -13,8 +14,8 @@ class ConfirmCMEMaterials
      * @param $status
      * @return mixed
      */
-    public static function execute(Surgery $surgery, $observation, $status)
+    public static function execute(Surgery $surgery, $observation)
     {
-        return Log::createFor($surgery, $observation, $status);
+        return Log::createFor($surgery, $observation, Status::MATERIALS_CONFIRMED_BY_CME);
     }
 }
