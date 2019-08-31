@@ -10,7 +10,7 @@ use HUAC\Models\Surgery;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ConfirmMaterialsCMEController
+class ConfirmCMEMaterialsController
 {
     public function __invoke(Surgery $surgery)
     {

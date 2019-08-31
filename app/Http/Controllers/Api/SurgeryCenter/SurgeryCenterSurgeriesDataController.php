@@ -1,12 +1,12 @@
 <?php
 
-namespace HUAC\Http\Controllers\Api\CME;
+namespace HUAC\Http\Controllers\Api\SurgeryCenter;
 
+use HUAC\Models\Views\SurgeryCenterSurgeriesForConfirmation as Surgery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use HUAC\Models\Views\CMESurgeriesForConfirmation as Surgery;
 
-class CMESurgeriesDataController
+class SurgeryCenterSurgeriesDataController
 {
     public function __invoke(Request $request)
     {
@@ -15,11 +15,11 @@ class CMESurgeriesDataController
             ++$i => "patient_name",
             ++$i => "medical_record",
         );
-        if(Gate::allows('surgeries.update'))
+        if (Gate::allows('surgeries.update'))
             $columns += array(++$i => 'surgery_id');
-        if(Gate::allows('cme.confirm-materials'))
+        if (Gate::allows('surgery-center.confirm-materials'))
             $columns += array(++$i => 'surgery_id');
-        if(Gate::allows('cme.deny-materials'))
+        if (Gate::allows('surgery-center.deny-materials'))
             $columns += array(++$i => 'surgery_id');
 
         $columns += array(

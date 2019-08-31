@@ -203,6 +203,17 @@ return [
                 ]
             ]
         ],
+        // Schedule
+        [
+            'text' => 'Agenda',
+            'icon' => 'clipboard-list',
+            'submenu' => [
+                [
+                    'text' => 'Com materiais confirmados',
+                    'route' => 'schedule.with-confirmed-materials'
+                ]
+            ]
+        ],
         // Surgical Rooms
         [
             'icon' => 'door-closed',

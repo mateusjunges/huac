@@ -10,8 +10,8 @@ use HUAC\Http\Controllers\Api\ACL\Users\UsersDataController;
 use HUAC\Http\Controllers\Api\ACL\Users\UsersPermissionsController;
 use HUAC\Http\Controllers\Api\CME\CMESurgeriesColumnsController;
 use HUAC\Http\Controllers\Api\CME\CMESurgeriesDataController;
-use HUAC\Http\Controllers\Api\CME\ConfirmMaterialsCMEController;
-use HUAC\Http\Controllers\Api\CME\DenyMaterialsCMEController;
+use HUAC\Http\Controllers\Api\CME\ConfirmCMEMaterialsController;
+use HUAC\Http\Controllers\Api\CME\DenyCMEMaterialsController;
 use HUAC\Http\Controllers\Api\Events\ChangeRoomController;
 use HUAC\Http\Controllers\Api\Events\EventController;
 use HUAC\Http\Controllers\Api\Events\EventDateController;
@@ -33,6 +33,10 @@ use HUAC\Http\Controllers\Api\Surgeries\SurgeriesColumnsController;
 use HUAC\Http\Controllers\Api\Surgeries\SurgeriesController;
 use HUAC\Http\Controllers\Api\Surgeries\SurgeriesDataController;
 use HUAC\Http\Controllers\Api\Surgeries\SurgeryStatusController;
+use HUAC\Http\Controllers\Api\SurgeryCenter\ConfirmSurgeryCenterMaterialsController;
+use HUAC\Http\Controllers\Api\SurgeryCenter\DenySurgeryCenterMaterialsController;
+use HUAC\Http\Controllers\Api\SurgeryCenter\SurgeryCenterSurgeriesColumnsController;
+use HUAC\Http\Controllers\Api\SurgeryCenter\SurgeryCenterSurgeriesDataController;
 use Illuminate\Http\Request;
 use HUAC\Http\Controllers\Api\ACL\Users\UsersColumnsController;
 use Illuminate\Support\Facades\Route;
@@ -89,14 +93,26 @@ Route::middleware(['auth:api'])->group(function () {
         Route::prefix('status')->group(function() {
             Route::put('update', [SurgeryStatusController::class, 'update']);
         });
+
+        /**
+         * Confirm surgery materials routes.
+         */
         Route::prefix('confirm-materials')->group(function() {
            Route::prefix('cme')->group(function() {
                Route::get('columns', CMESurgeriesColumnsController::class);
                Route::get('data', CMESurgeriesDataController::class);
                Route::prefix('{surgery}')->group(function() {
-                   Route::post('confirm', ConfirmMaterialsCMEController::class);
-                   Route::post('deny', DenyMaterialsCMEController::class);
+                   Route::post('confirm', ConfirmCMEMaterialsController::class);
+                   Route::post('deny', DenyCMEMaterialsController::class);
                });
+           });
+           Route::prefix('surgery-center')->group(function() {
+              Route::get('columns', SurgeryCenterSurgeriesColumnsController::class);
+              Route::get('data', SurgeryCenterSurgeriesDataController::class);
+              Route::prefix('{surgery}')->group(function() {
+                 Route::post('confirm', ConfirmSurgeryCenterMaterialsController::class);
+                 Route::post('deny', DenySurgeryCenterMaterialsController::class);
+              });
            });
         });
     });
