@@ -19,7 +19,7 @@
                          :id="'surgery'+surgery.id">
                         {{ surgery.patient.name }}
                     </div>
-                    <div v-if="surgeriesWithDeniedMaterials != null">
+                    <div v-if="this.surgeriesWithDeniedMaterials.length != 0">
                         <h4>Cirurgias com materiais negados</h4>
                     </div>
                     <div class="fc-event newCirurgia external-event

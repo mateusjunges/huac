@@ -39084,7 +39084,7 @@ var render = function() {
               )
             }),
             _vm._v(" "),
-            _vm.surgeriesWithDeniedMaterials != null
+            this.surgeriesWithDeniedMaterials.length != 0
               ? _c("div", [
                   _c("h4", [_vm._v("Cirurgias com materiais negados")])
                 ])
