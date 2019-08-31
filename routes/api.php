@@ -10,6 +10,8 @@ use HUAC\Http\Controllers\Api\ACL\Users\UsersDataController;
 use HUAC\Http\Controllers\Api\ACL\Users\UsersPermissionsController;
 use HUAC\Http\Controllers\Api\CME\CMESurgeriesColumnsController;
 use HUAC\Http\Controllers\Api\CME\CMESurgeriesDataController;
+use HUAC\Http\Controllers\Api\CME\ConfirmMaterialsCMEController;
+use HUAC\Http\Controllers\Api\CME\DenyMaterialsCMEController;
 use HUAC\Http\Controllers\Api\Events\ChangeRoomController;
 use HUAC\Http\Controllers\Api\Events\EventController;
 use HUAC\Http\Controllers\Api\Events\EventDateController;
@@ -91,6 +93,10 @@ Route::middleware(['auth:api'])->group(function () {
            Route::prefix('cme')->group(function() {
                Route::get('columns', CMESurgeriesColumnsController::class);
                Route::get('data', CMESurgeriesDataController::class);
+               Route::prefix('{surgery}')->group(function() {
+                   Route::post('confirm', ConfirmMaterialsCMEController::class);
+                   Route::post('deny', DenyMaterialsCMEController::class);
+               });
            });
         });
     });

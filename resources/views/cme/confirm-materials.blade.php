@@ -2,6 +2,8 @@
 @section('title', 'Confirmar materiais - CME')
 @section('js')
     <script src="{{ asset('js/CME/confirm-materials/index.js') }}"></script>
+    <script src="{{ asset('js/CME/confirm-materials/confirm.js') }}"></script>
+    <script src="{{ asset('js/CME/confirm-materials/deny.js') }}"></script>
 @endsection
 @section('css')
     <style>
@@ -43,4 +45,5 @@
             </table>
         </div>
     </div>
+    @include('_modals.CME.deny-materials-modal')
 @endsection

@@ -6,18 +6,6 @@
             </div>
             <div class="box-body">
                 <div id="external-events">
-                    <div class="fc-event newCirurgia external-event
-                                        bg-red ui-draggable
-                                        ui-draggable-handle"
-                         style="border: none"
-                         v-for="surgery in surgeriesWithoutMaterials"
-                         :data-id="surgery.id"
-                         :data-title="surgery.patient.name"
-                         data-color="#ff0000"
-                         :data-estimated="surgery.estimated_duration_time"
-                         :id="'surgery'+surgery.id">
-                        {{ surgery.patient.name }}
-                    </div>
                     <div class="fc-event new-surgery external-event
                                         bg-yellow ui-draggable
                                         ui-draggable-handle"
@@ -27,6 +15,21 @@
                          :data-title="surgery.patient.name"
                          data-color="#ff0000"
                          :data-event='{duration: convertToTimeString(surgery.estimated_duration_time)}'
+                         :data-estimated="surgery.estimated_duration_time"
+                         :id="'surgery'+surgery.id">
+                        {{ surgery.patient.name }}
+                    </div>
+                    <div v-if="surgeriesWithDeniedMaterials != null">
+                        <h4>Cirurgias com materiais negados</h4>
+                    </div>
+                    <div class="fc-event newCirurgia external-event
+                                        bg-red ui-draggable
+                                        ui-draggable-handle"
+                         style="border: none"
+                         v-for="surgery in surgeriesWithDeniedMaterials"
+                         :data-id="surgery.id"
+                         :data-title="surgery.patient.name"
+                         data-color="#ff0000"
                          :data-estimated="surgery.estimated_duration_time"
                          :id="'surgery'+surgery.id">
                         {{ surgery.patient.name }}
@@ -55,7 +58,7 @@
     export default {
         name: "SurgeriesToBeScheduled",
         props: {
-            surgeriesWithoutMaterials: Array,
+            surgeriesWithDeniedMaterials: Array,
             surgeries: Array,
             surgeriesInWaitingList: Array
 
