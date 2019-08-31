@@ -13,7 +13,8 @@
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/bootstrap/dist/css/bootstrap.min.css') }}">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/font-awesome/css/font-awesome.min.css') }}">
+{{--    <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/font-awesome/css/font-awesome.min.css') }}">--}}
+{{--    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">--}}
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/Ionicons/css/ionicons.min.css') }}">
 
@@ -41,7 +42,7 @@
 <body class="hold-transition @yield('body_class')">
 
 @yield('body')
-
+<script src="{{ asset('vendor/font-awesome/kit.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/select2/select2.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.slimscroll.min.js') }}"></script>

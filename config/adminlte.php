@@ -154,7 +154,7 @@ return [
             ]
         ],
         [
-            'icon'    => 'users',
+            'icon'    => 'users-cog',
             'text'    => 'Usuários',
             'submenu' => [
                 [
@@ -182,7 +182,7 @@ return [
             ]
         ],
         [
-            'icon' => 'door-close',
+            'icon' => 'door-closed',
             'text' => 'Salas',
             'submenu' => [
                 [
