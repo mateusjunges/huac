@@ -19,6 +19,7 @@ $(document).ready(function() {
                 $.ajax({
                     url: `/api/surgeries/confirm-materials/cme/${surgery}/confirm`,
                     headers: headers,
+                    method: 'post',
                     success: function(response, status, xhr) {
                         swal({
                             icon: response.data.swal.icon,

@@ -86,7 +86,7 @@ class CMESurgeriesDataController
                                                             <i class='fa fa-check-circle'></i>
                                                         </button>";
                 if (Gate::allows('cme.deny-materials'))
-                    $nestedData['Negar'] = "<button class='btn btn-danger btn-sm confirm'
+                    $nestedData['Negar'] = "<button class='btn btn-danger btn-sm deny'
                                                                 data-placement='top'
                                                                 data-toggle='tooltip'
                                                                 value='{$token}'

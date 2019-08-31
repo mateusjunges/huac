@@ -7,7 +7,7 @@ $(document).ready(function() {
 
     let element = null;
     let surgery = null;
-    table.on('click', 'button.confirm', function() {
+    table.on('click', 'button.deny', function() {
         surgery = $(this).data('id');
         element = $(this).closest('tr');
 

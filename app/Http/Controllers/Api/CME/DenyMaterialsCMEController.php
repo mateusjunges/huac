@@ -5,8 +5,7 @@ namespace HUAC\Http\Controllers\Api\CME;
 use Exception;
 use HUAC\Actions\DenyCMEMaterials;
 use HUAC\Enums\Status;
-use HUAC\Events\MaterialsConfirmedByCME;
-use HUAC\Models\Log;
+use HUAC\Events\MaterialsDeniedByCME;
 use HUAC\Models\Surgery;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,7 +33,7 @@ class DenyMaterialsCMEController
                 Status::MATERIALS_DENIED_BY_CME
             );
 
-            event(new MaterialsConfirmedByCME($surgery));
+            event(new MaterialsDeniedByCME($surgery));
 
             return response()->json([
                 'data' => [
