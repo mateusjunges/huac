@@ -110,7 +110,7 @@ return [
     'menu' => [
         // Scheduling
         [
-            'icon'  => 'clock',
+            'icon'  => 'calendar',
             'text'  => 'Agendar',
             'route' => 'surgeries.scheduling'
         ],
@@ -146,6 +146,7 @@ return [
         ],
         // Waiting list
         [
+            'icon' => 'clock',
             'text' => 'Lista de espera',
             'submenu' => [
                 [
