@@ -62,7 +62,7 @@ class SurgeriesDataController
         $data = array();
         if(!empty($surgeries)){
             foreach ($surgeries as $surgery){
-                $edit = route('surgeries.update', $surgery->surgery_id);
+                $edit = route('surgeries.edit', $surgery->surgery_id);
                 $token = csrf_token();
 
                 $nestedData['Paciente'] = $surgery->patient_name;

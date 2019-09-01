@@ -8,6 +8,7 @@ use HUAC\Http\Controllers\ACL\UsersController;
 use HUAC\Http\Controllers\CME\ConfirmMaterialsController;
 use HUAC\Http\Controllers\Patients\PatientController;
 use HUAC\Http\Controllers\Patients\PatientSurgeryController;
+use HUAC\Http\Controllers\Procedures\ProceduresController;
 use HUAC\Http\Controllers\Schedule\ConfirmedMaterialsScheduleController;
 use HUAC\Http\Controllers\SurgeryCenter\ConfirmMaterialsController as ConfirmSurgeryCenterMaterialsController;
 use HUAC\Http\Controllers\SurgicalRoom\SurgicalRoomController;
@@ -69,4 +70,6 @@ Route::group(['middleware' => 'auth'], function (){
         Route::get('confirmed-material-events', ConfirmedMaterialsScheduleController::class)
             ->name('schedule.with-confirmed-materials');
     });
+
+    Route::resource('procedures', ProceduresController::class);
 });

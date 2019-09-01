@@ -228,6 +228,21 @@ return [
                     'route' => 'rooms.index',
                 ]
             ]
+        ],
+        // Procedures
+        [
+            'icon' => 'procedures',
+            'text' => 'Procedimentos',
+            'submenu' => [
+                [
+                    'text' => 'Novo procedimento',
+                    'route' => 'procedures.create',
+                ],
+                [
+                    'text' => 'Listar procedimentos',
+                    'route' => 'procedures.index'
+                ]
+            ]
         ]
     ],
 
