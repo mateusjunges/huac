@@ -110,7 +110,7 @@ return [
     'menu' => [
         // Scheduling
         [
-            'icon'  => 'clock',
+            'icon'  => 'calendar',
             'text'  => 'Agendar',
             'route' => 'surgeries.scheduling'
         ],
@@ -146,6 +146,7 @@ return [
         ],
         // Waiting list
         [
+            'icon' => 'clock',
             'text' => 'Lista de espera',
             'submenu' => [
                 [
@@ -226,6 +227,21 @@ return [
                 [
                     'text'  => 'Listar salas',
                     'route' => 'rooms.index',
+                ]
+            ]
+        ],
+        // Procedures
+        [
+            'icon' => 'procedures',
+            'text' => 'Procedimentos',
+            'submenu' => [
+                [
+                    'text' => 'Novo procedimento',
+                    'route' => 'procedures.create',
+                ],
+                [
+                    'text' => 'Listar procedimentos',
+                    'route' => 'procedures.index'
                 ]
             ]
         ]

@@ -2,8 +2,11 @@
 
 namespace HUAC\Http\Controllers\Api\Procedures;
 
+use Exception;
 use HUAC\Http\Resources\ProceduresResource;
 use HUAC\Models\Procedure;
+use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProceduresController
 {
@@ -28,5 +31,26 @@ class ProceduresController
         return new ProceduresResource(
             Procedure::find($id)
         );
+    }
+
+    /**
+     * @param Procedure $procedure
+     * @return JsonResponse
+     * @throws Exception
+     */
+    public function destroy(Procedure $procedure)
+    {
+        $procedure->delete();
+
+        return response()->json([
+            'data' => [
+                'swal' => [
+                    'icon'  => 'success',
+                    'title' => 'Sucesso!',
+                    'text'  => 'Procedimento removido com sucesso!',
+                    'timer' => 5000
+                ]
+            ]
+        ], Response::HTTP_OK);
     }
 }
