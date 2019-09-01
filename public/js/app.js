@@ -1738,6 +1738,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 String.prototype.toHHMM = function () {
@@ -1764,7 +1767,7 @@ String.prototype.toHHMM = function () {
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SurgeriesToBeScheduled",
   props: {
-    surgeriesWithoutMaterials: Array,
+    surgeriesWithDeniedMaterials: Array,
     surgeries: Array,
     surgeriesInWaitingList: Array
   },
@@ -39051,31 +39054,6 @@ var render = function() {
           "div",
           { attrs: { id: "external-events" } },
           [
-            _vm._l(_vm.surgeriesWithoutMaterials, function(surgery) {
-              return _c(
-                "div",
-                {
-                  staticClass:
-                    "fc-event newCirurgia external-event\n                                    bg-red ui-draggable\n                                    ui-draggable-handle",
-                  staticStyle: { border: "none" },
-                  attrs: {
-                    "data-id": surgery.id,
-                    "data-title": surgery.patient.name,
-                    "data-color": "#ff0000",
-                    "data-estimated": surgery.estimated_duration_time,
-                    id: "surgery" + surgery.id
-                  }
-                },
-                [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(surgery.patient.name) +
-                      "\n                "
-                  )
-                ]
-              )
-            }),
-            _vm._v(" "),
             _vm._l(this.surgeries, function(surgery) {
               return _c(
                 "div",
@@ -39092,6 +39070,37 @@ var render = function() {
                         surgery.estimated_duration_time
                       )
                     },
+                    "data-estimated": surgery.estimated_duration_time,
+                    id: "surgery" + surgery.id
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(surgery.patient.name) +
+                      "\n                "
+                  )
+                ]
+              )
+            }),
+            _vm._v(" "),
+            this.surgeriesWithDeniedMaterials.length != 0
+              ? _c("div", [
+                  _c("h4", [_vm._v("Cirurgias com materiais negados")])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm._l(_vm.surgeriesWithDeniedMaterials, function(surgery) {
+              return _c(
+                "div",
+                {
+                  staticClass:
+                    "fc-event newCirurgia external-event\n                                    bg-red ui-draggable\n                                    ui-draggable-handle",
+                  staticStyle: { border: "none" },
+                  attrs: {
+                    "data-id": surgery.id,
+                    "data-title": surgery.patient.name,
+                    "data-color": "#ff0000",
                     "data-estimated": surgery.estimated_duration_time,
                     id: "surgery" + surgery.id
                   }

@@ -108,12 +108,15 @@ return [
     */
 
     'menu' => [
+        // Scheduling
         [
+            'icon'  => 'clock',
             'text'  => 'Agendar',
             'route' => 'surgeries.scheduling'
         ],
+        // Patients
         [
-            'icon' => 'user',
+            'icon' => 'user-injured',
             'text' => 'Pacientes',
             'submenu' => [
                 [
@@ -126,6 +129,7 @@ return [
                 ]
             ],
         ],
+        // Surgeries
         [
             'icon'    => 'list',
             'text'    => 'Cirurgias',
@@ -140,6 +144,7 @@ return [
                 ]
             ],
         ],
+        // Waiting list
         [
             'text' => 'Lista de espera',
             'submenu' => [
@@ -153,8 +158,24 @@ return [
                 ]
             ]
         ],
+        // Confirm materials
         [
-            'icon'    => 'users',
+            'text' => 'Confirmar materiais',
+            'icon' => 'calendar-check',
+            'submenu' => [
+                [
+                    'text' => 'CME',
+                    'route' => 'confirm-materials.cme',
+                ],
+                [
+                    'text' => 'Centro cirúrgico',
+                    'route' => 'confirm-materials.surgery-center'
+                ]
+            ]
+        ],
+        // Users
+        [
+            'icon'    => 'users-cog',
             'text'    => 'Usuários',
             'submenu' => [
                 [
@@ -167,6 +188,7 @@ return [
                 ],
             ]
         ],
+        // Groups
         [
             'icon' => 'group',
             'text' => 'Grupos',
@@ -181,8 +203,20 @@ return [
                 ]
             ]
         ],
+        // Schedule
         [
-            'icon' => 'door-close',
+            'text' => 'Agenda',
+            'icon' => 'clipboard-list',
+            'submenu' => [
+                [
+                    'text' => 'Com materiais confirmados',
+                    'route' => 'schedule.with-confirmed-materials'
+                ]
+            ]
+        ],
+        // Surgical Rooms
+        [
+            'icon' => 'door-closed',
             'text' => 'Salas',
             'submenu' => [
                 [

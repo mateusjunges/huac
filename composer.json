@@ -15,7 +15,8 @@
         "laravel/passport": "^7.3",
         "laravel/tinker": "^1.0",
         "mateusjunges/laravel-acl": "2.0.*",
-        "pusher/pusher-php-server": "~4.0"
+        "pusher/pusher-php-server": "~4.0",
+        "ext-json": "*"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

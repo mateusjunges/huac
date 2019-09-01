@@ -2,6 +2,10 @@
 
 namespace HUAC\Providers;
 
+use HUAC\Events\MaterialsConfirmedByCME;
+use HUAC\Events\MaterialsConfirmedBySurgeryCenter;
+use HUAC\Events\MaterialsDeniedByCME;
+use HUAC\Events\MaterialsDeniedBySurgeryCenter;
 use HUAC\Events\SurgeryDeletedEvent;
 use HUAC\Events\SurgeryScheduledEvent;
 use Illuminate\Support\Facades\Event;
@@ -24,6 +28,18 @@ class EventServiceProvider extends ServiceProvider
             // Event listeners here.
         ],
         SurgeryDeletedEvent::class => [
+            // Event listeners here.
+        ],
+        MaterialsConfirmedByCME::class => [
+            // Event listeners here.
+        ],
+        MaterialsDeniedByCME::class => [
+            // Event listeners here.
+        ],
+        MaterialsDeniedBySurgeryCenter::class => [
+            // Event listeners here.
+        ],
+        MaterialsConfirmedBySurgeryCenter::class => [
             // Event listeners here.
         ]
     ];
