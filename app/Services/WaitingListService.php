@@ -2,14 +2,14 @@
 
 namespace HUAC\Services;
 
-use HUAC\Events\SurgeryCreated;
+use HUAC\Events\SurgeryAddedToWaitingList;
 use HUAC\Models\Log;
 use HUAC\Models\Patient;
 use HUAC\Models\Surgeon;
 use HUAC\Models\Surgery;
 use Illuminate\Http\Request;
 
-class CreateSurgeryService
+class WaitingListService
 {
     /**
      * @param Request $request
@@ -33,9 +33,9 @@ class CreateSurgeryService
 
         $surgery->attachAnesthetics($request->input('anesthesia_id'));
 
-        Log::surgeryCreated($surgery);
+        Log::addedToWaitingList($surgery);
 
-        event(new SurgeryCreated($surgery));
+        event(new SurgeryAddedToWaitingList($surgery));
 
         return $surgery;
     }
@@ -44,6 +44,7 @@ class CreateSurgeryService
      * Update the specified surgery.
      * @param Request $request
      * @param $surgery
+     * @return mixed
      */
     public function update(Request $request, $surgery)
     {
@@ -63,7 +64,7 @@ class CreateSurgeryService
 
         Log::createFor(
             $surgery,
-            'Dados da cirurgia atualizados!',
+            'Os dados da cirurgia atualizados!',
             $surgery->latestStatus()->first()->status_id
         );
 

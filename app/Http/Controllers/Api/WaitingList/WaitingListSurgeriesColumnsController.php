@@ -1,12 +1,12 @@
 <?php
 
-namespace HUAC\Http\Controllers\Api\Surgeries;
+namespace HUAC\Http\Controllers\Api\WaitingList;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 
-class SurgeriesColumnsController
+class WaitingListSurgeriesColumnsController
 {
     public function __invoke(Request $request)
     {
@@ -16,9 +16,9 @@ class SurgeriesColumnsController
 
         $columns = array();
         $columns += array(++$i => 'Paciente', ++$i => 'Prontuário');
-        if(Gate::allows('surgeries.update'))
+        if(Gate::allows('waiting-list.update'))
             $columns += array(++$i => 'Editar');
-        if(Gate::allows('surgeries.delete'))
+        if(Gate::allows('waiting-list.delete'))
             $columns += array(++$i => 'Excluir');
         $columns += array(
             ++$i => 'Médico principal',

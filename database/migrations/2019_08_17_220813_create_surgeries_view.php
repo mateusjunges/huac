@@ -19,7 +19,7 @@ class CreateSurgeriesView extends Migration
                 users.name as head_surgeon_name, status.name as status_name, status.id as status_id, 
                 procedures.name as procedure_name, procedures.id as procedure_id,
                 surgeon_has_surgeries.surgeon_id as head_surgeon_id,
-                to_char(events.start_at, 'dd/mm/yyyy HH24:MM') as scheduling
+                to_char(events.start_at, 'dd/mm/yyyy HH24:MI') as scheduling
                 FROM surgeries
                     INNER JOIN patients ON patients.id = surgeries.patient_id
                     INNER JOIN procedures ON procedures.id = surgeries.procedure_id
@@ -40,6 +40,7 @@ class CreateSurgeriesView extends Migration
                     AND patients.deleted_at IS NULL
                     AND surgeon_has_surgeries.deleted_at IS NULL
                     AND procedures.deleted_at IS NULL
+                    AND events.deleted_at IS NULL
         ");
     }
 

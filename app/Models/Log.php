@@ -56,4 +56,19 @@ class Log extends Model
             'status_id'   => Status::IN_PROCESS
         ]);
     }
+
+    /**
+     * Log created when a surgery is added to the waiting list.
+     * @param Surgery $surgery
+     * @return mixed
+     */
+    public static function addedToWaitingList(Surgery $surgery)
+    {
+        return static::create([
+           'surgery_id' => $surgery->id,
+           'user_id' => Auth::id(),
+           'observation' => 'Cirurgia adicionada a lista de espera.',
+           'status_id' => Status::WAITING_LIST,
+        ]);
+    }
 }

@@ -37,6 +37,9 @@ use HUAC\Http\Controllers\Api\SurgeryCenter\ConfirmSurgeryCenterMaterialsControl
 use HUAC\Http\Controllers\Api\SurgeryCenter\DenySurgeryCenterMaterialsController;
 use HUAC\Http\Controllers\Api\SurgeryCenter\SurgeryCenterSurgeriesColumnsController;
 use HUAC\Http\Controllers\Api\SurgeryCenter\SurgeryCenterSurgeriesDataController;
+use HUAC\Http\Controllers\Api\WaitingList\WaitingListController;
+use HUAC\Http\Controllers\Api\WaitingList\WaitingListSurgeriesColumnsController;
+use HUAC\Http\Controllers\Api\WaitingList\WaitingListSurgeriesDataController;
 use Illuminate\Http\Request;
 use HUAC\Http\Controllers\Api\ACL\Users\UsersColumnsController;
 use Illuminate\Support\Facades\Route;
@@ -114,6 +117,14 @@ Route::middleware(['auth:api'])->group(function () {
                  Route::post('deny', DenySurgeryCenterMaterialsController::class);
               });
            });
+        });
+    });
+
+    Route::prefix('waiting-list')->group(function() {
+        Route::get('data', WaitingListSurgeriesDataController::class);
+        Route::get('columns', WaitingListSurgeriesColumnsController::class);
+        Route::prefix('{surgery}')->group(function() {
+           Route::delete('/', [WaitingListController::class, 'destroy']);
         });
     });
 
