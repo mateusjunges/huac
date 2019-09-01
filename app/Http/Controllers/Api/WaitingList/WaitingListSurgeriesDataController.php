@@ -1,13 +1,14 @@
 <?php
 
-namespace HUAC\Http\Controllers\Api\Surgeries;
+namespace HUAC\Http\Controllers\Api\WaitingList;
 
-use Illuminate\Support\Facades\Gate;
+use HUAC\Enums\Status;
 use HUAC\Models\Surgery;
 use HUAC\Models\Views\Surgeries;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
-class SurgeriesDataController
+class WaitingListSurgeriesDataController
 {
     public function __invoke(Request $request)
     {
@@ -37,37 +38,68 @@ class SurgeriesDataController
         $dir = $request->input('order.0.dir');
         if(empty($request->input('search.value')))
             $surgeries = Surgeries::offset($start)
+                ->where('status_id', Status::WAITING_LIST)
                 ->limit($limit)
                 ->orderBy($order, $dir)
                 ->get();
         else{
             $search = $request->input('search.value');
-            $surgeries = Surgeries::where('patient_name', 'ilike', '%'.$search.'%')
-                ->orWhere('medical_record', 'ilike', '%'.$search.'%')
-                ->orWhere('head_surgeon_name', 'ilike', '%'.$search.'%')
-                ->orWhere('status_name', 'ilike', '%'.$search.'%')
-                ->orWhere('scheduling', 'ilike', '%'.$search.'%')
+            $surgeries = Surgeries::where([
+                ['patient_name', 'ilike', '%'.$search.'%'],
+                ['status_id', '=', Status::WAITING_LIST]
+            ])
+                ->orWhere([
+                    ['medical_record', 'ilike', '%'.$search.'%'],
+                    ['status_id', '=', Status::WAITING_LIST]
+                ])
+                ->orWhere([
+                    ['head_surgeon_name', 'ilike', '%'.$search.'%'],
+                    ['status_id', '=', Status::WAITING_LIST]
+                ])
+                ->orWhere([
+                    ['status_name', 'ilike', '%'.$search.'%'],
+                    ['status_id', '=', Status::WAITING_LIST]
+                ])
+                ->orWhere([
+                    ['scheduling', 'ilike', '%'.$search.'%'],
+                    ['status_id', '=', Status::WAITING_LIST]
+                ])
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
                 ->get();
 
-            $totalFiltered = Surgeries::where('patient_name', 'ilike', '%'.$search.'%')
-                    ->orWhere('medical_record', 'ilike', '%'.$search.'%')
-                    ->orWhere('head_surgeon_name', 'ilike', '%'.$search.'%')
-                    ->orWhere('status_name', 'ilike', '%'.$search.'%')
-                    ->orWhere('scheduling', 'ilike', '%'.$search.'%')
+            $totalFiltered = Surgeries::where([
+                ['patient_name', 'ilike', '%'.$search.'%'],
+                ['status_id', '=', Status::WAITING_LIST]
+            ])
+                ->orWhere([
+                    ['medical_record', 'ilike', '%'.$search.'%'],
+                    ['status_id', '=', Status::WAITING_LIST]
+                ])
+                ->orWhere([
+                    ['head_surgeon_name', 'ilike', '%'.$search.'%'],
+                    ['status_id', '=', Status::WAITING_LIST]
+                ])
+                ->orWhere([
+                    ['status_name', 'ilike', '%'.$search.'%'],
+                    ['status_id', '=', Status::WAITING_LIST]
+                ])
+                ->orWhere([
+                    ['scheduling', 'ilike', '%'.$search.'%'],
+                    ['status_id', '=', Status::WAITING_LIST]
+                ])
                 ->count();
         }
         $data = array();
         if(!empty($surgeries)){
             foreach ($surgeries as $surgery){
-                $edit = route('surgeries.update', $surgery->surgery_id);
+                $edit = route('waiting-list.edit', $surgery->surgery_id);
                 $token = csrf_token();
 
                 $nestedData['Paciente'] = $surgery->patient_name;
                 $nestedData['Prontuário'] = $surgery->medical_record;
-                if (Gate::allows('surgeries.edit'))
+                if (Gate::allows('waiting-list.update'))
                     $nestedData['Editar'] = "<a href='{$edit}'>
                                                             <button class='btn btn-primary btn-sm' 
                                                                     data-toggle='tooltip'
@@ -76,11 +108,11 @@ class SurgeriesDataController
                                                                 <i class='fa fa-edit'></i>
                                                             </button>
                                                        </a>";
-                if (Gate::allows('surgeries.delete'))
+                if (Gate::allows('waiting-list.delete'))
                     $nestedData['Excluir'] = "<button class='btn btn-danger btn-sm delete'
                                                                 data-placement='top'
                                                                 data-toggle='tooltip'
-                                                                data-route='surgeries'
+                                                                data-route='waiting-list'
                                                                 data-type='cirurgia do paciente'
                                                                 data-name='{$surgery->patient_name}'
                                                                 data-gender='a'

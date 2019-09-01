@@ -23,7 +23,7 @@ class SchedulingController
                 || $latestStatus == Status::MATERIALS_DENIED_BY_CME
                 || $latestStatus == Status::RESCHEDULED_AFTER_MATERIALS_CONFIRMATION;
             });
-        $surgeries = Surgery::withStatus(Status::IN_PROCESS)->with('patient')->get()
+        $surgeries = Surgery::with('patient')->get()
             ->filter(function ($surgery) {
                 return $surgery->latestStatus->status_id === Status::IN_PROCESS
                     or $surgery->latestStatus->status_id === Status::DELETED;

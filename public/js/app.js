@@ -1768,7 +1768,7 @@ String.prototype.toHHMM = function () {
   name: "SurgeriesToBeScheduled",
   props: {
     surgeriesWithDeniedMaterials: Array,
-    surgeries: Array,
+    surgeries: Object,
     surgeriesInWaitingList: Array
   },
   data: function data() {

@@ -1,29 +1,25 @@
 <?php
 
-namespace HUAC\Http\Controllers\Api\Surgeries;
+namespace HUAC\Http\Controllers\Api\WaitingList;
 
 use HUAC\Enums\Status;
-use HUAC\Events\SurgeryDeletedEvent;
+use HUAC\Events\SurgeryRemovedFromWaitingList;
 use HUAC\Models\Log;
 use HUAC\Models\Surgery;
 use Symfony\Component\HttpFoundation\Response;
 
-class SurgeriesController
+class WaitingListController
 {
-    /**
-     * @param Surgery $surgery
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
-     */
     public function destroy(Surgery $surgery)
     {
-        Log::createFor($surgery, 'Cirurgia cancelada', Status::CANCELED);
+        Log::createFor($surgery, 'Cirurgia cancelada.', Status::CANCELED);
 
         $surgery->events()->delete();
 
-        event(new SurgeryDeletedEvent($surgery));
+        event(new SurgeryRemovedFromWaitingList($surgery));
 
         $surgery->delete();
+
         return response()->json([
             'code'  => Response::HTTP_OK,
             'timer' => 5000,
