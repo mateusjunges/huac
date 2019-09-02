@@ -14,6 +14,10 @@
         </div>
     </div>
     <div class="row" id="app">
-        <on-going-surgery :event-id="{{ $surgery->events()->latest()->first()->id }}"></on-going-surgery>
+        <div class="col-md-11 col-md-offset-2">
+            <div class="col-md-9">
+                <on-going-surgery :event-id="{{ $surgery->events()->latest()->first()->id }}"></on-going-surgery>
+            </div>
+        </div>
     </div>
 @endsection

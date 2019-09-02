@@ -2744,6 +2744,125 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2758,18 +2877,26 @@ var HTTP_OK = 200;
   },
   data: function data() {
     return {
-      started: false,
-      started_at: null,
-      duration: null,
-      finished: false,
-      isAtSurgeryCenter: false,
-      isAtSurgicalRoom: false,
-      repaiStarted: false,
-      timeoutDone: false,
-      anestheticInduction: false,
-      intercurrence: false,
-      outOfRepai: false
+      surgery: {
+        started: false,
+        started_at: null,
+        duration: null,
+        finished: false,
+        isAtSurgeryCenter: false,
+        isAtSurgicalRoom: false,
+        repaiStarted: false,
+        timeoutDone: false,
+        anestheticInduction: false,
+        intercurrence: false,
+        outOfRepai: false,
+        outOfSurgeryCenter: false,
+        outOfSurgicalRoom: false
+      }
     };
+  },
+  mounted: function mounted() {
+    var self = this;
+    this.surgeryStatus();
   },
   methods: {
     surgeryStatus: function () {
@@ -2785,16 +2912,18 @@ var HTTP_OK = 200;
                 _context.next = 2;
                 return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("/api/surgeries/stats/".concat(this.eventId)).then(function (response) {
                   if (response.status === HTTP_OK) {
-                    _this.started = response.data.started;
-                    _this.startedAt = response.data.startedAt;
-                    _this.duration = response.data.duration;
-                    _this.finished = response.data.finished;
-                    _this.isAtSurgeryCenter = response.data.isAtSurgeryCenter;
-                    _this.isAtSurgical_room = response.data.isAtSurgicalRoom;
-                    _this.repaiStarted = response.data.repaiStarted;
-                    _this.timeoutDone = response.data.timeoutDone;
-                    _this.intercurrence = response.data.intercurrence;
-                    _this.outOfRepai = response.data.outOfRepai;
+                    _this.surgery.started = response.data.data.started;
+                    _this.surgery.startedAt = response.data.data.startedAt;
+                    _this.surgery.duration = response.data.data.duration;
+                    _this.surgery.finished = response.data.data.finished;
+                    _this.surgery.isAtSurgeryCenter = response.data.data.isAtSurgeryCenter;
+                    _this.surgery.isAtSurgical_room = response.data.data.isAtSurgicalRoom;
+                    _this.surgery.repaiStarted = response.data.data.repaiStarted;
+                    _this.surgery.timeoutDone = response.data.data.timeoutDone;
+                    _this.surgery.intercurrence = response.data.data.intercurrence;
+                    _this.surgery.outOfRepai = response.data.data.outOfRepai;
+                    _this.surgery.outOfSurgeryCenter = response.data.data.outOfSurgeryCenter;
+                    _this.surgery.outOfSurgicalRoom = response.data.data.outOfSurgicalRoom;
                   } else {
                     swal({
                       icon: 'error',
@@ -2818,11 +2947,100 @@ var HTTP_OK = 200;
       }
 
       return surgeryStatus;
-    }()
-  },
-  mounted: function mounted() {
-    var self = this;
-    this.surgeryStatus();
+    }(),
+
+    /**
+     * Dtermine when to show the entrance at surgery center button.
+     * @returns {boolean}
+     */
+    shouldDisableEntranceAtSurgeryCenterButton: function shouldDisableEntranceAtSurgeryCenterButton() {
+      return this.surgery.started || this.surgery.finished || this.surgery.outOfRepai || this.surgery.isAtSurgeryCenter;
+    },
+    confirmEntranceAtSurgeryCenter: function confirmEntranceAtSurgeryCenter() {},
+
+    /**
+     * @returns {boolean}
+     */
+    shouldDisableEntranceAtSurgicalRoomButton: function shouldDisableEntranceAtSurgicalRoomButton() {
+      if (!this.surgery.isAtSurgeryCenter || this.surgery.started || this.surgery.finished || this.surgery.isAtSurgicalRoom || this.outOfRepai) return true;
+      return false;
+    },
+    confirmEntranceAtSurgicalRoom: function confirmEntranceAtSurgicalRoom() {},
+
+    /**
+     * Determine when to show the timeout button
+     * @returns {boolean}
+     */
+    shouldDisableTimeoutButton: function shouldDisableTimeoutButton() {
+      if (this.surgery.finished || this.surgery.isAtSurgicalRoom || !this.surgery.isAtSurgeryCenter || this.surgery.timeoutDone || this.surgery.anestheticInduction) return true;
+      return false;
+    },
+    confirmTimeout: function confirmTimeout() {},
+
+    /**
+     * Determine when to show the anesthetic induction button.
+     * @returns {boolean}
+     */
+    shouldDisableAnestheticInductionButton: function shouldDisableAnestheticInductionButton() {
+      if (!this.surgery.isAtSurgeryCenter || !this.surgery.isAtSurgicalRoom || this.surgery.anestheticInduction) return true;
+      return false;
+    },
+    confirmAnestheticInduction: function confirmAnestheticInduction() {},
+
+    /**
+     * Determine when to show the start surgery button
+     * @returns {boolean}
+     */
+    shouldDisableStartSurgeryButton: function shouldDisableStartSurgeryButton() {
+      if (!this.surgery.isAtSurgeryCenter || this.surgery.outOfSurgeryCenter || !this.surgery.isAtSurgicalRoom || this.surgery.outOfSurgicalRoom || this.surgery.started || this.surgery.finished || this.anestheticInduction) return true;
+      return false;
+    },
+    startSurgery: function startSurgery() {},
+
+    /**
+     * Determine when to show the finish surgery button.
+     * @returns {boolean}
+     */
+    shouldDisableFinishSurgeryButton: function shouldDisableFinishSurgeryButton() {
+      if (!this.surgery.started || !this.surgery.isAtSurgeryCenter || !this.surgery.isAtSurgeryCenter || this.surgery.finished) return true;
+      return false;
+    },
+    finishSurgery: function finishSurgery() {},
+
+    /**
+     * Determine when to show the surgical room exit button.
+     * @returns {boolean}
+     */
+    shouldDisableSurgicalRoomExitButton: function shouldDisableSurgicalRoomExitButton() {
+      if (!this.surgery.finished || this.surgery.outOfSurgeryCenter) return true;
+      return false;
+    },
+    confirmSurgicalRoomExit: function confirmSurgicalRoomExit() {},
+
+    /**
+     * Determine when to show the repai button.
+     * @returns {boolean}
+     */
+    shouldDisableEntranceAtRepaiButton: function shouldDisableEntranceAtRepaiButton() {
+      if (!this.surgery.outOfSurgicalRoom || this.surgery.outOfRepai) return true;
+      return false;
+    },
+    confirmEntranceAtRepai: function confirmEntranceAtRepai() {},
+
+    /**
+     * Determine when to show the exit of repai button.
+     * @returns {boolean}
+     */
+    shouldDisableExitOfRepaiButton: function shouldDisableExitOfRepaiButton() {
+      if (this.surgery.outOfRepai || this.outOfSurgeryCenter || !this.surgery.repaiStarted) return true;
+      return false;
+    },
+    confirmExitOfRepai: function confirmExitOfRepai() {},
+    shouldDisableSurgeryCenterExitButton: function shouldDisableSurgeryCenterExitButton() {
+      if (!this.outOfRepai || this.outOfSurgeryCenter) return true;
+      return false;
+    },
+    confirmSurgeryCenterExit: function confirmSurgeryCenterExit() {}
   }
 });
 
@@ -41350,7 +41568,281 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_c("stopwatch")], 1)
+  return _c(
+    "div",
+    [
+      this.surgery.started
+        ? _c("stopwatch", {
+            attrs: {
+              title: "Tempo de cirurgia decorrido: ",
+              finished: this.surgery.finished,
+              "current-timer": this.surgery.duration
+            }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _c("div", [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-4" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-block",
+                class: _vm.shouldDisableEntranceAtSurgeryCenterButton()
+                  ? ""
+                  : "btn-primary",
+                attrs: {
+                  id: "entrance-surgery-center",
+                  disabled: _vm.shouldDisableEntranceAtSurgeryCenterButton()
+                },
+                on: { click: _vm.confirmEntranceAtSurgeryCenter }
+              },
+              [
+                _vm._v(
+                  "\n                    1. Entrou no centro cirúrgico\n                "
+                )
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-4" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-block",
+                class: _vm.shouldDisableEntranceAtSurgicalRoomButton()
+                  ? ""
+                  : "btn-primary",
+                attrs: {
+                  disabled: _vm.shouldDisableEntranceAtSurgicalRoomButton()
+                },
+                on: { click: _vm.confirmEntranceAtSurgicalRoom }
+              },
+              [
+                _vm._v(
+                  "\n                    2. Entrou na sala cirúrgica\n                "
+                )
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-4" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-block",
+                class: _vm.shouldDisableTimeoutButton() ? "" : "btn-primary",
+                attrs: { disabled: _vm.shouldDisableTimeoutButton() },
+                on: { click: _vm.confirmTimeout }
+              },
+              [
+                _vm._v(
+                  "\n                    3. Time out realizado!\n                "
+                )
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-4" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-block",
+                class: _vm.shouldDisableAnestheticInductionButton()
+                  ? ""
+                  : "btn-primary",
+                attrs: {
+                  disabled: _vm.shouldDisableAnestheticInductionButton()
+                },
+                on: { click: _vm.confirmAnestheticInduction }
+              },
+              [
+                _vm._v(
+                  "\n                    4. Indução anestésica realizada\n                "
+                )
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-4" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-block",
+                class: _vm.shouldDisableStartSurgeryButton()
+                  ? ""
+                  : "btn-primary",
+                attrs: { disabled: _vm.shouldDisableStartSurgeryButton() },
+                on: { click: _vm.startSurgery }
+              },
+              [
+                _vm._v(
+                  "\n                    5. Cirurgia Iniciada!\n                "
+                )
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-4" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-block",
+                class: _vm.shouldDisableFinishSurgeryButton()
+                  ? ""
+                  : "btn-primary",
+                attrs: {
+                  disabled: _vm.shouldDisableFinishSurgeryButton(),
+                  id: "surgery-ended"
+                },
+                on: { click: _vm.finishSurgery }
+              },
+              [
+                _vm._v(
+                  "\n                    6. Cirurgia terminada!\n                "
+                )
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-4" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-block",
+                class: _vm.shouldDisableSurgicalRoomExitButton()
+                  ? ""
+                  : "btn-primary",
+                attrs: {
+                  disabled: _vm.shouldDisableSurgicalRoomExitButton(),
+                  id: "exit-surgical-room"
+                },
+                on: { click: _vm.confirmSurgicalRoomExit }
+              },
+              [
+                _vm._v(
+                  "\n                    7. Saiu da sala cirúrgica\n                "
+                )
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-4" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-block",
+                class: _vm.shouldDisableEntranceAtRepaiButton()
+                  ? ""
+                  : "btn-primary",
+                attrs: {
+                  disabled: _vm.shouldDisableEntranceAtRepaiButton(),
+                  id: "entrance-repai"
+                },
+                on: { click: _vm.confirmEntranceAtRepai }
+              },
+              [
+                _vm._v(
+                  "\n                    8. Entrada na REPAI\n                "
+                )
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-4" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-block",
+                class: _vm.shouldDisableExitOfRepaiButton()
+                  ? ""
+                  : "btn-primary",
+                attrs: {
+                  disabled: _vm.shouldDisableExitOfRepaiButton(),
+                  id: "exit-repai"
+                },
+                on: { click: _vm.confirmExitOfRepai }
+              },
+              [
+                _vm._v(
+                  "\n                    9. Saída da REPAI\n                "
+                )
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-block",
+                class: _vm.shouldDisableSurgeryCenterExitButton()
+                  ? ""
+                  : "btn-primary",
+                attrs: {
+                  disabled: _vm.shouldDisableSurgeryCenterExitButton(),
+                  id: "exit-surgical-center"
+                },
+                on: { click: _vm.confirmSurgeryCenterExit }
+              },
+              [
+                _vm._v(
+                  "\n                    9. Saída do centro cirúrgico\n                "
+                )
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c(
+            "div",
+            { staticClass: "col-md-6 col-md-push-3 col-md-pull-3" },
+            [
+              _c(
+                "router-link",
+                {
+                  attrs: {
+                    to: {
+                      name: "intercurrence.manage",
+                      params: { eventId: _vm.eventId }
+                    }
+                  }
+                },
+                [
+                  _c("button", { staticClass: "btn btn-danger btn-block" }, [
+                    _vm._v("Intercorrência cirúrgica")
+                  ])
+                ]
+              )
+            ],
+            1
+          )
+        ]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-12" }, [_c("router-view")], 1)
+        ])
+      ])
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -57111,8 +57603,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\projeto-software-2019\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\projeto-software-2019\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/mateus/Documents/Projetos/projeto-software-2019/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/mateus/Documents/Projetos/projeto-software-2019/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

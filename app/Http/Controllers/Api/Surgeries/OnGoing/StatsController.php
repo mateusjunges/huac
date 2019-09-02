@@ -29,6 +29,8 @@ class StatsController
         $timeout_done = ! is_null($event->anesthetic_induction);
         $intercurrence = (bool) $surgery->status()->where('id', Status::INTERCURRENCE)->count();
         $out_repai = ! is_null($event->exit_repai);
+        $out_of_surgery_center = ! is_null($event->exit_surgery_center);
+        $out_of_surgical_room = ! is_null($event->exit_surgical_room);
 
         return response()->json([
             'data' => [
@@ -41,7 +43,9 @@ class StatsController
                 'repaiStarted' => $repai_started,
                 'timeoutDone' => $timeout_done,
                 'intercurrence' => $intercurrence,
-                'outRepai' => $out_repai,
+                'outOfRepai' => $out_repai,
+                'outOfSurgeryCenter' => $out_of_surgery_center,
+                'outOfSurgicalRoom' => $out_of_surgical_room
             ]
         ], Response::HTTP_OK);
     }
