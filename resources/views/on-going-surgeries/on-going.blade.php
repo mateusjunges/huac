@@ -14,6 +14,6 @@
         </div>
     </div>
     <div class="row" id="app">
-        <on-going-surgery></on-going-surgery>
+        <on-going-surgery :event-id="{{ $surgery->events()->latest()->first()->id }}"></on-going-surgery>
     </div>
 @endsection

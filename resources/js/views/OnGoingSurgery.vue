@@ -9,6 +9,8 @@
     import Intercurrence from '@views/Intercurrence'
     import axios from 'axios'
 
+    const HTTP_OK = 200;
+
     export default {
         name: "OnGoingSurgery",
         props: {
@@ -19,25 +21,44 @@
         },
         data() {
             return {
-                surgery: {
                     started: false,
                     started_at: null,
                     duration: null,
                     finished: false,
-                    is_at_surgery_center: false,
-                    is_at_surgical_room: false,
-                    out_of_surgical_room: false,
-                    repai_finished: false,
-                    timeout_done: false,
-                    anesthetic_induction: false,
+                    isAtSurgeryCenter: false,
+                    isAtSurgicalRoom: false,
+                    repaiStarted: false,
+                    timeoutDone: false,
+                    anestheticInduction: false,
                     intercurrence: false,
-                    out_of_repai: false,
-                },
+                    outOfRepai: false,
             }
         },
         methods: {
-            surgeryStatus() {
+            async surgeryStatus() {
+                await axios.get(`/api/surgeries/stats/${this.eventId}`)
+                    .then((response) => {
+                        if (response.status === HTTP_OK) {
 
+                            this.started = response.data.started;
+                            this.startedAt = response.data.startedAt;
+                            this.duration = response.data.duration;
+                            this.finished = response.data.finished;
+                            this.isAtSurgeryCenter = response.data.isAtSurgeryCenter;
+                            this.isAtSurgical_room = response.data.isAtSurgicalRoom;
+                            this.repaiStarted = response.data.repaiStarted;
+                            this.timeoutDone = response.data.timeoutDone;
+                            this.intercurrence = response.data.intercurrence;
+                            this.outOfRepai = response.data.outOfRepai;
+                        } else {
+                            swal({
+                                icon: 'error',
+                                title: 'Ops...',
+                                text: 'Não foi possível carregar os dados da cirurgia!',
+                                timer: 5000,
+                            });
+                        }
+                    });
             }
         },
         mounted() {

@@ -33,6 +33,7 @@ use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeUpdateCont
 use HUAC\Http\Controllers\Api\Scheduling\VerifyReservedPeriodController;
 use HUAC\Http\Controllers\Api\Status\StatusController;
 use HUAC\Http\Controllers\Api\Surgeons\VerifySurgeonAvailabilityController;
+use HUAC\Http\Controllers\Api\Surgeries\OnGoing\StatsController;
 use HUAC\Http\Controllers\Api\Surgeries\SurgeriesColumnsController;
 use HUAC\Http\Controllers\Api\Surgeries\SurgeriesController;
 use HUAC\Http\Controllers\Api\Surgeries\SurgeriesDataController;
@@ -121,6 +122,10 @@ Route::middleware(['auth:api'])->group(function () {
                  Route::post('deny', DenySurgeryCenterMaterialsController::class);
               });
            });
+        });
+
+        Route::prefix('stats')->group(function() {
+            Route::get('{surgery}', StatsController::class);
         });
     });
 
