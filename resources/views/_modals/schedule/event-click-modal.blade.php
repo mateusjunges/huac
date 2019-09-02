@@ -76,9 +76,11 @@
                         <br>
                         <div class="row">
                             <div class="col-md-12">
-                                <button type="button" class="btn btn-primary btn-block" id="start-surgery">
-                                    <i class="fa fa-play-circle"></i> Iniciar cirurgia
-                                </button>
+                                <a href="" id="start-surgery-link">
+                                    <button type="button" class="btn btn-primary btn-block" id="start-surgery">
+                                        <i class="fa fa-play-circle"></i> Iniciar cirurgia
+                                    </button>
+                                </a>
                             </div>
                         </div>
                     </div>

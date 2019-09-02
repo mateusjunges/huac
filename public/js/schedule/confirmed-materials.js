@@ -299,6 +299,8 @@ $(document).ready(function() {
 
                     status.html(response.data.status.name);
 
+                    let action = `/surgeries/manage/${response.data.surgery.id}/start`;
+                    $("#start-surgery-link").attr('href', action);
 
                     let modal = $("#event-click-modal");
                     modal.modal('show');

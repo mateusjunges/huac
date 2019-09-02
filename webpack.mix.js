@@ -25,6 +25,7 @@ mix.extend('aliasConfig', new class {
             '@components': __dirname + '/resources/js/components',
             '@passport': __dirname + '/resources/js/components/passport',
             '@views': __dirname + '/resources/js/views',
+            '@routes': __dirname + '/resources/js/routes/routes'
         };
     }
 });

@@ -2,18 +2,31 @@ require('./bootstrap');
 
 import Vue from 'vue'
 import dotenv from 'dotenv'
+import VueRouter from 'vue-router'
+import Routes from '@routes'
 
 dotenv.config();
 
 Vue.component('schedule-surgeries', require('@components/SurgeriesToBeScheduled.vue').default);
+Vue.component('on-going-surgery', require('@views/OnGoingSurgery.vue').default);
+Vue.component('stopwatch', require('@components/Stopwatch.vue').default);
 
 Vue.component('passport-clients', require('@passport/Clients.vue').default);
 Vue.component('passport-authorized-clients', require('@passport/AuthorizedClients.vue').default);
 Vue.component('passport-personal-access-tokens', require('@passport/PersonalAccessTokens.vue').default);
 
+Vue.use(VueRouter);
+
+const router = new VueRouter({
+    mode: 'history',
+    routes: Routes
+});
+
 const app = new Vue({
     el: '#app',
+    router
 });
+
 
 String.prototype.toHHMMSS = function () {
     var sec_num = parseInt(this, 10);
