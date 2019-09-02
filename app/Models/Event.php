@@ -2,6 +2,7 @@
 
 namespace HUAC\Models;
 
+use HUAC\Enums\Status;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -44,13 +45,8 @@ class Event extends Model
     public function scopeConfirmedMaterials()
     {
         return $this->whereHas('surgery.latestStatus', function ($query){
-            $query->where('status_id', env('CONFIRMED'));
-        })->get()
-            ->filter(function ($event){
-                return $event->surgery
-                    ->latestStatus
-                    ->status_id == env('CONFIRMED');
-            });
+            $query->where('status_id', Status::MATERIALS_CONFIRMED_SURGERY_CENTER);
+        });
     }
 
     /**
