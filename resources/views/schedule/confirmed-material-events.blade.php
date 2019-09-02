@@ -25,8 +25,7 @@
     <script src='{{ asset('vendor/fullcalendar/lib/moment.min.js')}}'></script>
     <script src='{{ asset('vendor/fullcalendar/lib/jquery-ui.min.js')}}'></script>
     <script src='{{ asset('vendor/fullcalendar/fullcalendar.min.js')}}'></script>
-    <script src="{{ asset('js/scheduling/scheduling.js') }}"></script>
-    <script src="{{ asset('js/scheduling/make-events-draggable.js') }}"></script>
+    <script src="{{ asset('js/schedule/confirmed-materials.js') }}"></script>
 @endsection
 
 @section('content')
@@ -51,7 +50,7 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="botao">
+                <div class="">
                     <button class="btn btn-sm btn-primary" data-id="1" id="search-button">Pesquisar</button>
                 </div>
             </div>
@@ -72,43 +71,6 @@
                 <button class="btn btn-sm btn-primary" id="btnGoToDate">Ir para data</button>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h1 class="text-center" id="current-room">Sala 1</h1>
-            </div>
-        </div>
-        <br>
-        @if(count($surgicalRooms) == 0)
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="alert alert-danger box box-danger">
-                        Não existem salas disponíveis para agendamento
-                    </div>
-                </div>
-            </div>
-        @endif
-
-        <div class="row">
-            @for($i = 1; $i <= count($surgicalRooms); $i++)
-                @if($i%5 == 0)
-                    <div class="row">
-                        @endif
-                        <div class="col-md-3">
-                            <button type="button"
-                                    class="btn btn-block"
-                                    id="surgical-room-{{ $surgicalRooms[$i-1]->id }}"
-                                    data-toggle="tooltip"
-                                    data-id="{{ $surgicalRooms[$i-1]->id }}"
-                                    data-placement="top"
-                                    title="{{ $surgicalRooms[$i-1]->name }}">
-                                {{ $surgicalRooms[$i-1]->name }}
-                            </button>
-                        </div>
-                        @if($i%5 == 0)
-                    </div>
-                @endif
-            @endfor
-        </div>
         <hr>
         <div class="row">
             <div class="col-md-12">
@@ -116,7 +78,7 @@
             </div>
         </div>
     </div>
-    @include('_modals.scheduling.event-click-modal')
+    @include('_modals.schedule.event-click-modal')
     @include('_modals.scheduling.change-room-modal')
     @include('_modals.scheduling.change-status-modal')
     @include('_modals.scheduling.change-event-date-modal')

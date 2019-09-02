@@ -10,6 +10,7 @@ use HUAC\Http\Controllers\Patients\PatientController;
 use HUAC\Http\Controllers\Patients\PatientSurgeryController;
 use HUAC\Http\Controllers\Procedures\ProceduresController;
 use HUAC\Http\Controllers\Schedule\ConfirmedMaterialsScheduleController;
+use HUAC\Http\Controllers\Surgeries\OnGoing\OnGoingSurgeriesController;
 use HUAC\Http\Controllers\SurgeryCenter\ConfirmMaterialsController as ConfirmSurgeryCenterMaterialsController;
 use HUAC\Http\Controllers\SurgicalRoom\SurgicalRoomController;
 use HUAC\Http\Controllers\Scheduling\SchedulingController;
@@ -63,6 +64,11 @@ Route::group(['middleware' => 'auth'], function (){
         Route::prefix('surgery-center')->group(function () {
             Route::get('materials-confirmation', ConfirmSurgeryCenterMaterialsController::class)
                 ->name('confirm-materials.surgery-center');
+        });
+        Route::prefix('manage')->group(function() {
+           Route::prefix('{surgery}')->group(function() {
+               Route::get('start', OnGoingSurgeriesController::class);
+           });
         });
     });
 

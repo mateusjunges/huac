@@ -27,11 +27,13 @@ use HUAC\Http\Controllers\Api\Patients\Surgeries\PatientSurgeriesDataController;
 use HUAC\Http\Controllers\Api\Procedures\ProceduresColumnsController;
 use HUAC\Http\Controllers\Api\Procedures\ProceduresController;
 use HUAC\Http\Controllers\Api\Procedures\ProceduresDataController;
+use HUAC\Http\Controllers\Api\Schedule\ConfirmedMaterialsEventsController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeCreateController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeUpdateController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyReservedPeriodController;
 use HUAC\Http\Controllers\Api\Status\StatusController;
 use HUAC\Http\Controllers\Api\Surgeons\VerifySurgeonAvailabilityController;
+use HUAC\Http\Controllers\Api\Surgeries\OnGoing\StatsController;
 use HUAC\Http\Controllers\Api\Surgeries\SurgeriesColumnsController;
 use HUAC\Http\Controllers\Api\Surgeries\SurgeriesController;
 use HUAC\Http\Controllers\Api\Surgeries\SurgeriesDataController;
@@ -121,8 +123,15 @@ Route::middleware(['auth:api'])->group(function () {
               });
            });
         });
+
+        Route::prefix('stats')->group(function() {
+            Route::get('{surgery}', StatsController::class);
+        });
     });
 
+    /**
+     * Waiting list routes
+     */
     Route::prefix('waiting-list')->group(function() {
         Route::get('data', WaitingListSurgeriesDataController::class);
         Route::get('columns', WaitingListSurgeriesColumnsController::class);
@@ -136,6 +145,14 @@ Route::middleware(['auth:api'])->group(function () {
      */
     Route::prefix('events')->group(function() {
         Route::post('/', [EventController::class, 'store'])->name('api.events.store');
+
+        /**
+         * Confirmed materials schedule routes
+         */
+        Route::prefix('confirmed-materials')->group(function() {
+            Route::get('/', ConfirmedMaterialsEventsController::class);
+        });
+
         Route::prefix('{event}')->group(function() {
             Route::put('/', [EventController::class, 'update'])->name('api.events.update');
             Route::delete('/', [EventController::class, 'destroy'])->name('api.events.destroy');
@@ -147,6 +164,9 @@ Route::middleware(['auth:api'])->group(function () {
         Route::get('{room}', GetEventsPerRoomController::class)->name('api.events.per-room');
     });
 
+    /**
+     * Scheduling Routes
+     */
     Route::prefix('scheduling')->group(function () {
        Route::get('verify-reserved-period-before-store', [VerifyReservedPeriodController::class, 'beforeStore']);
        Route::get('verify-reserved-period-before-update', [VerifyReservedPeriodController::class, 'beforeUpdate']);
@@ -154,12 +174,18 @@ Route::middleware(['auth:api'])->group(function () {
        Route::get('verify-existing-schedules-before-create', VerifyExistingSchedulesBeforeCreateController::class);
     });
 
+    /**
+     * Surgeon routes
+     */
     Route::prefix('surgeons')->group(function() {
        Route::get('availability', VerifySurgeonAvailabilityController::class);
     });
 
     Route::get('status', [StatusController::class, 'index']);
 
+    /**
+     * Patients Routes
+     */
     Route::prefix('patients')->group(function() {
         Route::get('columns', PatientsColumnsController::class);
         Route::get('data', PatientsDataController::class);
@@ -175,6 +201,9 @@ Route::middleware(['auth:api'])->group(function () {
         });
     });
 
+    /**
+     * Procedure Routes
+     */
     Route::prefix('procedures')->group(function() {
        Route::get('data', ProceduresDataController::class);
        Route::get('columns', ProceduresColumnsController::class);

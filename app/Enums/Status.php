@@ -23,4 +23,5 @@ class Status
     const RESCHEDULED_AFTER_MATERIALS_CONFIRMATION = 17;
     const SURGICAL_COMPLICATIONS                   = 18;
     const DELETED                                  = 19;
+    const INTERCURRENCE                            = 20;
 }
