@@ -15,9 +15,10 @@ class TimeoutController
      * @param Event $event
      * @return JsonResponse
      */
-    public function __invoke(Event $event)
+    public function __invoke($event)
     {
         try {
+            $event = Event::find($event);
             $event->time_out_at = Carbon::now();
             $event->save();
 

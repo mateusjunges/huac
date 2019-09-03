@@ -40,6 +40,12 @@ use HUAC\Http\Controllers\Api\Surgeries\SurgeriesDataController;
 use HUAC\Http\Controllers\Api\Surgeries\SurgeryStatusController;
 use HUAC\Http\Controllers\Api\SurgeryCenter\ConfirmSurgeryCenterMaterialsController;
 use HUAC\Http\Controllers\Api\SurgeryCenter\DenySurgeryCenterMaterialsController;
+use HUAC\Http\Controllers\Api\SurgeryCenter\OnGoing\AnestheticInductionController;
+use HUAC\Http\Controllers\Api\SurgeryCenter\OnGoing\RepaiController;
+use HUAC\Http\Controllers\Api\SurgeryCenter\OnGoing\SurgeryCenterController;
+use HUAC\Http\Controllers\Api\SurgeryCenter\OnGoing\SurgeryController;
+use HUAC\Http\Controllers\Api\SurgeryCenter\OnGoing\SurgicalRoomController;
+use HUAC\Http\Controllers\Api\SurgeryCenter\OnGoing\TimeoutController;
 use HUAC\Http\Controllers\Api\SurgeryCenter\SurgeryCenterSurgeriesColumnsController;
 use HUAC\Http\Controllers\Api\SurgeryCenter\SurgeryCenterSurgeriesDataController;
 use HUAC\Http\Controllers\Api\WaitingList\WaitingListController;
@@ -126,6 +132,21 @@ Route::middleware(['auth:api'])->group(function () {
 
         Route::prefix('stats')->group(function() {
             Route::get('{surgery}', StatsController::class);
+        });
+        Route::prefix('manage')->group(function() {
+           Route::prefix('{surgery}')->group(function() {
+               Route::put('entrance-at-surgery-center', [SurgeryCenterController::class, 'entrance']);
+               Route::put('surgical-room-entrance', [SurgicalRoomController::class, 'entrance']);
+               Route::put('timeout', TimeoutController::class);
+               Route::put('anesthetic-induction', AnestheticInductionController::class);
+               Route::put('start', [SurgeryController::class, 'start']);
+               Route::put('finish', [SurgeryController::class, 'finish']);
+               Route::put('surgical-room-exit', [SurgicalRoomController::class, 'exit']);
+               Route::put('repai-entrance', [RepaiController::class, 'entrance']);
+               Route::put('repai-exit', [RepaiController::class, 'exit']);
+               Route::put('exit-of-surgery-center', [SurgeryCenterController::class, 'exit']);
+
+           });
         });
     });
 

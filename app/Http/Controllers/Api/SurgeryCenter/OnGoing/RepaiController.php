@@ -13,12 +13,13 @@ use Symfony\Component\HttpFoundation\Response;
 class RepaiController
 {
     /**
-     * @param Event $event
+     * @param $event
      * @return JsonResponse
      */
-    public function entrance(Event $event)
+    public function entrance($event)
     {
         try {
+            $event = Event::find($event);
             $event->entrance_repai = Carbon::now();
             $event->save();
 
@@ -60,9 +61,10 @@ class RepaiController
      * @param Event $event
      * @return JsonResponse
      */
-    public function exit(Event $event)
+    public function exit($event)
     {
         try {
+            $event = Event::find($event);
             $event->exit_repai = Carbon::now();
             $event->save();
 

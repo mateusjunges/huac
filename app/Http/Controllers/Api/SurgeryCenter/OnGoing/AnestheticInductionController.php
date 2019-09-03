@@ -11,12 +11,13 @@ use Exception;
 class AnestheticInductionController
 {
     /**
-     * @param Event $event
+     * @param $event
      * @return \Illuminate\Http\JsonResponse
      */
-    public function __invoke(Event $event)
+    public function __invoke($event)
     {
         try {
+            $event = Event::find($event);
             $event->anesthetic_induction = Carbon::now();
             $event->save();
 

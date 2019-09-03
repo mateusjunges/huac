@@ -16,10 +16,11 @@ class SurgeryController
      * @param Event $event
      * @return JsonResponse
      */
-    public function start(Event $event)
+    public function start($event)
     {
         try {
-            $event->sugeon_started_at = Carbon::now();
+            $event = Event::find($event);
+            $event->surgeon_started_at = Carbon::now();
             $event->save();
 
             event(new SurgeryStarted($event));
@@ -60,9 +61,10 @@ class SurgeryController
      * @param Event $event
      * @return JsonResponse
      */
-    public function finish(Event $event)
+    public function finish($event)
     {
         try {
+            $event = Event::find($event);
             $event->surgeon_ended_at = Carbon::now();
             $event->save();
 

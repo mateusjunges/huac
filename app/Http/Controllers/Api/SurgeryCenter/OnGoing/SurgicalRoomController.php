@@ -16,9 +16,10 @@ class SurgicalRoomController
      * @param Event $event
      * @return JsonResponse
      */
-    public function entrance(Event $event)
+    public function entrance($event)
     {
         try {
+            $event = Event::find($event);
             $event->entrance_at_surgical_room = Carbon::now();
             $event->save();
 
@@ -60,9 +61,10 @@ class SurgicalRoomController
      * @param Event $event
      * @return JsonResponse
      */
-    public function exit(Event $event)
+    public function exit($event)
     {
         try {
+            $event = Event::find($event);
             $event->exit_surgical_room = Carbon::now();
             $event->save();
 

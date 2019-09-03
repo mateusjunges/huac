@@ -143,7 +143,7 @@
             return {
                 surgery: {
                     started: false,
-                    started_at: null,
+                    startedAt: null,
                     duration: null,
                     finished: false,
                     isAtSurgeryCenter: false,
@@ -168,18 +168,19 @@
                 await axios.get(`/api/surgeries/stats/${this.eventId}`)
                     .then((response) => {
                         if (response.status === HTTP_OK) {
-                            this.surgery.started            = response.data.data.started;
-                            this.surgery.startedAt          = response.data.data.startedAt;
-                            this.surgery.duration           = response.data.data.duration;
-                            this.surgery.finished           = response.data.data.finished;
-                            this.surgery.isAtSurgeryCenter  = response.data.data.isAtSurgeryCenter;
-                            this.surgery.isAtSurgical_room  = response.data.data.isAtSurgicalRoom;
-                            this.surgery.repaiStarted       = response.data.data.repaiStarted;
-                            this.surgery.timeoutDone        = response.data.data.timeoutDone;
-                            this.surgery.intercurrence      = response.data.data.intercurrence;
-                            this.surgery.outOfRepai         = response.data.data.outOfRepai;
-                            this.surgery.outOfSurgeryCenter = response.data.data.outOfSurgeryCenter;
-                            this.surgery.outOfSurgicalRoom  = response.data.data.outOfSurgicalRoom;
+                            this.surgery.started             = response.data.data.started;
+                            this.surgery.startedAt           = response.data.data.startedAt;
+                            this.surgery.duration            = response.data.data.duration;
+                            this.surgery.finished            = response.data.data.finished;
+                            this.surgery.isAtSurgeryCenter   = response.data.data.isAtSurgeryCenter;
+                            this.surgery.isAtSurgicalRoom    =  response.data.data.isAtSurgicalRoom;
+                            this.surgery.repaiStarted        = response.data.data.repaiStarted;
+                            this.surgery.timeoutDone         = response.data.data.timeoutDone;
+                            this.surgery.intercurrence       = response.data.data.intercurrence;
+                            this.surgery.outOfRepai          = response.data.data.outOfRepai;
+                            this.surgery.outOfSurgeryCenter  = response.data.data.outOfSurgeryCenter;
+                            this.surgery.outOfSurgicalRoom   = response.data.data.outOfSurgicalRoom;
+                            this.surgery.anestheticInduction = response.data.data.anestheticInduction;
                         } else {
                             swal({
                                 icon: 'error',
@@ -201,8 +202,22 @@
                     || this.surgery.outOfRepai
                     || this.surgery.isAtSurgeryCenter;
             },
-            confirmEntranceAtSurgeryCenter() {
 
+            /**
+             * Confirm the surgery center entrance.
+             */
+            confirmEntranceAtSurgeryCenter() {
+                axios.put(`/api/surgeries/manage/${this.eventId}/entrance-at-surgery-center`)
+                    .then((response) => {
+                       swal({
+                           icon: response.data.data.swal.icon,
+                           title: response.data.data.swal.title,
+                           text: response.data.data.swal.text,
+                           timer: response.data.data.swal.timer,
+                       });
+                        if (response.status === HTTP_OK)
+                            this.surgery.isAtSurgeryCenter = true;
+                    });
             },
 
             /**
@@ -219,7 +234,17 @@
                 return false;
             },
             confirmEntranceAtSurgicalRoom() {
-
+                axios.put(`/api/surgeries/manage/${this.eventId}/surgical-room-entrance`)
+                    .then((response) => {
+                        swal({
+                            icon: response.data.data.swal.icon,
+                            title: response.data.data.swal.title,
+                            text: response.data.data.swal.text,
+                            timer: response.data.data.swal.timer,
+                        });
+                        if (response.status === HTTP_OK)
+                            this.surgery.isAtSurgicalRoom = true;
+                    });
             },
 
             /**
@@ -229,7 +254,7 @@
             shouldDisableTimeoutButton() {
                 if (
                     this.surgery.finished
-                    || this.surgery.isAtSurgicalRoom
+                    || !this.surgery.isAtSurgicalRoom
                     || ! this.surgery.isAtSurgeryCenter
                     || this.surgery.timeoutDone
                     || this.surgery.anestheticInduction
@@ -237,8 +262,22 @@
                     return true;
                 return false;
             },
-            confirmTimeout() {
 
+            /**
+             * Confirm the timeout.
+             */
+            confirmTimeout() {
+                axios.put(`/api/surgeries/manage/${this.eventId}/timeout`)
+                    .then((response) => {
+                        swal({
+                            icon: response.data.data.swal.icon,
+                            title: response.data.data.swal.title,
+                            text: response.data.data.swal.text,
+                            timer: response.data.data.swal.timer,
+                        });
+                        if (response.status === HTTP_OK)
+                            this.surgery.timeoutDone = true;
+                    });
             },
 
             /**
@@ -254,8 +293,22 @@
                     return true;
                 return false;
             },
-            confirmAnestheticInduction() {
 
+            /**
+             * Confirm the anesthetic induction
+             */
+            confirmAnestheticInduction() {
+                axios.put(`/api/surgeries/manage/${this.eventId}/anesthetic-induction`)
+                    .then((response) => {
+                        swal({
+                            icon: response.data.data.swal.icon,
+                            title: response.data.data.swal.title,
+                            text: response.data.data.swal.text,
+                            timer: response.data.data.swal.timer,
+                        });
+                        if (response.status === HTTP_OK)
+                            this.surgery.anestheticInduction = true;
+                    });
             },
 
             /**
@@ -270,13 +323,27 @@
                     || this.surgery.outOfSurgicalRoom
                     || this.surgery.started
                     || this.surgery.finished
-                    || this.anestheticInduction
+                    || ! this.surgery.anestheticInduction
                 )
                     return true;
                 return false;
             },
-            startSurgery() {
 
+            /**
+             * Start the surgery and the stopwatch.
+             */
+            startSurgery() {
+                axios.put(`/api/surgeries/manage/${this.eventId}/start`)
+                    .then((response) => {
+                        swal({
+                            icon: response.data.data.swal.icon,
+                            title: response.data.data.swal.title,
+                            text: response.data.data.swal.text,
+                            timer: response.data.data.swal.timer,
+                        });
+                        if (response.status === HTTP_OK)
+                            this.surgery.started = true;
+                    });
             },
 
             /**
@@ -293,8 +360,22 @@
                     return true;
                 return false;
             },
-            finishSurgery() {
 
+            /**
+             * Finish the surgery.
+             */
+            finishSurgery() {
+                axios.put(`/api/surgeries/manage/${this.eventId}/finish`)
+                    .then((response) => {
+                        swal({
+                            icon: response.data.data.swal.icon,
+                            title: response.data.data.swal.title,
+                            text: response.data.data.swal.text,
+                            timer: response.data.data.swal.timer,
+                        });
+                        if (response.status === HTTP_OK)
+                            this.surgery.finished = true;
+                    });
             },
 
             /**
@@ -306,8 +387,22 @@
                     return true;
                 return false;
             },
-            confirmSurgicalRoomExit() {
 
+            /**
+             * Confirm the surgical room exit.
+             */
+            confirmSurgicalRoomExit() {
+                axios.put(`/api/surgeries/manage/${this.eventId}/surgical-room-exit`)
+                    .then((response) => {
+                        swal({
+                            icon: response.data.data.swal.icon,
+                            title: response.data.data.swal.title,
+                            text: response.data.data.swal.text,
+                            timer: response.data.data.swal.timer,
+                        });
+                        if (response.status === HTTP_OK)
+                            this.surgery.outOfSurgicalRoom = true;
+                    });
             },
 
             /**
@@ -319,8 +414,22 @@
                     return true;
                 return false;
             },
-            confirmEntranceAtRepai() {
 
+            /**
+             * Confirm the repai entrance
+             */
+            confirmEntranceAtRepai() {
+                axios.put(`/api/surgeries/manage/${this.eventId}/repai-entrance`)
+                    .then((response) => {
+                        swal({
+                            icon: response.data.data.swal.icon,
+                            title: response.data.data.swal.title,
+                            text: response.data.data.swal.text,
+                            timer: response.data.data.swal.timer,
+                        });
+                        if (response.status === HTTP_OK)
+                            this.surgery.repaiStarted = true;
+                    });
             },
 
             /**
@@ -336,8 +445,22 @@
                     return true;
                 return false
             },
-            confirmExitOfRepai() {
 
+            /**
+             * Confirm the REPAI Exit.
+             */
+            confirmExitOfRepai() {
+                axios.put(`/api/surgeries/manage/${this.eventId}/repai-exit`)
+                    .then((response) => {
+                        swal({
+                            icon: response.data.data.swal.icon,
+                            title: response.data.data.swal.title,
+                            text: response.data.data.swal.text,
+                            timer: response.data.data.swal.timer,
+                        });
+                        if (response.status === HTTP_OK)
+                            this.surgery.outOfRepai = true;
+                    });
             },
 
 
@@ -349,8 +472,23 @@
                     return true;
                 return false;
             },
-            confirmSurgeryCenterExit() {
 
+            /**
+             * Confirm the surgery center exit.
+             */
+            confirmSurgeryCenterExit() {
+                axios.put(`/api/surgeries/manage/${this.eventId}/exit-of-surgery-center`)
+                    .then((response) => {
+                        swal({
+                            icon: response.data.data.swal.icon,
+                            title: response.data.data.swal.title,
+                            text: response.data.data.swal.text,
+                            timer: response.data.data.swal.timer,
+                        });
+
+                        if (response.status === HTTP_OK)
+                            this.surgery.outOfSurgeryCenter = true;
+                    })
             }
         }
     }

@@ -23,14 +23,15 @@ class StatsController
         $finished = ! is_null($event->surgeon_ended_at);
         $started_at = $event->surgeon_started_at;
         $duration = Carbon::parse($event->surgeon_started_at)->diffInSeconds(Carbon::now());
-        $is_at_surgery_center = ! is_null($event->exit_surgery_center);
-        $is_at_surgical_room = ! is_null($event->exit_surgical_room);
+        $is_at_surgery_center = ! is_null($event->entrance_at_surgical_center);
+        $is_at_surgical_room = ! is_null($event->entrance_at_surgical_room);
         $repai_started = ! is_null($event->entrance_repai);
-        $timeout_done = ! is_null($event->anesthetic_induction);
+        $timeout_done = ! is_null($event->time_out_at);
         $intercurrence = (bool) $surgery->status()->where('id', Status::INTERCURRENCE)->count();
         $out_repai = ! is_null($event->exit_repai);
         $out_of_surgery_center = ! is_null($event->exit_surgery_center);
         $out_of_surgical_room = ! is_null($event->exit_surgical_room);
+        $anestheticInduction = ! is_null($event->anesthetic_induction);
 
         return response()->json([
             'data' => [
@@ -40,6 +41,7 @@ class StatsController
                 'duration' => $duration,
                 'isAtSurgeryCenter' => $is_at_surgery_center,
                 'isAtSurgicalRoom' => $is_at_surgical_room,
+                'anestheticInduction' => $anestheticInduction,
                 'repaiStarted' => $repai_started,
                 'timeoutDone' => $timeout_done,
                 'intercurrence' => $intercurrence,
