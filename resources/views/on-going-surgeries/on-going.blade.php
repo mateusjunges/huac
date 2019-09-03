@@ -17,6 +17,10 @@
         <div class="col-md-11 col-md-offset-2">
             <div class="col-md-9">
                 <on-going-surgery :event-id="{{ $surgery->events()->latest()->first()->id }}"></on-going-surgery>
+
+                <current-surgery-info
+                    :surgery="{{ $surgery }}"
+                    :patient="{{  $surgery->patient }}"></current-surgery-info>
             </div>
         </div>
     </div>

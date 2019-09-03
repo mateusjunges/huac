@@ -10,6 +10,7 @@ dotenv.config();
 Vue.component('schedule-surgeries', require('@components/SurgeriesToBeScheduled.vue').default);
 Vue.component('on-going-surgery', require('@views/OnGoingSurgery.vue').default);
 Vue.component('stopwatch', require('@components/Stopwatch.vue').default);
+Vue.component('current-surgery-info', require('@components/CurrentSurgeryInfo.vue').default);
 
 Vue.component('passport-clients', require('@passport/Clients.vue').default);
 Vue.component('passport-authorized-clients', require('@passport/AuthorizedClients.vue').default);
