@@ -20,7 +20,8 @@
 
                 <current-surgery-info
                     :surgery="{{ $surgery }}"
-                    :patient="{{  $surgery->patient }}"></current-surgery-info>
+                    :patient="{{  $surgery->patient }}">
+                </current-surgery-info>
             </div>
         </div>
     </div>
