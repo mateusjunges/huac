@@ -2,20 +2,103 @@
 
 namespace HUAC\Http\Controllers\Api\SurgeryCenter\OnGoing;
 
+use Carbon\Carbon;
+use Exception;
 use HUAC\Events\SurgeryCenter\EntranceAtSurgicalRoom;
 use HUAC\Events\SurgeryCenter\SurgicalRoomExit;
 use HUAC\Models\Event;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class SurgicalRoomController
 {
-    public function entrance(Event $event)
+    /**
+     * @param Event $event
+     * @return JsonResponse
+     */
+    public function entrance($event)
     {
-        event(new EntranceAtSurgicalRoom($event));
+        try {
+            $event = Event::find($event);
+            $event->entrance_at_surgical_room = Carbon::now();
+            $event->save();
+
+            event(new EntranceAtSurgicalRoom($event));
+
+            return response()->json([
+                'data' => [
+                    'swal' => [
+                        'icon' => 'success',
+                        'title' => 'Sucesso!',
+                        'text' => 'Cirurgia iniciada!',
+                        'timer' => 5000,
+                    ],
+                    'event' => $event
+                ]
+            ], Response::HTTP_OK);
+
+        }catch (Exception $exception) {
+            return response()->json([
+                'data' => [
+                    'swal' => [
+                        'icon' => 'error',
+                        'title' => 'Ops...',
+                        'text' => 'Algo deu errado! Tente novamente mais tarde.',
+                        'timer' => 5000,
+                    ],
+                    'exception' => [
+                        'code' => $exception->getCode(),
+                        'message' => $exception->getMessage(),
+                        'line' => $exception->getLine(),
+                        'trace' => $exception->getTrace()
+                    ]
+                ]
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public function exit(Event $event)
+    /**
+     * @param Event $event
+     * @return JsonResponse
+     */
+    public function exit($event)
     {
-        event(new SurgicalRoomExit($event));
+        try {
+            $event = Event::find($event);
+            $event->exit_surgical_room = Carbon::now();
+            $event->save();
+
+            event(new SurgicalRoomExit($event));
+
+            return response()->json([
+                'data' => [
+                    'swal' => [
+                        'icon' => 'success',
+                        'title' => 'Sucesso!',
+                        'text' => 'Cirurgia iniciada!',
+                        'timer' => 5000,
+                    ],
+                    'event' => $event
+                ]
+            ], Response::HTTP_OK);
+
+        }catch (Exception $exception) {
+            return response()->json([
+                'data' => [
+                    'swal' => [
+                        'icon' => 'error',
+                        'title' => 'Ops...',
+                        'text' => 'Algo deu errado! Tente novamente mais tarde.',
+                        'timer' => 5000,
+                    ],
+                    'exception' => [
+                        'code' => $exception->getCode(),
+                        'message' => $exception->getMessage(),
+                        'line' => $exception->getLine(),
+                        'trace' => $exception->getTrace()
+                    ]
+                ]
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }
