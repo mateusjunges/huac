@@ -1700,6 +1700,33 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Alert.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Alert.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "Alert",
+  props: {
+    alert: String,
+    message: String
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CurrentSurgeryInfo.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CurrentSurgeryInfo.vue?vue&type=script&lang=js& ***!
@@ -1771,6 +1798,155 @@ __webpack_require__.r(__webpack_exports__);
     gender: function gender() {
       if (this.patient.gender === 'M') return 'Masculino';else if (this.patient.gender === 'F') return 'Feminino';else return 'Outro';
     }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Report.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Report.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+var HTTP_OK = 200;
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "Report",
+  props: {
+    eventId: Number
+  },
+  data: function data() {
+    return {
+      surgery: {
+        surgeons: {
+          head_surgeon: {
+            name: null
+          }
+        },
+        timeout: null,
+        duration: '',
+        anesthetic_duration: '',
+        time_at_surgical_room: '',
+        time_at_repai: '',
+        time_at_surgery_center: '',
+        procedure: {
+          name: null,
+          sus_code: null
+        }
+      },
+      patient: {
+        name: null
+      }
+    };
+  },
+  mounted: function () {
+    var _mounted = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return this.getData();
+
+            case 2:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    }));
+
+    function mounted() {
+      return _mounted.apply(this, arguments);
+    }
+
+    return mounted;
+  }(),
+  methods: {
+    getData: function () {
+      var _getData = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var _this = this;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/surgeries/stats/".concat(this.eventId, "/finished")).then(function (response) {
+                  if (response.status !== HTTP_OK) swal({
+                    icon: response.data.data.swal.icon,
+                    title: response.data.data.swal.title,
+                    text: response.data.data.swal.text,
+                    timer: response.data.data.swal.timer
+                  });
+                  var data = response.data.data;
+                  _this.surgery.duration = data.surgery.duration;
+                  _this.surgery.anesthetic_duration = data.surgery.anesthetic_duration;
+                  _this.surgery.time_at_surgery_center = data.surgery.time_at_surgery_center;
+                  _this.surgery.time_at_repai = data.surgery.time_at_repai;
+                  _this.surgery.time_at_surgical_room = data.surgery.time_at_surgical_room;
+                  _this.surgery.surgeons.head_surgeon = data.surgery.surgeons.head_surgeon;
+                  _this.surgery.procedure.name = data.procedure.name;
+                  _this.surgery.procedure.sus_code = data.procedure.sus_code;
+                  _this.surgery.timeout = moment__WEBPACK_IMPORTED_MODULE_2___default()(data.surgery.timeout).format('DD/MM/YYYY hh:mm:ss');
+                  _this.patient.name = data.patient.name;
+                });
+
+              case 2:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function getData() {
+        return _getData.apply(this, arguments);
+      }
+
+      return getData;
+    }()
   }
 });
 
@@ -2939,6 +3115,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2973,8 +3162,14 @@ var HTTP_OK = 200;
   mounted: function mounted() {
     var self = this;
     this.surgeryStatus();
+    this.$root.$on('has-intercurrence', function () {
+      self._hasIntercurrence();
+    });
   },
   methods: {
+    _hasIntercurrence: function _hasIntercurrence() {
+      this.surgery.intercurrence = true;
+    },
     surgeryStatus: function () {
       var _surgeryStatus = _asyncToGenerator(
       /*#__PURE__*/
@@ -2986,7 +3181,7 @@ var HTTP_OK = 200;
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("/api/surgeries/stats/".concat(this.eventId)).then(function (response) {
+                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("/api/surgeries/stats/".concat(this.eventId, "/started")).then(function (response) {
                   if (response.status === HTTP_OK) {
                     _this.surgery.started = response.data.data.started;
                     _this.surgery.startedAt = response.data.data.startedAt;
@@ -3181,7 +3376,7 @@ var HTTP_OK = 200;
      * @returns {boolean}
      */
     shouldDisableSurgicalRoomExitButton: function shouldDisableSurgicalRoomExitButton() {
-      if (!this.surgery.finished || this.surgery.outOfSurgeryCenter) return true;
+      if (!this.surgery.finished || this.surgery.outOfSurgeryCenter || this.surgery.outOfSurgicalRoom) return true;
       return false;
     },
 
@@ -3207,7 +3402,7 @@ var HTTP_OK = 200;
      * @returns {boolean}
      */
     shouldDisableEntranceAtRepaiButton: function shouldDisableEntranceAtRepaiButton() {
-      if (!this.surgery.outOfSurgicalRoom || this.surgery.outOfRepai) return true;
+      if (!this.surgery.outOfSurgicalRoom || this.surgery.outOfRepai || this.surgery.repaiStarted) return true;
       return false;
     },
 
@@ -3254,7 +3449,7 @@ var HTTP_OK = 200;
       });
     },
     shouldDisableSurgeryCenterExitButton: function shouldDisableSurgeryCenterExitButton() {
-      if (!this.outOfRepai || this.outOfSurgeryCenter) return true;
+      if (!this.surgery.outOfRepai || this.surgery.outOfSurgeryCenter) return true;
       return false;
     },
 
@@ -7720,6 +7915,25 @@ var HTTP_OK = 200;
 
 }));
 //# sourceMappingURL=bootstrap.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Report.vue?vue&type=style&index=0&id=24c36d42&scoped=true&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Report.vue?vue&type=style&index=0&id=24c36d42&scoped=true&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\np[data-v-24c36d42] {\n    font-size: 1.7rem;\n    font-weight: bold;\n}\np > span[data-v-24c36d42]{\n    float: right;\n    font-weight: normal;\n    text-transform: lowercase;\n}\np>span[data-v-24c36d42]::first-letter{\n    text-transform: capitalize;\n}\n\n", ""]);
+
+// exports
 
 
 /***/ }),
@@ -57437,6 +57651,36 @@ try {
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Report.vue?vue&type=style&index=0&id=24c36d42&scoped=true&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Report.vue?vue&type=style&index=0&id=24c36d42&scoped=true&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./Report.vue?vue&type=style&index=0&id=24c36d42&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Report.vue?vue&type=style&index=0&id=24c36d42&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Stopwatch.vue?vue&type=style&index=0&id=2da649b2&scoped=true&lang=css&":
 /*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Stopwatch.vue?vue&type=style&index=0&id=2da649b2&scoped=true&lang=css& ***!
@@ -58141,6 +58385,36 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Alert.vue?vue&type=template&id=7b2bf401&scoped=true&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Alert.vue?vue&type=template&id=7b2bf401&scoped=true& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "alert", class: _vm.alert, attrs: { role: "alert" } },
+      [_vm._v("\n        " + _vm._s(this.message) + "\n    ")]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CurrentSurgeryInfo.vue?vue&type=template&id=573edc96&scoped=true&":
 /*!*********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CurrentSurgeryInfo.vue?vue&type=template&id=573edc96&scoped=true& ***!
@@ -58213,6 +58487,98 @@ var staticRenderFns = [
     ])
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Report.vue?vue&type=template&id=24c36d42&scoped=true&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Report.vue?vue&type=template&id=24c36d42&scoped=true& ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-10 col-md-pull-1 col-md-push-1" }, [
+        _c("h2", [_vm._v("Dados da cirurgia:")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("p", [
+            _vm._v("Paciente: "),
+            _c("span", [_vm._v(_vm._s(this.patient.name))])
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v("Cirurgião principal: "),
+            _c("span", [
+              _vm._v(_vm._s(this.surgery.surgeons.head_surgeon.name))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v("Timeout realizado: "),
+            _c("span", [_vm._v(_vm._s(this.surgery.timeout))])
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v("Tempo de duração: "),
+            _c("span", [
+              _vm._v(_vm._s(this.surgery.duration.toString().toHHMMSS()))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v("Duração da anestesia: "),
+            _c("span", [
+              _vm._v(
+                _vm._s(this.surgery.anesthetic_duration.toString().toHHMMSS())
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v("Tempo de permanência na sala cirúrgica: "),
+            _c("span", [
+              _vm._v(
+                _vm._s(this.surgery.time_at_surgical_room.toString().toHHMMSS())
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v("Tempo de permanência na REPAI: "),
+            _c("span", [
+              _vm._v(_vm._s(this.surgery.time_at_repai.toString().toHHMMSS()))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v("Tempo de permanência no centro cirúrgico: "),
+            _c("span", [
+              _vm._v(
+                _vm._s(
+                  this.surgery.time_at_surgery_center.toString().toHHMMSS()
+                )
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -59487,7 +59853,7 @@ var render = function() {
   return _c(
     "div",
     [
-      this.surgery.started
+      this.surgery.started && !this.surgery.outOfSurgeryCenter
         ? _c("stopwatch", {
             attrs: {
               title: "Tempo de cirurgia decorrido: ",
@@ -59497,265 +59863,298 @@ var render = function() {
           })
         : _vm._e(),
       _vm._v(" "),
-      _c("div", [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-4" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-block",
-                class: _vm.shouldDisableEntranceAtSurgeryCenterButton()
-                  ? ""
-                  : "btn-primary",
-                attrs: {
-                  id: "entrance-surgery-center",
-                  disabled: _vm.shouldDisableEntranceAtSurgeryCenterButton()
-                },
-                on: { click: _vm.confirmEntranceAtSurgeryCenter }
-              },
-              [
-                _vm._v(
-                  "\n                    1. Entrou no centro cirúrgico\n                "
+      !this.surgery.outOfSurgeryCenter && !this.surgery.intercurrence
+        ? _c("div", [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-4" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-block",
+                    class: _vm.shouldDisableEntranceAtSurgeryCenterButton()
+                      ? ""
+                      : "btn-primary",
+                    attrs: {
+                      id: "entrance-surgery-center",
+                      disabled: _vm.shouldDisableEntranceAtSurgeryCenterButton()
+                    },
+                    on: { click: _vm.confirmEntranceAtSurgeryCenter }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    1. Entrou no centro cirúrgico\n                "
+                    )
+                  ]
                 )
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-4" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-block",
-                class: _vm.shouldDisableEntranceAtSurgicalRoomButton()
-                  ? ""
-                  : "btn-primary",
-                attrs: {
-                  disabled: _vm.shouldDisableEntranceAtSurgicalRoomButton()
-                },
-                on: { click: _vm.confirmEntranceAtSurgicalRoom }
-              },
-              [
-                _vm._v(
-                  "\n                    2. Entrou na sala cirúrgica\n                "
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-4" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-block",
+                    class: _vm.shouldDisableEntranceAtSurgicalRoomButton()
+                      ? ""
+                      : "btn-primary",
+                    attrs: {
+                      disabled: _vm.shouldDisableEntranceAtSurgicalRoomButton()
+                    },
+                    on: { click: _vm.confirmEntranceAtSurgicalRoom }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    2. Entrou na sala cirúrgica\n                "
+                    )
+                  ]
                 )
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-4" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-block",
-                class: _vm.shouldDisableTimeoutButton() ? "" : "btn-primary",
-                attrs: { disabled: _vm.shouldDisableTimeoutButton() },
-                on: { click: _vm.confirmTimeout }
-              },
-              [
-                _vm._v(
-                  "\n                    3. Time out realizado!\n                "
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-4" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-block",
+                    class: _vm.shouldDisableTimeoutButton()
+                      ? ""
+                      : "btn-primary",
+                    attrs: { disabled: _vm.shouldDisableTimeoutButton() },
+                    on: { click: _vm.confirmTimeout }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    3. Time out realizado!\n                "
+                    )
+                  ]
                 )
-              ]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-4" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-block",
-                class: _vm.shouldDisableAnestheticInductionButton()
-                  ? ""
-                  : "btn-primary",
-                attrs: {
-                  disabled: _vm.shouldDisableAnestheticInductionButton()
-                },
-                on: { click: _vm.confirmAnestheticInduction }
-              },
-              [
-                _vm._v(
-                  "\n                    4. Indução anestésica realizada\n                "
+              ])
+            ]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-4" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-block",
+                    class: _vm.shouldDisableAnestheticInductionButton()
+                      ? ""
+                      : "btn-primary",
+                    attrs: {
+                      disabled: _vm.shouldDisableAnestheticInductionButton()
+                    },
+                    on: { click: _vm.confirmAnestheticInduction }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    4. Indução anestésica realizada\n                "
+                    )
+                  ]
                 )
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-4" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-block",
-                class: _vm.shouldDisableStartSurgeryButton()
-                  ? ""
-                  : "btn-primary",
-                attrs: { disabled: _vm.shouldDisableStartSurgeryButton() },
-                on: { click: _vm.startSurgery }
-              },
-              [
-                _vm._v(
-                  "\n                    5. Cirurgia Iniciada!\n                "
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-4" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-block",
+                    class: _vm.shouldDisableStartSurgeryButton()
+                      ? ""
+                      : "btn-primary",
+                    attrs: { disabled: _vm.shouldDisableStartSurgeryButton() },
+                    on: { click: _vm.startSurgery }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    5. Cirurgia Iniciada!\n                "
+                    )
+                  ]
                 )
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-4" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-block",
-                class: _vm.shouldDisableFinishSurgeryButton()
-                  ? ""
-                  : "btn-primary",
-                attrs: {
-                  disabled: _vm.shouldDisableFinishSurgeryButton(),
-                  id: "surgery-ended"
-                },
-                on: { click: _vm.finishSurgery }
-              },
-              [
-                _vm._v(
-                  "\n                    6. Cirurgia terminada!\n                "
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-4" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-block",
+                    class: _vm.shouldDisableFinishSurgeryButton()
+                      ? ""
+                      : "btn-primary",
+                    attrs: {
+                      disabled: _vm.shouldDisableFinishSurgeryButton(),
+                      id: "surgery-ended"
+                    },
+                    on: { click: _vm.finishSurgery }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    6. Cirurgia terminada!\n                "
+                    )
+                  ]
                 )
-              ]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-4" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-block",
-                class: _vm.shouldDisableSurgicalRoomExitButton()
-                  ? ""
-                  : "btn-primary",
-                attrs: {
-                  disabled: _vm.shouldDisableSurgicalRoomExitButton(),
-                  id: "exit-surgical-room"
-                },
-                on: { click: _vm.confirmSurgicalRoomExit }
-              },
-              [
-                _vm._v(
-                  "\n                    7. Saiu da sala cirúrgica\n                "
+              ])
+            ]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-4" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-block",
+                    class: _vm.shouldDisableSurgicalRoomExitButton()
+                      ? ""
+                      : "btn-primary",
+                    attrs: {
+                      disabled: _vm.shouldDisableSurgicalRoomExitButton(),
+                      id: "exit-surgical-room"
+                    },
+                    on: { click: _vm.confirmSurgicalRoomExit }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    7. Saiu da sala cirúrgica\n                "
+                    )
+                  ]
                 )
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-4" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-block",
-                class: _vm.shouldDisableEntranceAtRepaiButton()
-                  ? ""
-                  : "btn-primary",
-                attrs: {
-                  disabled: _vm.shouldDisableEntranceAtRepaiButton(),
-                  id: "entrance-repai"
-                },
-                on: { click: _vm.confirmEntranceAtRepai }
-              },
-              [
-                _vm._v(
-                  "\n                    8. Entrada na REPAI\n                "
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-4" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-block",
+                    class: _vm.shouldDisableEntranceAtRepaiButton()
+                      ? ""
+                      : "btn-primary",
+                    attrs: {
+                      disabled: _vm.shouldDisableEntranceAtRepaiButton(),
+                      id: "entrance-repai"
+                    },
+                    on: { click: _vm.confirmEntranceAtRepai }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    8. Entrada na REPAI\n                "
+                    )
+                  ]
                 )
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-4" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-block",
-                class: _vm.shouldDisableExitOfRepaiButton()
-                  ? ""
-                  : "btn-primary",
-                attrs: {
-                  disabled: _vm.shouldDisableExitOfRepaiButton(),
-                  id: "exit-repai"
-                },
-                on: { click: _vm.confirmExitOfRepai }
-              },
-              [
-                _vm._v(
-                  "\n                    9. Saída da REPAI\n                "
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-4" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-block",
+                    class: _vm.shouldDisableExitOfRepaiButton()
+                      ? ""
+                      : "btn-primary",
+                    attrs: {
+                      disabled: _vm.shouldDisableExitOfRepaiButton(),
+                      id: "exit-repai"
+                    },
+                    on: { click: _vm.confirmExitOfRepai }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    9. Saída da REPAI\n                "
+                    )
+                  ]
                 )
-              ]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-12" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-block",
-                class: _vm.shouldDisableSurgeryCenterExitButton()
-                  ? ""
-                  : "btn-primary",
-                attrs: {
-                  disabled: _vm.shouldDisableSurgeryCenterExitButton(),
-                  id: "exit-surgical-center"
-                },
-                on: { click: _vm.confirmSurgeryCenterExit }
-              },
-              [
-                _vm._v(
-                  "\n                    9. Saída do centro cirúrgico\n                "
+              ])
+            ]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-12" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-block",
+                    class: _vm.shouldDisableSurgeryCenterExitButton()
+                      ? ""
+                      : "btn-primary",
+                    attrs: {
+                      disabled: _vm.shouldDisableSurgeryCenterExitButton(),
+                      id: "exit-surgical-center"
+                    },
+                    on: { click: _vm.confirmSurgeryCenterExit }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    9. Saída do centro cirúrgico\n                "
+                    )
+                  ]
                 )
-              ]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c(
-            "div",
-            { staticClass: "col-md-6 col-md-push-3 col-md-pull-3" },
-            [
+              ])
+            ]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
               _c(
-                "router-link",
-                {
-                  attrs: {
-                    to: {
-                      name: "intercurrence.manage",
-                      params: { eventId: _vm.eventId }
-                    }
-                  }
-                },
+                "div",
+                { staticClass: "col-md-6 col-md-push-3 col-md-pull-3" },
                 [
-                  _c("button", { staticClass: "btn btn-danger btn-block" }, [
-                    _vm._v("Intercorrência cirúrgica")
-                  ])
-                ]
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        to: {
+                          name: "intercurrence.manage",
+                          params: { eventId: _vm.eventId }
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "button",
+                        { staticClass: "btn btn-danger btn-block" },
+                        [_vm._v("Intercorrência cirúrgica")]
+                      )
+                    ]
+                  )
+                ],
+                1
               )
-            ],
-            1
-          )
-        ]),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-12" }, [_c("router-view")], 1)
-        ])
-      ])
+            ]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-12" }, [_c("router-view")], 1)
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.surgery.finished && _vm.surgery.outOfSurgeryCenter
+        ? _c("alert-component", {
+            attrs: {
+              message: "Cirurgia finalizada com sucesso!",
+              alert: "alert-success"
+            }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.surgery.intercurrence
+        ? _c("alert-component", {
+            attrs: {
+              message: "Intercorrência cirúrgica registrada.",
+              alert: "alert-warning"
+            },
+            on: {
+              "has-intercurrence": function($event) {
+                return _vm._hasIntercurrence()
+              }
+            }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.surgery.finished && _vm.surgery.outOfSurgeryCenter
+        ? _c("report", { attrs: { "event-id": _vm.eventId } })
+        : _vm._e()
     ],
     1
   )
@@ -74831,6 +75230,8 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('schedule-surgeries', __we
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('on-going-surgery', __webpack_require__(/*! @views/OnGoingSurgery.vue */ "./resources/js/views/OnGoingSurgery.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('stopwatch', __webpack_require__(/*! @components/Stopwatch.vue */ "./resources/js/components/Stopwatch.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('current-surgery-info', __webpack_require__(/*! @components/CurrentSurgeryInfo.vue */ "./resources/js/components/CurrentSurgeryInfo.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('alert-component', __webpack_require__(/*! @components/Alert.vue */ "./resources/js/components/Alert.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('report', __webpack_require__(/*! @components/Report.vue */ "./resources/js/components/Report.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('passport-clients', __webpack_require__(/*! @passport/Clients.vue */ "./resources/js/components/passport/Clients.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('passport-authorized-clients', __webpack_require__(/*! @passport/AuthorizedClients.vue */ "./resources/js/components/passport/AuthorizedClients.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('passport-personal-access-tokens', __webpack_require__(/*! @passport/PersonalAccessTokens.vue */ "./resources/js/components/passport/PersonalAccessTokens.vue")["default"]);
@@ -74841,7 +75242,30 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]({
 });
 var app = new vue__WEBPACK_IMPORTED_MODULE_0__["default"]({
   el: '#app',
-  router: router
+  props: {
+    eventId: Number
+  },
+  data: function data() {
+    return {
+      finished: false,
+      outOfSurgeryCenter: false
+    };
+  },
+  router: router,
+  mounted: function mounted() {
+    this.getSurgeryStatus();
+  },
+  methods: {
+    getSurgeryStatus: function getSurgeryStatus() {
+      var _this = this;
+
+      var param = this.$route.params.surgery;
+      axios.get("/api/surgeries/stats/".concat(param, "/root")).then(function (response) {
+        _this.finished = response.data.data.finished;
+        _this.outOfSurgeryCenter = response.data.data.outOfSurgeryCenter;
+      });
+    }
+  }
 });
 
 String.prototype.toHHMMSS = function () {
@@ -74925,6 +75349,75 @@ if (token) {
 
 /***/ }),
 
+/***/ "./resources/js/components/Alert.vue":
+/*!*******************************************!*\
+  !*** ./resources/js/components/Alert.vue ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Alert_vue_vue_type_template_id_7b2bf401_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Alert.vue?vue&type=template&id=7b2bf401&scoped=true& */ "./resources/js/components/Alert.vue?vue&type=template&id=7b2bf401&scoped=true&");
+/* harmony import */ var _Alert_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Alert.vue?vue&type=script&lang=js& */ "./resources/js/components/Alert.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Alert_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Alert_vue_vue_type_template_id_7b2bf401_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Alert_vue_vue_type_template_id_7b2bf401_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "7b2bf401",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Alert.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Alert.vue?vue&type=script&lang=js&":
+/*!********************************************************************!*\
+  !*** ./resources/js/components/Alert.vue?vue&type=script&lang=js& ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Alert_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Alert.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Alert.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Alert_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Alert.vue?vue&type=template&id=7b2bf401&scoped=true&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/Alert.vue?vue&type=template&id=7b2bf401&scoped=true& ***!
+  \**************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Alert_vue_vue_type_template_id_7b2bf401_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Alert.vue?vue&type=template&id=7b2bf401&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Alert.vue?vue&type=template&id=7b2bf401&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Alert_vue_vue_type_template_id_7b2bf401_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Alert_vue_vue_type_template_id_7b2bf401_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/CurrentSurgeryInfo.vue":
 /*!********************************************************!*\
   !*** ./resources/js/components/CurrentSurgeryInfo.vue ***!
@@ -74989,6 +75482,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CurrentSurgeryInfo_vue_vue_type_template_id_573edc96_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CurrentSurgeryInfo_vue_vue_type_template_id_573edc96_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Report.vue":
+/*!********************************************!*\
+  !*** ./resources/js/components/Report.vue ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Report_vue_vue_type_template_id_24c36d42_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Report.vue?vue&type=template&id=24c36d42&scoped=true& */ "./resources/js/components/Report.vue?vue&type=template&id=24c36d42&scoped=true&");
+/* harmony import */ var _Report_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Report.vue?vue&type=script&lang=js& */ "./resources/js/components/Report.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _Report_vue_vue_type_style_index_0_id_24c36d42_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Report.vue?vue&type=style&index=0&id=24c36d42&scoped=true&lang=css& */ "./resources/js/components/Report.vue?vue&type=style&index=0&id=24c36d42&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _Report_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Report_vue_vue_type_template_id_24c36d42_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Report_vue_vue_type_template_id_24c36d42_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "24c36d42",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Report.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Report.vue?vue&type=script&lang=js&":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/Report.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Report_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Report.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Report.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Report_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Report.vue?vue&type=style&index=0&id=24c36d42&scoped=true&lang=css&":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/components/Report.vue?vue&type=style&index=0&id=24c36d42&scoped=true&lang=css& ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Report_vue_vue_type_style_index_0_id_24c36d42_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./Report.vue?vue&type=style&index=0&id=24c36d42&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Report.vue?vue&type=style&index=0&id=24c36d42&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Report_vue_vue_type_style_index_0_id_24c36d42_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Report_vue_vue_type_style_index_0_id_24c36d42_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Report_vue_vue_type_style_index_0_id_24c36d42_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Report_vue_vue_type_style_index_0_id_24c36d42_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Report_vue_vue_type_style_index_0_id_24c36d42_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Report.vue?vue&type=template&id=24c36d42&scoped=true&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/Report.vue?vue&type=template&id=24c36d42&scoped=true& ***!
+  \***************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Report_vue_vue_type_template_id_24c36d42_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Report.vue?vue&type=template&id=24c36d42&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Report.vue?vue&type=template&id=24c36d42&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Report_vue_vue_type_template_id_24c36d42_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Report_vue_vue_type_template_id_24c36d42_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

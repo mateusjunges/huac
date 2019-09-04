@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@section('title', 'Iniciar cirurgia')
+@section('title', 'Andamento da cirurgia')
 @section('js')
     <script src="{{ asset('js/app.js') }}"></script>
 @endsection
@@ -19,6 +19,7 @@
                 <on-going-surgery :event-id="{{ $surgery->events()->latest()->first()->id }}"></on-going-surgery>
 
                 <current-surgery-info
+                    v-if="!finished && !outOfSurgeryCenter"
                     :surgery="{{ $surgery }}"
                     :patient="{{  $surgery->patient }}">
                 </current-surgery-info>

@@ -131,7 +131,11 @@ Route::middleware(['auth:api'])->group(function () {
         });
 
         Route::prefix('stats')->group(function() {
-            Route::get('{surgery}', StatsController::class);
+            Route::prefix('{event}')->group(function() {
+                Route::get('started', [StatsController::class, 'started']);
+                Route::get('finished', [StatsController::class, 'finished']);
+                Route::get('root', [StatsController::class, 'root']);
+            });
         });
         Route::prefix('manage')->group(function() {
            Route::prefix('{surgery}')->group(function() {

@@ -11,6 +11,8 @@ Vue.component('schedule-surgeries', require('@components/SurgeriesToBeScheduled.
 Vue.component('on-going-surgery', require('@views/OnGoingSurgery.vue').default);
 Vue.component('stopwatch', require('@components/Stopwatch.vue').default);
 Vue.component('current-surgery-info', require('@components/CurrentSurgeryInfo.vue').default);
+Vue.component('alert-component', require('@components/Alert.vue').default);
+Vue.component('report', require('@components/Report.vue').default);
 
 Vue.component('passport-clients', require('@passport/Clients.vue').default);
 Vue.component('passport-authorized-clients', require('@passport/AuthorizedClients.vue').default);
@@ -25,7 +27,29 @@ const router = new VueRouter({
 
 const app = new Vue({
     el: '#app',
-    router
+    props: {
+        eventId: Number
+    },
+    data() {
+      return {
+          finished: false,
+          outOfSurgeryCenter: false,
+      }
+    },
+    router,
+    mounted() {
+      this.getSurgeryStatus();
+    },
+    methods: {
+        getSurgeryStatus() {
+            const param = this.$route.params.surgery;
+            axios.get(`/api/surgeries/stats/${param}/root`)
+                .then((response) => {
+                this.finished = response.data.data.finished;
+                this.outOfSurgeryCenter = response.data.data.outOfSurgeryCenter;
+            });
+        }
+    }
 });
 
 

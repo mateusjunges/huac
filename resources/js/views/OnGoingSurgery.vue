@@ -1,12 +1,12 @@
 <template>
     <div>
         <stopwatch
-            v-if="this.surgery.started"
+            v-if="this.surgery.started && !this.surgery.outOfSurgeryCenter"
             title="Tempo de cirurgia decorrido: "
             :finished="this.surgery.finished"
             :current-timer="this.surgery.duration"></stopwatch>
 
-        <div>
+        <div v-if="!this.surgery.outOfSurgeryCenter && !this.surgery.intercurrence">
             <div class="row">
                 <div class="col-md-4">
                     <button class="btn btn-block"
@@ -120,6 +120,19 @@
             </div>
 
         </div>
+
+        <alert-component
+            v-if="surgery.finished && surgery.outOfSurgeryCenter"
+            message="Cirurgia finalizada com sucesso!"
+            alert="alert-success">
+        </alert-component>
+        <alert-component
+            v-on:has-intercurrence="_hasIntercurrence()"
+            v-if="surgery.intercurrence"
+            message="Intercorrência cirúrgica registrada."
+            alert="alert-warning">
+        </alert-component>
+        <report v-if="surgery.finished && surgery.outOfSurgeryCenter" :event-id="eventId"></report>
     </div>
 </template>
 
@@ -161,11 +174,19 @@
         mounted() {
             let self = this;
             this.surgeryStatus();
+
+            this.$root.$on('has-intercurrence', function() {
+                self._hasIntercurrence();
+            })
         },
 
         methods: {
+            _hasIntercurrence() {
+              this.surgery.intercurrence = true;
+            },
+
             async surgeryStatus() {
-                await axios.get(`/api/surgeries/stats/${this.eventId}`)
+                await axios.get(`/api/surgeries/stats/${this.eventId}/started`)
                     .then((response) => {
                         if (response.status === HTTP_OK) {
                             this.surgery.started             = response.data.data.started;
@@ -383,7 +404,7 @@
              * @returns {boolean}
              */
             shouldDisableSurgicalRoomExitButton() {
-                if (! this.surgery.finished || this.surgery.outOfSurgeryCenter)
+                if (! this.surgery.finished || this.surgery.outOfSurgeryCenter || this.surgery.outOfSurgicalRoom)
                     return true;
                 return false;
             },
@@ -410,7 +431,7 @@
              * @returns {boolean}
              */
             shouldDisableEntranceAtRepaiButton() {
-                if (!this.surgery.outOfSurgicalRoom || this.surgery.outOfRepai)
+                if (!this.surgery.outOfSurgicalRoom || this.surgery.outOfRepai || this.surgery.repaiStarted)
                     return true;
                 return false;
             },
@@ -466,8 +487,8 @@
 
             shouldDisableSurgeryCenterExitButton() {
                 if (
-                    ! this.outOfRepai
-                    || this.outOfSurgeryCenter
+                    ! this.surgery.outOfRepai
+                    || this.surgery.outOfSurgeryCenter
                 )
                     return true;
                 return false;
