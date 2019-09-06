@@ -13,12 +13,12 @@ class StatusTableSeeder extends Seeder
     public function run()
     {
         DB::table('status')->insert([
-            array(
+            [
                 'name'        => 'Em processo',
                 'description' => 'A cirurgia entrou no sistema.',
                 'created_at'  => Carbon::now(),
                 'updated_at'  => Carbon::now(),
-            ),
+            ],
             [
                 'name'        => 'Agendado',
                 'description' => 'A cirurgia foi agendada.',
@@ -126,7 +126,55 @@ class StatusTableSeeder extends Seeder
                 'description' => 'O agendamento desta cirurgia foi cancelado.',
                 'created_at'  => Carbon::now(),
                 'updated_at'  => Carbon::now(),
-            ]
+            ],
+            [
+                'name'        => 'No centro cirúrgico',
+                'description' => 'O paciente entrou no centro cirúrgico',
+                'created_at'  => Carbon::now(),
+                'updated_at'  => Carbon::now(),
+            ],
+            [
+                'name'        => 'Na sala cirúrgica',
+                'description' => 'O paciente entrou na sala de cirurgia',
+                'created_at'  => Carbon::now(),
+                'updated_at'  => Carbon::now(),
+            ],
+            [
+                'name'        => 'Timeout realizado',
+                'description' => 'O timeout foi realizado',
+                'created_at'  => Carbon::now(),
+                'updated_at'  => Carbon::now(),
+            ],
+            [
+                'name'        => 'Indução anestésica',
+                'description' => 'O paciente foi anestesiado',
+                'created_at'  => Carbon::now(),
+                'updated_at'  => Carbon::now(),
+            ],
+            [
+                'name'        => 'Saída da sala cirúrgica',
+                'description' => 'O paciente saiu da sala de cirurgia',
+                'created_at'  => Carbon::now(),
+                'updated_at'  => Carbon::now(),
+            ],
+            [
+                'name'        => 'Entrada na REPAI',
+                'description' => 'O paciente entrou na REPAI',
+                'created_at'  => Carbon::now(),
+                'updated_at'  => Carbon::now(),
+            ],
+            [
+                'name'        => 'Saída da REPAI',
+                'description' => 'O paciente saiu da REPAI',
+                'created_at'  => Carbon::now(),
+                'updated_at'  => Carbon::now(),
+            ],
+            [
+                'name'        => 'Saída do centro cirúrgico',
+                'description' => 'O paciente saiu do centro cirúrgico.',
+                'created_at'  => Carbon::now(),
+                'updated_at'  => Carbon::now(),
+            ],
         ]);
 
     }

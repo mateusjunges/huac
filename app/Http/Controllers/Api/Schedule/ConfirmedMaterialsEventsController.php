@@ -18,9 +18,7 @@ class ConfirmedMaterialsEventsController
         $events = Event::confirmedMaterials()
             ->select('id', 'start_at as start', 'end_at as end', 'color', 'title', 'surgery_id')
             ->get()->filter(function ($event) {
-//                if ($event->surgery->latestStatus->status_id === Status::MATERIALS_CONFIRMED_SURGERY_CENTER) {
-//                }
-                return $event->surgery->latestStatus->status_id === Status::MATERIALS_CONFIRMED_SURGERY_CENTER;
+                return in_array($event->surgery->latestStatus->status_id, $this->allowedStatus());
             });
 
         return response()->json([
@@ -28,5 +26,25 @@ class ConfirmedMaterialsEventsController
                 'events' => $events,
             ]
         ], Response::HTTP_OK);
+    }
+
+    /**
+     * @return array
+     */
+    private function allowedStatus()
+    {
+        return [
+            Status::PATIENT_AT_SURGERY_CENTER,
+            Status::PATIENT_AT_SURGICAL_ROOM,
+            Status::TIMEOUT_DONE,
+            Status::ANESTHETIC_INDUCTION,
+            Status::STARTED,
+            Status::FINISHED,
+            Status::PATIENT_OUT_OF_SURGICAL_ROOM,
+            Status::PATIENT_EXITED_REPAI,
+            Status::PATIENT_AT_REPAI,
+            Status::PATIENT_EXITED_REPAI,
+            Status::MATERIALS_CONFIRMED_BY_SURGERY_CENTER
+        ];
     }
 }
