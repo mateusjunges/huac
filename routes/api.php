@@ -30,6 +30,7 @@ use HUAC\Http\Controllers\Api\Procedures\ProceduresDataController;
 use HUAC\Http\Controllers\Api\Schedule\ConfirmedMaterialsEventsController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeCreateController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeUpdateController;
+use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeUpdateWithConfirmedMaterials;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyReservedPeriodController;
 use HUAC\Http\Controllers\Api\Status\StatusController;
 use HUAC\Http\Controllers\Api\Surgeons\VerifySurgeonAvailabilityController;
@@ -197,6 +198,7 @@ Route::middleware(['auth:api'])->group(function () {
        Route::get('verify-reserved-period-before-update', [VerifyReservedPeriodController::class, 'beforeUpdate']);
        Route::get('verify-existing-schedules-before-update', VerifyExistingSchedulesBeforeUpdateController::class);
        Route::get('verify-existing-schedules-before-create', VerifyExistingSchedulesBeforeCreateController::class);
+       Route::get('verify-existing-schedules-before-update-on-confirmed-materials', VerifyExistingSchedulesBeforeUpdateWithConfirmedMaterials::class);
     });
 
     /**

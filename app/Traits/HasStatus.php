@@ -35,6 +35,15 @@ trait HasStatus {
      */
     public function scopeWithStatus(Builder $query, $status)
     {
+        if (is_array($status)) {
+            return $this->whereHas('status', function ($query) use($status) {
+               $query->where(function($query) use ($status) {
+                  foreach ($status as $s) {
+                      $query->orWhere('status_id', $s);
+                  }
+               });
+            });
+        }
         return $this->whereHas('status', function ($query) use ($status) {
            $query->where('status_id', $status);
         });
