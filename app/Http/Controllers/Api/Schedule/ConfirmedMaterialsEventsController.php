@@ -15,36 +15,32 @@ class ConfirmedMaterialsEventsController
      */
     public function __invoke(Request $request)
     {
-        $events = Event::confirmedMaterials()
+        $_events = Event::confirmedMaterials()
             ->select('id', 'start_at as start', 'end_at as end', 'color', 'title', 'surgery_id')
-            ->get()->filter(function ($event) {
-                return in_array($event->surgery->latestStatus->status_id, $this->allowedStatus());
-            });
+            ->get();
+        $events = null;
+
+        foreach ($_events as $event) {
+            if (
+                $event->surgery->latestStatus->status_id === Status::PATIENT_AT_SURGERY_CENTER or
+                $event->surgery->latestStatus->status_id === Status::PATIENT_AT_SURGICAL_ROOM or
+                $event->surgery->latestStatus->status_id === Status::TIMEOUT_DONE or
+                $event->surgery->latestStatus->status_id === Status::ANESTHETIC_INDUCTION or
+                $event->surgery->latestStatus->status_id === Status::STARTED or
+                $event->surgery->latestStatus->status_id === Status::FINISHED or
+                $event->surgery->latestStatus->status_id === Status::PATIENT_OUT_OF_SURGICAL_ROOM or
+                $event->surgery->latestStatus->status_id === Status::PATIENT_EXITED_REPAI or
+                $event->surgery->latestStatus->status_id === Status::PATIENT_AT_REPAI or
+                $event->surgery->latestStatus->status_id === Status::PATIENT_EXITED_REPAI or
+                $event->surgery->latestStatus->status_id === Status::MATERIALS_CONFIRMED_BY_SURGERY_CENTER
+            )
+                $events[] = $event;
+        }
 
         return response()->json([
             'data' => [
                 'events' => $events,
             ]
         ], Response::HTTP_OK);
-    }
-
-    /**
-     * @return array
-     */
-    private function allowedStatus()
-    {
-        return [
-            Status::PATIENT_AT_SURGERY_CENTER,
-            Status::PATIENT_AT_SURGICAL_ROOM,
-            Status::TIMEOUT_DONE,
-            Status::ANESTHETIC_INDUCTION,
-            Status::STARTED,
-            Status::FINISHED,
-            Status::PATIENT_OUT_OF_SURGICAL_ROOM,
-            Status::PATIENT_EXITED_REPAI,
-            Status::PATIENT_AT_REPAI,
-            Status::PATIENT_EXITED_REPAI,
-            Status::MATERIALS_CONFIRMED_BY_SURGERY_CENTER
-        ];
     }
 }

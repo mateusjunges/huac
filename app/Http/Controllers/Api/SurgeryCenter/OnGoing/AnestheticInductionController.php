@@ -3,8 +3,11 @@
 namespace HUAC\Http\Controllers\Api\SurgeryCenter\OnGoing;
 
 use Carbon\Carbon;
+use HUAC\Enums\Status;
 use HUAC\Events\SurgeryCenter\AnestheticInduction;
 use HUAC\Models\Event;
+use HUAC\Models\Log;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 use Exception;
 
@@ -17,11 +20,19 @@ class AnestheticInductionController
     public function __invoke($event)
     {
         try {
-            $event = Event::find($event);
-            $event->anesthetic_induction = Carbon::now();
-            $event->save();
+            DB::transaction(function () use ($event) {
+                $event = Event::find($event);
+                $event->anesthetic_induction = Carbon::now();
+                $event->save();
 
-            event(new AnestheticInduction($event));
+                Log::createFor(
+                    $event->surgery,
+                    'Indução anestésica realizada!',
+                    Status::ANESTHETIC_INDUCTION
+                );
+
+                event(new AnestheticInduction($event));
+            });
 
             return response()->json([
                 'data' => [

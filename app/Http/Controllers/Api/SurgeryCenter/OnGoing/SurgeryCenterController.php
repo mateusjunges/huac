@@ -4,10 +4,13 @@ namespace HUAC\Http\Controllers\Api\SurgeryCenter\OnGoing;
 
 use Carbon\Carbon;
 use Exception;
+use HUAC\Enums\Status;
 use HUAC\Events\SurgeryCenter\EntranceAtSurgeryCenter;
 use HUAC\Events\SurgeryCenter\SurgicalCenterExit;
 use HUAC\Models\Event;
+use HUAC\Models\Log;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class SurgeryCenterController
@@ -19,11 +22,19 @@ class SurgeryCenterController
     public function entrance($event)
     {
         try {
-            $event = Event::find($event);
-            $event->entrance_at_surgical_center = Carbon::now();
-            $event->save();
+            DB::transaction(function () use ($event) {
+                $event = Event::find($event);
+                $event->entrance_at_surgical_center = Carbon::now();
+                $event->save();
 
-            event(new EntranceAtSurgeryCenter($event));
+                Log::createFor(
+                    $event->surgery,
+                    'O paciente entrou no centro cirúrgico',
+                    Status::PATIENT_AT_SURGERY_CENTER
+                );
+
+                event(new EntranceAtSurgeryCenter($event));
+            });
 
             return response()->json([
                 'data' => [
@@ -64,11 +75,19 @@ class SurgeryCenterController
     public function exit($event)
     {
         try {
-            $event = Event::find($event);
-            $event->exit_surgery_center = Carbon::now();
-            $event->save();
+            DB::transaction(function () use ($event) {
+                $event = Event::find($event);
+                $event->exit_surgery_center = Carbon::now();
+                $event->save();
 
-            event(new SurgicalCenterExit($event));
+                Log::createFor(
+                    $event->surgery,
+                    'O paciente saiu do centro cirúrgico.',
+                    Status::PATIENT_EXITED_SURGERY_CENTER
+                );
+
+                event(new SurgicalCenterExit($event));
+            });
 
             return response()->json([
                 'data' => [

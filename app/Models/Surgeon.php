@@ -51,15 +51,15 @@ class Surgeon extends Model
 
     /**
      * Determine if the surgeon is available in a specific time interval.
-     * @param $start
-     * @param $end
+     * @param Carbon $start
+     * @param Carbon $end
      * @param Surgery $surgery
      */
     public function isAvailable($start, $end, Surgery $surgery)
     {
         $surgeries = $this->surgeries()->get();
         $currentSurgery = $surgery->id;
-//        dd($start." ==== ".$end);
+
         foreach ($surgeries as $surgery) {
             if ($surgery->id != $currentSurgery) {
                 $event = $surgery->events()->orderBy('created_at', 'desc')->first();
@@ -70,8 +70,14 @@ class Surgeon extends Model
                     // The surgeon is available if the start of the surgery isn't between the
                     // Start and End of a scheduled surgery, and if the next surgery is not between
                     // The start and end a scheduled surgery.
-                    if ($start->between($eventStartAt, $eventEndAt) or $end->between($eventStartAt, $eventEndAt))
+                    if (
+                        ($start->greaterThan($eventStartAt) and $start->lessThan($eventEndAt))
+                            or
+                        ($end->greaterThan($eventStartAt) and $end->lessThan($eventEndAt))
+                    )
                         return false;
+//                    if ($start->between($eventStartAt, $eventEndAt) or $end->between($eventStartAt, $eventEndAt))
+//                        return false;
                 }
             }
         }

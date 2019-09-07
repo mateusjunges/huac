@@ -4,10 +4,13 @@ namespace HUAC\Http\Controllers\Api\SurgeryCenter\OnGoing;
 
 use Carbon\Carbon;
 use Exception;
+use HUAC\Enums\Status;
 use HUAC\Events\SurgeryCenter\SurgeryFinished;
 use HUAC\Events\SurgeryCenter\SurgeryStarted;
 use HUAC\Models\Event;
+use HUAC\Models\Log;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class SurgeryController
@@ -19,11 +22,19 @@ class SurgeryController
     public function start($event)
     {
         try {
-            $event = Event::find($event);
-            $event->surgeon_started_at = Carbon::now();
-            $event->save();
+            DB::transaction(function () use ($event) {
+                $event = Event::find($event);
+                $event->surgeon_started_at = Carbon::now();
+                $event->save();
 
-            event(new SurgeryStarted($event));
+                Log::createFor(
+                    $event->surgery,
+                    'A cirurgia foi iniciada!',
+                    Status::STARTED
+                );
+
+                event(new SurgeryStarted($event));
+            });
 
             return response()->json([
                 'data' => [
@@ -64,11 +75,19 @@ class SurgeryController
     public function finish($event)
     {
         try {
-            $event = Event::find($event);
-            $event->surgeon_ended_at = Carbon::now();
-            $event->save();
+            DB::transaction(function () use ($event) {
+                $event = Event::find($event);
+                $event->surgeon_ended_at = Carbon::now();
+                $event->save();
 
-            event(new SurgeryFinished($event));
+                Log::createFor(
+                    $event->surgery,
+                    'A cirurgia foi finalizada!',
+                    Status::FINISHED
+                );
+
+                event(new SurgeryFinished($event));
+            });
 
             return response()->json([
                 'data' => [

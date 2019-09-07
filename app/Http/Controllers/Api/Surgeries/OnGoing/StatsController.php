@@ -37,7 +37,7 @@ class StatsController
         $is_at_surgical_room = ! is_null($event->entrance_at_surgical_room);
         $repai_started = ! is_null($event->entrance_repai);
         $timeout_done = ! is_null($event->time_out_at);
-        $intercurrence = (bool) $surgery->status()->where('id', Status::INTERCURRENCE)->count();
+        $intercurrence = (bool) $surgery->status()->where('id', Status::SURGICAL_COMPLICATIONS)->count();
         $out_repai = ! is_null($event->exit_repai);
         $out_of_surgery_center = ! is_null($event->exit_surgery_center);
         $out_of_surgical_room = ! is_null($event->exit_surgical_room);
