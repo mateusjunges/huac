@@ -3,6 +3,8 @@
 namespace HUAC\Models;
 
 use Carbon\Carbon;
+use HUAC\Enums\Status;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -54,12 +56,52 @@ class Surgeon extends Model
      * @param Carbon $start
      * @param Carbon $end
      * @param Surgery $surgery
+     * @return bool
      */
     public function isAvailable($start, $end, Surgery $surgery)
     {
         $surgeries = $this->surgeries()->get();
         $currentSurgery = $surgery->id;
 
+        return $this->verifyAvailability($surgeries, $currentSurgery, $start, $end);
+    }
+
+    /**
+     * @param Carbon $start
+     * @param Carbon $end
+     * @param Surgery $surgery
+     * @return bool
+     */
+    public function isAvailableWithConfirmedMaterials(Carbon $start, Carbon $end, Surgery $surgery)
+    {
+        $surgeries = $this->surgeries()->get()->filter(function ($surgery) {
+           return $surgery->latestStatus->status_id === Status::PATIENT_AT_SURGERY_CENTER
+               or $surgery->latestStatus->status_id === Status::PATIENT_AT_SURGICAL_ROOM or
+                  $surgery->latestStatus->status_id === Status::TIMEOUT_DONE or
+                  $surgery->latestStatus->status_id === Status::ANESTHETIC_INDUCTION or
+                  $surgery->latestStatus->status_id === Status::STARTED or
+                  $surgery->latestStatus->status_id === Status::FINISHED or
+                  $surgery->latestStatus->status_id === Status::PATIENT_OUT_OF_SURGICAL_ROOM or
+                  $surgery->latestStatus->status_id === Status::PATIENT_EXITED_REPAI or
+                  $surgery->latestStatus->status_id === Status::PATIENT_AT_REPAI or
+                  $surgery->latestStatus->status_id === Status::PATIENT_EXITED_REPAI or
+                  $surgery->latestStatus->status_id === Status::MATERIALS_CONFIRMED_BY_SURGERY_CENTER;
+        });
+        $currentSurgery = $surgery->id;
+
+        return $this->verifyAvailability($surgeries, $currentSurgery, $start, $end);
+
+    }
+
+    /**
+     * @param array|Collection $surgeries
+     * @param Surgery $currentSurgery
+     * @param Carbon $start
+     * @param Carbon $end
+     * @return bool
+     */
+    private function verifyAvailability($surgeries, $currentSurgery, Carbon $start, Carbon $end)
+    {
         foreach ($surgeries as $surgery) {
             if ($surgery->id != $currentSurgery) {
                 $event = $surgery->events()->orderBy('created_at', 'desc')->first();
@@ -72,12 +114,10 @@ class Surgeon extends Model
                     // The start and end a scheduled surgery.
                     if (
                         ($start->greaterThan($eventStartAt) and $start->lessThan($eventEndAt))
-                            or
+                        or
                         ($end->greaterThan($eventStartAt) and $end->lessThan($eventEndAt))
                     )
                         return false;
-//                    if ($start->between($eventStartAt, $eventEndAt) or $end->between($eventStartAt, $eventEndAt))
-//                        return false;
                 }
             }
         }
