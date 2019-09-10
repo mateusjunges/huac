@@ -22,10 +22,11 @@ class VerifyReservedPeriod
         $afternoonReservationStartsAt = Carbon::parse($room->afternoon_reservation_starts_at);
         $afternoonReservationEndsAt = Carbon::parse($room->afternoon_reservation_ends_at);
 
-        if ($morningReservationStartsAt->between($start, $end)
-            or $afternoonReservationStartsAt->between($start, $end)
-            or $morningReservationEndsAt->between($start, $end)
-            or $afternoonReservationEndsAt->between($start, $end)
+        if (
+            ($morningReservationStartsAt->greaterThan($start) and $morningReservationStartsAt->lessThan($end))
+            or ($morningReservationEndsAt->greaterThan($start) and $morningReservationEndsAt->lessThan($end))
+            or ($afternoonReservationStartsAt->greaterThan($start) and $afternoonReservationEndsAt->lessThan($end)
+            or ($afternoonReservationEndsAt->greaterThan($start) and $afternoonReservationEndsAt->lessThan($end)))
         )
             return true;
         return false;
