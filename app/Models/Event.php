@@ -45,7 +45,7 @@ class Event extends Model
     public function scopeConfirmedMaterials()
     {
         return $this->whereHas('surgery.latestStatus', function ($query){
-            $query->where('status_id', Status::MATERIALS_CONFIRMED_SURGERY_CENTER);
+            $query->where('status_id', Status::MATERIALS_CONFIRMED_BY_SURGERY_CENTER);
         });
     }
 

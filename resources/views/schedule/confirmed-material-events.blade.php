@@ -21,7 +21,7 @@
         json = document.getElementById('surgical-rooms-json');
         window.surgicalRooms = JSON.parse(json.value);
     </script>
-    <script src="{{ asset('js/app.js') }}"></script>
+{{--    <script src="{{ asset('js/app.js') }}"></script>--}}
     <script src='{{ asset('vendor/fullcalendar/lib/moment.min.js')}}'></script>
     <script src='{{ asset('vendor/fullcalendar/lib/jquery-ui.min.js')}}'></script>
     <script src='{{ asset('vendor/fullcalendar/fullcalendar.min.js')}}'></script>

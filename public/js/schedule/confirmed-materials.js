@@ -322,7 +322,7 @@ $(document).ready(function() {
      */
     async function verifySchedulesBeforeUpdate(event) {
         $.ajax({
-            url: '/api/scheduling/verify-existing-schedules-before-update',
+            url: '/api/scheduling/verify-existing-schedules-before-update-on-confirmed-materials',
             method: 'get',
             async: false,
             headers: headers,

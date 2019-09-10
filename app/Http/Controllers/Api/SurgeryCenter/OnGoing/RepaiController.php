@@ -4,10 +4,13 @@ namespace HUAC\Http\Controllers\Api\SurgeryCenter\OnGoing;
 
 use Carbon\Carbon;
 use Exception;
+use HUAC\Enums\Status;
 use HUAC\Events\SurgeryCenter\EntranceAtRepai;
 use HUAC\Events\SurgeryCenter\ExitOfRepai;
 use HUAC\Models\Event;
+use HUAC\Models\Log;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class RepaiController
@@ -19,11 +22,19 @@ class RepaiController
     public function entrance($event)
     {
         try {
-            $event = Event::find($event);
-            $event->entrance_repai = Carbon::now();
-            $event->save();
+            DB::transaction(function () use ($event) {
+                $event = Event::find($event);
+                $event->entrance_repai = Carbon::now();
+                $event->save();
 
-            event(new EntranceAtRepai($event));
+                Log::createFor(
+                    $event->surgery,
+                    'O paciente entrou na REPAI',
+                    Status::PATIENT_AT_REPAI,
+                );
+
+                event(new EntranceAtRepai($event));
+            });
 
             return response()->json([
                 'data' => [
@@ -64,11 +75,19 @@ class RepaiController
     public function exit($event)
     {
         try {
-            $event = Event::find($event);
-            $event->exit_repai = Carbon::now();
-            $event->save();
+            DB::transaction(function () use ($event) {
+                $event = Event::find($event);
+                $event->exit_repai = Carbon::now();
+                $event->save();
 
-            event(new ExitOfRepai($event));
+                Log::createFor(
+                    $event->surgery,
+                    'O paciente saiu da REPAI',
+                    Status::PATIENT_EXITED_REPAI
+                );
+
+                event(new ExitOfRepai($event));
+            });
 
             return response()->json([
                 'data' => [

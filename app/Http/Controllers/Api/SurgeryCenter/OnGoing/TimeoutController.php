@@ -4,9 +4,12 @@ namespace HUAC\Http\Controllers\Api\SurgeryCenter\OnGoing;
 
 use Carbon\Carbon;
 use Exception;
+use HUAC\Enums\Status;
 use HUAC\Events\SurgeryCenter\TimeOutDone;
 use HUAC\Models\Event;
+use HUAC\Models\Log;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class TimeoutController
@@ -18,11 +21,19 @@ class TimeoutController
     public function __invoke($event)
     {
         try {
-            $event = Event::find($event);
-            $event->time_out_at = Carbon::now();
-            $event->save();
+            DB::transaction(function () use ($event) {
+                $event = Event::find($event);
+                $event->time_out_at = Carbon::now();
+                $event->save();
 
-            event(new TimeOutDone($event));
+                Log::createFor(
+                    $event->surgery,
+                    'O timeout foi realizado!',
+                    Status::TIMEOUT_DONE
+                );
+
+                event(new TimeOutDone($event));
+            });
 
             return response()->json([
                 'data' => [

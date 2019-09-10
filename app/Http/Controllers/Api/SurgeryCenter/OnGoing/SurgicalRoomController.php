@@ -4,10 +4,13 @@ namespace HUAC\Http\Controllers\Api\SurgeryCenter\OnGoing;
 
 use Carbon\Carbon;
 use Exception;
+use HUAC\Enums\Status;
 use HUAC\Events\SurgeryCenter\EntranceAtSurgicalRoom;
 use HUAC\Events\SurgeryCenter\SurgicalRoomExit;
 use HUAC\Models\Event;
+use HUAC\Models\Log;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class SurgicalRoomController
@@ -19,11 +22,19 @@ class SurgicalRoomController
     public function entrance($event)
     {
         try {
-            $event = Event::find($event);
-            $event->entrance_at_surgical_room = Carbon::now();
-            $event->save();
+            DB::transaction(function () use ($event) {
+                $event = Event::find($event);
+                $event->entrance_at_surgical_room = Carbon::now();
+                $event->save();
 
-            event(new EntranceAtSurgicalRoom($event));
+                Log::createFor(
+                    $event->surgery,
+                    'O paciente entrou na sala de cirurgia.',
+                    Status::PATIENT_AT_SURGICAL_ROOM
+                );
+
+                event(new EntranceAtSurgicalRoom($event));
+            });
 
             return response()->json([
                 'data' => [
@@ -64,11 +75,19 @@ class SurgicalRoomController
     public function exit($event)
     {
         try {
-            $event = Event::find($event);
-            $event->exit_surgical_room = Carbon::now();
-            $event->save();
+            DB::transaction(function () use ($event) {
+                $event = Event::find($event);
+                $event->exit_surgical_room = Carbon::now();
+                $event->save();
 
-            event(new SurgicalRoomExit($event));
+                Log::createFor(
+                    $event->surgery,
+                    'O paciente saiu da sala de cirurgia.',
+                    Status::PATIENT_OUT_OF_SURGICAL_ROOM
+                );
+
+                event(new SurgicalRoomExit($event));
+            });
 
             return response()->json([
                 'data' => [
