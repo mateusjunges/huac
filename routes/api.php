@@ -205,7 +205,8 @@ Route::middleware(['auth:api'])->group(function () {
      * Surgeon routes
      */
     Route::prefix('surgeons')->group(function() {
-       Route::get('availability', VerifySurgeonAvailabilityController::class);
+       Route::get('availability', [VerifySurgeonAvailabilityController::class, 'verify']);
+       Route::get('availability-with-confirmed-materials', [VerifySurgeonAvailabilityController::class, 'verifyWithConfirmedMaterials']);
     });
 
     Route::get('status', [StatusController::class, 'index']);

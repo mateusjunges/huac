@@ -6,21 +6,14 @@ use Carbon\Carbon;
 use HUAC\Models\Event;
 use HUAC\Models\Surgery;
 
-class VerifySurgeonAvailability
+class VerifySurgeonAvailabilityWithConfirmedMaterialsOnly
 {
-    /**
-    * VerifySurgeonAvailability constructor
-    */
-    public function __construct()
-    {
-        //
-    }
 
     /**
-     * @param Event $event
-     * @param int $estimatedTime
+     * @param $event
      * @param $start
      * @param $end
+     * @param int $estimatedTime
      * @return bool
      */
     public static function execute($event, $start, $end, $estimatedTime = 0)
@@ -40,7 +33,7 @@ class VerifySurgeonAvailability
         $surgeons = $surgery->surgeons()->get();
 
         foreach ($surgeons as $surgeon) {
-            if (! $surgeon->isAvailable($start, $end, $surgery)) {
+            if (! $surgeon->isAvailableWithConfirmedMaterialsOnly($start, $end, $surgery)) {
                 return false;
             }
         }

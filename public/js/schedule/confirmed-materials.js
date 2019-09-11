@@ -75,7 +75,7 @@ $(document).ready(function() {
     function verifySurgeonAvailability(start, end, estimated_time, surgery_id = null, event_id = null) {
         try {
             $.ajax({
-                url: '/api/surgeons/availability',
+                url: '/api/surgeons/availability-with-confirmed-materials',
                 headers: headers,
                 method: 'get',
                 async: false,
@@ -318,16 +318,17 @@ $(document).ready(function() {
     /**
      * Verify all schedules for the specified time interval checking for schedule conflicts.
      * @param event
+     * @param room
      * @returns {Promise<void>}
      */
-    async function verifySchedulesBeforeUpdate(event) {
+    async function verifySchedulesBeforeUpdate(event, room=config.data('room')) {
         $.ajax({
             url: '/api/scheduling/verify-existing-schedules-before-update-on-confirmed-materials',
             method: 'get',
             async: false,
             headers: headers,
             data: {
-                room: config.data('room'),
+                room: room,
                 start: event.start.format(),
                 end: event.end.format(),
                 event: event.id,
@@ -417,14 +418,15 @@ $(document).ready(function() {
         slotDuration: _slotDuration,
         droppable: true,
         editable: true,
-        eventConstraint: {
-            start: moment().startOf('day'),
-            end: moment(moment().startOf('day'), 'MM-DD-YYY').add('days', 365)
-        },
-        selectConstraint: {
-            start: moment().startOf('day'),
-            end: moment(moment().startOf('day'), 'MM-DD-YYY').add('days', 365)
-        },
+        // TODO: Uncomment constraints
+        // eventConstraint: {
+        //     start: moment().startOf('day'),
+        //     end: moment(moment().startOf('day'), 'MM-DD-YYY').add('days', 365)
+        // },
+        // selectConstraint: {
+        //     start: moment().startOf('day'),
+        //     end: moment(moment().startOf('day'), 'MM-DD-YYY').add('days', 365)
+        // },
 
         /**
          * Change the fullCalendar view to agendaDay
@@ -704,46 +706,63 @@ $(document).ready(function() {
      */
     $("#save-new-room").click(async function () {
 
-        await verifySchedulesBeforeUpdate(currentEvent);
-        if (existEventsAtSameTime) {
+        let newRoom = $("#new-room");
+
+        await verifySchedulesBeforeUpdate(currentEvent, newRoom.val());
+
+        surgeonIsAvailable = null;
+        await verifySurgeonAvailability(currentEvent.start.format(),
+            currentEvent.end.format(),
+            0, null, currentEventId
+        );
+
+        if (surgeonIsAvailable) {
+            if (existEventsAtSameTime) {
+                swal({
+                    icon: 'error',
+                    text: 'Você não pode trocar esta cirurgia para a sala desejada, ' +
+                        'pois já existe uma cirurgia ocupando este horário nesta sala.',
+                    title: 'Conflito de horário!',
+                    timer: 5000,
+                });
+            } else {
+                $.ajax({
+                    url: `/api/events/${currentEventId}/change-room`,
+                    method: 'post',
+                    headers: headers,
+                    data: {
+                        _method: 'put',
+                        surgical_room_id: newRoom.val(),
+                    },
+                    success: function (response, status, xhr) {
+                        swal({
+                            icon: response.data.swal.icon,
+                            title: response.data.swal.title,
+                            text: response.data.swal.text,
+                            timer: response.data.swal.timer,
+                        });
+                        if (xhr.status === HTTP_OK){ // Response code = 200
+                            $("#change-room-modal").modal('hide');
+                            getEvents(config.data('room'));
+                            refetchEvents(config.data('room'));
+                        }
+                    },
+                    error: function (response, status, xhr) {
+                        swal({
+                            icon: response.data.swal.icon,
+                            title: response.data.swal.title,
+                            text: response.data.swal.text,
+                            timer: response.data.swal.timer,
+                        });
+                    }
+                });
+            }
+        } else {
             swal({
                 icon: 'error',
-                text: 'Você não pode trocar esta cirurgia para a sala desejada, ' +
-                    'pois já existe uma cirurgia ocupando este horário nesta sala.',
                 title: 'Conflito de horário!',
                 timer: 5000,
-            });
-        } else {
-            let newRoom = $("#new-room");
-            $.ajax({
-                url: `/api/events/${currentEventId}/change-room`,
-                method: 'post',
-                headers: headers,
-                data: {
-                    _method: 'put',
-                    surgical_room_id: newRoom.val(),
-                },
-                success: function (response, status, xhr) {
-                    swal({
-                        icon: response.data.swal.icon,
-                        title: response.data.swal.title,
-                        text: response.data.swal.text,
-                        timer: response.data.swal.timer,
-                    });
-                    if (xhr.status === HTTP_OK){ // Response code = 200
-                        $("#change-room-modal").modal('hide');
-                        getEvents(config.data('room'));
-                        refetchEvents(config.data('room'));
-                    }
-                },
-                error: function (response, status, xhr) {
-                    swal({
-                        icon: response.data.swal.icon,
-                        title: response.data.swal.title,
-                        text: response.data.swal.text,
-                        timer: response.data.swal.timer,
-                    });
-                }
+                text: 'Um dos cirurgiões já possui agendamentos para este horário na sala selecionada!'
             });
         }
     });

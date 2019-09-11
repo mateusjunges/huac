@@ -72,7 +72,7 @@ class Surgeon extends Model
      * @param Surgery $surgery
      * @return bool
      */
-    public function isAvailableWithConfirmedMaterials(Carbon $start, Carbon $end, Surgery $surgery)
+    public function isAvailableWithConfirmedMaterialsOnly(Carbon $start, Carbon $end, Surgery $surgery)
     {
         $surgeries = $this->surgeries()->get()->filter(function ($surgery) {
            return $surgery->latestStatus->status_id === Status::PATIENT_AT_SURGERY_CENTER
