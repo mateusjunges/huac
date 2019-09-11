@@ -3024,8 +3024,9 @@ var HTTP_OK = 200;
         reason: this.reason,
         observation: this.observation
       };
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.put('/api/intercurrence', data).then(function (response) {
-        var _response = response.data;
+      var surgery = this.$route.params.surgery;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/surgeries/manage/".concat(surgery, "/intercurrence"), data).then(function (response) {
+        var _response = response.data.data;
         swal({
           icon: _response.swal.icon,
           title: _response.swal.title,
@@ -3048,6 +3049,8 @@ var HTTP_OK = 200;
             surgery: _this.$route.params.surgery
           }
         });
+      })["catch"](function (error) {
+        console.log(error);
       });
     }
   }

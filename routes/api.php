@@ -42,6 +42,7 @@ use HUAC\Http\Controllers\Api\Surgeries\SurgeryStatusController;
 use HUAC\Http\Controllers\Api\SurgeryCenter\ConfirmSurgeryCenterMaterialsController;
 use HUAC\Http\Controllers\Api\SurgeryCenter\DenySurgeryCenterMaterialsController;
 use HUAC\Http\Controllers\Api\SurgeryCenter\OnGoing\AnestheticInductionController;
+use HUAC\Http\Controllers\Api\SurgeryCenter\OnGoing\IntercurrenceController;
 use HUAC\Http\Controllers\Api\SurgeryCenter\OnGoing\RepaiController;
 use HUAC\Http\Controllers\Api\SurgeryCenter\OnGoing\SurgeryCenterController;
 use HUAC\Http\Controllers\Api\SurgeryCenter\OnGoing\SurgeryController;
@@ -131,6 +132,9 @@ Route::middleware(['auth:api'])->group(function () {
            });
         });
 
+        /**
+         * Stats
+         */
         Route::prefix('stats')->group(function() {
             Route::prefix('{event}')->group(function() {
                 Route::get('started', [StatsController::class, 'started']);
@@ -138,6 +142,10 @@ Route::middleware(['auth:api'])->group(function () {
                 Route::get('root', [StatsController::class, 'root']);
             });
         });
+
+        /**
+         * Manage
+         */
         Route::prefix('manage')->group(function() {
            Route::prefix('{surgery}')->group(function() {
                Route::put('entrance-at-surgery-center', [SurgeryCenterController::class, 'entrance']);
@@ -150,7 +158,7 @@ Route::middleware(['auth:api'])->group(function () {
                Route::put('repai-entrance', [RepaiController::class, 'entrance']);
                Route::put('repai-exit', [RepaiController::class, 'exit']);
                Route::put('exit-of-surgery-center', [SurgeryCenterController::class, 'exit']);
-
+               Route::post('intercurrence', IntercurrenceController::class);
            });
         });
     });

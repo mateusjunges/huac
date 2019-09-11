@@ -66,9 +66,11 @@
                     observation: this.observation,
                 };
 
-                axios.put('/api/intercurrence', data)
+                let surgery = this.$route.params.surgery;
+
+                axios.post(`/api/surgeries/manage/${surgery}/intercurrence`, data)
                     .then((response) => {
-                        let _response = response.data;
+                        let _response = response.data.data;
                         swal({
                             icon: _response.swal.icon,
                             title: _response.swal.title,
@@ -87,7 +89,9 @@
                             name: 'events.start',
                             params: {surgery: this.$route.params.surgery}
                         });
-                    });
+                    }).catch(error => {
+                        console.log(error);
+                });
             }
         }
     }
