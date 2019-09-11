@@ -18,6 +18,7 @@ class IntercurrenceController
 //        try {
             $surgery = Surgery::find($surgery);
             $event = $surgery->events()->orderBy('created_at', 'desc')->first();
+
             if ((int) $request->input('reason') === 1) {
                 DB::transaction(function () use ($surgery, $event) {
                     $observation = "O paciente entrou em óbito durante a cirurgia.";
