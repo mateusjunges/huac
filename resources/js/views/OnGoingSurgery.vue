@@ -107,7 +107,7 @@
             <br>
             <div class="row">
                 <div class="col-md-6 col-md-push-3 col-md-pull-3">
-                    <router-link :to="{ name:'intercurrence.manage', params: { eventId } }">
+                    <router-link :to="{ name:'events.intercurrence', params: { eventId } }">
                         <button class="btn btn-danger btn-block">Intercorrência cirúrgica</button>
                     </router-link>
                 </div>

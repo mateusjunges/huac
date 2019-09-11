@@ -2959,12 +2959,98 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var HTTP_OK = 200;
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Intercurrence"
+  name: "Intercurrence",
+  data: function data() {
+    return {
+      reason: null,
+      observation: "",
+      saving: false,
+      options: [{
+        id: 1,
+        name: 'Óbito'
+      }, {
+        id: 2,
+        name: 'Outro'
+      }]
+    };
+  },
+  methods: {
+    submit: function submit() {
+      var _this = this;
+
+      this.saving = true;
+      var data = {
+        reason: this.reason,
+        observation: this.observation
+      };
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.put('/api/intercurrence', data).then(function (response) {
+        var _response = response.data;
+        swal({
+          icon: _response.swal.icon,
+          title: _response.swal.title,
+          text: _response.swal.text,
+          timer: _response.swal.timer
+        });
+
+        if (response.status === HTTP_OK) {
+          _this.$root.$emit('has-intercurrence', true);
+
+          _this.reason = null;
+          _this.observation = null;
+        }
+      }).then(function () {
+        return _this.saving = false;
+      }).then(function () {
+        _this.$router.push({
+          name: 'events.start',
+          params: {
+            surgery: _this.$route.params.surgery
+          }
+        });
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -59826,7 +59912,108 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c("div", { staticClass: "border border-success" }, [
+    _c(
+      "div",
+      { staticClass: "col-md-8 col-md-pull-2 col-md-push-2" },
+      [
+        _c("form", { attrs: { action: "" } }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "reason" } }, [
+              _vm._v("Selecione o motivo:")
+            ]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.reason,
+                    expression: "reason"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { name: "", id: "reason" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.reason = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  }
+                }
+              },
+              _vm._l(_vm.options, function(option) {
+                return _c("option", { domProps: { value: option.id } }, [
+                  _vm._v(_vm._s(option.name))
+                ])
+              }),
+              0
+            )
+          ]),
+          _vm._v(" "),
+          _vm.reason === 2
+            ? _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "observation" } }, [
+                  _vm._v('O motivo "outro" requer que você especifique abaixo:')
+                ]),
+                _vm._v(" "),
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.observation,
+                      expression: "observation"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "", id: "observation", cols: "30", rows: "5" },
+                  domProps: { value: _vm.observation },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.observation = $event.target.value
+                    }
+                  }
+                })
+              ])
+            : _vm._e()
+        ]),
+        _vm._v(" "),
+        _c("router-link", { attrs: { to: { name: "events.start" } } }, [
+          _c("button", { staticClass: "btn btn-default" }, [_vm._v("Cancelar")])
+        ]),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-success pull-right",
+            attrs: { id: "save", disabled: this.saving },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.submit($event)
+              }
+            }
+          },
+          [_vm._v("\n            Salvar\n        ")]
+        )
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -60103,7 +60290,7 @@ var render = function() {
                     {
                       attrs: {
                         to: {
-                          name: "intercurrence.manage",
+                          name: "events.intercurrence",
                           params: { eventId: _vm.eventId }
                         }
                       }

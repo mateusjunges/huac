@@ -68,6 +68,7 @@ Route::group(['middleware' => 'auth'], function (){
         Route::prefix('manage')->group(function() {
            Route::prefix('{surgery}')->group(function() {
                Route::get('start', OnGoingSurgeriesController::class);
+               Route::get('intercurrence', OnGoingSurgeriesController::class);
            });
         });
     });
