@@ -91,17 +91,6 @@ $(document).ready(function () {
             });
         },
         slotDuration: _slotDuration,
-        droppable: true,
-        editable: true,
-        // TODO: Uncomment constraints
-        // eventConstraint: {
-        //     start: moment().startOf('day'),
-        //     end: moment(moment().startOf('day'), 'MM-DD-YYY').add('days', 365)
-        // },
-        // selectConstraint: {
-        //     start: moment().startOf('day'),
-        //     end: moment(moment().startOf('day'), 'MM-DD-YYY').add('days', 365)
-        // },
 
         /**
          * Change the fullCalendar view to agendaDay
