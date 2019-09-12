@@ -308,7 +308,7 @@ $(document).ready(function() {
                        icon: response.data.icon,
                        title: response.data.title,
                        text: response.data.text,
-                       timer: reponse.data.timer,
+                       timer: response.data.timer,
                     });
             }
         })
