@@ -47,4 +47,5 @@
             </div>
         </div>
     </div>
+    @include('_modals.surgeries.my-surgeries-event-click')
 @endsection

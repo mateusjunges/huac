@@ -57,6 +57,70 @@ $(document).ready(function () {
     }
 
 
+    /**
+     * Get all event information.
+     * @param eventId
+     */
+    function information(eventId) {
+        $.ajax({
+            url: `/api/events/${eventId}/details`,
+            headers: headers,
+            method: 'get',
+            success: function (response, status, xhr) {
+                if (xhr.status === HTTP_OK) {
+                    let patient_name = $("#patient-name");
+                    let medical_record = $("#medical-record");
+                    let birthday_at = $("#birthday-at");
+                    let gender = $("#gender");
+                    let head_surgeon = $("#head-surgeon");
+                    let assistant_surgeon = $("#assistant-surgeon");
+                    let anesthesia = $("#anesthesia");
+                    let procedure = $("#procedure");
+                    let materials = $("#materials");
+                    let status = $("#status");
+                    let observation = $("#observation");
+                    let anesthetic_evaluation = $("#anesthetic-evaluation");
+                    let surgical_room = $("#surgical-room");
+
+                    let _gender = null;
+                    if (response.data.patient.gender === "M") _gender = "Masculino";
+                    else if (response.data.patient.gender === "F") _gender = "Feminino";
+                    else _gender = "Outro";
+
+                    let _anesthesia = "";
+                    console.log(response.data.anesthetics);
+                    response.data.anesthetics.forEach(function(anesthesia) {
+                        _anesthesia = _anesthesia + " - " + anesthesia.name;
+                    });
+
+                    patient_name.html(response.data.patient.name);
+                    medical_record.html(response.data.patient.medical_record);
+                    birthday_at.html(moment(response.data.patient.birthday_at).format('DD/MM/YYYY'));
+                    gender.html(_gender);
+                    head_surgeon.html(response.data.head_surgeon);
+                    assistant_surgeon.html(response.data.assistant_surgeon);
+                    anesthesia.html(_anesthesia);
+                    procedure.html(response.data.procedure.name);
+                    materials.html(response.data.surgery.materials);
+                    observation.html(response.data.surgery.observation || "Não cadastrado.");
+                    anesthetic_evaluation.html(response.data.surgery.anesthetic_evaluation || "Não cadastrado.");
+                    surgical_room.html(response.data.event.surgical_room_id);
+                    status.html(response.data.status.name);
+
+
+                    let modal = $("#event-click-modal");
+                    modal.modal('show');
+                } else
+                    swal({
+                        icon: response.data.icon,
+                        title: response.data.title,
+                        text: response.data.text,
+                        timer: response.data.timer,
+                    });
+            }
+        })
+    }
+
 
     /**
      * Instantiate and configure the fullCalendar plugin.
