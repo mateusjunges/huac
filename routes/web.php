@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['namespace' => 'HUAC\Http\Controllers'], function () {
-    Auth::routes();
+    Auth::routes(['register' => false]);
 });
 
 Route::get('/', function () {
