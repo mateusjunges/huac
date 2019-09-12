@@ -22,16 +22,6 @@
 <div class="limiter">
     <div class="container-login100">
         <div class="wrap-login100 p-t-50 p-b-90">
-        @if (isset($errors) && (count($errors) > 0))
-            <!-- mostra este bloco se existe uma chave na sessão chamada mensagem-erro -->
-                <div class='alert alert-danger' id="error-sgi">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
             <div>
                 <img src="{{asset('vendor/login/images/logo.png')}}" alt="" id="logoLogin">
             </div>
@@ -39,22 +29,40 @@
             <span class="login100-form-title p-b-51">
 						Agendamento Cirúrgico
             </span>
-            @if (Session::has('message'))
-                <!-- mostra este bloco se existe uma chave na sessão chamada mensagens-sucesso -->
-                    <div class='alert alert-info' id="success-sgi">
-                        <ul>
-                            <li>{{ Session::get('message') }}</li>
-                        </ul>
-                    </div>
+            @if (isset($errors) && (count($errors) > 0))
+                <!-- mostra este bloco se existe uma chave na sessão chamada mensagem-erro -->
+                <div class='alert alert-danger' style="width: 100%;">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
             @endif
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="wrap-input100 validate-input m-b-16" data-validate = "Nome de usuário obrigatório!">
-                    <input class="input100" type="text" name="username" value="{{ old('username') }}" placeholder="Nome de usuário">
+                    <input class="input100"
+                           type="text"
+                           name="username"
+                           autofocus
+                           value="{{ old('username') }}" placeholder="Nome de usuário">
                     <span class="focus-input100"></span>
                 </div>
                 <div class="wrap-input100 validate-input m-b-16" data-validate = "Senha obrigatória!">
                     <input class="input100" type="password" name="password" placeholder="Senha">
                     <span class="focus-input100"></span>
+                    @error('password')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+                <div class="m-b-16">
+                    <label for="remember">
+                        <input type="checkbox" id="remember" name="remember">
+                        Mantenha-me conectado
+                    </label>
+
                 </div>
                 <div class="container-login100-form-btn m-t-17">
                     <button class="login100-form-btn">

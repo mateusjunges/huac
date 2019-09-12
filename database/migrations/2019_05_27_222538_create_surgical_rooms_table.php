@@ -21,6 +21,7 @@ class CreateSurgicalRoomsTable extends Migration
             $table->boolean('available')
                 ->nullable(false)
                 ->default(true);
+            $table->string('color')->nullable(false);
             $table->string('morning_reservation_starts_at', 8)->nullable(false);
             $table->string('morning_reservation_ends_at', 8)->nullable(false);
             $table->string('afternoon_reservation_starts_at', 8)->nullable(false);

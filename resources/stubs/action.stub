@@ -1,0 +1,19 @@
+<?php
+
+namespace HUAC\Actions;
+
+class DummyAction
+{
+    /**
+    * DummyAction constructor
+    */
+    public function __construct()
+    {
+        //
+    }
+
+    public function execute()
+    {
+        //
+    }
+}

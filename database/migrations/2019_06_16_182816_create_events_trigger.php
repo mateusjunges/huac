@@ -24,17 +24,23 @@ class CreateEventsTrigger extends Migration
             END IF;
             
             SELECT count(DISTINCT surgeon_has_surgeries.surgeon_id) INTO busySurgeons
-                    FROM events
-                    inner join surgeon_has_surgeries ON surgeon_has_surgeries.surgery_id = NEW.surgery_id
-                    AND surgeon_has_surgeries.surgeon_id IN (
-                        SELECT surgeon_has_surgeries.surgeon_id FROM surgeon_has_surgeries WHERE surgery_id = NEW.surgery_id
-                    )
-                    WHERE (
-                            (events.start_at::timestamp BETWEEN NEW.start_at::timestamp AND NEW.end_at::timestamp
-                             OR events.end_at::timestamp BETWEEN NEW.start_at::timestamp AND NEW.end_at::timestamp
-                            )
-                             AND events.id <> OLD.id
-                          );
+	FROM events
+		inner join surgeon_has_surgeries ON surgeon_has_surgeries.surgery_id = events.surgery_id
+		AND surgeon_has_surgeries.surgeon_id IN (
+			SELECT surgeon_has_surgeries.surgeon_id FROM surgeon_has_surgeries WHERE surgery_id = NEW.surgery_id
+		)
+		WHERE (
+				(
+					(
+						NEW.start_at::timestamp > events.start_at::timestamp AND NEW.start_at::timestamp < events.end_at::timestamp
+					)
+					OR
+					(
+						NEW.end_at::timestamp > events.start_at::timestamp AND NEW.end_at::timestamp < events.end_at::timestamp
+					)
+				)			
+			 AND events.id <> OLD.id
+	   );
         
             IF(busySurgeons > 0)
             THEN
@@ -69,14 +75,6 @@ class CreateEventsTrigger extends Migration
                 THEN
                     RAISE EXCEPTION 'The \"end_at\" attribute is required!';
                     RETURN NULL;
-                ELSIF (NEW.surgeon_start_at IS NULL)
-                THEN
-                    RAISE EXCEPTION 'The \"surgeon_star_at\" attribute is required!';
-                    RETURN NULL;
-                ELSIF (NEW.surgeon_end_at IS NULL)
-                THEN
-                    RAISE EXCEPTION 'The \"surgeon_end_at\" attribute is required!';
-                    RETURN NULL;
                 ELSIF (NEW.surgery_id IS NULL)
                 THEN
                     RAISE EXCEPTION 'The \"surgery_id\" attribute is required!';
@@ -97,6 +95,7 @@ class CreateEventsTrigger extends Migration
                     RAISE EXCEPTION 'The \"color\" attribute must have exactly 7 characters!';
                     RETURN NULL;
                 END IF;
+                RETURN NEW;
             END;
             \$BODY\$
             LANGUAGE plpgsql;
@@ -113,8 +112,17 @@ class CreateEventsTrigger extends Migration
                         AND surgeon_has_surgeries.surgeon_id IN (
                             SELECT surgeon_has_surgeries.surgeon_id FROM surgeon_has_surgeries WHERE surgery_id = NEW.surgery_id
                         )	
-                        WHERE (events.start_at::timestamp BETWEEN NEW.start_at::timestamp AND NEW.end_at::timestamp 
-                              OR events.end_at::timestamp BETWEEN NEW.start_at::timestamp AND NEW.end_at::timestamp);
+                        WHERE (
+                                (
+					                (
+						              NEW.start_at::timestamp > events.start_at::timestamp AND NEW.start_at::timestamp < events.end_at::timestamp
+					                )
+					            OR
+					                (
+						              NEW.end_at::timestamp > events.start_at::timestamp AND NEW.end_at::timestamp < events.end_at::timestamp
+					                )
+				                )	
+                        );
                     
                 IF(busySurgeons > 0)
                 THEN

@@ -37,9 +37,9 @@ class CreateStatusTrigger extends Migration
                 END IF;
                 
                 -- Check for string length:
-                IF (SELECT LENGTH(NEW.name) NOT BETWEEN 1 AND 20)
+                IF (SELECT LENGTH(NEW.name) NOT BETWEEN 1 AND 60)
                 THEN 
-                    RAISE EXCEPTION 'The \"name\" attribute must have between 1 and 20 characters';
+                    RAISE EXCEPTION 'The \"name\" attribute must have between 1 and 60 characters';
                     RETURN NULL;
                 ELSIF (SELECT LENGTH(NEW.description) <= 5)
                 THEN
@@ -78,9 +78,9 @@ class CreateStatusTrigger extends Migration
             END IF;
         
             -- Check for string length:
-            IF (SELECT LENGTH(NEW.name) NOT BETWEEN 1 AND 20)
+            IF (SELECT LENGTH(NEW.name) NOT BETWEEN 1 AND 60)
             THEN
-                RAISE NOTICE 'The name must have between 1 and 20 characters';
+                RAISE NOTICE 'The name must have between 1 and 60 characters';
                 RETURN NULL;
             ELSIF (SELECT LENGTH(NEW.description) <= 5)
             THEN

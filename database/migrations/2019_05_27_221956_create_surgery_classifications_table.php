@@ -15,7 +15,7 @@ class CreateSurgeryClassificationsTable extends Migration
     {
         Schema::create('surgery_classifications', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 70)
+            $table->string('name', 35)
                 ->unique()
                 ->nullable(false);
             $table->text('description')->nullable(false);

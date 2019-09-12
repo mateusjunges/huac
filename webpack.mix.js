@@ -11,12 +11,21 @@ const mix = require('laravel-mix');
  |
  */
 
+mix.webpackConfig({
+    node: {
+        fs: "empty",
+    }
+});
+
 mix.extend('aliasConfig', new class {
     webpackConfig(webpackConfig) {
         webpackConfig.resolve.extensions.push('.js', '.json', '.vue'); // you don't need this on v4
         webpackConfig.resolve.alias = {
             'vue$': 'vue/dist/vue.esm.js',
-            '@components': __dirname + '/resources/js/components'
+            '@components': __dirname + '/resources/js/components',
+            '@passport': __dirname + '/resources/js/components/passport',
+            '@views': __dirname + '/resources/js/views',
+            '@routes': __dirname + '/resources/js/routes/routes'
         };
     }
 });

@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 2',
+    'title' => 'HUAC - Agendamento cirúrgico do Hospital Universitário dos Campos Gerais',
 
     'title_prefix' => '',
 
@@ -89,7 +89,7 @@ return [
 
     'logout_url' => 'logout',
 
-    'logout_method' => 'get',
+    'logout_method' => 'post',
 
     'login_url' => 'login',
 
@@ -108,7 +108,148 @@ return [
     */
 
     'menu' => [
-        //
+        [
+            'icon' => 'user-md',
+            'text' => 'Minhas cirurgias',
+            'route' => 'my-surgeries'
+        ],
+        // Scheduling
+        [
+            'icon'  => 'calendar',
+            'text'  => 'Agendar',
+            'route' => 'surgeries.scheduling'
+        ],
+        // Patients
+        [
+            'icon' => 'user-injured',
+            'text' => 'Pacientes',
+            'submenu' => [
+                [
+                    'text'  => 'Ver pacientes',
+                    'route' => 'patients.index'
+                ],
+                [
+                    'text' => 'Novo paciente',
+                    'route' => 'patients.create'
+                ]
+            ],
+        ],
+        // Surgeries
+        [
+            'icon'    => 'list',
+            'text'    => 'Cirurgias',
+            'submenu' => [
+                [
+                    'text' => 'Nova cirurgia',
+                    'route' => 'surgeries.create'
+                ],
+                [
+                    'text'  => 'Listar cirurgias',
+                    'route' => 'surgeries.index'
+                ]
+            ],
+        ],
+        // Waiting list
+        [
+            'icon' => 'clock',
+            'text' => 'Lista de espera',
+            'submenu' => [
+                [
+                    'text' => 'Incluir cirurgia',
+                    'route' => 'waiting-list.create',
+                ],
+                [
+                    'text' => 'Ver cirurgias',
+                    'route' => 'waiting-list.index',
+                ]
+            ]
+        ],
+        // Confirm materials
+        [
+            'text' => 'Confirmar materiais',
+            'icon' => 'calendar-check',
+            'submenu' => [
+                [
+                    'text' => 'CME',
+                    'route' => 'confirm-materials.cme',
+                ],
+                [
+                    'text' => 'Centro cirúrgico',
+                    'route' => 'confirm-materials.surgery-center'
+                ]
+            ]
+        ],
+        // Users
+        [
+            'icon'    => 'users-cog',
+            'text'    => 'Usuários',
+            'submenu' => [
+                [
+                    'text'  => 'Listar usuários',
+                    'route' => 'users.index',
+                ],
+                [
+                    'text'  => 'Novo usuário',
+                    'route' => 'users.create'
+                ],
+            ]
+        ],
+        // Groups
+        [
+            'icon' => 'group',
+            'text' => 'Grupos',
+            'submenu' => [
+                [
+                    'text' => 'Novo grupo',
+                    'route' => 'groups.create'
+                ],
+                [
+                    'text' => 'Listar grupos',
+                    'route' => 'groups.index'
+                ]
+            ]
+        ],
+        // Schedule
+        [
+            'text' => 'Agenda',
+            'icon' => 'clipboard-list',
+            'submenu' => [
+                [
+                    'text' => 'Com materiais confirmados',
+                    'route' => 'schedule.with-confirmed-materials'
+                ]
+            ]
+        ],
+        // Surgical Rooms
+        [
+            'icon' => 'door-closed',
+            'text' => 'Salas',
+            'submenu' => [
+                [
+                    'text' => 'Nova sala',
+                    'route' => 'rooms.create'
+                ],
+                [
+                    'text'  => 'Listar salas',
+                    'route' => 'rooms.index',
+                ]
+            ]
+        ],
+        // Procedures
+        [
+            'icon' => 'procedures',
+            'text' => 'Procedimentos',
+            'submenu' => [
+                [
+                    'text' => 'Novo procedimento',
+                    'route' => 'procedures.create',
+                ],
+                [
+                    'text' => 'Listar procedimentos',
+                    'route' => 'procedures.index'
+                ]
+            ]
+        ]
     ],
 
     /*

@@ -30,9 +30,9 @@ class CreateSurgeryClassificationsTrigger extends Migration
                 END IF;
                 
                 -- Check for string length:
-                IF (SELECT LENGTH(NEW.name) NOT BETWEEN 1 AND 20)
+                IF (SELECT LENGTH(NEW.name) NOT BETWEEN 1 AND 35)
                 THEN
-                    RAISE EXCEPTION 'The \"name\" must have between 1 and 20 characters!';
+                    RAISE EXCEPTION 'The \"name\" must have between 1 and 35 characters!';
                     RETURN NULL;
                 END IF;
                 RETURN NEW;
@@ -59,9 +59,9 @@ class CreateSurgeryClassificationsTrigger extends Migration
         
         
             -- Check for string length:
-            IF (SELECT LENGTH(NEW.name) NOT BETWEEN 1 AND 20)
+            IF (SELECT LENGTH(NEW.name) NOT BETWEEN 1 AND 35)
             THEN
-                RAISE NOTICE 'The name must have between 1 and 20 characters!';
+                RAISE NOTICE 'The name must have between 1 and 35 characters!';
                 RETURN NULL;
             END IF;
         

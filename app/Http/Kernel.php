@@ -35,6 +35,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \HUAC\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class,
         ],
 
         'api' => [
@@ -67,11 +68,6 @@ class Kernel extends HttpKernel
         'permissions' => \Junges\ACL\Middlewares\PermissionMiddleware::class,
         'groups' => \Junges\ACL\Middlewares\GroupMiddleware::class,
         'permissionOrGroup' => \Junges\ACL\Middlewares\PermissionOrGroupMiddleware::class,
-
-        /*
-         * SGI Authorizer middlewares
-         */
-        'sgi-auth' => \Uepg\SGIAuthorizer\Auth\Middleware\TokenVerifierMiddleware::class,
     ];
 
     /**

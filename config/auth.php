@@ -42,7 +42,7 @@ return [
         ],
 
         'api' => [
-            'driver' => 'token',
+            'driver' => 'passport',
             'provider' => 'users',
         ],
     ],
@@ -66,8 +66,8 @@ return [
 
     'providers' => [
         'users' => [
-            'driver' => 'sgiauthorizer',
-            'model' => \HUAC\User::class,
+            'driver' => 'eloquent',
+            'model' => \HUAC\Models\User::class,
         ],
 
         // 'users' => [
