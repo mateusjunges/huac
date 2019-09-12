@@ -2,6 +2,7 @@
 
 namespace HUAC\Http\Controllers\Api\Schedule;
 
+use Carbon\Carbon;
 use HUAC\Enums\Status;
 use HUAC\Models\Event;
 use Illuminate\Http\Request;
@@ -15,7 +16,12 @@ class ConfirmedMaterialsEventsController
      */
     public function __invoke(Request $request)
     {
+        $start = Carbon::parse($request->input('start'));
+        $end = Carbon::parse($request->input('end'));
+
         $_events = Event::confirmedMaterials()
+            ->where('start_at', '>=', $start->subWeek())
+            ->where('end_at', '<=', $end->addWeek())
             ->select('id', 'start_at as start', 'end_at as end', 'color', 'title', 'surgery_id')
             ->get();
         $events = null;

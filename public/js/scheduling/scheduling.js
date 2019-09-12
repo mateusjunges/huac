@@ -399,7 +399,7 @@ $(document).ready(function() {
                headers: headers,
                data: {
                    start: view.start.format(),
-                   end: view.start.format(),
+                   end: view.end.format(),
                },
                success: function (response, status, xhr) {
                    if (xhr.status !== HTTP_OK)

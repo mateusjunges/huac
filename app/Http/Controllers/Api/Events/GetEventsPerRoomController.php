@@ -2,6 +2,7 @@
 
 namespace HUAC\Http\Controllers\Api\Events;
 
+use Carbon\Carbon;
 use HUAC\Models\Event;
 use HUAC\Models\SurgicalRoom;
 use Illuminate\Http\Request;
@@ -16,7 +17,12 @@ class GetEventsPerRoomController
      */
     public function __invoke(Request $request, SurgicalRoom $room)
     {
+        $start = Carbon::parse($request->input('start'));
+        $end = Carbon::parse($request->input('end'));
+
         $events = Event::room($room->id)
+            ->where('start_at', '>=', $start->subWeek())
+            ->where('end_at', '<=', $end->addWeek())
             ->select('id', 'start_at as start', 'end_at as end', 'color', 'title', 'surgery_id')->get();
 
         return response()->json([

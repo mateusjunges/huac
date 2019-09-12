@@ -68,8 +68,7 @@ $(document).ready(function () {
             right: 'month,agendaWeek,agendaDay',
         },
         viewRender: function (view, element) {
-            console.log(view.start.format());
-            console.log(view.end.format());
+
             let room = config.data('room');
             $.ajax({
                 url: `/api/events/my-surgeries`,
