@@ -74,7 +74,7 @@ Route::group(['middleware' => 'auth'], function (){
                Route::get('intercurrence', OnGoingSurgeriesController::class);
            });
         });
-        Route::get('my', MySurgeriesController::class);
+        Route::get('my', MySurgeriesController::class)->name('my-surgeries');
     });
 
     Route::prefix('schedule')->group(function () {

@@ -24,7 +24,7 @@ class MySurgeriesController
 
             $start = Carbon::parse($start);
             $end = Carbon::parse($end);
-    
+
             $events = Event::whereHas('surgery.surgeons', function($query) {
                 $query->where('surgeon_id', Auth::id());
             })

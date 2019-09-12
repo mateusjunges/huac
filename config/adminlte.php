@@ -108,6 +108,11 @@ return [
     */
 
     'menu' => [
+        [
+            'icon' => 'user-md',
+            'text' => 'Minhas cirurgias',
+            'route' => 'my-surgeries'
+        ],
         // Scheduling
         [
             'icon'  => 'calendar',
