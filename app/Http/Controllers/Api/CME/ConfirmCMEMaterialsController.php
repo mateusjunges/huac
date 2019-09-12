@@ -4,7 +4,6 @@ namespace HUAC\Http\Controllers\Api\CME;
 
 use Exception;
 use HUAC\Actions\ConfirmCMEMaterials;
-use HUAC\Events\MaterialsConfirmedByCME;
 use HUAC\Models\Surgery;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -16,8 +15,6 @@ class ConfirmCMEMaterialsController
             $observation = "Os materiais para esta cirurgia encontram-se disponíveis no CME.";
 
             $log = ConfirmCMEMaterials::execute($surgery, $observation);
-
-            event(new MaterialsConfirmedByCME($surgery));
 
             return response()->json([
                 'data' => [

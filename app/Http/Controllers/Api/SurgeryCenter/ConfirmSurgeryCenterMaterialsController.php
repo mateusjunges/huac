@@ -4,7 +4,6 @@ namespace HUAC\Http\Controllers\Api\SurgeryCenter;
 
 use Exception;
 use HUAC\Actions\ConfirmSurgeryCenterMaterials;
-use HUAC\Events\MaterialsConfirmedBySurgeryCenter;
 use HUAC\Models\Surgery;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,8 +19,6 @@ class ConfirmSurgeryCenterMaterialsController
             $observation = "Os materiais para esta cirurgia encontram-se disponíveis no Centro Cirúrgico.";
 
             $log = ConfirmSurgeryCenterMaterials::execute($surgery, $observation);
-
-            event(new MaterialsConfirmedBySurgeryCenter($surgery));
 
             return response()->json([
                 'data' => [

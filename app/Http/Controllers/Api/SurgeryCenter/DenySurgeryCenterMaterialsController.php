@@ -38,8 +38,6 @@ class DenySurgeryCenterMaterialsController
                 $request->input('observation')
             );
 
-            event(new MaterialsDeniedBySurgeryCenter($surgery));
-
             return response()->json([
                 'data' => [
                     'swal' => [

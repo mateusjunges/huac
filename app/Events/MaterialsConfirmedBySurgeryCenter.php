@@ -10,7 +10,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class MaterialsConfirmedBySurgeryCenter
+class MaterialsConfirmedBySurgeryCenter implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -33,6 +33,11 @@ class MaterialsConfirmedBySurgeryCenter
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-name');
+        return new Channel('confirmed-surgery-center-materials');
+    }
+
+    public function broadcastAs()
+    {
+        return 'confirmed-surgery-center-materials';
     }
 }
