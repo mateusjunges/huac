@@ -10,6 +10,7 @@ use HUAC\Http\Controllers\Patients\PatientController;
 use HUAC\Http\Controllers\Patients\PatientSurgeryController;
 use HUAC\Http\Controllers\Procedures\ProceduresController;
 use HUAC\Http\Controllers\Schedule\ConfirmedMaterialsScheduleController;
+use HUAC\Http\Controllers\Surgeries\MySurgeriesController;
 use HUAC\Http\Controllers\Surgeries\OnGoing\OnGoingSurgeriesController;
 use HUAC\Http\Controllers\SurgeryCenter\ConfirmMaterialsController as ConfirmSurgeryCenterMaterialsController;
 use HUAC\Http\Controllers\SurgicalRoom\SurgicalRoomController;
@@ -33,7 +34,9 @@ Route::get('home', [HomeController::class, 'index'])->name('home');
 
 /* Routes that needs authentication */
 Route::group(['middleware' => 'auth'], function (){
-    Route::resource('surgeries', SurgeryController::class);
+    Route::resource('surgeries', SurgeryController::class, [
+        'except' => ['show']
+    ]);
 
     Route::get('users/{user}/permissions', [UserPermissionsController::class, 'index'])->name('users.permissions');
     Route::get('users/{user}/groups', [UserGroupsController::class, 'index'])->name('users.groups');
@@ -71,6 +74,7 @@ Route::group(['middleware' => 'auth'], function (){
                Route::get('intercurrence', OnGoingSurgeriesController::class);
            });
         });
+        Route::get('my', MySurgeriesController::class);
     });
 
     Route::prefix('schedule')->group(function () {

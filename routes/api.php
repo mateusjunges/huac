@@ -34,6 +34,7 @@ use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeUpdateWith
 use HUAC\Http\Controllers\Api\Scheduling\VerifyReservedPeriodController;
 use HUAC\Http\Controllers\Api\Status\StatusController;
 use HUAC\Http\Controllers\Api\Surgeons\VerifySurgeonAvailabilityController;
+use HUAC\Http\Controllers\Api\Surgeries\MySurgeriesController;
 use HUAC\Http\Controllers\Api\Surgeries\OnGoing\StatsController;
 use HUAC\Http\Controllers\Api\Surgeries\SurgeriesColumnsController;
 use HUAC\Http\Controllers\Api\Surgeries\SurgeriesController;
@@ -179,7 +180,7 @@ Route::middleware(['auth:api'])->group(function () {
      */
     Route::prefix('events')->group(function() {
         Route::post('/', [EventController::class, 'store'])->name('api.events.store');
-
+        Route::get('my-surgeries', MySurgeriesController::class);
         /**
          * Confirmed materials schedule routes
          */
