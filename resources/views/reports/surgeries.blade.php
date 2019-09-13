@@ -10,6 +10,7 @@
         <div class="col-md-12">
             <surgeries-report :finished-surgeries="{{ $finished }}"
                               :surgeries-with-complications="{{ $withComplications }}"
+                              :surgeries-to-be-scheduled="{{ $toBeScheduled }}"
                               :scheduled-surgeries="{{ $scheduled }}">
             </surgeries-report>
         </div>

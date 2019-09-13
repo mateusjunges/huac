@@ -27,10 +27,16 @@ class SurgeriesReportController
 
         $withComplications = Surgery::withStatus(Status::SURGICAL_COMPLICATIONS)->count();
 
+        $toBeScheduled = Surgery::withStatus(Status::IN_PROCESS)
+            ->get()->filter(function($surgery) {
+                return $surgery->latestStatus->status_id === Status::IN_PROCESS;
+            })->count();
+
         return view('reports.surgeries')->with([
-            'scheduled' => $scheduled,
-            'finished' => $finished,
-            'withComplications' => $withComplications
+            'scheduled'         => $scheduled,
+            'finished'          => $finished,
+            'withComplications' => $withComplications,
+            'toBeScheduled'     => $toBeScheduled
         ]);
     }
 }

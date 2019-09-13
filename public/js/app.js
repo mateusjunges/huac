@@ -3595,14 +3595,16 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     finishedSurgeries: Number,
     scheduledSurgeries: Number,
-    surgeriesWithComplications: Number
+    surgeriesWithComplications: Number,
+    surgeriesToBeScheduled: Number
   },
   data: function data() {
     return {
       chart: {
         finished: 0,
         scheduled: 0,
-        withComplications: 0
+        withComplications: 0,
+        toBeScheduled: 0
       }
     };
   },
@@ -3611,21 +3613,21 @@ __webpack_require__.r(__webpack_exports__);
     this.chart.finished = this.finishedSurgeries;
     this.chart.scheduled = this.scheduledSurgeries;
     this.chart.withComplications = this.surgeriesWithComplications;
+    this.chart.toBeScheduled = this.surgeriesToBeScheduled;
   },
   mounted: function mounted() {
     console.log(this.chart.finished);
     var c = new chart_js__WEBPACK_IMPORTED_MODULE_0___default.a('surgeriesChart', {
       type: 'pie',
       data: {
-        labels: ['Cirurgias concluídas', 'Cirurgias agendadas', 'Intercorrências cirúrgicas'],
+        labels: ['Cirurgias concluídas', 'Cirurgias agendadas', 'Intercorrências cirúrgicas', 'Aguardando agendamento'],
         datasets: [{
           // one line graph
           label: 'Number of Moons',
-          //data: Cirurgias concluídas, cirurgias agendadas, intercorrencias
-          data: [this.chart.finished, this.chart.scheduled, this.chart.withComplications],
-          backgroundColor: ['rgba(48, 145, 19, .5)', // Blue
-          'rgba(66, 135, 255, .5)', 'rgba(255, 17, 0, .5)'],
-          borderColor: ['#36495d', '#36495d', '#36495d', '#36495d', '#36495d', '#36495d', '#36495d', '#36495d'],
+          //data: Cirurgias concluídas, cirurgias agendadas, intercorrencias, a ser agendado
+          data: [this.chart.finished, this.chart.scheduled, this.chart.withComplications, this.chart.toBeScheduled],
+          backgroundColor: ['rgba(48, 145, 19, .5)', 'rgba(66, 135, 255, .5)', 'rgba(255, 17, 0, .5)', 'rgba(255, 222, 56, .5)'],
+          borderColor: ['#36495d', '#36495d', '#36495d', '#36495d'],
           borderWidth: 3
         }]
       },
@@ -23004,6 +23006,7 @@ function log (message /*: string */) {
 const NEWLINE = '\n'
 const RE_INI_KEY_VAL = /^\s*([\w.-]+)\s*=\s*(.*)?\s*$/
 const RE_NEWLINES = /\\n/g
+const NEWLINES_MATCH = /\n|\r|\r\n/
 
 // Parses src into an Object
 function parse (src /*: string | Buffer */, options /*: ?DotenvParseOptions */) /*: DotenvParseOutput */ {
@@ -23011,7 +23014,7 @@ function parse (src /*: string | Buffer */, options /*: ?DotenvParseOptions */) 
   const obj = {}
 
   // convert Buffers before splitting into lines and processing
-  src.toString().split(NEWLINE).forEach(function (line, idx) {
+  src.toString().split(NEWLINES_MATCH).forEach(function (line, idx) {
     // matching "KEY' and 'VAL' in 'KEY=VAL'
     const keyValueArr = line.match(RE_INI_KEY_VAL)
     // matched?
@@ -23068,7 +23071,7 @@ function config (options /*: ?DotenvConfigOptions */) /*: DotenvConfigOutput */ 
     const parsed = parse(fs.readFileSync(dotenvPath, { encoding }), { debug })
 
     Object.keys(parsed).forEach(function (key) {
-      if (!process.env.hasOwnProperty(key)) {
+      if (!Object.prototype.hasOwnProperty.call(process.env, key)) {
         process.env[key] = parsed[key]
       } else if (debug) {
         log(`"${key}" is already defined in \`process.env\` and will not be overwritten`)
@@ -91248,8 +91251,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/mateus/Documents/Projetos/projeto-software-2019/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/mateus/Documents/Projetos/projeto-software-2019/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/mateusjunges/Documents/huac/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/mateusjunges/Documents/huac/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
