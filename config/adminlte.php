@@ -249,6 +249,17 @@ return [
                     'route' => 'procedures.index'
                 ]
             ]
+        ],
+        // Relatórios
+        [
+            'icon' => 'print',
+            'text' => 'Relatórios',
+            'submenu' => [
+                [
+                    'text' => 'Cirurgias',
+                    'route' => 'reports.surgeries'
+                ]
+            ]
         ]
     ],
 

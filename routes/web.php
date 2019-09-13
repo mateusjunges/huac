@@ -9,6 +9,7 @@ use HUAC\Http\Controllers\CME\ConfirmMaterialsController;
 use HUAC\Http\Controllers\Patients\PatientController;
 use HUAC\Http\Controllers\Patients\PatientSurgeryController;
 use HUAC\Http\Controllers\Procedures\ProceduresController;
+use HUAC\Http\Controllers\Reports\SurgeriesReportController;
 use HUAC\Http\Controllers\Schedule\ConfirmedMaterialsScheduleController;
 use HUAC\Http\Controllers\Surgeries\MySurgeriesController;
 use HUAC\Http\Controllers\Surgeries\OnGoing\OnGoingSurgeriesController;
@@ -83,4 +84,10 @@ Route::group(['middleware' => 'auth'], function (){
     });
 
     Route::resource('procedures', ProceduresController::class);
+
+    Route::prefix('reports')->group(function() {
+        Route::prefix('surgeries')->group(function() {
+           Route::get('/', SurgeriesReportController::class)->name('reports.surgeries');
+        });
+    });
 });
