@@ -9,6 +9,7 @@ use HUAC\Http\Controllers\CME\ConfirmMaterialsController;
 use HUAC\Http\Controllers\Patients\PatientController;
 use HUAC\Http\Controllers\Patients\PatientSurgeryController;
 use HUAC\Http\Controllers\Procedures\ProceduresController;
+use HUAC\Http\Controllers\Reports\AverageProcedureDuration;
 use HUAC\Http\Controllers\Reports\SurgeriesReportController;
 use HUAC\Http\Controllers\Schedule\ConfirmedMaterialsScheduleController;
 use HUAC\Http\Controllers\Surgeries\MySurgeriesController;
@@ -88,6 +89,9 @@ Route::group(['middleware' => 'auth'], function (){
     Route::prefix('reports')->group(function() {
         Route::prefix('surgeries')->group(function() {
            Route::get('/', SurgeriesReportController::class)->name('reports.surgeries');
+        });
+        Route::prefix('procedures')->group(function () {
+           Route::get('average-duration', AverageProcedureDuration::class);
         });
     });
 });
