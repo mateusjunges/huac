@@ -989,7 +989,7 @@ $(document).ready(function() {
 
     let roomChanged = pusher.subscribe('room-changed');
     roomChanged.bind('room-changed', function(data) {
-       if (data.event.surgical_room_id === config.data('room'))
+       if (data.event.surgical_room_id.toString() === config.data('room').toString())
            refreshEvents();
     });
 });
