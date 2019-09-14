@@ -975,4 +975,21 @@ $(document).ready(function() {
             }
         })
     });
+
+
+
+
+    // Event listeners with pusher
+    Pusher.logToConsole = true; //Allow pusher to console.log things
+
+    let pusher = new Pusher('81d1a717599e253f378e', {
+        cluster: 'us2',
+        forceTLS: true
+    });
+
+    let roomChanged = pusher.subscribe('room-changed');
+    roomChanged.bind('room-changed', function(data) {
+       if (data.event.surgical_room_id === config.data('room'))
+           refreshEvents();
+    });
 });
