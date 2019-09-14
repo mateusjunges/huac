@@ -16,7 +16,7 @@ class AverageProcedureDuration
 
             $procedures = AverageDurationReport::select('name', 'procedure_id')->get();
 
-            return view('')->with([
+            return view('reports.procedures.average-duration')->with([
                 'procedures' => $procedures,
                 'duration'   => $duration,
             ]);

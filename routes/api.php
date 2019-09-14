@@ -27,6 +27,7 @@ use HUAC\Http\Controllers\Api\Patients\Surgeries\PatientSurgeriesDataController;
 use HUAC\Http\Controllers\Api\Procedures\ProceduresColumnsController;
 use HUAC\Http\Controllers\Api\Procedures\ProceduresController;
 use HUAC\Http\Controllers\Api\Procedures\ProceduresDataController;
+use HUAC\Http\Controllers\Api\Reports\ProcedureAverageDurationController;
 use HUAC\Http\Controllers\Api\Schedule\ConfirmedMaterialsEventsController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeCreateController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeUpdateController;
@@ -247,5 +248,12 @@ Route::middleware(['auth:api'])->group(function () {
        Route::prefix('{procedure}')->group(function() {
           Route::delete('/', [ProceduresController::class, 'destroy']);
        });
+    });
+
+    Route::prefix('reports')->group(function () {
+        Route::prefix('procedures')->group(function () {
+           Route::get('columns', [ProcedureAverageDurationController::class, 'columns']);
+           Route::get('data', [ProcedureAverageDurationController::class, 'data']);
+        });
     });
 });

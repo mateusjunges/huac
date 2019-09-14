@@ -258,6 +258,15 @@ return [
                 [
                     'text' => 'Cirurgias',
                     'route' => 'reports.surgeries'
+                ],
+                [
+                    'text' => 'Procedimentos',
+                    'submenu' => [
+                        [
+                            'text' => 'Tempo médio de duração',
+                            'route' => 'reports.procedures.average-duration'
+                        ]
+                    ]
                 ]
             ]
         ]

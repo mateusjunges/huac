@@ -3626,7 +3626,10 @@ __webpack_require__.r(__webpack_exports__);
           label: 'Number of Moons',
           //data: Cirurgias concluídas, cirurgias agendadas, intercorrencias, a ser agendado
           data: [this.chart.finished, this.chart.scheduled, this.chart.withComplications, this.chart.toBeScheduled],
-          backgroundColor: ['rgba(48, 145, 19, .5)', 'rgba(66, 135, 255, .5)', 'rgba(255, 17, 0, .5)', 'rgba(255, 222, 56, .5)'],
+          backgroundColor: ['rgba(48, 145, 19, .5)', //Green
+          'rgba(66, 135, 255, .5)', //Blue
+          'rgba(255, 17, 0, .5)', //Red
+          'rgba(255, 222, 56, .5)'],
           borderColor: ['#36495d', '#36495d', '#36495d', '#36495d'],
           borderWidth: 3
         }]
@@ -23006,7 +23009,6 @@ function log (message /*: string */) {
 const NEWLINE = '\n'
 const RE_INI_KEY_VAL = /^\s*([\w.-]+)\s*=\s*(.*)?\s*$/
 const RE_NEWLINES = /\\n/g
-const NEWLINES_MATCH = /\n|\r|\r\n/
 
 // Parses src into an Object
 function parse (src /*: string | Buffer */, options /*: ?DotenvParseOptions */) /*: DotenvParseOutput */ {
@@ -23014,7 +23016,7 @@ function parse (src /*: string | Buffer */, options /*: ?DotenvParseOptions */) 
   const obj = {}
 
   // convert Buffers before splitting into lines and processing
-  src.toString().split(NEWLINES_MATCH).forEach(function (line, idx) {
+  src.toString().split(NEWLINE).forEach(function (line, idx) {
     // matching "KEY' and 'VAL' in 'KEY=VAL'
     const keyValueArr = line.match(RE_INI_KEY_VAL)
     // matched?
@@ -23071,7 +23073,7 @@ function config (options /*: ?DotenvConfigOptions */) /*: DotenvConfigOutput */ 
     const parsed = parse(fs.readFileSync(dotenvPath, { encoding }), { debug })
 
     Object.keys(parsed).forEach(function (key) {
-      if (!Object.prototype.hasOwnProperty.call(process.env, key)) {
+      if (!process.env.hasOwnProperty(key)) {
         process.env[key] = parsed[key]
       } else if (debug) {
         log(`"${key}" is already defined in \`process.env\` and will not be overwritten`)
@@ -91251,8 +91253,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/mateusjunges/Documents/huac/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/mateusjunges/Documents/huac/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/mateus/Documents/Projetos/projeto-software-2019/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/mateus/Documents/Projetos/projeto-software-2019/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

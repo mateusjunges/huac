@@ -91,7 +91,8 @@ Route::group(['middleware' => 'auth'], function (){
            Route::get('/', SurgeriesReportController::class)->name('reports.surgeries');
         });
         Route::prefix('procedures')->group(function () {
-           Route::get('average-duration', AverageProcedureDuration::class);
+           Route::get('average-duration', AverageProcedureDuration::class)
+               ->name('reports.procedures.average-duration');
         });
     });
 });
