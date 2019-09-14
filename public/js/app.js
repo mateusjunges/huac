@@ -2157,11 +2157,7 @@ String.prototype.toHHMM = function () {
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SurgeriesToBeScheduled",
-  props: {
-    surgeriesWithDeniedMaterials: Array,
-    surgeries: Object,
-    surgeriesInWaitingList: Array
-  },
+  props: ['surgeriesWithDeniedMaterials', 'surgeries', 'surgeriesInWaitingList'],
   data: function data() {
     return {};
   },

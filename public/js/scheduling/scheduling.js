@@ -47,6 +47,7 @@ $(document).ready(function() {
     }
 
     function refreshEvents() {
+        console.log("refreshEvents");
         let room = config.data('room');
         getEvents(room);
         refetchEvents(room);
@@ -121,6 +122,7 @@ $(document).ready(function() {
             url: '/api/events/',
             method: 'post',
             headers: headers,
+            async: false,
             data: {
                 _method: 'post',
                 event: event,
@@ -622,13 +624,12 @@ $(document).ready(function() {
                 estimated_duration: estimated_duration,
             };
 
-             console.log(event); // TODO: Remove this line
              currentSurgeryId = event.surgery_id;
              // Check if the desired time interval at the specified room is available
              // and does not has any surgeries already scheduled to cause time conflict:
              existEventsAtSameTime = null;
              await verifySchedulesBeforeCreate(event);
-             console.log("Events at same time: "+existEventsAtSameTime); // TODO: Remove this line
+
              if (existEventsAtSameTime === false) { //There is no events schedule to this period
                  surgeonIsAvailable = null;
                  await verifySurgeonAvailability(event.start, event.end, event.estimated_duration, currentSurgeryId, null);
@@ -646,18 +647,16 @@ $(document).ready(function() {
                          }).then(async (response) => {
                              if (response){
                                  // Schedule the event using the reserved period:
-                                 if (await store(event)) {
-                                     refreshEvents();
-                                 }
+                                 let stored = await store(event);
+                                 refreshEvents();
                              } else {
                                  refreshEvents();
                              }
                          });
                      } else {
                          // the surgery will not use the reserved period:
-                         if (await store(event)) {
-                            refreshEvents();
-                         }
+                         let stored = await store(event);
+                         refreshEvents();
                      }
                  } else {
                      refreshEvents();

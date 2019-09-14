@@ -57,12 +57,11 @@
 
     export default {
         name: "SurgeriesToBeScheduled",
-        props: {
-            surgeriesWithDeniedMaterials: Array,
-            surgeries: Object,
-            surgeriesInWaitingList: Array
-
-        },
+        props: [
+            'surgeriesWithDeniedMaterials',
+            'surgeries',
+            'surgeriesInWaitingList'
+        ],
         data() {
             return {
 
