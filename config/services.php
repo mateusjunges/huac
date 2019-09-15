@@ -31,7 +31,7 @@ return [
     ],
 
     'stripe' => [
-        'model' => HUAC\User::class,
+        'model' => HUAC\Models\User::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
         'webhook' => [
@@ -39,5 +39,12 @@ return [
             'tolerance' => env('STRIPE_WEBHOOK_TOLERANCE', 300),
         ],
     ],
+
+    // Oauth services
+    'google' => [
+        'client_id' => env('OAUTH_GOOGLE_ID'),
+        'client_secret' => env('OAUTH_GOOGLE_SECRET'),
+        'redirect' => env('OAUTH_GOOGLE_REDIRECT_URL')
+    ]
 
 ];
