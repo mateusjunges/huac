@@ -5,7 +5,9 @@ namespace HUAC\Http\Controllers\Procedures;
 use HUAC\Http\Requests\ProcedureRequest;
 use HUAC\Models\Procedure;
 use HUAC\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 
 class ProceduresController extends Controller
 {
@@ -16,6 +18,16 @@ class ProceduresController extends Controller
      */
     public function index()
     {
+        if (Gate::denies('procedures.index')) {
+            $message = array(
+                'title' => 'Acesso negado!',
+                'text' => 'Você não possui permissão para acessar esta área do sistema!',
+                'type' => 'warning',
+            );
+            session()->flash('message', $message);
+            return redirect()->back();
+        }
+
         return view('procedures.index');
     }
 
@@ -26,6 +38,16 @@ class ProceduresController extends Controller
      */
     public function create()
     {
+        if (Gate::denies('procedures.create')) {
+            $message = array(
+                'title' => 'Acesso negado!',
+                'text' => 'Você não possui permissão para acessar esta área do sistema!',
+                'type' => 'warning',
+            );
+            session()->flash('message', $message);
+            return redirect()->back();
+        }
+
         return view('procedures.create');
     }
 
@@ -37,6 +59,16 @@ class ProceduresController extends Controller
      */
     public function store(ProcedureRequest $request)
     {
+        if (Gate::denies('procedures.create')) {
+            $message = array(
+                'title' => 'Acesso negado!',
+                'text' => 'Você não possui permissão para acessar esta área do sistema!',
+                'type' => 'warning',
+            );
+            session()->flash('message', $message);
+            return redirect()->back();
+        }
+
         $procedure = Procedure::create($request->all());
 
         $message = array(
@@ -58,6 +90,16 @@ class ProceduresController extends Controller
      */
     public function edit(Procedure $procedure)
     {
+        if (Gate::denies('procedures.update')) {
+            $message = array(
+                'title' => 'Acesso negado!',
+                'text' => 'Você não possui permissão para acessar esta área do sistema!',
+                'type' => 'warning',
+            );
+            session()->flash('message', $message);
+            return redirect()->back();
+        }
+
         return view('procedures.edit')->with([
             'procedure' => $procedure
         ]);
@@ -66,12 +108,22 @@ class ProceduresController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param ProcedureRequest $request
      * @param Procedure $procedure
      * @return void
      */
     public function update(ProcedureRequest $request, Procedure $procedure)
     {
+        if (Gate::denies('procedures.update')) {
+            $message = array(
+                'title' => 'Acesso negado!',
+                'text' => 'Você não possui permissão para acessar esta área do sistema!',
+                'type' => 'warning',
+            );
+            session()->flash('message', $message);
+            return redirect()->back();
+        }
+
         $procedure->update($request->all());
 
         $message = array(

@@ -136,7 +136,7 @@ class GroupsController extends Controller
             session()->flash('message', $message);
             return redirect()->back();
         }
-        
+
         $group = $group->syncPermissions($request->permissions);
 
         $message = array(
