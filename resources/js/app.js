@@ -7,6 +7,7 @@ import Routes from '@routes'
 
 dotenv.config();
 
+// General components
 Vue.component('schedule-surgeries', require('@components/SurgeriesToBeScheduled.vue').default);
 Vue.component('on-going-surgery', require('@views/OnGoingSurgery.vue').default);
 Vue.component('stopwatch', require('@components/Stopwatch.vue').default);
@@ -14,6 +15,10 @@ Vue.component('current-surgery-info', require('@components/CurrentSurgeryInfo.vu
 Vue.component('alert-component', require('@components/Alert.vue').default);
 Vue.component('report', require('@components/Report.vue').default);
 
+// Reports
+Vue.component('surgeries-report', require('@report/SurgeriesReport.vue').default);
+
+//Passport components
 Vue.component('passport-clients', require('@passport/Clients.vue').default);
 Vue.component('passport-authorized-clients', require('@passport/AuthorizedClients.vue').default);
 Vue.component('passport-personal-access-tokens', require('@passport/PersonalAccessTokens.vue').default);
@@ -38,7 +43,7 @@ const app = new Vue({
     },
     router,
     mounted() {
-      this.getSurgeryStatus();
+      // this.getSurgeryStatus();
     },
     methods: {
         getSurgeryStatus() {

@@ -137,9 +137,8 @@
 </template>
 
 <script>
+    import Pusher from 'pusher-js'
     import Stopwatch from '@components/Stopwatch'
-    import Intercurrence from '@views/Intercurrence'
-
     import axios from 'axios'
 
     const HTTP_OK = 200;
@@ -172,12 +171,65 @@
             }
         },
         mounted() {
+            let pusher = new Pusher(process.env.MIX_PUSHER_APP_KEY, {
+                cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+                encrypted: false,
+            });
+
+            // Pusher.logToConsole = true;
             let self = this;
             this.surgeryStatus();
 
             this.$root.$on('has-intercurrence', function() {
                 self._hasIntercurrence();
-            })
+            });
+            let anestheticInduction = pusher.subscribe('anesthetic-induction');
+            let entranceAtRepai = pusher.subscribe('entrance-at-repai');
+            let entranceAtSurgeryCenter = pusher.subscribe('entrance-at-surgery-center');
+            let entranceAtSurgicalRoom = pusher.subscribe('entrance-at-surgical-room');
+            let exitOfRepai = pusher.subscribe('exit-of-repai');
+            let surgeryFinished = pusher.subscribe('surgery-finished');
+            let surgeryStarted = pusher.subscribe('surgery-started');
+            let surgicalCenterExit = pusher.subscribe('exit-of-surgical-center');
+            let surgicalIntercurrence = pusher.subscribe('surgical-intercurence');
+            let surgicalRoomExit = pusher.subscribe('surgical-room-exit');
+            let timeoutDone = pusher.subscribe('timeout-done');
+
+
+            entranceAtSurgeryCenter.bind('entrance-at-surgery-center', (data) => {
+                this.surgeryStatus();
+            });
+            entranceAtSurgicalRoom.bind('entrance-at-surgical-room', (data) => {
+                this.surgeryStatus();
+            });
+            timeoutDone.bind('timeout-done', (data) => {
+               this.surgeryStatus();
+            });
+            anestheticInduction.bind('anesthetic-induction', (data) => {
+               this.surgeryStatus();
+            });
+            surgeryStarted.bind('surgery-started', (data) => {
+               this.surgeryStatus();
+            });
+            surgeryFinished.bind('surgery-finished', (data) => {
+               this.surgeryStatus();
+            });
+            surgicalRoomExit.bind('surgical-room-exit', (data) => {
+               this.surgeryStatus();
+            });
+            entranceAtRepai.bind('entrance-at-repai', (data) => {
+               this.surgeryStatus();
+            });
+            exitOfRepai.bind('exit-of-repai', (data) => {
+                this.surgeryStatus();
+            });
+            surgicalCenterExit.bind('exit-of-surgical-center', (data) => {
+                this.surgeryStatus();
+            });
+            surgicalIntercurrence.bind('surgical-intercurrence', (data) => {
+               this.surgeryStatus();
+            });
+
         },
 
         methods: {

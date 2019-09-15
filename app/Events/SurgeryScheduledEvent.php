@@ -4,8 +4,6 @@ namespace HUAC\Events;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -33,11 +31,11 @@ class SurgeryScheduledEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('surgery-scheduled-channel');
+        return new Channel('surgery-scheduled');
     }
 
     public function broadcastAs()
     {
-        return 'surgery-scheduled-event';
+        return 'surgery-scheduled';
     }
 }

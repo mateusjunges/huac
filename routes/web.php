@@ -9,6 +9,8 @@ use HUAC\Http\Controllers\CME\ConfirmMaterialsController;
 use HUAC\Http\Controllers\Patients\PatientController;
 use HUAC\Http\Controllers\Patients\PatientSurgeryController;
 use HUAC\Http\Controllers\Procedures\ProceduresController;
+use HUAC\Http\Controllers\Reports\AverageProcedureDuration;
+use HUAC\Http\Controllers\Reports\SurgeriesReportController;
 use HUAC\Http\Controllers\Schedule\ConfirmedMaterialsScheduleController;
 use HUAC\Http\Controllers\Surgeries\MySurgeriesController;
 use HUAC\Http\Controllers\Surgeries\OnGoing\OnGoingSurgeriesController;
@@ -23,7 +25,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['namespace' => 'HUAC\Http\Controllers'], function () {
-    Auth::routes();
+    Auth::routes(['register' => false]);
 });
 
 Route::get('/', function () {
@@ -83,4 +85,14 @@ Route::group(['middleware' => 'auth'], function (){
     });
 
     Route::resource('procedures', ProceduresController::class);
+
+    Route::prefix('reports')->group(function() {
+        Route::prefix('surgeries')->group(function() {
+           Route::get('/', SurgeriesReportController::class)->name('reports.surgeries');
+        });
+        Route::prefix('procedures')->group(function () {
+           Route::get('average-duration', AverageProcedureDuration::class)
+               ->name('reports.procedures.average-duration');
+        });
+    });
 });

@@ -32,7 +32,6 @@ class DenyCMEMaterialsController
                 $request->input('observation')
             );
 
-            event(new MaterialsDeniedByCME($surgery));
 
             return response()->json([
                 'data' => [

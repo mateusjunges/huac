@@ -2,28 +2,27 @@
 
 namespace HUAC\Events;
 
+use HUAC\Models\Event;
 use Illuminate\Broadcasting\Channel;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class MaterialsConfirmedBySurgeryCenter implements ShouldBroadcast
+class RoomChangedEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $surgery;
+    public $event;
 
     /**
      * Create a new event instance.
      *
-     * @param $surgery
+     * @param Event $event
      */
-    public function __construct($surgery)
+    public function __construct(Event $event)
     {
-        $this->surgery = $surgery;
+        $this->event = $event;
     }
 
     /**
@@ -33,11 +32,11 @@ class MaterialsConfirmedBySurgeryCenter implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('confirmed-surgery-center-materials');
+        return new Channel('room-changed');
     }
 
     public function broadcastAs()
     {
-        return 'confirmed-surgery-center-materials';
+        return 'room-changed';
     }
 }

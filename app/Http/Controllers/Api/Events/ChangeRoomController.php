@@ -2,6 +2,7 @@
 
 namespace HUAC\Http\Controllers\Api\Events;
 
+use HUAC\Events\RoomChangedEvent;
 use HUAC\Models\Event;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,6 +28,8 @@ class ChangeRoomController
 
         $event->surgical_room_id = $request->input('surgical_room_id');
         $event->save();
+
+        event(new RoomChangedEvent($event));
 
         return response()->json([
             'data' => [
