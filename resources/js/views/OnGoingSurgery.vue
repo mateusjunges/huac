@@ -176,7 +176,7 @@
                 encrypted: false,
             });
 
-            Pusher.logToConsole = true; // TODO: Remove this line
+            // Pusher.logToConsole = true;
             let self = this;
             this.surgeryStatus();
 

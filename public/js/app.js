@@ -3251,8 +3251,7 @@ var HTTP_OK = 200;
     var pusher = new pusher_js__WEBPACK_IMPORTED_MODULE_1___default.a("81d1a717599e253f378e", {
       cluster: "us2",
       encrypted: false
-    });
-    pusher_js__WEBPACK_IMPORTED_MODULE_1___default.a.logToConsole = true; // TODO: Remove this line
+    }); // Pusher.logToConsole = true;
 
     var self = this;
     this.surgeryStatus();
