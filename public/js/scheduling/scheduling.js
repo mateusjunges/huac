@@ -992,4 +992,10 @@ $(document).ready(function() {
        if (data.event.surgical_room_id.toString() === config.data('room').toString())
            refreshEvents();
     });
+
+    let surgeryScheduled = pusher.subscribe('surgery-scheduled');
+    surgeryScheduled.bind('surgery-scheduled', function (data) {
+       if (data.event.surgical_room_id.toString() === config.data('room').toString())
+           refreshEvents();
+    });
 });
