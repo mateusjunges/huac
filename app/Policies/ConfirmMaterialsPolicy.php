@@ -26,6 +26,7 @@ class ConfirmMaterialsPolicy
     public static function cme(User $user)
     {
         return $user->hasPermission('cme.deny-materials')
+            or $user->hasPermission('cme.view-pending-surgeries')
             or $user->hasPermission('cme.confirm-materials');
     }
 
@@ -36,6 +37,7 @@ class ConfirmMaterialsPolicy
     public static function surgeryCenter(User $user)
     {
         return $user->hasPermission('surgery-center.deny-materials')
+            or $user->hasPermission('surgery-center.view-pending-surgeries')
             or $user->hasPermission('surgery-center.confirm-materials');
     }
 }

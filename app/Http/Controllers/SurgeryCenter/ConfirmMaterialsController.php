@@ -8,7 +8,7 @@ class ConfirmMaterialsController
 {
     public function __invoke()
     {
-        if (Gate::denies('surgery-center.confirm-materials')) {
+        if (Gate::denies('surgery-center.view-pending-surgeries')) {
             $message = array(
                 'title' => 'Acesso negado!',
                 'text' => 'Você não possui permissão para acessar esta área do sistema!',
