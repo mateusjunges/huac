@@ -27,7 +27,6 @@ class ProcedureRequest extends FormRequest
         $procedure = 'NULL';
         if (Route::getCurrentRoute()->parameters() != null)
             $procedure = Route::getCurrentRoute()->parameters()['procedure'];
-
         $id = $procedure != 'NULL' ? $procedure->id : 'NULL';
 
         return [

@@ -18,7 +18,7 @@ class SurgeriesDataController
         );
         if(Gate::allows('surgeries.update'))
             $columns += array(++$i => 'surgery_id');
-        if(Gate::allows('surgeries.delete'))
+        if(Gate::allows('surgeries.delete') or Gate::allows('surgeries.cancel'))
             $columns += array(++$i => 'surgery_id');
         $columns += array(
             ++$i => 'head_surgeon_name',
@@ -67,7 +67,7 @@ class SurgeriesDataController
 
                 $nestedData['Paciente'] = $surgery->patient_name;
                 $nestedData['Prontuário'] = $surgery->medical_record;
-                if (Gate::allows('surgeries.edit'))
+                if (Gate::allows('surgeries.update'))
                     $nestedData['Editar'] = "<a href='{$edit}'>
                                                             <button class='btn btn-primary btn-sm' 
                                                                     data-toggle='tooltip'
@@ -76,7 +76,7 @@ class SurgeriesDataController
                                                                 <i class='fa fa-edit'></i>
                                                             </button>
                                                        </a>";
-                if (Gate::allows('surgeries.delete'))
+                if (Gate::allows('surgeries.delete') or Gate::allows('surgeries.cancel'))
                     $nestedData['Excluir'] = "<button class='btn btn-danger btn-sm delete'
                                                                 data-placement='top'
                                                                 data-toggle='tooltip'

@@ -2,7 +2,7 @@
 
 namespace HUAC\Http\Controllers\Api\Patients\Surgeries;
 
-use Gate;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 

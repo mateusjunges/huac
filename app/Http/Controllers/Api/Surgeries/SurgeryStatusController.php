@@ -5,6 +5,7 @@ namespace HUAC\Http\Controllers\Api\Surgeries;
 use HUAC\Models\Event;
 use HUAC\Models\Log;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class SurgeryStatusController
@@ -16,6 +17,19 @@ class SurgeryStatusController
     public function update(Request $request)
     {
         try {
+            if (Gate::denies('surgeries.update-status')) {
+                return response()->json([
+                    'data' => [
+                        'swal' => [
+                            'icon' => 'warning',
+                            'title' => 'Acesso negado!',
+                            'text'  => 'Você não tem permissão para realizar esta ação no sistema!',
+                            'timer' => 5000,
+                        ]
+                    ]
+                ], Response::HTTP_UNAUTHORIZED);
+            }
+
             $event = Event::find($request->input('event_id'));
             $surgery = $event->surgery;
 

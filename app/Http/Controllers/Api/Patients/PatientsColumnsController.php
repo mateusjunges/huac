@@ -4,7 +4,7 @@ namespace HUAC\Http\Controllers\Api\Patients;
 
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Gate;
+use Illuminate\Support\Facades\Gate;
 
 class PatientsColumnsController
 {

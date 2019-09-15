@@ -14,5 +14,9 @@ class UserHasPermissionsTableSeeder extends Seeder
     {
         User::where('username', 'mateusjunges')->first()->assignPermissions('admin');
         User::where('username', 'alceubritto')->first()->assignPermissions('admin');
+        User::where('username', 'ezequiel')->first()->assignPermissions('admin');
+        User::where('username', 'dierone')->first()->assignPermissions('admin');
+        User::where('username', 'idomar')->first()->assignPermissions('admin');
+        User::where('username', 'diolete')->first()->assignPermissions('admin');
     }
 }

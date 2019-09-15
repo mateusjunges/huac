@@ -63,7 +63,6 @@
                         <input type="checkbox" id="remember" name="remember">
                         Mantenha-me conectado
                     </label>
-
                 </div>
                 <div class="container-login100-form-btn m-t-17">
                     <button class="login100-form-btn">
@@ -76,6 +75,11 @@
                     <button class="login100-form btn-google">
                         <img src="{{ asset('svg/google.svg') }}" alt="Logo do google">
                     </button>
+                </a>
+            </div>
+            <div class="container-login-100 m-t-17">
+                <a href="{{ route('password.request') }}">
+                    Esqueci minha senha
                 </a>
             </div>
         </div>

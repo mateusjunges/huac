@@ -28,16 +28,16 @@
                     @can('groups.view-permissions')
                         <th>Ver permissões</th>
                     @endcan
-                    @can('groups.assign-user')
+                    @can('groups.attach-user')
                         <th>Atribuir a usuário</th>
                     @endcan
-                    @can('groups.view-users')
+                    @can('group.view-users')
                         <th>Ver usuários</th>
                     @endcan
                     @can('groups.assign-permission')
                         <th>Atribuir permissão</th>
                     @endcan
-                    @can('groups.edit')
+                    @can('groups.update')
                         <th>Editar</th>
                     @endcan
                     @can('groups.delete')
@@ -63,7 +63,7 @@
                             </a>
                         </td>
                     @endcan
-                    @can('groups.assign-user')
+                    @can('groups.attach-user')
                         <td>
                             <button class="btn btn-warning btn-sm assign-user-to-group"
                                     value="{{ csrf_token() }}"
@@ -80,7 +80,7 @@
                             </button>
                         </td>
                     @endcan
-                    @can('groups.view-users')
+                    @can('group.view-users')
                         <td>
                             <a href="{{ route('groups.users', $group->id) }}">
                                 <button class="btn btn-sm"
@@ -103,7 +103,7 @@
                             </button>
                         </td>
                     @endcan
-                    @can('groups.edit')
+                    @can('groups.update')
                         <td>
                             <a href="{{ route('groups.edit', $group->id) }}">
                                 <button class="btn btn-primary btn-sm edit-group"

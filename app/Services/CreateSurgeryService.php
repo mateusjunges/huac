@@ -44,6 +44,7 @@ class CreateSurgeryService
      * Update the specified surgery.
      * @param Request $request
      * @param $surgery
+     * @return mixed
      */
     public function update(Request $request, $surgery)
     {

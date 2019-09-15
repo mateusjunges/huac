@@ -36,14 +36,14 @@ Route::prefix('login/{driver}')->group(function() {
         ->name('login.socialite.callback');
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('home', [HomeController::class, 'index'])->name('home');
-
 /* Routes that needs authentication */
 Route::group(['middleware' => 'auth'], function (){
+    Route::get('/', function () {
+        return view('welcome');
+    });
+
+    Route::get('home', [HomeController::class, 'index'])->name('home');
+
     Route::resource('surgeries', SurgeryController::class, [
         'except' => ['show']
     ]);

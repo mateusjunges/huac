@@ -111,26 +111,31 @@ return [
         [
             'icon' => 'user-md',
             'text' => 'Minhas cirurgias',
-            'route' => 'my-surgeries'
+            'route' => 'my-surgeries',
+            'can' => 'surgeries.my-surgeries'
         ],
         // Scheduling
         [
             'icon'  => 'calendar',
             'text'  => 'Agendar',
-            'route' => 'surgeries.scheduling'
+            'route' => 'surgeries.scheduling',
+            'can' => 'scheduling.manage'
         ],
         // Patients
         [
             'icon' => 'user-injured',
             'text' => 'Pacientes',
+            'can' => 'patients.manage',
             'submenu' => [
                 [
                     'text'  => 'Ver pacientes',
-                    'route' => 'patients.index'
+                    'route' => 'patients.index',
+                    'can'   => 'patients.index'
                 ],
                 [
-                    'text' => 'Novo paciente',
-                    'route' => 'patients.create'
+                    'text'  => 'Novo paciente',
+                    'route' => 'patients.create',
+                    'can'   => 'patients.create'
                 ]
             ],
         ],
@@ -138,14 +143,17 @@ return [
         [
             'icon'    => 'list',
             'text'    => 'Cirurgias',
+            'can'     => 'surgeries.manage',
             'submenu' => [
                 [
-                    'text' => 'Nova cirurgia',
-                    'route' => 'surgeries.create'
+                    'text'  => 'Nova cirurgia',
+                    'route' => 'surgeries.create',
+                    'can'   => 'surgeries.create'
                 ],
                 [
                     'text'  => 'Listar cirurgias',
-                    'route' => 'surgeries.index'
+                    'route' => 'surgeries.index',
+                    'can'  => 'surgeries.index'
                 ]
             ],
         ],
@@ -153,14 +161,17 @@ return [
         [
             'icon' => 'clock',
             'text' => 'Lista de espera',
+            'can'  => 'waiting-list.manage',
             'submenu' => [
                 [
-                    'text' => 'Incluir cirurgia',
+                    'text'  => 'Incluir cirurgia',
                     'route' => 'waiting-list.create',
+                    'can'   => 'waiting-list.create'
                 ],
                 [
-                    'text' => 'Ver cirurgias',
+                    'text'  => 'Ver cirurgias',
                     'route' => 'waiting-list.index',
+                    'can'   => 'waiting-list.index'
                 ]
             ]
         ],
@@ -168,14 +179,17 @@ return [
         [
             'text' => 'Confirmar materiais',
             'icon' => 'calendar-check',
+            'can' => 'confirm-materials.manage',
             'submenu' => [
                 [
                     'text' => 'CME',
                     'route' => 'confirm-materials.cme',
+                    'can' => 'confirm-materials.cme'
                 ],
                 [
                     'text' => 'Centro cirúrgico',
-                    'route' => 'confirm-materials.surgery-center'
+                    'route' => 'confirm-materials.surgery-center',
+                    'can' => 'confirm-materials.surgery-center'
                 ]
             ]
         ],
@@ -183,14 +197,17 @@ return [
         [
             'icon'    => 'users-cog',
             'text'    => 'Usuários',
+            'can' => 'users.manage',
             'submenu' => [
                 [
                     'text'  => 'Listar usuários',
                     'route' => 'users.index',
+                    'can' => 'users.index'
                 ],
                 [
                     'text'  => 'Novo usuário',
-                    'route' => 'users.create'
+                    'route' => 'users.create',
+                    'can'   => 'users.create'
                 ],
             ]
         ],
@@ -198,14 +215,17 @@ return [
         [
             'icon' => 'group',
             'text' => 'Grupos',
+            'can' => 'groups.manage',
             'submenu' => [
                 [
                     'text' => 'Novo grupo',
-                    'route' => 'groups.create'
+                    'route' => 'groups.create',
+                    'can' => 'groups.create'
                 ],
                 [
                     'text' => 'Listar grupos',
-                    'route' => 'groups.index'
+                    'route' => 'groups.index',
+                    'can' => 'groups.index'
                 ]
             ]
         ],
@@ -213,10 +233,12 @@ return [
         [
             'text' => 'Agenda',
             'icon' => 'clipboard-list',
+            'can' => 'schedule.confirmed-materials',
             'submenu' => [
                 [
                     'text' => 'Com materiais confirmados',
-                    'route' => 'schedule.with-confirmed-materials'
+                    'route' => 'schedule.with-confirmed-materials',
+                    'can' => 'schedule.confirmed-materials'
                 ]
             ]
         ],
@@ -224,14 +246,17 @@ return [
         [
             'icon' => 'door-closed',
             'text' => 'Salas',
+            'can' => 'rooms.manage',
             'submenu' => [
                 [
                     'text' => 'Nova sala',
-                    'route' => 'rooms.create'
+                    'route' => 'rooms.create',
+                    'can' => 'rooms.create'
                 ],
                 [
                     'text'  => 'Listar salas',
                     'route' => 'rooms.index',
+                    'can' => 'rooms.index'
                 ]
             ]
         ],
@@ -239,14 +264,17 @@ return [
         [
             'icon' => 'procedures',
             'text' => 'Procedimentos',
+            'can' => 'procedures.manage',
             'submenu' => [
                 [
                     'text' => 'Novo procedimento',
                     'route' => 'procedures.create',
+                    'can' => 'procedures.create'
                 ],
                 [
                     'text' => 'Listar procedimentos',
-                    'route' => 'procedures.index'
+                    'route' => 'procedures.index',
+                    'can' => 'procedures.index'
                 ]
             ]
         ],

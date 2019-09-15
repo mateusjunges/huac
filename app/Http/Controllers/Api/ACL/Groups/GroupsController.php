@@ -3,6 +3,7 @@
 namespace HUAC\Http\Controllers\Api\ACL\Groups;
 
 use HUAC\Http\Resources\GroupsResource;
+use Illuminate\Support\Facades\Gate;
 use Junges\ACL\Http\Models\Group;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,6 +24,16 @@ class GroupsController
     public function destroy(Group $group)
     {
         try{
+            if (Gate::denies('groups.delete')) {
+                return response()->json([
+                    'code' => Response::HTTP_UNAUTHORIZED,
+                    'icon' => 'warning',
+                    'title' => 'Acesso negado!',
+                    'text'  => 'Você não tem permissão para realizar esta ação no sistema!',
+                    'timer' => 5000,
+                ]);
+            }
+
             $group->delete();
 
             return response()->json([

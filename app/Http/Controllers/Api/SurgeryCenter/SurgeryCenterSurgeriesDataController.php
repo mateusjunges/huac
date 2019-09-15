@@ -68,7 +68,7 @@ class SurgeryCenterSurgeriesDataController
 
                 $nestedData['Paciente'] = $surgery->patient_name;
                 $nestedData['Prontuário'] = $surgery->medical_record;
-                if (Gate::allows('surgeries.edit'))
+                if (Gate::allows('surgeries.update'))
                     $nestedData['Editar'] = "<a href='{$edit}'>
                                                             <button class='btn btn-primary btn-sm' 
                                                                     data-toggle='tooltip'
@@ -77,7 +77,7 @@ class SurgeryCenterSurgeriesDataController
                                                                 <i class='fa fa-edit'></i>
                                                             </button>
                                                        </a>";
-                if (Gate::allows('cme.confirm-materials'))
+                if (Gate::allows('surgery-center.confirm-materials'))
                     $nestedData['Confirmar'] = "<button class='btn btn-success btn-sm confirm'
                                                                 data-placement='top'
                                                                 data-toggle='tooltip'
@@ -88,7 +88,7 @@ class SurgeryCenterSurgeriesDataController
                                                                 id='confirm{$surgery->surgery_id}'>
                                                             <i class='fa fa-check-circle'></i>
                                                         </button>";
-                if (Gate::allows('cme.deny-materials'))
+                if (Gate::allows('surgery-center.deny-materials'))
                     $nestedData['Negar'] = "<button class='btn btn-danger btn-sm deny'
                                                                 data-placement='top'
                                                                 data-toggle='tooltip'

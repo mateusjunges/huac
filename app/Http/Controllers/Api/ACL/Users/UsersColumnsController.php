@@ -2,8 +2,8 @@
 
 namespace HUAC\Http\Controllers\Api\ACL\Users;
 
-use Gate;
 use HUAC\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 
 class UsersColumnsController extends Controller
 {
@@ -13,17 +13,17 @@ class UsersColumnsController extends Controller
 
         $columns = array();
         $columns += array(++$i => 'Nome', ++$i => 'Email', ++$i => 'Username');
-        if(Gate::allows('users.edit'))
+        if(Gate::allows('users.update'))
             $columns += array(++$i => 'Editar');
         if(Gate::allows('users.delete'))
             $columns += array(++$i => 'Remover');
-        if (Gate::allows('users.assign-group'))
+        if (Gate::allows('users.attach-group'))
             $columns += array(++$i => 'Atribuir grupo');
         if (Gate::allows('users.assign-permissions'))
             $columns += array(++$i => 'Atribuir permissão');
         if(Gate::allows('users.view-permissions'))
             $columns += array(++$i => 'Ver Permissões');
-        if(Gate::allows('users.viewGroups'))
+        if(Gate::allows('users.view-groups'))
             $columns += array(++$i => 'Ver grupos');
 
         return response(collect($columns)->map(function ($item){

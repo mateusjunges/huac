@@ -88,4 +88,17 @@ class LoginController extends Controller
 
         return redirect()->route('home');
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        return redirect()->route('login');
+    }
 }

@@ -10,6 +10,8 @@ use HUAC\Models\Surgery;
 use HUAC\Models\SurgeryClassification;
 use HUAC\Services\WaitingListService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 
 class WaitingListController
 {
@@ -30,20 +32,40 @@ class WaitingListController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
+        if (Gate::denies('waiting-list.index')) {
+            $message = array(
+                'title' => 'Acesso negado!',
+                'text' => 'Você não possui permissão para acessar esta área do sistema!',
+                'type' => 'warning',
+            );
+            session()->flash('message', $message);
+            return redirect()->back();
+        }
+
         return view('waiting-list.index');
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
+        if (Gate::denies('waiting-list.create')) {
+            $message = array(
+                'title' => 'Acesso negado!',
+                'text' => 'Você não possui permissão para acessar esta área do sistema!',
+                'type' => 'warning',
+            );
+            session()->flash('message', $message);
+            return redirect()->back();
+        }
+
         $procedures = Procedure::all();
         $surgeons = Surgeon::all();
         $anesthetics = Anesthesia::all();
@@ -65,6 +87,16 @@ class WaitingListController
      */
     public function store(SurgeryRequest $request)
     {
+        if (Gate::denies('waiting-list.create')) {
+            $message = array(
+                'title' => 'Acesso negado!',
+                'text' => 'Você não possui permissão para acessar esta área do sistema!',
+                'type' => 'warning',
+            );
+            session()->flash('message', $message);
+            return redirect()->back();
+        }
+
         $surgery = $this->waiting_list_service->store($request);
 
         $message = array(
@@ -79,24 +111,23 @@ class WaitingListController
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param $surgery
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit($surgery)
     {
+        if (Gate::denies('waiting-list.update')) {
+            $message = array(
+                'title' => 'Acesso negado!',
+                'text' => 'Você não possui permissão para acessar esta área do sistema!',
+                'type' => 'warning',
+            );
+            session()->flash('message', $message);
+            return redirect()->back();
+        }
+
         $procedures = Procedure::all();
         $surgeons = Surgeon::all();
         $anesthetics = Anesthesia::all();
@@ -119,24 +150,23 @@ class WaitingListController
      *
      * @param \Illuminate\Http\Request $request
      * @param $surgery
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, $surgery)
     {
+        if (Gate::denies('waiting-list.update')) {
+            $message = array(
+                'title' => 'Acesso negado!',
+                'text' => 'Você não possui permissão para acessar esta área do sistema!',
+                'type' => 'warning',
+            );
+            session()->flash('message', $message);
+            return redirect()->back();
+        }
+
         $surgery = Surgery::find($surgery);
         $surgery = $this->waiting_list_service->update($request, $surgery);
 
         return redirect()->route('waiting-list.index');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }
