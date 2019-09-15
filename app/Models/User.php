@@ -2,6 +2,7 @@
 
 namespace HUAC\Models;
 
+use HUAC\Notifications\ResetPassword;
 use Illuminate\Notifications\Notifiable;
 use Junges\ACL\Traits\UsersTrait;
 use Laravel\Passport\HasApiTokens;
@@ -34,4 +35,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPassword($token));
+    }
 }
