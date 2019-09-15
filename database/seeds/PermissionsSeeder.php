@@ -150,8 +150,18 @@ class PermissionsSeeder extends Seeder
         ]);
         Permission::create([
             'name' => 'Visualizar cirurgias que necessitam de confirmação de materiais do centro cirúrgico',
-            'slug' => 'surgery-center.confirm-materials',
+            'slug' => 'surgery-center.view-pending-surgeries',
             'description' => 'Permite visualizar cirurgias que necessitam de confirmação de materiais do centro cirúrgico'
+        ]);
+        Permission::create([
+            'name' => 'Negar materiais do centro cirúrgico',
+            'slug' => 'surgery-center.deny-materials',
+            'description' => 'Permite negar os materiais do centro cirúrgico'
+        ]);
+        Permission::create([
+            'name' => 'Confirmar materiais do centro cirúrgico',
+            'slug' => 'surgery-center.confirm-materials',
+            'description' => 'Permite negar os materiais do centro cirúrgico'
         ]);
         Permission::create([
             'name' => 'Visualizar cirurgias na lista de espera',
