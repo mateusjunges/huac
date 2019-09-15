@@ -5,6 +5,7 @@ use HUAC\Http\Controllers\ACL\GroupsController;
 use HUAC\Http\Controllers\ACL\UserGroupsController;
 use HUAC\Http\Controllers\ACL\UserPermissionsController;
 use HUAC\Http\Controllers\ACL\UsersController;
+use HUAC\Http\Controllers\Auth\LoginController;
 use HUAC\Http\Controllers\CME\ConfirmMaterialsController;
 use HUAC\Http\Controllers\Patients\PatientController;
 use HUAC\Http\Controllers\Patients\PatientSurgeryController;
@@ -26,6 +27,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['namespace' => 'HUAC\Http\Controllers'], function () {
     Auth::routes(['register' => false]);
+});
+
+Route::prefix('login/{driver}')->group(function() {
+    Route::get('/', [LoginController::class, 'redirectToProvider'])
+        ->name('login.socialite');
+    Route::get('callback', [LoginController::class, 'handleProviderCallback'])
+        ->name('login.socialite.callback');
 });
 
 Route::get('/', function () {

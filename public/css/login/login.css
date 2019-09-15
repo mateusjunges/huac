@@ -1,0 +1,9 @@
+.btn-google {
+    border: 1px solid #c2c8c2;
+    padding: 2%;
+    border-radius: 5px;
+}
+.btn-google img{
+    width: 8%;
+    height: 100%;
+}
