@@ -5,6 +5,7 @@ namespace HUAC\Http\Controllers\Api\CME;
 use Exception;
 use HUAC\Actions\ConfirmCMEMaterials;
 use HUAC\Models\Surgery;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class ConfirmCMEMaterialsController
@@ -12,6 +13,19 @@ class ConfirmCMEMaterialsController
     public function __invoke(Surgery $surgery)
     {
         try {
+            if (Gate::denies('cme.confirm-materials')) {
+                return response()->json([
+                    'data' => [
+                        'swal' => [
+                            'icon' => 'warning',
+                            'title' => 'Acesso negado!',
+                            'text'  => 'Você não tem permissão para realizar esta ação no sistema!',
+                            'timer' => 5000,
+                        ]
+                    ]
+                ], Response::HTTP_UNAUTHORIZED);
+            }
+
             $observation = "Os materiais para esta cirurgia encontram-se disponíveis no CME.";
 
             $log = ConfirmCMEMaterials::execute($surgery, $observation);

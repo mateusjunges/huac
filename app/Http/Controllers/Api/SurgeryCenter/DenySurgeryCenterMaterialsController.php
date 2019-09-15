@@ -9,6 +9,7 @@ use HUAC\Events\MaterialsDeniedBySurgeryCenter;
 use HUAC\Models\Surgery;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class DenySurgeryCenterMaterialsController
@@ -21,6 +22,18 @@ class DenySurgeryCenterMaterialsController
     public function __invoke(Request $request, Surgery $surgery)
     {
         try{
+            if (Gate::denies('surgery-center.deny-materials')) {
+                return response()->json([
+                    'data' => [
+                        'swal' => [
+                            'icon' => 'warning',
+                            'title' => 'Acesso negado!',
+                            'text'  => 'Você não tem permissão para realizar esta ação no sistema!',
+                            'timer' => 5000,
+                        ]
+                    ]
+                ], Response::HTTP_UNAUTHORIZED);
+            }
 
             if (is_null($request->input('observation'))) {
                 return response()->json([

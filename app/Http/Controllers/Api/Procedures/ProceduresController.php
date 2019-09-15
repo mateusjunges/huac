@@ -6,6 +6,7 @@ use Exception;
 use HUAC\Http\Resources\ProceduresResource;
 use HUAC\Models\Procedure;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProceduresController
@@ -40,6 +41,19 @@ class ProceduresController
      */
     public function destroy(Procedure $procedure)
     {
+        if (Gate::denies('procedures.delete')) {
+            return response()->json([
+                'data' => [
+                    'swal' => [
+                        'icon' => 'warning',
+                        'title' => 'Acesso negado!',
+                        'text'  => 'Você não tem permissão para realizar esta ação no sistema!',
+                        'timer' => 5000,
+                    ]
+                ]
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
         $procedure->delete();
 
         return response()->json([

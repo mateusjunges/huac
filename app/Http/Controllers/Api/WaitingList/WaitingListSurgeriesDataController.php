@@ -17,9 +17,9 @@ class WaitingListSurgeriesDataController
             ++$i => "patient_name",
             ++$i => "medical_record",
         );
-        if(Gate::allows('surgeries.update'))
+        if(Gate::allows('waiting-list.update'))
             $columns += array(++$i => 'surgery_id');
-        if(Gate::allows('surgeries.delete'))
+        if(Gate::allows('waiting-list.delete'))
             $columns += array(++$i => 'surgery_id');
         $columns += array(
             ++$i => 'head_surgeon_name',

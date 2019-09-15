@@ -39,11 +39,6 @@ class PermissionsSeeder extends Seeder
             'description' => 'Permite visualizar as permissões atribuídas a um grupo.'
         ]);
         Permission::create([
-            'name' => 'Remover permissão de grupos',
-            'slug' => 'groups.revoke-permissions',
-            'description' => 'Permite remover permissões de grupos.'
-        ]);
-        Permission::create([
             'name' => 'Ver usuários no grupo',
             'slug' => 'group.view-users',
             'description' => 'Permite visualizar os usuários pertencentes a um grupo de permisões.'
@@ -119,6 +114,11 @@ class PermissionsSeeder extends Seeder
             'description' => 'Permite atualizar os procedimentos cadastrados.'
         ]);
         Permission::create([
+            'name' => 'Remover procedimentos',
+            'slug' => 'procedures.delete',
+            'description' => 'Permite excluír um procedimento'
+        ]);
+        Permission::create([
             'name' => 'Visualizar eventos com materiais confirmados',
             'slug' => 'schedule.confirmed-materials',
             'description' => 'Pèrmite visualizar a agenda com materiais confirmados.'
@@ -154,300 +154,116 @@ class PermissionsSeeder extends Seeder
             'description' => 'Permite visualizar cirurgias que necessitam de confirmação de materiais do centro cirúrgico'
         ]);
         Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
+            'name' => 'Visualizar cirurgias na lista de espera',
+            'slug' => 'waiting-list.index',
+            'description' => 'Permite visualizar as cirurgias na lista de espera'
         ]);
         Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
+            'name' => 'Adicionar cirurgias a lista de espera',
+            'slug' => 'waiting-list.create',
+            'description' => 'Permite adicionar cirurgias a lista de espera'
         ]);
         Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
+            'name' => 'Atualizar cirurgias na lista de espera',
+            'slug' => 'waiting-list.update',
+            'description' => 'Permite atualizar uma cirurgia na lista de espera'
         ]);
         Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
+            'name' => 'Remover grupo de permissões',
+            'slug' => 'groups.delete',
+            'description' => 'Permite remover um grupo de permissões'
         ]);
         Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
+            'name' => 'Atribuir permissões a grupo',
+            'slug' => 'groups.assign-permissions',
+            'description' => 'Permite atribuir permissões a um grupo de permissões'
         ]);
         Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
+            'name' => 'Remover permissões de grupos',
+            'slug' => 'groups.revoke-permissions',
+            'description' => 'Permite remover permissões de grupos'
         ]);
         Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
+            'name' => 'Remover usuário de um grupo',
+            'slug' => 'groups.remove-user',
+            'description' => 'Permite remover um usuário de um grupo de permissões'
         ]);
         Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
+            'name' => 'Atribuir usuário a grupo',
+            'slug' => 'groups.attach-user',
+            'description' => 'Permite adicionar um usuário a um grupo de permissões'
         ]);
         Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
+            'name' => 'Atribuir grupo para usuário',
+            'slug' => 'users.attach-group',
+            'description' => 'Permite atribuir um grupo de permissões a um usuário.'
         ]);
         Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
+            'name' => 'Remover grupo de usuário',
+            'slug' => 'users.revoke-group',
+            'description' => 'Permite remover um grupo de um usuário.'
         ]);
         Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
+            'name' => 'Atribuir permissões a usuários',
+            'slug' => 'users.assign-permissions',
+            'description' => 'Permite atribuir permissões a usuários'
         ]);
         Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
+            'name' => 'Remover permissão de usuário',
+            'slug' => 'users.revoke-permissions',
+            'description' => 'Permite remover permissões de usuários'
         ]);
         Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
+            'name' => 'Confirmar matriais do CME',
+            'slug' => 'cme.confirm-materials',
+            'description' => 'Permite confirmar os materiais do CME'
         ]);
         Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
+            'name' => 'Negar materiais do CME',
+            'slug' => 'cme.deny-materials',
+            'description' => 'Permite negar os materiais do CME'
         ]);
         Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
+            'name' => 'Alterar sala',
+            'slug' => 'events.change-room',
+            'description' => 'Permite trocar a sala de realização de uma cirurgia'
         ]);
         Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
+            'name' => 'Agendar cirurgia',
+            'slug' => 'events.create',
+            'description' => 'Permite agendar uma cirurgia'
         ]);
         Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
+            'name' => 'Atualizar agendamento',
+            'slug' => 'events.update',
+            'description' => 'Permite atualizar um agendamento'
         ]);
         Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
+            'name' => 'Remover agendamento',
+            'slug' => 'events.delete',
+            'description' => 'Permite remover um agendamento'
         ]);
         Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
+            'name' => 'Cancelar cirurgia',
+            'slug' => 'surgeries.cancel',
+            'description' => 'Permite cancelar uma cirurgia'
         ]);
         Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
+            'name' => 'Atualizar status de cirurgias',
+            'slug' => 'surgeries.update-status',
+            'description' => 'Permite atualizar o status de uma cirurgia'
         ]);
         Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
+            'name' => 'Remover cirurgia da lista de espera',
+            'slug' => 'waiting-list.delete',
+            'description' => 'Permite remover uma cirurgia da lista de espera.'
         ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
-        Permission::create([
-            'name' => '',
-            'slug' => '',
-            'description' => ''
-        ]);
+//        Permission::create([
+//            'name' => '',
+//            'slug' => '',
+//            'description' => ''
+//        ]);
+//
 
     }
 }

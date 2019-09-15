@@ -2,9 +2,9 @@
 
 namespace HUAC\Http\Controllers\Api\ACL\Users;
 
-use Gate;
 use HUAC\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class UsersDataController
 {
@@ -21,13 +21,13 @@ class UsersDataController
             $columns += array(++$i => 'id');
         if(Gate::allows('users.delete'))
             $columns += array(++$i => 'id');
-        if(Gate::allows('users.viewPermissions'))
+        if(Gate::allows('users.view-permissions'))
             $columns += array(++$i => 'id');
-        if(Gate::allows('users.updateUserPermissions'))
+        if(Gate::allows('users.assign-permissions'))
             $columns += array(++$i => 'id');
-        if(Gate::allows('users.viewGroups'))
+        if(Gate::allows('users.view-groups'))
             $columns += array(++$i => 'id');
-        if(Gate::allows('groups.addUser'))
+        if(Gate::allows('users.attach-group'))
             $columns += array(++$i => 'id');
         $columns += array(++$i => 'name', ++$i => 'username', ++$i => 'email');
 
@@ -69,7 +69,7 @@ class UsersDataController
                 $nestedData['Nome'] = $user->name;
                 $nestedData['Username'] = $user->username;
                 $nestedData['Email'] = $user->email;
-                if (Gate::allows('users.edit'))
+                if (Gate::allows('users.update'))
                     $nestedData['Editar'] = "<a href='{$edit}'>
                                                             <button class='btn btn-primary btn-sm' 
                                                                     data-toggle='tooltip'
@@ -78,7 +78,7 @@ class UsersDataController
                                                                 <i class='fa fa-edit'></i>
                                                             </button>
                                                        </a>";
-                if (Gate::allows('users.remove'))
+                if (Gate::allows('users.delete'))
                     $nestedData['Remover'] = "&emsp;<button class='btn btn-danger btn-sm delete'
                                                                 data-placement='top'
                                                                 data-toggle='tooltip'
@@ -113,7 +113,7 @@ class UsersDataController
                                                                             <i class='fa fa-tags'></i>        
                                                                         </button>  
                                                                   </a>";
-                if (Gate::allows('user.assign-group'))
+                if (Gate::allows('user.attach-group'))
                     $nestedData['Atribuir grupo'] = "&emsp;<button class='btn btn-sm btn-default assign-group'
                                                                           data-toggle='tooltip'
                                                                           data-placement='top'
@@ -122,7 +122,7 @@ class UsersDataController
                                                                           id='user{$user->id}'>
                                                                         <i class='fa fa-plus'></i>      
                                                                   </button>";
-                if (Gate::allows('users.assign-permission'))
+                if (Gate::allows('users.assign-permissions'))
                     $nestedData['Atribuir permissão'] = "<button class='btn btn-sm btn-default assignPermission'
                                                                           data-placement='top'
                                                                           data-toggle='tooltip'

@@ -6,6 +6,7 @@ use HUAC\Enums\Status;
 use HUAC\Events\SurgeryDeletedEvent;
 use HUAC\Models\Log;
 use HUAC\Models\Surgery;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class SurgeriesController
@@ -17,6 +18,19 @@ class SurgeriesController
      */
     public function destroy(Surgery $surgery)
     {
+        if (Gate::denies('surgeries.cancel')) {
+            return response()->json([
+                'data' => [
+                    'swal' => [
+                        'icon' => 'warning',
+                        'title' => 'Acesso negado!',
+                        'text'  => 'Você não tem permissão para realizar esta ação no sistema!',
+                        'timer' => 5000,
+                    ]
+                ]
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
         Log::createFor($surgery, 'Cirurgia cancelada', Status::CANCELED);
 
         $surgery->events()->delete();
