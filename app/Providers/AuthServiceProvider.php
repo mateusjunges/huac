@@ -7,6 +7,7 @@ use HUAC\Policies\GroupsPolicy;
 use HUAC\Policies\PatientsPolicy;
 use HUAC\Policies\ProceduresPolicy;
 use HUAC\Policies\RoomsPolicy;
+use HUAC\Policies\SchedulingPolicy;
 use HUAC\Policies\SurgeriesPolicy;
 use HUAC\Policies\UsersPolicy;
 use HUAC\Policies\WaitingListPolicy;
@@ -53,5 +54,6 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('groups.manage', [GroupsPolicy::class, 'manage']);
         Gate::define('rooms.manage', [RoomsPolicy::class, 'manage']);
         Gate::define('procedures.manage', [ProceduresPolicy::class, 'manage']);
+        Gate::define('scheduling.manage', [SchedulingPolicy::class, 'manage']);
     }
 }

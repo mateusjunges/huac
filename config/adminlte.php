@@ -119,7 +119,7 @@ return [
             'icon'  => 'calendar',
             'text'  => 'Agendar',
             'route' => 'surgeries.scheduling',
-            'can' => 'events.create'
+            'can' => 'scheduling.manage'
         ],
         // Patients
         [
