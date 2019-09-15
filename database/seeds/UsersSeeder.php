@@ -25,5 +25,30 @@ class UsersSeeder extends Seeder
            'email' => 'alceubrittoneto@gmail.com',
            'password' => Hash::make('alceubritto'),
         ]);
+        User::create([
+            'name' => 'Idomar Cerutti',
+            'username' => 'idomar',
+            'email' => 'idomar@uepg.br',
+            'password' => Hash::make('idomar'),
+        ]);
+        User::create([
+           'name' => 'Dierone Foltran',
+           'username' => 'dierone',
+           'email' => 'dcfoltran@uepg.br',
+           'password' => Hash::make('dierone'),
+        ]);
+        User::create([
+           'name' => 'Ezequiel Gueiber',
+           'username' => 'ezequiel',
+           'email' => 'ezequiel@aguiasistemas.com.br',
+           'password' => Hash::make('ezequiel'),
+        ]);
+        User::create([
+           'name' => 'Diolete Cerutti',
+           'username' => 'diolete',
+           'email' => 'diolete@uepg.br',
+           'password' => Hash::make('diolete'),
+        ]);
+
     }
 }
