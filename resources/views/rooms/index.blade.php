@@ -13,6 +13,7 @@
 
 @section('js')
     <script src="{{ asset('js/rooms/index.js') }}"></script>
+    <script src="{{ asset('js/rooms/status.js') }}"></script>
     <script src="{{ asset('js/CRUD/crud.js') }}"></script>
 @endsection
 
@@ -32,7 +33,7 @@
                     </a>
                 </div>
             </div>
-            <table class="table table-hover table-responsive-md text-center" id="rooms">
+            <table class="table table-hover table-responsive-md text-center dataTable" id="rooms">
                 <thead>
                     <tr>
                         <th>Nome da Sala</th>
@@ -51,11 +52,12 @@
                         <tr>
                             <td>{{ $room->name }}</td>
                             <td>
-                                <button class="btn btn-{{ $room->available ? 'success' : 'danger' }}">
+                                <button class="btn btn-{{ $room->available ? 'success' : 'danger' }} lock"
+                                        data-id="{{ $room->id }}">
                                     @if($room->available)
-                                        <i class="fa fa-check"></i>
+                                        <i class="fa fa-check" id="icon-{{ $room->id }}"></i>
                                     @else
-                                        <i class="fa fa-times"></i>
+                                        <i class="fa fa-times" id="icon-{{ $room->id }}"></i>
                                     @endif
                                 </button>
                             </td>

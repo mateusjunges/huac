@@ -52,6 +52,7 @@ use HUAC\Http\Controllers\Api\SurgeryCenter\OnGoing\SurgicalRoomController;
 use HUAC\Http\Controllers\Api\SurgeryCenter\OnGoing\TimeoutController;
 use HUAC\Http\Controllers\Api\SurgeryCenter\SurgeryCenterSurgeriesColumnsController;
 use HUAC\Http\Controllers\Api\SurgeryCenter\SurgeryCenterSurgeriesDataController;
+use HUAC\Http\Controllers\Api\SurgicalRooms\UpdateSurgicalRoomStatusController;
 use HUAC\Http\Controllers\Api\WaitingList\WaitingListController;
 use HUAC\Http\Controllers\Api\WaitingList\WaitingListSurgeriesColumnsController;
 use HUAC\Http\Controllers\Api\WaitingList\WaitingListSurgeriesDataController;
@@ -256,4 +257,6 @@ Route::middleware(['auth:api'])->group(function () {
            Route::get('data', [ProcedureAverageDurationController::class, 'data']);
         });
     });
+
+    Route::put('rooms/{room}/status', UpdateSurgicalRoomStatusController::class);
 });
