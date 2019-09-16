@@ -2,6 +2,7 @@
 
 namespace HUAC\Actions;
 
+use HUAC\Events\RoomStatusChangedEvent;
 use HUAC\Models\SurgicalRoom;
 
 class UpdateSurgicalRoomStatus
@@ -15,6 +16,9 @@ class UpdateSurgicalRoomStatus
     {
         $room->available = !$room->available;
         $room->save();
+
+        event(new RoomStatusChangedEvent($room));
+
         return $room;
     }
 }
