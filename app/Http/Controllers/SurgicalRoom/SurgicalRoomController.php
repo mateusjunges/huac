@@ -42,7 +42,6 @@ class SurgicalRoomController extends Controller
      */
     public function store(SurgicalRoomRequest $request)
     {
-//        dd($request->all());
         if (!is_null($request->input('morning_reservation_starts_at')))
             $request->request->set(
                 'morning_reservation_starts_at',
@@ -100,8 +99,8 @@ class SurgicalRoomController extends Controller
         $room->update($request->all());
         $message = array(
             'type' => 'success',
-            'title' => trans('huac.success'),
-            'text' => trans('huac.user_updated_successfully'),
+            'title' => 'Sucesso!',
+            'text' => 'Sala de cirurgia atualizada com sucesso!',
         );
         session()->flash('message', $message);
 
