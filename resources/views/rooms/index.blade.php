@@ -37,7 +37,9 @@
                 <thead>
                     <tr>
                         <th>Nome da Sala</th>
-                        <th>Disponível</th>
+                        @can('rooms.change-status')
+                            <th>Disponível</th>
+                        @endcan
                         @can('rooms.update')
                             <th>Editar</th>
                         @endcan
@@ -51,28 +53,34 @@
                     @foreach($surgicalRooms as $room)
                         <tr>
                             <td>{{ $room->name }}</td>
-                            <td>
-                                <button class="btn btn-{{ $room->available ? 'success' : 'danger' }} lock"
-                                        data-id="{{ $room->id }}">
-                                    @if($room->available)
-                                        <i class="fa fa-check" id="icon-{{ $room->id }}"></i>
-                                    @else
-                                        <i class="fa fa-times" id="icon-{{ $room->id }}"></i>
-                                    @endif
-                                </button>
-                            </td>
-                            <td>
-                                <a href="{{ route('rooms.edit', $room->id) }}">
-                                    <button class="btn btn-primary">
-                                        <i class="fa fa-edit"></i>
+                            @can('rooms.change-status')
+                                <td>
+                                    <button class="btn btn-{{ $room->available ? 'success' : 'danger' }} lock"
+                                            data-id="{{ $room->id }}">
+                                        @if($room->available)
+                                            <i class="fa fa-check" id="icon-{{ $room->id }}"></i>
+                                        @else
+                                            <i class="fa fa-times" id="icon-{{ $room->id }}"></i>
+                                        @endif
                                     </button>
-                                </a>
-                            </td>
-                            <td>
-                                <button class="btn btn-danger delete">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                            </td>
+                                </td>
+                            @endcan
+                            @can('rooms.update')
+                                <td>
+                                    <a href="{{ route('rooms.edit', $room->id) }}">
+                                        <button class="btn btn-primary">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                    </a>
+                                </td>
+                            @endcan
+                            @can('rooms.delete')
+                                <td>
+                                    <button class="btn btn-danger delete">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </td>
+                            @endcan
                             <td class="text-center">
                                 <div class=""
                                      style="background: {{ $room->color }};

@@ -273,11 +273,11 @@ class PermissionsSeeder extends Seeder
 //            'slug' => 'waiting-list.delete',
 //            'description' => 'Permite remover uma cirurgia da lista de espera.'
 //        ]);
-//        Permission::create([
-//            'name' => '',
-//            'slug' => '',
-//            'description' => ''
-//        ]);
+        Permission::create([
+            'name' => 'Liberar/bloquear salas',
+            'slug' => 'rooms.change-status',
+            'description' => 'Permite tornar uma sala disponível e indisponível'
+        ]);
 //
 
     }
