@@ -168,21 +168,21 @@ class PermissionsSeeder extends Seeder
             'slug' => 'surgery-center.confirm-materials',
             'description' => 'Permite negar os materiais do centro cirúrgico'
         ]);
-        Permission::create([
-            'name' => 'Visualizar cirurgias na lista de espera',
-            'slug' => 'waiting-list.index',
-            'description' => 'Permite visualizar as cirurgias na lista de espera'
-        ]);
-        Permission::create([
-            'name' => 'Adicionar cirurgias a lista de espera',
-            'slug' => 'waiting-list.create',
-            'description' => 'Permite adicionar cirurgias a lista de espera'
-        ]);
-        Permission::create([
-            'name' => 'Atualizar cirurgias na lista de espera',
-            'slug' => 'waiting-list.update',
-            'description' => 'Permite atualizar uma cirurgia na lista de espera'
-        ]);
+//        Permission::create([
+//            'name' => 'Visualizar cirurgias na lista de espera',
+//            'slug' => 'waiting-list.index',
+//            'description' => 'Permite visualizar as cirurgias na lista de espera'
+//        ]);
+//        Permission::create([
+//            'name' => 'Adicionar cirurgias a lista de espera',
+//            'slug' => 'waiting-list.create',
+//            'description' => 'Permite adicionar cirurgias a lista de espera'
+//        ]);
+//        Permission::create([
+//            'name' => 'Atualizar cirurgias na lista de espera',
+//            'slug' => 'waiting-list.update',
+//            'description' => 'Permite atualizar uma cirurgia na lista de espera'
+//        ]);
         Permission::create([
             'name' => 'Remover grupo de permissões',
             'slug' => 'groups.delete',
@@ -268,11 +268,11 @@ class PermissionsSeeder extends Seeder
             'slug' => 'surgeries.update-status',
             'description' => 'Permite atualizar o status de uma cirurgia'
         ]);
-        Permission::create([
-            'name' => 'Remover cirurgia da lista de espera',
-            'slug' => 'waiting-list.delete',
-            'description' => 'Permite remover uma cirurgia da lista de espera.'
-        ]);
+//        Permission::create([
+//            'name' => 'Remover cirurgia da lista de espera',
+//            'slug' => 'waiting-list.delete',
+//            'description' => 'Permite remover uma cirurgia da lista de espera.'
+//        ]);
 //        Permission::create([
 //            'name' => '',
 //            'slug' => '',
