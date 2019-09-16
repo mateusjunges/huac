@@ -157,24 +157,24 @@ return [
                 ]
             ],
         ],
-        // Waiting list
-        [
-            'icon' => 'clock',
-            'text' => 'Lista de espera',
-            'can'  => 'waiting-list.manage',
-            'submenu' => [
-                [
-                    'text'  => 'Incluir cirurgia',
-                    'route' => 'waiting-list.create',
-                    'can'   => 'waiting-list.create'
-                ],
-                [
-                    'text'  => 'Ver cirurgias',
-                    'route' => 'waiting-list.index',
-                    'can'   => 'waiting-list.index'
-                ]
-            ]
-        ],
+//        // Waiting list
+//        [
+//            'icon' => 'clock',
+//            'text' => 'Lista de espera',
+//            'can'  => 'waiting-list.manage',
+//            'submenu' => [
+//                [
+//                    'text'  => 'Incluir cirurgia',
+//                    'route' => 'waiting-list.create',
+//                    'can'   => 'waiting-list.create'
+//                ],
+//                [
+//                    'text'  => 'Ver cirurgias',
+//                    'route' => 'waiting-list.index',
+//                    'can'   => 'waiting-list.index'
+//                ]
+//            ]
+//        ],
         // Confirm materials
         [
             'text' => 'Confirmar materiais',

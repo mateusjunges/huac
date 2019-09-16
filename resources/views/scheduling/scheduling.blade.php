@@ -113,9 +113,9 @@
         <div class="row">
             @can('events.create')
                 <div class="col-md-3">
-                    <button class="btn btn-default btn-block emergency" id="emergency-schedule">
-                        Adicionar cirurgia de emergência
-                    </button>
+{{--                    <button class="btn btn-default btn-block emergency" id="emergency-schedule">--}}
+{{--                        Adicionar cirurgia de emergência--}}
+{{--                    </button>--}}
                     {{-- Vue component --}}
                     <schedule-surgeries
                         :surgeries-with-denied-materials="{{ $surgeriesWithDeniedMaterials }}"
