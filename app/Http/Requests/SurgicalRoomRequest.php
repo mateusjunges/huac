@@ -28,11 +28,12 @@ class SurgicalRoomRequest extends FormRequest
         if (Route::getCurrentRoute()->parameters() != null)
             $room = Route::getCurrentRoute()->parameters()['room'];
         $room = $room != 'NULL' ? $room->id : 'NULL';
+
         return [
             'name'                              => 'required|min:6|string',
-            'morning_reservation_starts_at'     => 'required_without:afternoon_reservation_starts_at',
+            'morning_reservation_starts_at'     => 'required_with:morning_reservation_ends_at',
             'morning_reservation_ends_at'       => 'required_with:morning_reservation_starts_at',
-            'afternoon_reservation_starts_at'   => 'required_without:morning_reservation_starts_at',
+            'afternoon_reservation_starts_at'   => 'required_with:afternoon_reservation_ends_at',
             'afternoon_reservation_ends_at'     => 'required_with:afternoon_reservation_starts_at',
             'available'                         => 'required'
         ];
@@ -43,8 +44,8 @@ class SurgicalRoomRequest extends FormRequest
         return [
             'name.min' => 'O :attribute deve ter no mínimo :min letras!',
             '*.required'     => 'O :attribute é obrigatório!',
-            '*.required_with' => 'Você deve selecionar um :attribute para o uso da sala!',
-            '*.required_without' => 'Você deve selecionar um :attribute para o uso da sala!'
+            '*.required_with' => 'Você deve selecionar um :attribute para o bloqueio da sala!',
+            '*.required_without' => 'Você deve selecionar um :attribute para o bloqueio da sala!'
         ];
     }
 

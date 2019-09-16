@@ -67,8 +67,7 @@ class SurgicalRoomController extends Controller
                 'afternoon_reservation_ends_at',
                 Carbon::parse($request->input('afternoon_reservation_ends_at'))->format('H:i:s')
             );
-        
-//        dd($request->all());
+
         $room = SurgicalRoom::create($request->all());
 
         $message = array(
@@ -78,17 +77,6 @@ class SurgicalRoomController extends Controller
         );
         session()->flash('message', $message);
         return redirect()->route('rooms.index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param SurgicalRoom $room
-     * @return void
-     */
-    public function show(SurgicalRoom $room)
-    {
-        //
     }
 
     /**
