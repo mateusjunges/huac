@@ -129,16 +129,17 @@
                         </div>
                         <div class="box-body">
                             <!-- the events -->
-                            <div id="external-events" class="listaEspera custom-overflow">
+                            <div id="external-events-waiting-list" class="listaEspera custom-overflow">
                                 @foreach($surgeriesInWaitingList as $surgeryInWaitingList)
                                     <div class="fc-event newCirurgia external-event
                                         bg-blue ui-draggable
                                         ui-draggable-handle"
                                          style="border: none"
+                                         data-estimated="{{$surgeryInWaitingList->estimated_duration_time }}"
                                          data-id="{{ $surgeryInWaitingList->id }}"
                                          data-title="{{ $surgeryInWaitingList->patient->name  }}"
                                          data-color="#ff0000"
-                                         id="cirurgia{{ $surgeryInWaitingList->id }}">
+                                         id="surgery{{ $surgeryInWaitingList->id }}">
                                         {{ $surgeryInWaitingList->patient->name}}
                                     </div>
                                 @endforeach
