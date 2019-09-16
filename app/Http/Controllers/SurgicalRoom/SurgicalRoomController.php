@@ -2,6 +2,7 @@
 
 namespace HUAC\Http\Controllers\SurgicalRoom;
 
+use Exception;
 use HUAC\Exceptions\ViewNotFoundException;
 use HUAC\Http\Requests\SurgicalRoomRequest;
 use HUAC\Models\SurgicalRoom;
@@ -32,7 +33,7 @@ class SurgicalRoomController extends Controller
     {
         try{
             return view('rooms.create');
-        }catch (\Exception $exception){
+        }catch (Exception $exception){
             if ($exception instanceof InvalidArgumentException)
                 return ViewNotFoundException::forView();
         }
@@ -41,7 +42,7 @@ class SurgicalRoomController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  UsersRequest $request
+     * @param  SurgicalRoomRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(SurgicalRoomRequest $request)
@@ -82,8 +83,8 @@ class SurgicalRoomController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  User $user
-     * @return \Illuminate\Http\Response
+     * @param SurgicalRoom $room
+     * @return void
      */
     public function show(SurgicalRoom $room)
     {
@@ -93,7 +94,7 @@ class SurgicalRoomController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param User $user
+     * @param SurgicalRoom $room
      * @return \Illuminate\Http\Response
      */
     public function edit(SurgicalRoom $room)
@@ -106,8 +107,8 @@ class SurgicalRoomController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  User $user
+     * @param Request $request
+     * @param SurgicalRoom $room
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, SurgicalRoom $room)
@@ -126,10 +127,11 @@ class SurgicalRoomController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  User $user
+     * @param SurgicalRoom $room
      * @return \Illuminate\Http\Response
+     * @throws Exception
      */
-    public function destroy(Room $room)
+    public function destroy(SurgicalRoom $room)
     {
         $room->delete();
 
