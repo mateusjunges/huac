@@ -58,13 +58,13 @@ $(document).ready(function () {
         forceTLS: true
     });
 
-    Pusher.logToConsole = true;
+    // Pusher.logToConsole = true;
 
     let statusChanged = pusher.subscribe('room-status-changed');
     statusChanged.bind('room-status-changed', event => {
         let icon = $(`#icon-${event.room.id}`);
         let button = icon.parent();
-        console.log(event);
+
         let available = event.room.available;
 
         if (available) {
