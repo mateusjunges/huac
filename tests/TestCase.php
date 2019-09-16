@@ -37,6 +37,6 @@ class TestCase extends Orchestra
 
     public function configureDatabase($app)
     {
-
+//        $this->ru
     }
 }
