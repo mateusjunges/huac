@@ -24,10 +24,10 @@ class SurgicalRoomRequest extends FormRequest
      */
     public function rules()
     {
-        $room = 'NULL';
-        if (Route::getCurrentRoute()->parameters() != null)
-            $room = Route::getCurrentRoute()->parameters()['room'];
-        $room = $room != 'NULL' ? $room->id : 'NULL';
+//        $room = 'NULL';
+//        if (Route::getCurrentRoute()->parameters() != null)
+//            $room = Route::getCurrentRoute()->parameters()['room'];
+//        $room = $room != 'NULL' ? $room->id : 'NULL';
 
         return [
             'name'                              => 'required|min:6|string',
@@ -35,7 +35,8 @@ class SurgicalRoomRequest extends FormRequest
             'morning_reservation_ends_at'       => 'required_with:morning_reservation_starts_at',
             'afternoon_reservation_starts_at'   => 'required_with:afternoon_reservation_ends_at',
             'afternoon_reservation_ends_at'     => 'required_with:afternoon_reservation_starts_at',
-            'available'                         => 'required'
+            'available'                         => 'required',
+            'color'                             => 'required'
         ];
     }
 

@@ -2,15 +2,11 @@
 
 namespace HUAC\Http\Controllers\SurgicalRoom;
 
-use Exception;
-use HUAC\Exceptions\ViewNotFoundException;
 use HUAC\Http\Requests\SurgicalRoomRequest;
 use HUAC\Models\SurgicalRoom;
 use Illuminate\Http\Request;
 use HUAC\Http\Controllers\Controller;
 use Carbon\Carbon;
-use InvalidArgumentException;
-use Symfony\Component\HttpFoundation\Response;
 
 class SurgicalRoomController extends Controller
 {
@@ -21,7 +17,11 @@ class SurgicalRoomController extends Controller
      */
     public function index()
     {
-        return view('rooms.index');
+        $rooms = SurgicalRoom::all();
+
+        return view('rooms.index')->with([
+            'surgicalRooms' => $rooms
+        ]);
     }
 
     /**
@@ -31,12 +31,7 @@ class SurgicalRoomController extends Controller
      */
     public function create()
     {
-        try{
-            return view('rooms.create');
-        }catch (Exception $exception){
-            if ($exception instanceof InvalidArgumentException)
-                return ViewNotFoundException::forView();
-        }
+        return view('rooms.create');
     }
 
     /**
@@ -47,6 +42,7 @@ class SurgicalRoomController extends Controller
      */
     public function store(SurgicalRoomRequest $request)
     {
+//        dd($request->all());
         if (!is_null($request->input('morning_reservation_starts_at')))
             $request->request->set(
                 'morning_reservation_starts_at',
@@ -71,8 +67,8 @@ class SurgicalRoomController extends Controller
         $room = SurgicalRoom::create($request->all());
 
         $message = array(
-            'title' => trans('huac.success'),
-            'text'  => trans('huac.user_saved_successfully'),
+            'title' => 'Sucesso!',
+            'text'  => 'Sala de cirurgia adicionada com sucesso!',
             'type'  => 'success',
         );
         session()->flash('message', $message);

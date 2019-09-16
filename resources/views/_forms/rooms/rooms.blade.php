@@ -21,7 +21,7 @@
                    id="time"
                    name="morning_reservation_starts_at"
                    placeholder="Informe o horário desejado"
-                   value="{{ isset($room) ? $room->time : old('morning_reservation_starts_at') }}"
+                   value="{{ isset($room) ? $room->morning_reservation_starts_at : old('morning_reservation_starts_at') }}"
                    class="form-control @error('time')validation-error @enderror">
             @if($errors->has('morning_reservation_starts_at'))
                 <span class="text-danger">{{ $errors->first('morning_reservation_starts_at') }}</span>
@@ -33,7 +33,7 @@
                    id="time"
                    name="morning_reservation_ends_at"
                    placeholder="Informe o horário desejado"
-                   value="{{ isset($room) ? $room->time : old('morning_reservation_ends_at') }}"
+                   value="{{ isset($room) ? $room->morning_reservation_ends_at : old('morning_reservation_ends_at') }}"
                    class="form-control @error('time')validation-error @enderror">
             @if($errors->has('morning_reservation_ends_at'))
                 <span class="text-danger">{{ $errors->first('morning_reservation_ends_at') }}</span>
@@ -45,10 +45,11 @@
                    id="time"
                    name="afternoon_reservation_starts_at"
                    placeholder="Informe o horário desejado"
-                   value="{{ isset($room) ? $room->time : old('afternoon_reservation_starts_at') }}"
+                   value="{{ isset($room) ? $room->afternoon_reservation_starts_at : old('afternoon_reservation_starts_at') }}"
                    class="form-control @error('time')validation-error @enderror">
             @if($errors->has('afternoon_reservation_starts_at'))
-                <span class="text-danger">{{ $errors->first('afternoon_reservation_starts_at') }}</span>
+                <span
+                    class="text-danger">{{ $errors->first('afternoon_reservation_starts_at') }}</span>
             @endif
         </div>
         <div class="form-group">
@@ -57,10 +58,20 @@
                    id="time"
                    name="afternoon_reservation_ends_at"
                    placeholder="Informe o horário desejado"
-                   value="{{ isset($room) ? $room->time : old('afternoon_reservation_ends_at') }}"
+                   value="{{ isset($room) ? $room->afternoon_reservation_ends_at : old('afternoon_reservation_ends_at') }}"
                    class="form-control @error('time')validation-error @enderror">
             @if($errors->has('afternoon_reservation_ends_at'))
                 <span class="text-danger">{{ $errors->first('afternoon_reservation_ends_at') }}</span>
+            @endif
+        </div>
+        <div class="form-group">
+            <label for="color">Selecione uma cor para a sala:</label>
+            <input type="color"
+                   class="form-control"
+                   name="color"
+                   value="{{ isset($room) ? $room->color : old('color') }}">
+            @if($errors->has('color'))
+                <span class="text-danger">{{ $errors->first('color') }}</span>
             @endif
         </div>
       <div>
@@ -71,11 +82,21 @@
               <label for="available">Disponível</label>
               <input type="radio"
                      id="available"
+                     @if(isset($room))
+                         @if($room->available)
+                            checked
+                         @endif
+                     @endif
                      name="available"
                      value="true">
               <br>
               <label for="bloqueada">Bloqueada</label>
               <input type="radio"
+                     @if(isset($room))
+                         @if(!$room->available)
+                            checked
+                         @endif
+                     @endif
                      id="bloqueada"
                      name="available"
                      value="false">

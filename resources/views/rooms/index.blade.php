@@ -2,19 +2,17 @@
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/rooms/index.css') }}">
     <style>
-        table#users {
+        table#rooms {
             width: 100% !important;
         }
-        .new-user-btn {
+        .new-room-btn {
             padding-bottom: 1em;
         }
     </style>
 @endsection
 
 @section('js')
-    <script src="{{ asset('js/ACL/users/index.js') }}"></script>
-    <script src="{{ asset('js/ACL/users/permissions/assign-permissions.js') }}"></script>
-    <script src="{{ asset('js/ACL/users/groups/assign-groups.js') }}"></script>
+    <script src="{{ asset('js/rooms/index.js') }}"></script>
     <script src="{{ asset('js/CRUD/crud.js') }}"></script>
 @endsection
 
@@ -34,19 +32,55 @@
                     </a>
                 </div>
             </div>
-            <table class="table table-hover table-responsive-md text-center" id="room">
+            <table class="table table-hover table-responsive-md text-center" id="rooms">
                 <thead>
                     <tr>
                         <th>Nome da Sala</th>
                         <th>Disponível</th>
-                        @can('rooms.edit')
+                        @can('rooms.update')
                             <th>Editar</th>
                         @endcan
                         @can('rooms.delete')
                             <th>Remover</th>
                         @endcan
+                        <th>Cor da sala</th>
                     </tr>
                 </thead>
+                <tbody>
+                    @foreach($surgicalRooms as $room)
+                        <tr>
+                            <td>{{ $room->name }}</td>
+                            <td>
+                                <button class="btn btn-{{ $room->available ? 'success' : 'danger' }}">
+                                    @if($room->available)
+                                        <i class="fa fa-check"></i>
+                                    @else
+                                        <i class="fa fa-times"></i>
+                                    @endif
+                                </button>
+                            </td>
+                            <td>
+                                <a href="{{ route('rooms.edit', $room->id) }}">
+                                    <button class="btn btn-primary">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                </a>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger delete">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </td>
+                            <td class="text-center">
+                                <div class=""
+                                     style="background: {{ $room->color }};
+                                         margin: 0 auto;
+                                         width: 100px; height: 10px;">
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
             </table>
         </div>
     </div>
