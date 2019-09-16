@@ -38,6 +38,15 @@ class SurgeryController extends Controller
      */
     public function index()
     {
+        if (Gate::denies('surgeries.index')) {
+            $message = array(
+                'title' => 'Acesso negado!',
+                'text' => 'Você não possui permissão para acessar esta área do sistema!',
+                'type' => 'warning',
+            );
+            session()->flash('message', $message);
+            return redirect()->back();
+        }
         return view('surgeries.index');
     }
 

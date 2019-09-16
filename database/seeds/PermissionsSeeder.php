@@ -139,6 +139,11 @@ class PermissionsSeeder extends Seeder
             'description' => 'Permite adicionar uma nova cirurgia no sistema'
         ]);
         Permission::create([
+            'name' => 'Visualizar cirurigas',
+            'slug' => 'surgeries.index',
+            'description' => 'Permite visualizar as cirurgias do paciente'
+        ]);
+        Permission::create([
             'name' => 'Atualizar cirurgias',
             'slug' => 'surgeries.update',
             'description' => 'Permite atualizar os dados de uma cirurgia cadastrada.'

@@ -4,7 +4,7 @@ namespace HUAC\Http\Controllers\Api\WaitingList;
 
 use HUAC\Enums\Status;
 use HUAC\Models\Surgery;
-use HUAC\Models\Views\Surgeries;
+use HUAC\Models\Views\WaitingListSurgeries as Surgeries;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
