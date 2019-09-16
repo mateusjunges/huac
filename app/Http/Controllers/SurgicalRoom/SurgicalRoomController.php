@@ -123,24 +123,4 @@ class SurgicalRoomController extends Controller
 
         return redirect()->route('rooms.index');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param SurgicalRoom $room
-     * @return \Illuminate\Http\Response
-     * @throws Exception
-     */
-    public function destroy(SurgicalRoom $room)
-    {
-        $room->delete();
-
-        return response()->json([
-           'code'  => Response::HTTP_OK,
-           'title' => trans('huac.success'),
-           'text'  => trans('huac.successfully_deleted'),
-           'icon'  => 'success',
-           'timer' => 5000,
-        ]);
-    }
 }
