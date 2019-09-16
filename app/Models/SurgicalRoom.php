@@ -16,6 +16,7 @@ class SurgicalRoom extends Model
     protected $fillable = [
         'name',
         'available',
+        'color',
         'morning_reservation_starts_at',
         'morning_reservation_ends_at',
         'afternoon_reservation_starts_at',

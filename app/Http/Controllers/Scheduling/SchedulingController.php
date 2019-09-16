@@ -47,7 +47,7 @@ class SchedulingController
                 return $surgery->latestStatus->status_id == Status::WAITING_LIST;
             });
 
-        $surgicalRooms = SurgicalRoom::available()->get();
+        $surgicalRooms = SurgicalRoom::available()->orderBy('id', 'asc')->get();
         $surgicalRoomsJSON = json_encode($surgicalRooms->toArray());
 
         return view('scheduling.scheduling')->with([
