@@ -180,4 +180,10 @@ $(document).ready(function () {
         },
     });
 
+    $("#btnGoToDate").click(function() {
+        let date = $("#goToDate").val();
+        console.log(date);
+        fullCalendar.fullCalendar('gotoDate', date);
+    });
+
 });

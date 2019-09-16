@@ -26,6 +26,7 @@
     <script src='{{ asset('vendor/fullcalendar/lib/jquery-ui.min.js')}}'></script>
     <script src='{{ asset('vendor/fullcalendar/fullcalendar.min.js')}}'></script>
     <script src="{{ asset('js/schedule/confirmed-materials.js') }}"></script>
+    <script src="{{ asset('vendor/fullcalendar/locale/pt-br.js') }}"></script>
 @endsection
 
 @section('content')
