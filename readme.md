@@ -83,7 +83,7 @@ MIX_API_TOKEN="${API_TOKEN}
 ```bash
 php artisan key:generate
 ```
-- Crie as tabelas no banco de dados:
+- Crie as tabelas no banco de dados pelo terminal linux:
 ```bash
 php artisan migrate
 ```
