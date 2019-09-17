@@ -1,0 +1,32 @@
+<html>
+<head>
+<title>anesthetics.sql</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #000080; font-weight: bold;}
+.s1 { color: #000000;}
+.s2 { color: #008000; font-weight: bold;}
+.s3 { color: #0000ff;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+anesthetics.sql</font>
+</center></td></tr></table>
+<pre><span class="s0">CREATE SEQUENCE </span>anesthetics_id_seq;
+<span class="s0">CREATE TABLE public</span>.anesthetics
+(
+    id <span class="s0">integer NOT NULL DEFAULT </span>nextval(<span class="s2">'anesthetics_id_seq'</span>::<span class="s0">regclass</span>),
+    <span class="s0">name character varying</span>(<span class="s3">70</span>) <span class="s0">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s0">NOT NULL</span>,
+    deleted_at <span class="s0">timestamp</span>(<span class="s3">0</span>) <span class="s0">without time zone</span>,
+    created_at <span class="s0">timestamp</span>(<span class="s3">0</span>) <span class="s0">without time zone</span>,
+    updated_at <span class="s0">timestamp</span>(<span class="s3">0</span>) <span class="s0">without time zone</span>,
+    <span class="s0">CONSTRAINT </span>anesthetics_pkey <span class="s0">PRIMARY KEY </span>(id),
+    <span class="s0">CONSTRAINT </span>anesthetics_name_unique <span class="s0">UNIQUE </span>(<span class="s0">name</span>)
+
+);
+</pre>
+</body>
+</html>
