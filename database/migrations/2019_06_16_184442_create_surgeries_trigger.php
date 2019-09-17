@@ -40,9 +40,9 @@ class CreateSurgeriesTrigger extends Migration
                 END IF;
                 
                 -- Check for string length:
-                IF (SELECT LENGTH(NEW.materials) <= 10)
+                IF (SELECT LENGTH(NEW.materials) < 10)
                 THEN
-                    RAISE EXCEPTION 'The \"anesthetic_evaluation\" must have at least 10 characters!';
+                    RAISE EXCEPTION 'The \"materials\" must have at least 10 characters!';
                     RETURN NULL;
                 END IF;
                 

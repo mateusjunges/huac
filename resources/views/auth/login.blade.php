@@ -16,6 +16,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/login/css/util.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/login/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/login/css/footer.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/login/login.css') }}">
     <!--===============================================================================================-->
 </head>
 <body>
@@ -62,7 +63,6 @@
                         <input type="checkbox" id="remember" name="remember">
                         Mantenha-me conectado
                     </label>
-
                 </div>
                 <div class="container-login100-form-btn m-t-17">
                     <button class="login100-form-btn">
@@ -70,6 +70,18 @@
                     </button>
                 </div>
             </form>
+            <div class="container-login-100-form-btn m-t-17">
+                <a href="{{ route('login.socialite', 'google') }}">
+                    <button class="login100-form btn-google">
+                        <img src="{{ asset('svg/google.svg') }}" alt="Logo do google">
+                    </button>
+                </a>
+            </div>
+            <div class="container-login-100 m-t-17">
+                <a href="{{ route('password.request') }}">
+                    Esqueci minha senha
+                </a>
+            </div>
         </div>
     </div>
 </div>

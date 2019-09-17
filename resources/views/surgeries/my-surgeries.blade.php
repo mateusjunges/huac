@@ -4,6 +4,7 @@
     <script src='{{ asset('vendor/fullcalendar/lib/moment.min.js')}}'></script>
     <script src='{{ asset('vendor/fullcalendar/lib/jquery-ui.min.js')}}'></script>
     <script src='{{ asset('vendor/fullcalendar/fullcalendar.min.js')}}'></script>
+    <script src="{{ asset('vendor/fullcalendar/locale/pt-br.js') }}"></script>
     <script src="{{ asset('js/surgeries/my-surgeries.js') }}"></script>
 @endsection
 @section('css')
@@ -47,4 +48,5 @@
             </div>
         </div>
     </div>
+    @include('_modals.surgeries.my-surgeries-event-click')
 @endsection

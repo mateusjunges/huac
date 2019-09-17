@@ -26,6 +26,7 @@
     <script src='{{ asset('vendor/fullcalendar/lib/jquery-ui.min.js')}}'></script>
     <script src='{{ asset('vendor/fullcalendar/fullcalendar.min.js')}}'></script>
     <script src="{{ asset('js/scheduling/scheduling.js') }}"></script>
+    <script src="{{ asset('vendor/fullcalendar/locale/pt-br.js') }}"></script>
     <script src="{{ asset('js/scheduling/make-events-draggable.js') }}"></script>
 @endsection
 
@@ -111,41 +112,44 @@
         </div>
     <hr>
         <div class="row">
-            <div class="col-md-3">
-                <button class="btn btn-default btn-block emergency" id="emergency-schedule">
-                    Adicionar cirurgia de emergência
-                </button>
-                {{-- Vue component --}}
-                <schedule-surgeries
-                    :surgeries-with-denied-materials="{{ $surgeriesWithDeniedMaterials }}"
-                    :surgeries="{{ $surgeries }}"
-                    :surgeries-in-waiting-list="{{ $surgeriesInWaitingList }}"
-                ></schedule-surgeries>
+            @can('events.create')
+                <div class="col-md-3">
+{{--                    <button class="btn btn-default btn-block emergency" id="emergency-schedule">--}}
+{{--                        Adicionar cirurgia de emergência--}}
+{{--                    </button>--}}
+                    {{-- Vue component --}}
+                    <schedule-surgeries
+                        :surgeries-with-denied-materials="{{ $surgeriesWithDeniedMaterials }}"
+                        :surgeries="{{ $surgeries }}"
+                        :surgeries-in-waiting-list="{{ $surgeriesInWaitingList }}"
+                    ></schedule-surgeries>
 
-                <div class="box box-solid">
-                    <div class="box-header with-border">
-                        <h4 class="box-title">Lista de Espera</h4>
-                    </div>
-                    <div class="box-body">
-                        <!-- the events -->
-                        <div id="external-events" class="listaEspera custom-overflow">
-                            @foreach($surgeriesInWaitingList as $surgeryInWaitingList)
-                                <div class="fc-event newCirurgia external-event
+                    <div class="box box-solid">
+                        <div class="box-header with-border">
+                            <h4 class="box-title">Lista de Espera</h4>
+                        </div>
+                        <div class="box-body">
+                            <!-- the events -->
+                            <div id="external-events-waiting-list" class="listaEspera custom-overflow">
+                                @foreach($surgeriesInWaitingList as $surgeryInWaitingList)
+                                    <div class="fc-event newCirurgia external-event
                                         bg-blue ui-draggable
                                         ui-draggable-handle"
-                                     style="border: none"
-                                     data-id="{{ $surgeryInWaitingList->id }}"
-                                     data-title="{{ $surgeryInWaitingList->patient->name  }}"
-                                     data-color="#ff0000"
-                                     id="cirurgia{{ $surgeryInWaitingList->id }}">
-                                    {{ $surgeryInWaitingList->patient->name}}
-                                </div>
-                            @endforeach
+                                         style="border: none"
+                                         data-estimated="{{$surgeryInWaitingList->estimated_duration_time }}"
+                                         data-id="{{ $surgeryInWaitingList->id }}"
+                                         data-title="{{ $surgeryInWaitingList->patient->name  }}"
+                                         data-color="#ff0000"
+                                         id="surgery{{ $surgeryInWaitingList->id }}">
+                                        {{ $surgeryInWaitingList->patient->name}}
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-9">
+            @endcan
+            <div class="@can('events.create') col-md-9 @endcan @cannot('events.create') col-md-12 @endcannot">
                 <div id="fullCalendar"></div>
             </div>
         </div>

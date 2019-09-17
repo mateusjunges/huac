@@ -15,7 +15,8 @@
     </div>
     <div class="row">
         <div class="col-md-8 col-md-pull-2 col-md-push-2">
-            <form action="{{ route('procedures.store') }}" method="post">
+            <form action="{{ route('procedures.update', $procedure->id) }}" method="post">
+                @method('PUT')
                 @include('_forms.procedures.procedures')
             </form>
         </div>

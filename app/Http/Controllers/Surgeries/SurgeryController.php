@@ -2,6 +2,7 @@
 
 namespace HUAC\Http\Controllers\Surgeries;
 
+use Exception;
 use HUAC\Exceptions\ViewNotFoundException;
 use HUAC\Http\Controllers\Controller;
 use HUAC\Http\Requests\SurgeryRequest;
@@ -11,9 +12,9 @@ use HUAC\Models\Procedure;
 use HUAC\Models\Surgeon;
 use HUAC\Models\Surgery;
 use HUAC\Models\SurgeryClassification;
-use HUAC\Models\Views\Surgeries;
 use HUAC\Services\CreateSurgeryService;
-use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use InvalidArgumentException;
 
 class SurgeryController extends Controller
@@ -33,21 +34,40 @@ class SurgeryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
+        if (Gate::denies('surgeries.index')) {
+            $message = array(
+                'title' => 'Acesso negado!',
+                'text' => 'Você não possui permissão para acessar esta área do sistema!',
+                'type' => 'warning',
+            );
+            session()->flash('message', $message);
+            return redirect()->back();
+        }
         return view('surgeries.index');
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
         try{
+            if (Gate::denies('surgeries.create')) {
+                $message = array(
+                    'title' => 'Acesso negado!',
+                    'text' => 'Você não possui permissão para acessar esta área do sistema!',
+                    'type' => 'warning',
+                );
+                session()->flash('message', $message);
+                return redirect()->back();
+            }
+
             $procedures = Procedure::all();
             $classifications = SurgeryClassification::all();
             $anesthetics = Anesthesia::all();
@@ -59,7 +79,7 @@ class SurgeryController extends Controller
                 'anesthetics'     => $anesthetics,
                 'surgeons'        => $surgeons
             ]);
-        }catch (\Exception $exception){
+        }catch (Exception $exception){
             if ($exception instanceof InvalidArgumentException)
                 return ViewNotFoundException::forView();
         }
@@ -68,11 +88,21 @@ class SurgeryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param SurgeryRequest $request
+     * @return Response
      */
     public function store(SurgeryRequest $request)
     {
+        if (Gate::denies('surgeries.create')) {
+            $message = array(
+                'title' => 'Acesso negado!',
+                'text' => 'Você não possui permissão para acessar esta área do sistema!',
+                'type' => 'warning',
+            );
+            session()->flash('message', $message);
+            return redirect()->back();
+        }
+
         $surgery = $this->surgeryService->store($request);
 
         $message = array(
@@ -87,24 +117,23 @@ class SurgeryController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param Surgery $surgery
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit(Surgery $surgery)
     {
+        if (Gate::denies('surgeries.update')) {
+            $message = array(
+                'title' => 'Acesso negado!',
+                'text' => 'Você não possui permissão para acessar esta área do sistema!',
+                'type' => 'warning',
+            );
+            session()->flash('message', $message);
+            return redirect()->back();
+        }
+
         $procedures = Procedure::all();
         $classifications = SurgeryClassification::all();
         $anesthetics = Anesthesia::all();
@@ -124,25 +153,24 @@ class SurgeryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param SurgeryRequest $request
+     * @param Surgery $surgery
+     * @return Response
      */
     public function update(SurgeryRequest $request, Surgery $surgery)
     {
+        if (Gate::denies('surgeries.update')) {
+            $message = array(
+                'title' => 'Acesso negado!',
+                'text' => 'Você não possui permissão para acessar esta área do sistema!',
+                'type' => 'warning',
+            );
+            session()->flash('message', $message);
+            return redirect()->back();
+        }
+
         $surgery = $this->surgeryService->update($request, $surgery);
 
         return redirect()->route('surgeries.index');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

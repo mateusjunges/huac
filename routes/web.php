@@ -5,10 +5,13 @@ use HUAC\Http\Controllers\ACL\GroupsController;
 use HUAC\Http\Controllers\ACL\UserGroupsController;
 use HUAC\Http\Controllers\ACL\UserPermissionsController;
 use HUAC\Http\Controllers\ACL\UsersController;
+use HUAC\Http\Controllers\Auth\LoginController;
 use HUAC\Http\Controllers\CME\ConfirmMaterialsController;
 use HUAC\Http\Controllers\Patients\PatientController;
 use HUAC\Http\Controllers\Patients\PatientSurgeryController;
 use HUAC\Http\Controllers\Procedures\ProceduresController;
+use HUAC\Http\Controllers\Reports\AverageProcedureDuration;
+use HUAC\Http\Controllers\Reports\SurgeriesReportController;
 use HUAC\Http\Controllers\Schedule\ConfirmedMaterialsScheduleController;
 use HUAC\Http\Controllers\Surgeries\MySurgeriesController;
 use HUAC\Http\Controllers\Surgeries\OnGoing\OnGoingSurgeriesController;
@@ -26,14 +29,21 @@ Route::group(['namespace' => 'HUAC\Http\Controllers'], function () {
     Auth::routes(['register' => false]);
 });
 
-Route::get('/', function () {
-    return view('welcome');
+Route::prefix('login/{driver}')->group(function() {
+    Route::get('/', [LoginController::class, 'redirectToProvider'])
+        ->name('login.socialite');
+    Route::get('callback', [LoginController::class, 'handleProviderCallback'])
+        ->name('login.socialite.callback');
 });
-
-Route::get('home', [HomeController::class, 'index'])->name('home');
 
 /* Routes that needs authentication */
 Route::group(['middleware' => 'auth'], function (){
+    Route::get('/', function () {
+        return view('welcome');
+    });
+
+    Route::get('home', [HomeController::class, 'index'])->name('home');
+
     Route::resource('surgeries', SurgeryController::class, [
         'except' => ['show']
     ]);
@@ -83,4 +93,14 @@ Route::group(['middleware' => 'auth'], function (){
     });
 
     Route::resource('procedures', ProceduresController::class);
+
+    Route::prefix('reports')->group(function() {
+        Route::prefix('surgeries')->group(function() {
+           Route::get('/', SurgeriesReportController::class)->name('reports.surgeries');
+        });
+        Route::prefix('procedures')->group(function () {
+           Route::get('average-duration', AverageProcedureDuration::class)
+               ->name('reports.procedures.average-duration');
+        });
+    });
 });

@@ -27,6 +27,7 @@ use HUAC\Http\Controllers\Api\Patients\Surgeries\PatientSurgeriesDataController;
 use HUAC\Http\Controllers\Api\Procedures\ProceduresColumnsController;
 use HUAC\Http\Controllers\Api\Procedures\ProceduresController;
 use HUAC\Http\Controllers\Api\Procedures\ProceduresDataController;
+use HUAC\Http\Controllers\Api\Reports\ProcedureAverageDurationController;
 use HUAC\Http\Controllers\Api\Schedule\ConfirmedMaterialsEventsController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeCreateController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeUpdateController;
@@ -51,6 +52,7 @@ use HUAC\Http\Controllers\Api\SurgeryCenter\OnGoing\SurgicalRoomController;
 use HUAC\Http\Controllers\Api\SurgeryCenter\OnGoing\TimeoutController;
 use HUAC\Http\Controllers\Api\SurgeryCenter\SurgeryCenterSurgeriesColumnsController;
 use HUAC\Http\Controllers\Api\SurgeryCenter\SurgeryCenterSurgeriesDataController;
+use HUAC\Http\Controllers\Api\SurgicalRooms\UpdateSurgicalRoomStatusController;
 use HUAC\Http\Controllers\Api\WaitingList\WaitingListController;
 use HUAC\Http\Controllers\Api\WaitingList\WaitingListSurgeriesColumnsController;
 use HUAC\Http\Controllers\Api\WaitingList\WaitingListSurgeriesDataController;
@@ -248,4 +250,13 @@ Route::middleware(['auth:api'])->group(function () {
           Route::delete('/', [ProceduresController::class, 'destroy']);
        });
     });
+
+    Route::prefix('reports')->group(function () {
+        Route::prefix('procedures')->group(function () {
+           Route::get('columns', [ProcedureAverageDurationController::class, 'columns']);
+           Route::get('data', [ProcedureAverageDurationController::class, 'data']);
+        });
+    });
+
+    Route::put('rooms/{room}/status', UpdateSurgicalRoomStatusController::class);
 });

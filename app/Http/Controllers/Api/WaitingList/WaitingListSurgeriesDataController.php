@@ -4,7 +4,7 @@ namespace HUAC\Http\Controllers\Api\WaitingList;
 
 use HUAC\Enums\Status;
 use HUAC\Models\Surgery;
-use HUAC\Models\Views\Surgeries;
+use HUAC\Models\Views\WaitingListSurgeries as Surgeries;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -17,9 +17,9 @@ class WaitingListSurgeriesDataController
             ++$i => "patient_name",
             ++$i => "medical_record",
         );
-        if(Gate::allows('surgeries.update'))
+        if(Gate::allows('waiting-list.update'))
             $columns += array(++$i => 'surgery_id');
-        if(Gate::allows('surgeries.delete'))
+        if(Gate::allows('waiting-list.delete'))
             $columns += array(++$i => 'surgery_id');
         $columns += array(
             ++$i => 'head_surgeon_name',

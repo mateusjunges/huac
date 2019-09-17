@@ -4,7 +4,7 @@ namespace HUAC\Http\Controllers\Api\Patients;
 
 use HUAC\Models\Patient;
 use Illuminate\Http\Request;
-use Gate;
+use Illuminate\Support\Facades\Gate;
 
 class PatientsDataController
 {
@@ -18,7 +18,7 @@ class PatientsDataController
             $columns += array(++$i => 'id');
         if (Gate::allows('patients.delete'))
             $columns += array(++$i => 'id');
-        if (Gate::allows('patients.view-surgeries'))
+        if (Gate::allows('patients.surgeries'))
             $columns += array(++$i => 'id');
 
         $columns += array(
@@ -89,7 +89,7 @@ class PatientsDataController
                                                                 id='delete{$patient->id}'>
                                                             <i class='fa fa-trash'></i>
                                                         </button>";
-                if (Gate::allows('patients.view-surgeries'))
+                if (Gate::allows('patients.surgeries'))
                     $nestedData['Ver cirurgias'] = "<a href='{$view_surgeries}'>
                                                         <button class='btn btn-default btn-sm'
                                                                 data-placement='top'

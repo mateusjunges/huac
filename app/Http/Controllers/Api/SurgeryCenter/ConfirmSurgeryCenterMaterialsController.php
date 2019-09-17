@@ -4,8 +4,8 @@ namespace HUAC\Http\Controllers\Api\SurgeryCenter;
 
 use Exception;
 use HUAC\Actions\ConfirmSurgeryCenterMaterials;
-use HUAC\Events\MaterialsConfirmedBySurgeryCenter;
 use HUAC\Models\Surgery;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class ConfirmSurgeryCenterMaterialsController
@@ -17,11 +17,22 @@ class ConfirmSurgeryCenterMaterialsController
     public function __invoke(Surgery $surgery)
     {
         try {
+            if (Gate::denies('surgery-center.confirm-materials')) {
+                return response()->json([
+                    'data' => [
+                        'swal' => [
+                            'icon' => 'warning',
+                            'title' => 'Acesso negado!',
+                            'text'  => 'Você não tem permissão para realizar esta ação no sistema!',
+                            'timer' => 5000,
+                        ]
+                    ]
+                ], Response::HTTP_UNAUTHORIZED);
+            }
+
             $observation = "Os materiais para esta cirurgia encontram-se disponíveis no Centro Cirúrgico.";
 
             $log = ConfirmSurgeryCenterMaterials::execute($surgery, $observation);
-
-            event(new MaterialsConfirmedBySurgeryCenter($surgery));
 
             return response()->json([
                 'data' => [

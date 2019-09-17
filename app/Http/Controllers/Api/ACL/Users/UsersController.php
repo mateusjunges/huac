@@ -5,6 +5,7 @@ namespace HUAC\Http\Controllers\Api\ACL\Users;
 
 use HUAC\Http\Resources\UsersResource;
 use HUAC\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class UsersController
@@ -28,6 +29,16 @@ class UsersController
      */
     public function destroy(User $user)
     {
+        if (Gate::denies('users.delete')) {
+            return response()->json([
+                'code' => Response::HTTP_UNAUTHORIZED,
+                'icon' => 'warning',
+                'title' => 'Acesso negado!',
+                'text'  => 'Você não tem permissão para realizar esta ação no sistema!',
+                'timer' => 5000,
+            ]);
+        }
+
         $user->delete();
 
         return response()->json([

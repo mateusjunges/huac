@@ -6,12 +6,26 @@ use Carbon\Carbon;
 use HUAC\Actions\VerifyExistingSchedulesAtRoom;
 use HUAC\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class EventDateController
 {
     public function update(Request $request, Event $event)
     {
+        if (Gate::denies('events.update')) {
+            return response()->json([
+                'data' => [
+                    'swal' => [
+                        'icon' => 'warning',
+                        'title' => 'Acesso negado!',
+                        'text'  => 'Você não tem permissão para realizar esta ação no sistema!',
+                        'timer' => 5000,
+                    ]
+                ]
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
         $event_start_at = $event->start_at;
         $event_end_at = $event->end_at;
 

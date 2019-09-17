@@ -21,6 +21,7 @@ $(document).ready(function() {
                     headers: headers,
                     method: 'post',
                     success: function(response, status, xhr) {
+                        console.log(response);
                         swal({
                             icon: response.data.swal.icon,
                             title: response.data.swal.title,

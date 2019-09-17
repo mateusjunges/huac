@@ -68,7 +68,7 @@ class CMESurgeriesDataController
 
                 $nestedData['Paciente'] = $surgery->patient_name;
                 $nestedData['Prontuário'] = $surgery->medical_record;
-                if (Gate::allows('surgeries.edit'))
+                if (Gate::allows('surgeries.update'))
                     $nestedData['Editar'] = "<a href='{$edit}'>
                                                             <button class='btn btn-primary btn-sm' 
                                                                     data-toggle='tooltip'

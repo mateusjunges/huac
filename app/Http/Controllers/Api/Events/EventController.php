@@ -8,8 +8,10 @@ use HUAC\Events\SurgeryScheduledEvent;
 use HUAC\Models\Event;
 use HUAC\Models\Log;
 use HUAC\Models\Surgery;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class EventController
@@ -18,11 +20,24 @@ class EventController
     /**
      * Store a newly created resource.
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function store(Request $request)
     {
         try {
+            if (Gate::denies('events.create')) {
+                return response()->json([
+                    'data' => [
+                        'swal' => [
+                            'icon' => 'warning',
+                            'title' => 'Acesso negado!',
+                            'text'  => 'Você não tem permissão para realizar esta ação no sistema!',
+                            'timer' => 5000,
+                        ]
+                    ]
+                ], Response::HTTP_UNAUTHORIZED);
+            }
+
             $request->request->set('start', str_replace('T', ' ', $request->input('event.start')));
             $request->request->set('end', str_replace('T', ' ', $request->input('event.end')));
 
@@ -83,11 +98,22 @@ class EventController
     /**
      * @param Request $request
      * @param Event $event
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function update(Request $request, Event $event)
     {
         try {
+            if (Gate::denies('events.update')) {
+                return response()->json([
+                    'data' => [
+                        'icon' => 'warning',
+                        'title' => 'Acesso negado!',
+                        'text'  => 'Você não tem permissão para realizar esta ação no sistema!',
+                        'timer' => 5000,
+                    ]
+                ], Response::HTTP_UNAUTHORIZED);
+            }
+
             $request->request->set('start', str_replace('T', ' ', $request->input('event.start')));
             $request->request->set('end', str_replace('T', ' ', $request->input('event.end')));
 
@@ -148,11 +174,24 @@ class EventController
 
     /**
      * @param Event $event
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      * @throws \Exception
      */
     public function destroy(Event $event)
     {
+        if (Gate::denies('events.delete')) {
+            return response()->json([
+                'data' => [
+                    'swal' => [
+                        'icon' => 'warning',
+                        'title' => 'Acesso negado!',
+                        'text'  => 'Você não tem permissão para realizar esta ação no sistema!',
+                        'timer' => 5000,
+                    ]
+                ]
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
          $surgery = $event->surgery;
          $event->delete();
 

@@ -2,7 +2,7 @@
 
 namespace HUAC\Http\Controllers\Api\Patients\Surgeries;
 
-use Gate;
+use Illuminate\Support\Facades\Gate;
 use HUAC\Models\Patient;
 use HUAC\Models\Surgery;
 use HUAC\Models\Views\Surgeries;

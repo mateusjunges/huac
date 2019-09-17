@@ -3,6 +3,7 @@
 namespace HUAC\Http\Controllers\Api\Patients;
 
 use HUAC\Models\Patient;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class PatientsController
@@ -14,6 +15,19 @@ class PatientsController
      */
     public function destroy(Patient $patient)
     {
+        if (Gate::denies('patients.delete')) {
+            return response()->json([
+                'data' => [
+                    'swal' => [
+                        'icon' => 'warning',
+                        'title' => 'Acesso negado!',
+                        'text'  => 'Você não tem permissão para realizar esta ação no sistema!',
+                        'timer' => 5000,
+                    ]
+                ]
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
         $surgeries = $patient->surgeries()->get();
         foreach ($surgeries as $surgery) {
             $surgery->events()->delete();

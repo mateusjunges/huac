@@ -4,6 +4,8 @@ namespace HUAC\Http\Controllers\Auth;
 
 use HUAC\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Lang;
 
 class ResetPasswordController extends Controller
 {

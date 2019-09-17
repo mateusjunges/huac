@@ -15,14 +15,14 @@
 <font face="Arial, Helvetica" color="#000000">
 anesthetics.sql</font>
 </center></td></tr></table>
-<pre><span class="s0">CREATE </span>SEQUENCE anesthetics_id_seq;
+<pre><span class="s0">CREATE SEQUENCE </span>anesthetics_id_seq;
 <span class="s0">CREATE TABLE public</span>.anesthetics
 (
-    id <span class="s0">integer NOT NULL DEFAULT </span>nextval(<span class="s2">'anesthetics_id_seq'</span>::regclass),
+    id <span class="s0">integer NOT NULL DEFAULT </span>nextval(<span class="s2">'anesthetics_id_seq'</span>::<span class="s0">regclass</span>),
     <span class="s0">name character varying</span>(<span class="s3">70</span>) <span class="s0">COLLATE </span>pg_catalog.&quot;default&quot; <span class="s0">NOT NULL</span>,
-    deleted_at <span class="s0">timestamp</span>(<span class="s3">0</span>) without <span class="s0">time zone</span>,
-    created_at <span class="s0">timestamp</span>(<span class="s3">0</span>) without <span class="s0">time zone</span>,
-    updated_at <span class="s0">timestamp</span>(<span class="s3">0</span>) without <span class="s0">time zone</span>,
+    deleted_at <span class="s0">timestamp</span>(<span class="s3">0</span>) <span class="s0">without time zone</span>,
+    created_at <span class="s0">timestamp</span>(<span class="s3">0</span>) <span class="s0">without time zone</span>,
+    updated_at <span class="s0">timestamp</span>(<span class="s3">0</span>) <span class="s0">without time zone</span>,
     <span class="s0">CONSTRAINT </span>anesthetics_pkey <span class="s0">PRIMARY KEY </span>(id),
     <span class="s0">CONSTRAINT </span>anesthetics_name_unique <span class="s0">UNIQUE </span>(<span class="s0">name</span>)
 
