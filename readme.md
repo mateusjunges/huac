@@ -17,12 +17,12 @@ composer install
 ```bash
 cp .env.example .env
 ```
-- Se você quiser utilizar autenticação com o google, deve fazer um cadastro na api de autenticação (OUATH)
+- Caso deseje utilizar autenticação com o google, é ness um cadastro na api de autenticação (OUATH)
 com o nome do seu host e obter as chaves de autenticação.
 Para usar envio de email para redefinição de senha, cadastre um servidor de emails no arquivo.
-Está pré-configurado para o gmail, mas você precisa permitir o acesso de aplicativos menos seguros a sua conta.
+Está pré-configurado para o gmail, mas caso utilize esta opção, é necessário permitir o acesso de aplicativos menos seguros a conta.
 - Modifique o arquivo `.env` com suas configurações de banco de dados, que já deve ter sido criado previamente,
-o nome do seu localhost.
+o nome do seu localhos e os dados de autenticação na api do google.
 Este é um exemplo de como deve ficar o arquivo `.env` após as configurações necessárias:
 
 ```txt
