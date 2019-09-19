@@ -18,8 +18,6 @@ class Event extends Model
         'color',
         'start_at',
         'end_at',
-        'doctor_start_at',
-        'doctor_end_at',
         'doctor_started_at',
         'doctor_ended_at',
         'surgery_id',
