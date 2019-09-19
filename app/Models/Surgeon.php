@@ -116,6 +116,8 @@ class Surgeon extends Model
                         ($start->greaterThan($eventStartAt) and $start->lessThan($eventEndAt))
                         or
                         ($end->greaterThan($eventStartAt) and $end->lessThan($eventEndAt))
+                        or
+                        ($start->equalTo($eventStartAt) and $end->equalTo($eventEndAt))
                     )
                         return false;
                 }
