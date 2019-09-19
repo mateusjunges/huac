@@ -30,7 +30,7 @@ class RepaiController
                 Log::createFor(
                     $event->surgery,
                     'O paciente entrou na REPAI',
-                    Status::PATIENT_AT_REPAI,
+                    Status::PATIENT_AT_REPAI
                 );
 
                 event(new EntranceAtRepai($event));
