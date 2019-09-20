@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
 
-class TestDatabaseConnection extends TestCase
+class DatabaseConnectionTest extends TestCase
 {
   public function test_it_is_connected_to_database()
   {

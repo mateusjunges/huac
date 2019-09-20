@@ -12,7 +12,6 @@ class ConfirmCMEMaterials
     /**
      * @param Surgery $surgery
      * @param $observation
-     * @param $status
      * @return mixed
      */
     public static function execute(Surgery $surgery, $observation)
