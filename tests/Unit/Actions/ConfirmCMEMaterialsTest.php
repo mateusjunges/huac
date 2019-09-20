@@ -14,6 +14,8 @@ class ConfirmCMEMaterialsTest extends TestCase
 {
     public function test_it_can_confirm_the_CME_materials()
     {
+        $this->withoutEvents();
+
         $user = User::first();
 
         Auth::login($user);

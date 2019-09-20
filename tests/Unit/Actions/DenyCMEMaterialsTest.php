@@ -15,6 +15,8 @@ class DenyCMEMaterialsTest extends TestCase
 {
     public function test_it_can_deny_CME_materials()
     {
+        $this->withoutEvents();
+
         $user = User::first();
 
         Auth::login($user);

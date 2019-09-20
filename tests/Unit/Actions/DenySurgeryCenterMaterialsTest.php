@@ -15,6 +15,8 @@ class DenySurgeryCenterMaterialsTest extends TestCase
 {
     public function test_it_can_deny_surgery_center_materials()
     {
+        $this->withoutEvents();
+        
         $user = User::first();
 
         Auth::login($user);

@@ -10,6 +10,8 @@ class UpdateSurgicalRoomStatusTest extends TestCase
 {
     public function test_it_can_update_the_surgical_room_status()
     {
+        $this->withoutEvents();
+
         $room = SurgicalRoom::first();
         $this->assertTrue($room->available);
 
