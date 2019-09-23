@@ -78,6 +78,7 @@
                                 <td>
                                     <button class="btn btn-danger delete"
                                             data-type="sala"
+                                            data-route="rooms"
                                             data-name="{{ $room->name }}"
                                             value="{{ csrf_token() }}"
                                             data-id="{{ $room->id }}"
