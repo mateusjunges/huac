@@ -7,16 +7,17 @@ $(document).ready(function() {
     };
     const HTTP_OK = 200;
 
-    var events = [];
-    var currentEventId = null;
-    var currentSurgeryId = null;
-    var currentEvent = null;
-    var surgeonIsAvailable = false;
-    var existEventsAtSameTime = false;
-    var logId = -1;
-    var usingReservedPeriod = null;
-    var config = $("#event-config");
-    var fullCalendar = $("#fullCalendar");
+    let events = [];
+    let currentEventId = null;
+    let currentSurgeryId = null;
+    let currentEvent = null;
+    let surgeonIsAvailable = false;
+    let existEventsAtSameTime = false;
+    let logId = -1;
+    let usingReservedPeriod = null;
+    let config = $("#event-config");
+    let fullCalendar = $("#fullCalendar");
+    let onGoingSurgery = false;
 
     /**
      * Retrieve the events scheduled in the specified room.
@@ -46,6 +47,23 @@ $(document).ready(function() {
         });
     }
 
+    async function checkIfTheSurgeryHasStarted(eventId) {
+        $.ajax({
+            url: `/api/scheduling/check-for-on-going-surgery/${eventId}/`,
+            method: 'get',
+            headers: headers,
+            async: false,
+            success: function(response, status, xhr) {
+                if (xhr.status === HTTP_OK) {
+                    onGoingSurgery = response.data.on_going;
+                } else onGoingSurgery = false;
+            }
+        })
+    }
+
+    /**
+     * Refresh fullCalendar events.
+     */
     function refreshEvents() {
         console.log("refreshEvents");
         let room = config.data('room');
@@ -518,6 +536,19 @@ $(document).ready(function() {
          */
         eventDrop: async function (event, delta, revertFunc) {
             currentEventId = event.id;
+
+            await checkIfTheSurgeryHasStarted(currentEventId);
+
+            if (onGoingSurgery) {
+                revertFunc();
+                swal({
+                    icon: 'warning',
+                    title: 'Ops...',
+                    text: 'Você não pode reagendar uma cirurgia que já começou!',
+                    timer: 5000,
+                });
+                return;
+            }
 
             if (await
                 swal({
