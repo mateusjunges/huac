@@ -24,7 +24,7 @@ class ConfirmSurgeryCenterMaterialsController
                             'icon' => 'warning',
                             'title' => 'Acesso negado!',
                             'text'  => 'Você não tem permissão para realizar esta ação no sistema!',
-                            'timer' => 5000,
+                            'timer' => 1000,
                         ]
                     ]
                 ], Response::HTTP_UNAUTHORIZED);
@@ -40,7 +40,7 @@ class ConfirmSurgeryCenterMaterialsController
                         'icon' => 'success',
                         'title' => 'Sucesso!',
                         'text' => 'Materiais confirmados com sucesso!!',
-                        'timer' => 5000,
+                        'timer' => 1000,
                     ],
                 ],
             ], Response::HTTP_OK);
@@ -51,7 +51,7 @@ class ConfirmSurgeryCenterMaterialsController
                         'icon' => 'error',
                         'title' => 'Ops...',
                         'text' => 'Algo deu errado! Entre em contato com o administrador do sistema!',
-                        'timer' => 5000,
+                        'timer' => 1000,
                     ],
                     'exception' => [
                         'code' => $exception->getCode(),

@@ -29,7 +29,7 @@ class DenySurgeryCenterMaterialsController
                             'icon' => 'warning',
                             'title' => 'Acesso negado!',
                             'text'  => 'Você não tem permissão para realizar esta ação no sistema!',
-                            'timer' => 5000,
+                            'timer' => 1000,
                         ]
                     ]
                 ], Response::HTTP_UNAUTHORIZED);
