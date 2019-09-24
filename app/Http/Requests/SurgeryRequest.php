@@ -29,7 +29,7 @@ class SurgeryRequest extends FormRequest
             'medical_record'            => 'required',
             'mother_name'               => 'required|full_name|min:7',
             'gender'                    => 'required|in:M,F,O',
-            'birthday_at'               => 'required|date',
+            'birthday_at'               => 'required|date|before:today',
             'procedure_id'              => 'required',
             'surgery_classification_id' => 'required',
             'anesthesia_id'             => 'required',
@@ -74,7 +74,8 @@ class SurgeryRequest extends FormRequest
             'assistant_surgeon.different' => 'O cirurgião auxiliar e principal não podem ser os mesmos!',
             '*.unique'                    => 'Este :attribute já está em uso!',
             'gender.in'                   => 'Por favor, selecione um dos valores listados!',
-            '*.min'                       => 'Por favor, informe :min caracteres!'
+            '*.min'                       => 'Por favor, informe :min caracteres!',
+            'birthday_at.before'          => 'A data de nascimento deve ser anterior a hoje!',
         ];
     }
 }

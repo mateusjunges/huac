@@ -16,3 +16,5 @@ yarn-error.log
 .local/
 .bash_history
 /.rnd
+/public/js/app.js
+/public/css/app.css
