@@ -17,3 +17,5 @@ package-json.lock
 .local/
 .bash_history
 /.rnd
+/public/js/app.js
+/public/css/app.css
