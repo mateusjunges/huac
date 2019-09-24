@@ -7,6 +7,24 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property mixed entrance_at_surgical_center
+ * @property mixed title
+ * @property mixed color
+ * @property mixed start_at
+ * @property mixed end_at
+ * @property mixed surgery_id
+ * @property mixed surgical_room_id
+ * @property mixed entrance_at_surgical_room
+ * @property mixed time_out_at
+ * @property mixed anesthetic_induction
+ * @property mixed surgeon_started_at
+ * @property mixed surgeon_ended_at
+ * @property mixed exit_surgical_room
+ * @property mixed entrance_repai
+ * @property mixed exit_repai
+ * @property mixed exit_surgery_center
+ */
 class Event extends Model
 {
     use SoftDeletes;

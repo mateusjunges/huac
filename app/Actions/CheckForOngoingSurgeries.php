@@ -2,18 +2,12 @@
 
 namespace HUAC\Actions;
 
+use HUAC\Models\Event;
+
 class CheckForOngoingSurgeries
 {
-    /**
-    * CheckForOngoingSurgeries constructor
-    */
-    public function __construct()
+    public static function execute(Event $event)
     {
-        //
-    }
-
-    public function execute()
-    {
-        //
+        return $event->entrance_at_surgical_center !== null;
     }
 }
