@@ -29,6 +29,7 @@ use HUAC\Http\Controllers\Api\Procedures\ProceduresController;
 use HUAC\Http\Controllers\Api\Procedures\ProceduresDataController;
 use HUAC\Http\Controllers\Api\Reports\ProcedureAverageDurationController;
 use HUAC\Http\Controllers\Api\Schedule\ConfirmedMaterialsEventsController;
+use HUAC\Http\Controllers\Api\Scheduling\CheckForOnGoingSurgeryController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeCreateController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeUpdateController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeUpdateWithConfirmedMaterials;
@@ -210,6 +211,7 @@ Route::middleware(['auth:api'])->group(function () {
        Route::get('verify-existing-schedules-before-update', VerifyExistingSchedulesBeforeUpdateController::class);
        Route::get('verify-existing-schedules-before-create', VerifyExistingSchedulesBeforeCreateController::class);
        Route::get('verify-existing-schedules-before-update-on-confirmed-materials', VerifyExistingSchedulesBeforeUpdateWithConfirmedMaterials::class);
+       Route::get('check-for-on-going-surgery/{event}', CheckForOnGoingSurgeryController::class);
     });
 
     /**
