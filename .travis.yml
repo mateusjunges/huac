@@ -3,11 +3,19 @@ language: php
 php:
   - 7.2
   - 7.3
+  - 7.4snapshot
+
+services:
+  - postgresql
 
 before_script:
+  - psql -c "create database huac_tests;" -U postgres
+  - psql -c "create USER test WITH PASSWORD 'test';" -U postgres
   - travis_retry composer self-update
   - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-source
-  - cp .env.example .env
+  - cp .env.ci .env
+  - php artisan migrate
+  - php artisan db:seed
   - php artisan key:generate
 
 script:
