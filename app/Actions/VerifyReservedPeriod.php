@@ -25,8 +25,10 @@ class VerifyReservedPeriod
         if (
             ($morningReservationStartsAt->greaterThan($start) and $morningReservationStartsAt->lessThan($end))
             or ($morningReservationEndsAt->greaterThan($start) and $morningReservationEndsAt->lessThan($end))
-            or ($afternoonReservationStartsAt->greaterThan($start) and $afternoonReservationEndsAt->lessThan($end)
-            or ($afternoonReservationEndsAt->greaterThan($start) and $afternoonReservationEndsAt->lessThan($end)))
+            or ($afternoonReservationStartsAt->greaterThan($start) and $afternoonReservationEndsAt->lessThan($end))
+            or ($afternoonReservationEndsAt->greaterThan($start) and $afternoonReservationEndsAt->lessThan($end))
+            or ($afternoonReservationStartsAt->equalTo($start) and $afternoonReservationEndsAt->equalTo($end))
+            or ($morningReservationStartsAt->equalTo($start) and $morningReservationEndsAt->equalTo($end))
         )
             return true;
         return false;

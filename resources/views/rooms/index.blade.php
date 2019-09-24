@@ -76,7 +76,13 @@
                             @endcan
                             @can('rooms.delete')
                                 <td>
-                                    <button class="btn btn-danger delete">
+                                    <button class="btn btn-danger delete"
+                                            data-type="sala"
+                                            data-route="rooms"
+                                            data-name="{{ $room->name }}"
+                                            value="{{ csrf_token() }}"
+                                            data-id="{{ $room->id }}"
+                                            data-gender="a">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </td>

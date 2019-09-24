@@ -53,6 +53,7 @@ use HUAC\Http\Controllers\Api\SurgeryCenter\OnGoing\SurgicalRoomController;
 use HUAC\Http\Controllers\Api\SurgeryCenter\OnGoing\TimeoutController;
 use HUAC\Http\Controllers\Api\SurgeryCenter\SurgeryCenterSurgeriesColumnsController;
 use HUAC\Http\Controllers\Api\SurgeryCenter\SurgeryCenterSurgeriesDataController;
+use HUAC\Http\Controllers\Api\SurgicalRooms\DeleteSurgicalRoom;
 use HUAC\Http\Controllers\Api\SurgicalRooms\UpdateSurgicalRoomStatusController;
 use HUAC\Http\Controllers\Api\WaitingList\WaitingListController;
 use HUAC\Http\Controllers\Api\WaitingList\WaitingListSurgeriesColumnsController;
@@ -261,4 +262,5 @@ Route::middleware(['auth:api'])->group(function () {
     });
 
     Route::put('rooms/{room}/status', UpdateSurgicalRoomStatusController::class);
+    Route::delete('rooms/{room}', DeleteSurgicalRoom::class);
 });
