@@ -536,7 +536,7 @@ $(document).ready(function() {
          */
         eventDrop: async function (event, delta, revertFunc) {
             currentEventId = event.id;
-            
+
             await checkIfTheSurgeryHasStarted(currentEventId);
 
             if (onGoingSurgery) {
