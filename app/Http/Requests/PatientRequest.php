@@ -33,7 +33,7 @@ class PatientRequest extends FormRequest
             'name'           => 'required|min:7|full_name',
             'medical_record' => 'required|unique:patients,medical_record,'.$patient,
             'mother_name'    => 'required|min:7|full_name',
-            'birthday_at'    => 'required|date',
+            'birthday_at'    => 'required|date|before:today',
             'gender'         => 'required|in:M,O,F'
         ];
     }
@@ -58,12 +58,13 @@ class PatientRequest extends FormRequest
     public function messages()
     {
         return [
-            '*.required'       => 'O campo :attribute é obrigatório!',
-            '*.full_name'      => 'Você deve informar o nome completo!',
-            '*.min'            => 'O campo :attribute requer :min caracteres!',
-            'birthday_at.date' => 'Informe uma data válida!',
-            'gender.in'        => 'Selecione uma das opções da lista!',
-            '*unique'          => 'Este :attribute já está cadastrado para outro paciente!',
+            '*.required'         => 'O campo :attribute é obrigatório!',
+            '*.full_name'        => 'Você deve informar o nome completo!',
+            '*.min'              => 'O campo :attribute requer :min caracteres!',
+            'birthday_at.date'   => 'Informe uma data válida!',
+            'gender.in'          => 'Selecione uma das opções da lista!',
+            '*unique'            => 'Este :attribute já está cadastrado para outro paciente!',
+            'birthday_at.before' => 'A data de nascimento deve ser anterior a hoje!'
         ];
     }
 }
