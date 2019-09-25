@@ -12,6 +12,8 @@
                         <div class="form-group">
                             <label for="report-starts-at">Início em:</label>
                             <input type="date"
+                                   v-model="filter.starting_at"
+                                   v-on:blur="changedStartingAt"
                                    id="report-starts-at"
                                    class="form-control">
                         </div>
@@ -20,7 +22,9 @@
                         <div class="form-group">
                             <label for="report-ends-at">Término em:</label>
                             <input type="date"
+                                   v-model="filter.ending_at"
                                    id="report-ends-at"
+                                   v-on:blur="changedEndingAt"
                                    class="form-control">
                         </div>
                     </div>
@@ -37,6 +41,10 @@
 
 <script>
     import Chart from 'chart.js'
+    import axios from 'axios'
+
+    const HTTP_OK = 200;
+    let c = null;
 
     export default {
         name: "SurgeriesReport",
@@ -53,11 +61,33 @@
                     scheduled: 0,
                     withComplications: 0,
                     toBeScheduled: 0
+                },
+                filter: {
+                    starting_at: '',
+                    ending_at: ''
                 }
             }
         },
 
         methods: {
+            changedStartingAt() {
+                axios.get(`/api/reports/`)
+                    .then(response => {
+                        if (response.status === HTTP_OK) {
+                            this.chart.finished = response.chart.finished;
+                            this.chart.scheduled = response.chart.scheduled;
+                            this.chart.toBeScheduled = response.chart.to_be_scheduled;
+                            this.chart.withComplications = response.chart.with_complications;
+                        }
+                    });
+                c.update();
+            },
+
+            changedEndingAt() {
+                console.log('ok');
+            }
+        },
+        computed: {
 
         },
         created() {
@@ -67,8 +97,7 @@
             this.chart.toBeScheduled = this.surgeriesToBeScheduled;
         },
         mounted() {
-            console.log(this.chart.finished);
-            const c = new Chart('surgeriesChart', {
+            c = new Chart('surgeriesChart', {
                 type: 'pie',
                 data: {
                     labels: ['Cirurgias concluídas', 'Cirurgias agendadas', 'Intercorrências cirúrgicas', 'Aguardando agendamento'],
