@@ -71,13 +71,16 @@
 
         methods: {
             changedStartingAt() {
-                axios.get(`/api/reports/`)
+                axios.get(`/api/reports/`, {
+                    starting_at: this.filter.starting_at,
+                    ending_at: this.filter.ending_at,
+                })
                     .then(response => {
                         if (response.status === HTTP_OK) {
-                            this.chart.finished = response.chart.finished;
-                            this.chart.scheduled = response.chart.scheduled;
-                            this.chart.toBeScheduled = response.chart.to_be_scheduled;
-                            this.chart.withComplications = response.chart.with_complications;
+                            this.chart.finished = response.data.chart.finished;
+                            this.chart.scheduled = response.data.chart.scheduled;
+                            this.chart.toBeScheduled = response.data.chart.to_be_scheduled;
+                            this.chart.withComplications = response.data.chart.with_complications;
                         }
                     });
                 c.update();
