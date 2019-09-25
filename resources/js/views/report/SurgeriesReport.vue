@@ -106,7 +106,7 @@
                     labels: ['Cirurgias concluídas', 'Cirurgias agendadas', 'Intercorrências cirúrgicas', 'Aguardando agendamento'],
                     datasets: [
                         { // one line graph
-                            label: 'Number of Moons',
+                            label: 'Surgeries',
                             //data: Cirurgias concluídas, cirurgias agendadas, intercorrencias, a ser agendado
                             data: [this.chart.finished, this.chart.scheduled, this.chart.withComplications, this.chart.toBeScheduled],
                             backgroundColor: [
