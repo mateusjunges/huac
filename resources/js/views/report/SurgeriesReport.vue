@@ -6,6 +6,28 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-md-8 col-md-pull-2 col-md-push-2">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="report-starts-at">Início em:</label>
+                            <input type="date"
+                                   id="report-starts-at"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="report-ends-at">Término em:</label>
+                            <input type="date"
+                                   id="report-ends-at"
+                                   class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-12">
                 <canvas id="surgeriesChart"></canvas>
             </div>

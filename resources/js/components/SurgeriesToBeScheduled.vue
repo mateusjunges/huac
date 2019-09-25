@@ -3,6 +3,10 @@
         <div class="box box-solid">
             <div class="box-header with-border">
                 <h4 class="box-title">Novas Cirurgias</h4>
+                <br>
+                <p>
+                    <b>Arraste o paciente para o dia desejado no calendário!</b>
+                </p>
             </div>
             <div class="box-body">
                 <div id="external-events">
