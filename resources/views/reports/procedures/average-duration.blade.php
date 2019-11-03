@@ -15,6 +15,23 @@
     </div>
     <div class="row">
         <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="starting-at">Selecione o início:</label>
+                    <input type="date"
+                           id="starting-at"
+                           placeholder="Selecione o início" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <label for="ending-at">Selecione o fim:</label>
+                    <input type="date"
+                           id="ending-at"
+                           placeholder="Selecione o fim:" class="form-control">
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div class="col-md-12">
             <table class="table table-responsive table-hover dataTable">
                 <thead>
                     <tr>

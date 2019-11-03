@@ -11,6 +11,9 @@ String.prototype.toHHMMSS = function () {
     return hours+':'+minutes+':'+seconds;
 };
 
+let starting_at = null;
+let ending_at = null;
+
 $(document).ready(function() {
     const headers = {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -28,7 +31,7 @@ $(document).ready(function() {
             columns = response;
         }
     });
-    dataTable.dataTable({
+    let table = dataTable.dataTable({
         language: {
             "decimal":        "",
             "emptyTable":     "Não há dados cadastrados",
@@ -70,7 +73,24 @@ $(document).ready(function() {
             url: '/api/reports/procedures/data',
             dataType: 'json',
             headers: headers,
+            data: function(data) {
+                let starting_at = $("#starting-at").val();
+                let ending_at = $("#ending-at").val();
+
+                data.starting_at = starting_at;
+                data.ending_at = ending_at;
+            }
         },
         columns: JSON.parse(columns),
+    }).api();
+
+    $("#starting-at").change(function() {
+        table.ajax.reload();
+        table.draw();
+    });
+
+    $("#ending-at").change(function() {
+        table.ajax.reload();
+        table.draw();
     });
 });

@@ -2,6 +2,7 @@
 
 namespace HUAC\Http\Controllers\Reports;
 
+use Carbon\Carbon;
 use HUAC\Models\Views\AverageDurationReport;
 use Illuminate\Http\Request;
 

@@ -2,6 +2,7 @@
 
 namespace HUAC\Http\Controllers\Api\Reports;
 
+use Carbon\Carbon;
 use HUAC\Models\Views\AverageDurationReport as Procedure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -38,6 +39,27 @@ class ProcedureAverageDurationController
      */
     public function data(Request $request)
     {
+        $where = null;
+
+        if ($request->input('starting_at') !== null and $request->input('ending_at') !== null) {
+            $where =
+                [
+                    [
+                        'start_at', '>=', Carbon::parse($request->input('starting_at'))
+                    ],
+                    [
+                        'end_at', '<=', Carbon::parse($request->input('ending_at'))
+                    ]
+                ];
+
+        }
+        else if ($request->input('ending_at') !== null and $request->input('starting_at') === null) {
+            $where = ['end_at', '<=', Carbon::parse($request->input('ending_at'))];
+        }
+        else if ($request->has('starting_at') !== null and $request->has('ending_at') === null) {
+            $where = ['start_at', '>=', Carbon::parse($request->input('starting_at'))];
+        }
+
         $i = -1;
         $columns = array(
             ++$i => "name",
@@ -53,13 +75,16 @@ class ProcedureAverageDurationController
         $dir = $request->input('order.0.dir');
 
         if(empty($request->input('search.value')))
-            $procedures = Procedure::offset($start)
-                ->limit($limit)
-                ->orderBy($order, $dir)
-                ->get();
+                $procedures = Procedure::offset($start)
+                    ->where($where)
+                    ->limit($limit)
+                    ->orderBy($order, $dir)
+                    ->get();
         else{
             $search = $request->input('search.value');
+
             $procedures = Procedure::where('name', 'ilike', '%'.$search.'%')
+                ->where($where)
                 ->orWhere('average_duration', 'ilike', '%'.$search.'%')
                 ->offset($start)
                 ->limit($limit)
@@ -67,8 +92,10 @@ class ProcedureAverageDurationController
                 ->get();
 
             $totalFiltered = Procedure::where('name', 'ilike', '%'.$search.'%')
+                ->where($where)
                 ->orWhere('average_duration', 'ilike', '%'.$search.'%')
                 ->count();
+
         }
         $data = array();
         if(!empty($procedures)){
