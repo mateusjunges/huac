@@ -13,6 +13,7 @@ use HUAC\Http\Controllers\Procedures\ProceduresController;
 use HUAC\Http\Controllers\Reports\AverageProcedureDuration;
 use HUAC\Http\Controllers\Reports\SurgeriesReportController;
 use HUAC\Http\Controllers\Schedule\ConfirmedMaterialsScheduleController;
+use HUAC\Http\Controllers\Surgeons\SurgeonsController;
 use HUAC\Http\Controllers\Surgeries\MySurgeriesController;
 use HUAC\Http\Controllers\Surgeries\OnGoing\OnGoingSurgeriesController;
 use HUAC\Http\Controllers\SurgeryCenter\ConfirmMaterialsController as ConfirmSurgeryCenterMaterialsController;
@@ -103,4 +104,8 @@ Route::group(['middleware' => 'auth'], function (){
                ->name('reports.procedures.average-duration');
         });
     });
+
+    Route::resource('surgeons', SurgeonsController::class, [
+        'except' => ['show', 'destroy']
+    ]);
 });

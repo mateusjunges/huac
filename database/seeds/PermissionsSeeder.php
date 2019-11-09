@@ -278,7 +278,25 @@ class PermissionsSeeder extends Seeder
             'slug' => 'rooms.change-status',
             'description' => 'Permite tornar uma sala disponível e indisponível'
         ]);
-//
-
+        Permission::create([
+            'name' => 'Adicionar médicos',
+            'slug' => 'surgeons.store',
+            'description' => 'Permite adicionar um médico no sistema'
+        ]);
+        Permission::create([
+            'name' => 'Remover médicos',
+            'slug' => 'surgeons.delete',
+            'description' => 'Permite remover médicos do sistema'
+        ]);
+        Permission::create([
+            'name' => 'Atualizar médicos',
+            'slug' => 'surgeons.update',
+            'description' => 'Permite atualizar os dados de um médico'
+        ]);
+        Permission::create([
+            'name' => 'Visualizar médicos cadastrados',
+            'slug' => 'surgeons.index',
+            'description' => 'Permite visualizar os médicos cadastrados no sistema'
+        ]);
     }
 }
