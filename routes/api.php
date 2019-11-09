@@ -28,6 +28,7 @@ use HUAC\Http\Controllers\Api\Procedures\ProceduresColumnsController;
 use HUAC\Http\Controllers\Api\Procedures\ProceduresController;
 use HUAC\Http\Controllers\Api\Procedures\ProceduresDataController;
 use HUAC\Http\Controllers\Api\Reports\ProcedureAverageDurationController;
+use HUAC\Http\Controllers\Api\Reports\SurgeriesReportController;
 use HUAC\Http\Controllers\Api\Schedule\ConfirmedMaterialsEventsController;
 use HUAC\Http\Controllers\Api\Scheduling\CheckForOnGoingSurgeryController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeCreateController;
@@ -261,6 +262,7 @@ Route::middleware(['auth:api'])->group(function () {
            Route::get('columns', [ProcedureAverageDurationController::class, 'columns']);
            Route::get('data', [ProcedureAverageDurationController::class, 'data']);
         });
+        Route::get('surgeries', SurgeriesReportController::class);
     });
 
     Route::put('rooms/{room}/status', UpdateSurgicalRoomStatusController::class);

@@ -13,7 +13,7 @@
                             <label for="report-starts-at">Início em:</label>
                             <input type="date"
                                    v-model="filter.starting_at"
-                                   v-on:blur="changedStartingAt"
+                                   v-on:change="changedDates"
                                    id="report-starts-at"
                                    class="form-control">
                         </div>
@@ -24,7 +24,7 @@
                             <input type="date"
                                    v-model="filter.ending_at"
                                    id="report-ends-at"
-                                   v-on:blur="changedEndingAt"
+                                   v-on:change="changedDates"
                                    class="form-control">
                         </div>
                     </div>
@@ -70,24 +70,54 @@
         },
 
         methods: {
-            changedStartingAt() {
-                axios.get(`/api/reports/`, {
-                    starting_at: this.filter.starting_at,
-                    ending_at: this.filter.ending_at,
+            changedDates() {
+                axios.get(`/api/reports/surgeries`, {
+                    params: {
+                        starting_at: this.filter.starting_at,
+                        ending_at: this.filter.ending_at,
+                    },
                 })
                     .then(response => {
+
                         if (response.status === HTTP_OK) {
-                            this.chart.finished = response.data.chart.finished;
-                            this.chart.scheduled = response.data.chart.scheduled;
-                            this.chart.toBeScheduled = response.data.chart.to_be_scheduled;
-                            this.chart.withComplications = response.data.chart.with_complications;
+                            this.chart.finished = response.data.data.chart.finished;
+                            this.chart.scheduled = response.data.data.chart.scheduled;
+                            this.chart.toBeScheduled = response.data.data.chart.to_be_scheduled;
+                            this.chart.withComplications = response.data.data.chart.with_complications;
                         }
+                    })
+                    .then(() => {
+                        let values =  [this.chart.finished, this.chart.scheduled, this.chart.withComplications, this.chart.toBeScheduled];
+                        this.updateChart(values);
                     });
-                c.update();
             },
 
-            changedEndingAt() {
-                console.log('ok');
+            updateChart(values) {
+                c.data = {
+                    labels: ['Cirurgias concluídas', 'Cirurgias agendadas', 'Intercorrências cirúrgicas', 'Aguardando agendamento'],
+                    datasets: [
+                        { // one line graph
+                            label: 'Surgeries',
+                            //data: Cirurgias concluídas, cirurgias agendadas, intercorrencias, a ser agendado
+                            data: values,
+                            backgroundColor: [
+                                'rgba(48, 145, 19, .5)', //Green
+                                'rgba(66, 135, 255, .5)', //Blue
+                                'rgba(255, 17, 0, .5)', //Red
+                                'rgba(255, 222, 56, .5)', //Yellow
+                            ],
+                            borderColor: [
+                                '#36495d',
+                                '#36495d',
+                                '#36495d',
+                                '#36495d',
+                            ],
+                            borderWidth: 3
+                        },
+                    ]
+                };
+
+                c.update();
             }
         },
         computed: {
