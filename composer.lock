@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "0dd4a337ac69e8553ae361d0eaae1ee3",
@@ -445,16 +445,16 @@
         },
         {
             "name": "facade/ignition",
-            "version": "1.8.0",
+            "version": "1.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facade/ignition.git",
-                "reference": "c4aae328c58b5a6e6ff731050db56901c02451c0"
+                "reference": "4ff9397a24da58b35382802e2d22325b640123ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facade/ignition/zipball/c4aae328c58b5a6e6ff731050db56901c02451c0",
-                "reference": "c4aae328c58b5a6e6ff731050db56901c02451c0",
+                "url": "https://api.github.com/repos/facade/ignition/zipball/4ff9397a24da58b35382802e2d22325b640123ea",
+                "reference": "4ff9397a24da58b35382802e2d22325b640123ea",
                 "shasum": ""
             },
             "require": {
@@ -509,7 +509,7 @@
                 "laravel",
                 "page"
             ],
-            "time": "2019-09-18T19:06:14+00:00"
+            "time": "2019-09-20T09:37:06+00:00"
         },
         {
             "name": "facade/ignition-contracts",
@@ -654,8 +654,8 @@
             "authors": [
                 {
                     "name": "Filipe Dobreira",
-                    "homepage": "https://github.com/filp",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "homepage": "https://github.com/filp"
                 }
             ],
             "description": "php error handling for cool kids",
@@ -703,13 +703,13 @@
             "authors": [
                 {
                     "name": "Neuman Vong",
-                    "email": "neuman+pear@twilio.com",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "neuman+pear@twilio.com"
                 },
                 {
                     "name": "Anant Narayanan",
-                    "email": "anant@php.net",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "anant@php.net"
                 }
             ],
             "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
@@ -1194,16 +1194,16 @@
         },
         {
             "name": "laravel/passport",
-            "version": "v7.4.1",
+            "version": "v7.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/passport.git",
-                "reference": "cc39dc6a36ebf5926906eb5ad3c62dba50c9bbd0"
+                "reference": "663e720a6d15e8ec70bf5309f774439a110efc89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/passport/zipball/cc39dc6a36ebf5926906eb5ad3c62dba50c9bbd0",
-                "reference": "cc39dc6a36ebf5926906eb5ad3c62dba50c9bbd0",
+                "url": "https://api.github.com/repos/laravel/passport/zipball/663e720a6d15e8ec70bf5309f774439a110efc89",
+                "reference": "663e720a6d15e8ec70bf5309f774439a110efc89",
                 "shasum": ""
             },
             "require": {
@@ -1261,7 +1261,7 @@
                 "oauth",
                 "passport"
             ],
-            "time": "2019-09-10T19:55:34+00:00"
+            "time": "2019-09-24T20:59:35+00:00"
         },
         {
             "name": "laravel/socialite",
@@ -1689,15 +1689,15 @@
             "authors": [
                 {
                     "name": "Alex Bilbie",
+                    "role": "Developer",
                     "email": "hello@alexbilbie.com",
-                    "homepage": "http://www.alexbilbie.com",
-                    "role": "Developer"
+                    "homepage": "http://www.alexbilbie.com"
                 },
                 {
                     "name": "Andy Millington",
+                    "role": "Developer",
                     "email": "andrew@noexceptions.io",
-                    "homepage": "https://www.noexceptions.io",
-                    "role": "Developer"
+                    "homepage": "https://www.noexceptions.io"
                 }
             ],
             "description": "A lightweight and powerful OAuth 2.0 authorization and resource server library with support for all the core specification grants. This library will allow you to secure your API with OAuth and allow your applications users to approve apps that want to access their data from your API.",
@@ -4529,9 +4529,9 @@
             "authors": [
                 {
                     "name": "Marcel Pociot",
+                    "role": "Developer",
                     "email": "marcel@beyondco.de",
-                    "homepage": "https://beyondco.de",
-                    "role": "Developer"
+                    "homepage": "https://beyondco.de"
                 }
             ],
             "description": "Symfony Var-Dump Server for Laravel",
@@ -5495,8 +5495,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Utility class for timing",
@@ -6288,8 +6288,8 @@
             "authors": [
                 {
                     "name": "Arne Blankerts",
-                    "role": "Developer",
-                    "email": "arne@blankerts.de"
+                    "email": "arne@blankerts.de",
+                    "role": "Developer"
                 }
             ],
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",

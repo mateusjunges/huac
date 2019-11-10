@@ -17,23 +17,13 @@ class CreateAverageDurationReportsTable extends Migration
        
             CREATE OR REPLACE VIEW average_duration_report_view AS
             SELECT procedures.name, 
-					cast(
-						concat(CAST(
-								DATE_PART('day', events.surgeon_ended_at::timestamp - events.surgeon_started_at::timestamp)*24+
-								DATE_PART('hour', events.surgeon_ended_at::timestamp - events.surgeon_started_at::timestamp) AS CHAR(2)
-								), 
-					   		':',
-					  		   CAST(
-									DATE_PART('minute', events.surgeon_ended_at::timestamp - events.surgeon_started_at::timestamp) AS CHAR(2)
-								),
-					  		':',
-					   			CAST(
-									DATE_PART('second', events.surgeon_ended_at::timestamp - events.surgeon_started_at::timestamp) AS CHAR(2)
-					  			)
-					  		)
-						AS varchar(8))
+					(DATE_PART('day', events.surgeon_ended_at::timestamp - events.surgeon_started_at::timestamp)*24*60*60)+
+					DATE_PART('hour', events.surgeon_ended_at::timestamp - events.surgeon_started_at::timestamp)*60*60+
+					DATE_PART('minute', events.surgeon_ended_at::timestamp - events.surgeon_started_at::timestamp)*60+
+					DATE_PART('second', events.surgeon_ended_at::timestamp - events.surgeon_started_at::timestamp)
 				 as average_duration,
-                procedures.id as procedure_id
+                procedures.id as procedure_id,
+				start_at, end_at
                 from events
                 inner join surgeries on surgeries.id = events.surgery_id
                 inner join procedures on procedures.id = surgeries.procedure_id

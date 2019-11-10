@@ -40,7 +40,7 @@ class AnestheticInductionController
                         'icon' => 'success',
                         'title' => 'Sucesso!',
                         'text' => 'Indução anestésica confirmada!',
-                        'timer' => 5000,
+                        'timer' => 1000,
                     ],
                     'event' => $event
                 ]
@@ -52,7 +52,7 @@ class AnestheticInductionController
                         'icon' => 'error',
                         'title' => 'Ops...',
                         'text' => 'Algo deu errado! Tente novamente mais tarde.',
-                        'timer' => 5000,
+                        'timer' => 1000,
                     ],
                     'exception' => [
                         'code' => $exception->getCode(),

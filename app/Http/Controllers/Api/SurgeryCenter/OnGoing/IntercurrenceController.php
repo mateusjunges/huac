@@ -15,7 +15,7 @@ class IntercurrenceController
 {
     public function __invoke($surgery, Request $request)
     {
-//        try {
+        try {
             $surgery = Surgery::find($surgery);
             $event = $surgery->events()->orderBy('created_at', 'desc')->first();
 
@@ -43,27 +43,27 @@ class IntercurrenceController
                         'icon'  => 'success',
                         'title' => 'Sucesso!',
                         'text'  => 'Intercorrência cirúrgica registrada com sucesso!',
-                        'timer' => 5000,
+                        'timer' => 1000,
                     ]
                 ]
             ], Response::HTTP_OK);
-//        } catch (\Exception $exception) {
-//            return response()->json([
-//                'data' => [
-//                    'swal' => [
-//                        'icon'  => 'error',
-//                        'title' => 'Ops...',
-//                        'text'  => 'Algo deu errado! Entre em contato com o administrador do sistema!',
-//                        'timer' => 5000,
-//                    ],
-//                    'exception' => [
-//                        'code' => $exception->getCode(),
-//                        'message' => $exception->getMessage(),
-//                        'line' => $exception->getLine(),
-//                        'trace' => $exception->getTrace(),
-//                    ]
-//                ]
-//            ], Response::HTTP_INTERNAL_SERVER_ERROR);
-//        }
+        } catch (\Exception $exception) {
+            return response()->json([
+                'data' => [
+                    'swal' => [
+                        'icon'  => 'error',
+                        'title' => 'Ops...',
+                        'text'  => 'Algo deu errado! Entre em contato com o administrador do sistema!',
+                        'timer' => 1000,
+                    ],
+                    'exception' => [
+                        'code' => $exception->getCode(),
+                        'message' => $exception->getMessage(),
+                        'line' => $exception->getLine(),
+                        'trace' => $exception->getTrace(),
+                    ]
+                ]
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }

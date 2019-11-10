@@ -552,12 +552,12 @@
             confirmSurgeryCenterExit() {
                 axios.put(`/api/surgeries/manage/${this.eventId}/exit-of-surgery-center`)
                     .then((response) => {
-                        swal({
-                            icon: response.data.data.swal.icon,
-                            title: response.data.data.swal.title,
-                            text: response.data.data.swal.text,
-                            timer: response.data.data.swal.timer,
-                        });
+                        // swal({
+                        //     icon: response.data.data.swal.icon,
+                        //     title: response.data.data.swal.title,
+                        //     text: response.data.data.swal.text,
+                        //     timer: response.data.data.swal.timer,
+                        // });
 
                         if (response.status === HTTP_OK)
                             this.surgery.outOfSurgeryCenter = true;

@@ -41,7 +41,7 @@ class TimeoutController
                         'icon' => 'success',
                         'title' => 'Sucesso!',
                         'text' => 'Timeout realizado!',
-                        'timer' => 5000,
+                        'timer' => 1000,
                     ],
                     'event' => $event
                 ]
@@ -53,7 +53,7 @@ class TimeoutController
                         'icon' => 'error',
                         'title' => 'Ops...',
                         'text' => 'Algo deu errado! Tente novamente mais tarde.',
-                        'timer' => 5000,
+                        'timer' => 1000,
                     ],
                     'exception' => [
                         'code' => $exception->getCode(),

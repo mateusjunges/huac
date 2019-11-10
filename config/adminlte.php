@@ -260,6 +260,24 @@ return [
                 ]
             ]
         ],
+        // Surgeons
+        [
+            'icon' => 'user-md',
+            'text' => 'Médicos',
+            'can'  => 'surgeons.manage',
+            'submenu' => [
+                [
+                    'text' => 'Novo médico',
+                    'route' => 'surgeons.create',
+                    'can' => 'surgeons.store',
+                ],
+                [
+                    'text' => 'Ver médicos',
+                    'route' => 'surgeons.index',
+                    'can' => 'surgeons.index'
+                ]
+            ]
+        ],
         // Procedures
         [
             'icon' => 'procedures',

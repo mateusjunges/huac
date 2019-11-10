@@ -42,7 +42,7 @@ class SurgeryCenterController
                         'icon' => 'success',
                         'title' => 'Sucesso!',
                         'text' => 'Entrada no centro cirúrgico confirmada!',
-                        'timer' => 5000,
+                        'timer' => 1000,
                     ],
                     'event' => $event
                 ]
@@ -55,7 +55,7 @@ class SurgeryCenterController
                         'icon' => 'error',
                         'title' => 'Ops...',
                         'text' => 'Algo deu errado! Tente novamente mais tarde.',
-                        'timer' => 5000,
+                        'timer' => 1000,
                     ],
                     'exception' => [
                         'code' => $exception->getCode(),
@@ -95,7 +95,7 @@ class SurgeryCenterController
                         'icon' => 'success',
                         'title' => 'Sucesso!',
                         'text' => 'Saída do centro cirúrgico confirmada!',
-                        'timer' => 5000,
+                        'timer' => 1000,
                     ],
                     'event' => $event
                 ]
@@ -108,7 +108,7 @@ class SurgeryCenterController
                         'icon' => 'error',
                         'title' => 'Ops...',
                         'text' => 'Algo deu errado! Tente novamente mais tarde.',
-                        'timer' => 5000,
+                        'timer' => 1000,
                     ],
                     'exception' => [
                         'code' => $exception->getCode(),

@@ -56,6 +56,7 @@
                             @can('rooms.change-status')
                                 <td>
                                     <button class="btn btn-{{ $room->available ? 'success' : 'danger' }} lock"
+                                            data-name="{{ $room->name }}"
                                             data-id="{{ $room->id }}">
                                         @if($room->available)
                                             <i class="fa fa-check" id="icon-{{ $room->id }}"></i>

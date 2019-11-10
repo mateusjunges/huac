@@ -42,7 +42,7 @@ class RepaiController
                         'icon' => 'success',
                         'title' => 'Sucesso!',
                         'text' => 'Entrada na REPAI confirmada!',
-                        'timer' => 5000,
+                        'timer' => 1000,
                     ],
                     'event' => $event
                 ]
@@ -55,7 +55,7 @@ class RepaiController
                         'icon' => 'error',
                         'title' => 'Ops...',
                         'text' => 'Algo deu errado! Tente novamente mais tarde.',
-                        'timer' => 5000,
+                        'timer' => 1000,
                     ],
                     'exception' => [
                         'code' => $exception->getCode(),
@@ -95,7 +95,7 @@ class RepaiController
                         'icon' => 'success',
                         'title' => 'Sucesso!',
                         'text' => 'Saída da REPAI confirmada!',
-                        'timer' => 5000,
+                        'timer' => 1000,
                     ],
                     'event' => $event
                 ]
@@ -108,7 +108,7 @@ class RepaiController
                         'icon' => 'error',
                         'title' => 'Ops...',
                         'text' => 'Algo deu errado! Tente novamente mais tarde.',
-                        'timer' => 5000,
+                        'timer' => 1000,
                     ],
                     'exception' => [
                         'code' => $exception->getCode(),

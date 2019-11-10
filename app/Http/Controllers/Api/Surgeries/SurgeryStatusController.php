@@ -24,7 +24,7 @@ class SurgeryStatusController
                             'icon' => 'warning',
                             'title' => 'Acesso negado!',
                             'text'  => 'Você não tem permissão para realizar esta ação no sistema!',
-                            'timer' => 5000,
+                            'timer' => 1000,
                         ]
                     ]
                 ], Response::HTTP_UNAUTHORIZED);
@@ -41,7 +41,7 @@ class SurgeryStatusController
                        'icon'  => 'success',
                        'title' => 'Sucesso!',
                        'text'  => 'Status alterado com sucesso!',
-                       'timer' => 5000
+                       'timer' => 1000
                    ],
                    'event' => $event,
                    'surgery' => $surgery,
@@ -55,7 +55,7 @@ class SurgeryStatusController
                         'icon'  => 'error',
                         'title' => 'Ops...',
                         'text'  => 'Algo deu errado, entre em contato com o administrador do sistema!',
-                        'timer' => 5000
+                        'timer' => 1000
                     ],
                     'exception' => [
                         'code'    => $exception->getCode(),

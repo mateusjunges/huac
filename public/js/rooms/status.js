@@ -8,13 +8,14 @@ $(document).ready(function () {
     // Bloqueia a sala
     $(".dataTable tbody").on('click', 'button.lock', function () {
         let room = $(this).data('id');
+        let name = $(this).data('name');
         let element = $(this);
         let roomAvailableIcon = $(`#icon-${room}`);
 
         swal({
             icon: 'warning',
             title: 'Tem certeza?',
-            text: 'Deseja realmente alterar o status desta sala?',
+            text: `Deseja realmente alterar o status da sala ${name}?`,
             buttons: ["Não", "Sim, tenho certeza"],
         }).then(response => {
             if (response) {

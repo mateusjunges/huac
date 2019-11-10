@@ -1,3 +1,19 @@
+
+String.prototype.toHHMMSS = function () {
+    var sec_num = parseInt(this, 10);
+    var hours   = Math.floor(sec_num / 3600);
+    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+    var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+    if (hours   < 10) {hours   = "0"+hours;}
+    if (minutes < 10) {minutes = "0"+minutes;}
+    if (seconds < 10) {seconds = "0"+seconds;}
+    return hours+':'+minutes+':'+seconds;
+};
+
+let starting_at = null;
+let ending_at = null;
+
 $(document).ready(function() {
     const headers = {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -15,7 +31,7 @@ $(document).ready(function() {
             columns = response;
         }
     });
-    dataTable.dataTable({
+    let table = dataTable.dataTable({
         language: {
             "decimal":        "",
             "emptyTable":     "Não há dados cadastrados",
@@ -41,6 +57,14 @@ $(document).ready(function() {
             }
 
         },
+        "columnDefs": [
+            {
+                "render": function ( data, type, row ) {
+                    return data.toString().toHHMMSS();
+                },
+                "targets": 1
+            },
+        ],
         scrollX: true,
         processing: true,
         serverSide: true,
@@ -49,7 +73,24 @@ $(document).ready(function() {
             url: '/api/reports/procedures/data',
             dataType: 'json',
             headers: headers,
+            data: function(data) {
+                let starting_at = $("#starting-at").val();
+                let ending_at = $("#ending-at").val();
+
+                data.starting_at = starting_at;
+                data.ending_at = ending_at;
+            }
         },
         columns: JSON.parse(columns),
+    }).api();
+
+    $("#starting-at").change(function() {
+        table.ajax.reload();
+        table.draw();
+    });
+
+    $("#ending-at").change(function() {
+        table.ajax.reload();
+        table.draw();
     });
 });

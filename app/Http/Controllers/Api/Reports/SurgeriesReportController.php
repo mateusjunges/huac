@@ -1,6 +1,6 @@
 <?php
 
-namespace HUAC\Http\Controllers\Reports;
+namespace HUAC\Http\Controllers\Api\Reports;
 
 use Carbon\Carbon;
 use HUAC\Enums\Status;
@@ -17,6 +17,7 @@ class SurgeriesReportController
         if ($request->has('ending_at'))
             $ending_at = Carbon::parse($request->input('ending_at'));
 
+//        dd($request->all());
         $scheduled = Surgery::withStatus([
             Status::SCHEDULED,
             Status::MATERIALS_CONFIRMED_BY_SURGERY_CENTER,
@@ -29,7 +30,6 @@ class SurgeriesReportController
         $withComplications = Surgery::withStatus(Status::SURGICAL_COMPLICATIONS);
 
         $toBeScheduled = Surgery::withStatus(Status::IN_PROCESS);
-
 
         if (!is_null($starting_at) and !is_null($ending_at)) {
             $scheduled = $scheduled->where([
@@ -65,11 +65,16 @@ class SurgeriesReportController
             return $surgery->latestStatus->status_id === Status::IN_PROCESS;
         })->count();
 
-        return view('reports.surgeries')->with([
-            'scheduled'         => $scheduled,
-            'finished'          => $finished,
-            'withComplications' => $withComplications,
-            'toBeScheduled'     => $toBeScheduled
+
+        return response()->json([
+            'data' => [
+                'chart' => [
+                    'scheduled'          => $scheduled,
+                    'to_be_scheduled'    => $toBeScheduled,
+                    'with_complications' => $withComplications,
+                    'finished'           => $finished
+                ]
+            ]
         ]);
     }
 }

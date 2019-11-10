@@ -28,6 +28,7 @@ use HUAC\Http\Controllers\Api\Procedures\ProceduresColumnsController;
 use HUAC\Http\Controllers\Api\Procedures\ProceduresController;
 use HUAC\Http\Controllers\Api\Procedures\ProceduresDataController;
 use HUAC\Http\Controllers\Api\Reports\ProcedureAverageDurationController;
+use HUAC\Http\Controllers\Api\Reports\SurgeriesReportController;
 use HUAC\Http\Controllers\Api\Schedule\ConfirmedMaterialsEventsController;
 use HUAC\Http\Controllers\Api\Scheduling\CheckForOnGoingSurgeryController;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeCreateController;
@@ -35,6 +36,7 @@ use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeUpdateCont
 use HUAC\Http\Controllers\Api\Scheduling\VerifyExistingSchedulesBeforeUpdateWithConfirmedMaterials;
 use HUAC\Http\Controllers\Api\Scheduling\VerifyReservedPeriodController;
 use HUAC\Http\Controllers\Api\Status\StatusController;
+use HUAC\Http\Controllers\Api\Surgeons\SurgeonsController;
 use HUAC\Http\Controllers\Api\Surgeons\VerifySurgeonAvailabilityController;
 use HUAC\Http\Controllers\Api\Surgeries\MySurgeriesController;
 use HUAC\Http\Controllers\Api\Surgeries\OnGoing\StatsController;
@@ -221,6 +223,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::prefix('surgeons')->group(function() {
        Route::get('availability', [VerifySurgeonAvailabilityController::class, 'verify']);
        Route::get('availability-with-confirmed-materials', [VerifySurgeonAvailabilityController::class, 'verifyWithConfirmedMaterials']);
+       Route::delete('{surgeon}', [SurgeonsController::class, 'destroy']);
     });
 
     Route::get('status', [StatusController::class, 'index']);
@@ -259,6 +262,7 @@ Route::middleware(['auth:api'])->group(function () {
            Route::get('columns', [ProcedureAverageDurationController::class, 'columns']);
            Route::get('data', [ProcedureAverageDurationController::class, 'data']);
         });
+        Route::get('surgeries', SurgeriesReportController::class);
     });
 
     Route::put('rooms/{room}/status', UpdateSurgicalRoomStatusController::class);
