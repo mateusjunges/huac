@@ -49,6 +49,8 @@ class SurgeryCenterSurgeriesDataController
                 ->orWhere('medical_record', 'ilike', '%'.$search.'%')
                 ->orWhere('status_name', 'ilike', '%'.$search.'%')
                 ->orWhere('scheduling', 'ilike', '%'.$search.'%')
+                ->orWhere('procedure_name', 'ilike', '%'.$search.'%')
+                ->orWhere('materials', 'ilike', '%'.$search.'%')
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
@@ -58,6 +60,8 @@ class SurgeryCenterSurgeriesDataController
                 ->orWhere('medical_record', 'ilike', '%'.$search.'%')
                 ->orWhere('status_name', 'ilike', '%'.$search.'%')
                 ->orWhere('scheduling', 'ilike', '%'.$search.'%')
+                ->orWhere('procedure_name', 'ilike', '%'.$search.'%')
+                ->orWhere('materials', 'ilike', '%'.$search.'%')
                 ->count();
         }
         $data = array();

@@ -45,10 +45,13 @@ class CMESurgeriesDataController
                 ->get();
         else{
             $search = $request->input('search.value');
+
             $surgeries = Surgery::where('patient_name', 'ilike', '%'.$search.'%')
                 ->orWhere('medical_record', 'ilike', '%'.$search.'%')
                 ->orWhere('status_name', 'ilike', '%'.$search.'%')
                 ->orWhere('scheduling', 'ilike', '%'.$search.'%')
+                ->orWhere('materials', 'ilike', '%'.$search.'%')
+                ->orWhere('procedure_name', 'ilike', '%'.$search.'%')
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
@@ -58,6 +61,8 @@ class CMESurgeriesDataController
                 ->orWhere('medical_record', 'ilike', '%'.$search.'%')
                 ->orWhere('status_name', 'ilike', '%'.$search.'%')
                 ->orWhere('scheduling', 'ilike', '%'.$search.'%')
+                ->orWhere('materials', 'ilike', '%'.$search.'%')
+                ->orWhere('procedure_name', 'ilike', '%'.$search.'%')
                 ->count();
         }
         $data = array();
