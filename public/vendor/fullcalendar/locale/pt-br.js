@@ -46,7 +46,7 @@
                 showMonthAfterYear: !1,
                 yearSuffix: ""
             }), r.locale("pt-br", {
-                buttonText: {month: "Mês", week: "Semana", day: "Dia", list: "Compromissos"},
+                buttonText: {month: "Mês", week: "Semana", day: "Dia", list: "Lista de agendamentos"},
                 allDayText: "dia inteiro",
                 eventLimitText: function (e) {
                     return "mais +" + e
