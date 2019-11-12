@@ -3,6 +3,7 @@
 namespace HUAC\Models;
 
 use HUAC\Notifications\ResetPassword;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Junges\ACL\Traits\UsersTrait;
 use Laravel\Passport\HasApiTokens;
@@ -13,6 +14,7 @@ class User extends Authenticatable
     use Notifiable;
     use UsersTrait;
     use HasApiTokens;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
