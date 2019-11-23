@@ -85,18 +85,36 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Modal title</h4>
+                    <h4 class="modal-title">Ajuda</h4>
                 </div>
                 <div class="modal-body">
-                    <p>One fine body&hellip;</p>
+                    <h2>Agendamentos com mateirais confirmados</h2>
+                    <p>
+                        Esta tela é utilizada para mostrar as cirurgias agendadas que já possuem os materiais confirmados
+                        pelo CME e centro cirúrgico.
+                    </p>
+                    <ul>
+                        <li>
+                            Clique no nome de um paciente para ver mais opções.
+                        </li>
+                        <br>
+                        <li>
+                            Utilize o botão
+                            <button type="button" class="btn btn-primary">
+                                <i class="fa fa-play-circle" aria-hidden="true"></i> Iniciar cirurgia
+                            </button>
+                            para dar início a uma cirurgia.
+                        </li>
+                        <br>
+                    </ul>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
     @include('_modals.schedule.event-click-modal')
     @include('_modals.scheduling.change-room-modal')
     @include('_modals.scheduling.change-status-modal')

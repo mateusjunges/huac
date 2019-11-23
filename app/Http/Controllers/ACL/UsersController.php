@@ -120,7 +120,11 @@ class UsersController extends Controller
             return redirect()->back();
         }
 
-        $user->update($request->all());
+        if ($request->input('password') === null) {
+          $user->update($request->except('password'));
+        } else {
+            $user->update($request->all());
+        }
         $message = array(
             'type' => 'success',
             'title' => trans('huac.success'),

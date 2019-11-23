@@ -138,6 +138,96 @@
         </table>
     </div>
 </div>
+
+<div class="modal" tabindex="-1" role="dialog" id="help-modal" data-backdrop="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Ajuda</h4>
+            </div>
+            <div class="modal-body block">
+                <h2>Gerenciar grupo de permissões</h2>
+                <p>
+                    Esta tela é utilizada para gerenciar os grupos de permissões do sistema.
+                </p>
+                <ul>
+                    <li>
+                       Você pode utilizar o campo "Buscar" para procurar por um grupo específico.
+                    </li>
+                    <br>
+                    @can('groups.view-permissions')
+                        <li>
+                            Utilize o botão
+                            <button class="btn btn-success btn-sm">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                            </button>
+                            para ver as permissões atribuídas a um grupo.
+                        </li>
+                        <br>
+                    @endcan
+                    @can('groups.attach-user')
+                        <li>
+                            Utilize o botão
+                            <button class="btn btn-warning btn-sm">
+                                <i class="fa fa-check-circle" aria-hidden="true"></i>
+                            </button>
+                            para atribuir um grupo a um usuário.
+                        </li>
+                        <br>
+                    @endcan
+                    @can('group.view-users')
+                        <li>
+                            Utilize o botão
+                            <button class="btn btn-sm">
+                                <i class="fa fa-group" aria-hidden="true"></i>
+                            </button>
+                            para ver os usuários que possuem um grupo.
+                        </li>
+                        <br>
+                    @endcan
+                    @can('groups.assign-permission')
+                        <li>
+                            Utilize o botão
+                            <button class="btn btn-sm btn-default">
+                                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                            </button>
+                            para atribuir permissões a um grupo.
+                        </li>
+                        <br>
+                    @endcan
+                    @can('groups.update')
+                        <li>
+                            Utilize o botão
+                            <button class="btn btn-primary btn-sm">
+                                <i class="fa fa-edit" aria-hidden="true"></i>
+                            </button>
+                            para atualizar as informações de um grupo.
+                        </li>
+                        <br>
+                    @endcan
+                    @can('groups.delete')
+                        <li>
+                            Utilize o botão
+                            <button class="btn btn-danger btn-sm">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                            para remover um grupo de permissões do sistema.
+                        </li>
+                        <br>
+                    @endcan
+                </ul>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
     @include('_modals.groups.assign-permissions')
     @include('_modals.groups.attach-user')
 @endsection

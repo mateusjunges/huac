@@ -41,7 +41,7 @@
                             <button class="btn btn-success">
                                 Cadastrar
                             </button>
-                            para cadastrar o paciente
+                            para salvar os dados da cirurgia.
                         </li>
                     </ul>
 

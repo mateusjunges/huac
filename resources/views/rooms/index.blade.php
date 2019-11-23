@@ -101,4 +101,48 @@
             </table>
         </div>
     </div>
+    <div class="modal" tabindex="-1" role="dialog" id="help-modal" data-backdrop="false">
+        <div class="modal-dialog bg-dark" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Ajuda</h4>
+                </div>
+                <div class="modal-body">
+                    <h2>Gerenciamento de salas</h2>
+                    <p>
+                        Esta tela é utilizada para gerenciar as salas cadastradas no sistema.
+                    </p>
+                    <ul>
+                        <li>
+                            Utilize o botão
+                            <button class="btn btn-success lock">
+                                <i class="fa fa-check" id="icon-1" aria-hidden="true"></i>
+                            </button>
+                            para deixar uma sala indisponível para agendamentos.
+                        </li>
+                        <br>
+                        <li>
+                            Utilize o botão
+                            <button class="btn lock btn-danger">
+                                <i class="fa fa-times" id="icon-1" aria-hidden="true"></i>
+                            </button>
+                            para deixar uma sala disponível para agendamentos.
+                        </li>
+                        <br>
+                        <li>
+                            Utilize o botão
+                            <button class="btn btn-danger delete">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                            para remover uma sala cirúrgica.
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 @endsection
