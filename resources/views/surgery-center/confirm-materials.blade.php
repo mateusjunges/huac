@@ -45,5 +45,64 @@
             </table>
         </div>
     </div>
+    <div class="modal fade" tabindex="-1" role="dialog" id="help-modal">
+        <div class="modal-dialog bg-dark" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Ajuda</h4>
+                </div>
+                <div class="modal-body block">
+                    <h2>Confirmar materiais do centro cirúrgico</h2>
+                    <p>
+                        Esta tela mostra todas as cirurgias que necessitam da confirmação de materiais pelo centro cirúrgico
+                    </p>
+                    <ul>
+                        <li>
+                            Você pode utilizar o campo "buscar" para procurar por uma cirurgia específica
+                        </li>
+                        <br>
+                        @can('surgeries.update')
+                            <li>
+                                Utilize o botão
+                                <button class="btn btn-primary btn-sm">
+                                    <i class="fa fa-edit" aria-hidden="true"></i>
+                                </button>
+                                para editar os dados de uma cirurgia
+                            </li>
+                            <br>
+                        @endcan
+                        @can('cme.confirm-materials')
+                            <li>
+                                Utilize o botão
+                                <button class="btn btn-success btn-sm confirm">
+                                    <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                </button>
+                                para confirmar os materiais para uma cirurgia.
+                            </li>
+                            <br>
+                        @endcan
+                        @can('cmd.deny-materials')
+                            <li>
+                                Utilize o botão
+                                <button class="btn btn-danger btn-sm deny">
+                                    <i class="fa fa-times-circle" aria-hidden="true"></i>
+                                </button>
+                                para negar os materiais para uma cirurgia
+                            </li>
+                            <br>
+                        @endcan
+                    </ul>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     @include('_modals.surgery-center.deny-materials-modal')
 @endsection

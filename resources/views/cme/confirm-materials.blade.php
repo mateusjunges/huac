@@ -56,16 +56,16 @@
                     <h4 class="modal-title">Ajuda</h4>
                 </div>
                 <div class="modal-body block">
-                    <h2>Cirurgias cadastradas</h2>
+                    <h2>Confirmar materiais do CME</h2>
                     <p>
-                        Esta tela mostra todas as cirurgias cadastradas no sistema.
+                        Esta tela mostra todas as cirurgias que necessitam da confirmação de materiais pelo CME
                     </p>
                     <ul>
                         <li>
                             Você pode utilizar o campo "buscar" para procurar por uma cirurgia específica
                         </li>
                         <br>
-                        @can('surgeries.edit')
+                        @can('surgeries.update')
                             <li>
                                 Utilize o botão
                                 <button class="btn btn-primary btn-sm">
@@ -75,14 +75,25 @@
                             </li>
                             <br>
                         @endcan
-                        @can('surgeries.delete')
+                        @can('cme.confirm-materials')
                             <li>
                                 Utilize o botão
-                                <button class="btn btn-danger btn-sm delete">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                <button class="btn btn-success btn-sm confirm">
+                                    <i class="fa fa-check-circle" aria-hidden="true"></i>
                                 </button>
-                                para remover uma cirurgia
+                                para confirmar os materiais para uma cirurgia.
                             </li>
+                            <br>
+                        @endcan
+                        @can('cmd.deny-materials')
+                            <li>
+                                Utilize o botão
+                                <button class="btn btn-danger btn-sm deny">
+                                    <i class="fa fa-times-circle" aria-hidden="true"></i>
+                                </button>
+                                para negar os materiais para uma cirurgia
+                            </li>
+                            <br>
                         @endcan
                     </ul>
 
