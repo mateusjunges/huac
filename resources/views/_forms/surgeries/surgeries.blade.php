@@ -1,7 +1,8 @@
 @csrf
 <div class="row">
     <div class="col-md-6">
-        <div class="form-group">
+        <div class="form-group"
+             data-toggle="tooltip" data-placement="top" title="Neste campo você precisa informar o nome do paciente">
             <label for="patient-name">Nome do paciente:</label>
             <input type="text"
                    id="patient-name"
@@ -15,7 +16,8 @@
             ])
             @endcomponent
         </div>
-        <div class="form-group">
+        <div class="form-group"
+             data-toggle="tooltip" data-placement="top" title="Neste campo você precisa informar o número do prontuário do paciente">
             <label for="medical-record">Número do prontuário:</label>
             <input type="text"
                    name="medical_record"
@@ -29,7 +31,8 @@
             ])
             @endcomponent
         </div>
-        <div class="form-group">
+        <div class="form-group"
+             data-toggle="tooltip" data-placement="top" title="Neste campo você precisa informar o nome da mãe do paciente">
             <label for="mother-name">Nome da mãe:</label>
             <input type="text"
                    id="mother-name"
@@ -43,7 +46,8 @@
             ])
             @endcomponent
         </div>
-        <div class="form-group">
+        <div class="form-group"
+             data-toggle="tooltip" data-placement="top" title="Neste campo você precisa informar a data de nascimento do paciente">
             <label for="birthday-at">Data de nascimento:</label>
             <input type="date"
                    name="birthday_at"
@@ -57,7 +61,8 @@
              ])
             @endcomponent
         </div>
-        <div class="form-group">
+        <div class="form-group"
+             data-toggle="tooltip" data-placement="top" title="Neste campo você precisa informar o gênero sexual do paciente">
             <label for="gender">Gênero:</label>
             <select name="gender"
                     id="gender"
@@ -105,7 +110,8 @@
         <div class="text-center">
             <b>Dados da cirurgia</b>
         </div>
-        <div class="form-group">
+        <div class="form-group"
+             data-toggle="tooltip" data-placement="top" title="Neste campo você precisa selecionar o procedimento cirúrgico que vai ser realizado">
             <label for="surgical-procedure">Procedimento cirúrgico:</label>
             <select name="procedure_id"
                     id="surgical-procedure"
@@ -133,7 +139,8 @@
             ])
             @endcomponent
         </div>
-        <div class="form-group">
+        <div class="form-group"
+             data-toggle="tooltip" data-placement="top" title="Neste campo você precisa informar o tempo de duração estimado do procedimento selecionado">
             <label for="estimated-duration">Tempo de duração estimado:</label>
             <select name="estimated_duration_time"
                     id="estimated-duration"
@@ -159,7 +166,8 @@
             ])
             @endcomponent
         </div>
-        <div class="form-group">
+        <div class="form-group"
+             data-toggle="tooltip" data-placement="top" title="Neste campo você precisa informar a classificação desta cirurgia">
             <label for="classification_id">Classificação:</label>
             <select name="surgery_classification_id"
                     id="classification_id"
@@ -190,7 +198,8 @@
             ])
             @endcomponent
         </div>
-        <div class="form-group">
+        <div class="form-group"
+             data-toggle="tooltip" data-placement="top" title="Neste campo você precisa selecionar o tipo de anestesia necessário para este procedimento">
             <label for="anesthesia">Anestesia:</label>
             <select name="anesthesia_id[]"
                     id="anesthesia"
@@ -221,7 +230,8 @@
         </div>
     </div>
     <div class="col-md-6">
-        <div class="form-group">
+        <div class="form-group"
+             data-toggle="tooltip" data-placement="top" title="Neste campo você precisa selecionar o cirurgião principal, que vai realizar este procedimento.">
             <label for="head-surgeon">Cirurgião principal:</label>
             <select name="head_surgeon"
                     class="form-control @error('head_surgeon') validation-error @enderror "
@@ -250,7 +260,9 @@
             ])
             @endcomponent
         </div>
-        <div class="form-group">
+        <div class="form-group"
+             data-toggle="tooltip" data-placement="top"
+             title="Este campo é opcional. Se quiser, você pode informar o cirurgião auxiliar que ajudará na realização deste procedimento">
             <label for="assistant-surgeon">Cirurgião auxiliar:</label>
             <select name="assistant_surgeon"
                     class="form-control @error('assistant_surgeon') validation-error @enderror "
@@ -280,7 +292,9 @@
             ])
             @endcomponent
         </div>
-        <div class="form-group">
+        <div class="form-group"
+             data-toggle="tooltip" data-placement="top"
+             title="Neste campo você precisa informar os materiais que são necessários para a realização deste procedimento">
             <label for="materials">Materiais solicitados:</label>
             <textarea name="materials"
                       id="materials"
@@ -297,7 +311,8 @@
             ])
             @endcomponent
         </div>
-        <div class="form-group">
+        <div class="form-group"
+             data-toggle="tooltip" data-placement="top" title="Quer adicionar uma observação? Se sim, preencha este campo">
             <label for="observation">Observação:</label>
             <textarea
                 id="observation"
@@ -312,7 +327,9 @@
             ])
             @endcomponent
         </div>
-        <div class="form-group">
+        <div class="form-group"
+             data-toggle="tooltip" data-placement="top"
+             title="Neste campo você precisa informar a data da avaliação anestésica, ou informações relacionadas. Esta informação é opcional">
             <label for="anesthetic-evaluation">Avaliação anestésica:</label>
             <textarea
                 id="anesthetic-evaluation"
@@ -330,7 +347,9 @@
     </div>
 </div>
 <div class="row">
-    <button class="btn btn-success btn-lg btn-block">
+    <button class="btn btn-success btn-lg btn-block"
+            data-toggle="tooltip" data-placement="top"
+            title="Ao clicar neste botão, uma solicitação de cirurgia será criada, e o agendamento seguirá com o processo.">
         @yield('buttonTitle')
     </button>
 </div>

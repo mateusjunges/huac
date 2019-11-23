@@ -48,5 +48,38 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" tabindex="-1" role="dialog" id="help-modal">
+        <div class="modal-dialog bg-dark" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Ajuda</h4>
+                </div>
+                <div class="modal-body">
+                    <h2>Minhas cirurgias</h2>
+                    <p>Esta tela mostra todas as cirurgias que estão agendadas nas quais você foi listado como o cirurgião principal ou auxiliar.</p>
+                    <ul>
+                        <li>
+                            Você pode utilizar o botão <button class="btn btn-sm btn-primary" id="btnGoToDate">Ir para data</button> para ir para uma data específica
+                        </li>
+                        <br>
+                        <li>Utilize os botões <div class="fc-button-group"><button type="button" class="fc-month-button fc-button fc-state-default fc-corner-left">Mês</button><button type="button" class="fc-agendaWeek-button fc-button fc-state-default">Semana</button><button type="button" class="fc-agendaDay-button fc-button fc-state-default fc-corner-right">Dia</button></div>
+                        para alterar as views do calendário para "dia", "mês" e "semana"</li>
+                        <br>
+                        <li>Clique sobre uma cirurgia agendada para ver mais detalhes</li>
+                    </ul>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     @include('_modals.surgeries.my-surgeries-event-click')
+
+
 @endsection

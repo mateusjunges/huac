@@ -114,10 +114,6 @@
         <div class="row">
             @can('events.create')
                 <div class="col-md-3">
-{{--                    <button class="btn btn-default btn-block emergency" id="emergency-schedule">--}}
-{{--                        Adicionar cirurgia de emergência--}}
-{{--                    </button>--}}
-                    {{-- Vue component --}}
                     <schedule-surgeries
                         :surgeries-with-denied-materials="{{ $surgeriesWithDeniedMaterials }}"
                         :surgeries="{{ $surgeries }}"
@@ -159,4 +155,55 @@
     @include('_modals.scheduling.change-status-modal')
     @include('_modals.scheduling.change-event-date-modal')
     @include('_modals.scheduling.history-modal')
+    <div class="modal" tabindex="-1" role="dialog" id="help-modal">
+        <div class="modal-dialog bg-dark" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Ajuda</h4>
+                </div>
+                <div class="modal-body block">
+                    <h2>Agendar cirurgias</h2>
+                    <p>Esta tela mostra todas as cirurgias que estão na fila para serem agendadas.
+                        Se ela aparece em vermelho, os materiais foram negados, e está aqui para ser reagendada.
+                        Se aparece em azul, significa que está na lista de espera.
+                    </p>
+                    <ul>
+                        <li>
+                            Você pode utilizar o botão <button class="btn btn-sm btn-primary">Ir para data</button> para ir para uma data específica
+                        </li>
+                        <br>
+                        <li>
+                            Você pode utilizar o botão <button class="btn btn-sm btn-primary">Pesquisar</button> para procurar um paciente já agendado pelo número do prontuário
+                        </li>
+                        <br>
+                        <li>Utilize os botões
+                            <div class="fc-button-group">
+                                <button type="button" class="fc-month-button fc-button fc-state-default fc-corner-left">
+                                    Mês
+                                </button>
+                                <button type="button" class="fc-agendaWeek-button fc-button fc-state-default">
+                                    Semana
+                                </button>
+                                <button type="button" class="fc-agendaDay-button fc-button fc-state-default fc-corner-right">
+                                    Dia
+                                </button>
+                            </div>
+                            para alterar as views do calendário para "dia", "mês" e "semana"</li>
+                        <br>
+                        <li>Clique sobre uma cirurgia agendada para ver mais detalhes e mostrar as opções disponíveis para cada cirurgia.</li>
+                    </ul>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
 @endsection

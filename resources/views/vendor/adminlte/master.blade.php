@@ -60,6 +60,6 @@
 @endif
 
 @yield('adminlte_js')
-
+<script src="{{ asset('js/should-open-help.js') }}"></script>
 </body>
 </html>

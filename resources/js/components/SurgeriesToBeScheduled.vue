@@ -13,6 +13,10 @@
                     <div class="fc-event new-surgery external-event
                                         bg-yellow ui-draggable
                                         ui-draggable-handle"
+                         data-title="Arraste a cirurgia para o calendário para agendar no dia e hora desejados.
+                         Você pode selecionar a hora clicando em 'Dia', e soltando o paciente sobre a hora desejada."
+                         data-toggle="tooltip"
+                         data-placement="top"
                          style="border: none"
                          v-for="surgery in this.surgeries"
                          :data-id="surgery.id"

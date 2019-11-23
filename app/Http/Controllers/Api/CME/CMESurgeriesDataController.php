@@ -98,7 +98,7 @@ class CMESurgeriesDataController
                                                                 data-placement='top'
                                                                 data-toggle='tooltip'
                                                                 value='{$token}'
-                                                                title='Confirmar os materiais para esta cirurgia'  
+                                                                title='Negar os materiais para esta cirurgia'  
                                                                 data-id='{$surgery->surgery_id}'
                                                                 type='button' 
                                                                 id='confirm{$surgery->surgery_id}'>
