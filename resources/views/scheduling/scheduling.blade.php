@@ -37,7 +37,7 @@
         {{-- Events config --}}
         <input id="event-config" type="hidden"
                data-color="#24872c"
-               data-room="1">
+               data-room="{{ $surgicalRooms[0]->id }}">
         {{-- End event config --}}
         <div class="row" id="search-row">
             <div class="col-md-9">
@@ -75,7 +75,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <h1 class="text-center" id="current-room">Sala 1</h1>
+                <h1 class="text-center" id="current-room">Sala {{ $surgicalRooms[0]->id }}</h1>
             </div>
         </div>
         <br>
@@ -90,25 +90,33 @@
         @endif
 
         <div class="row">
-            @for($i = 1; $i <= count($surgicalRooms); $i++)
-                @if($i%5 == 0)
-                    <div class="row">
-                @endif
-                    <div class="col-md-3">
-                        <button type="button"
-                                class="btn btn-block"
-                                id="surgical-room-{{ $surgicalRooms[$i-1]->id }}"
-                                data-toggle="tooltip"
-                                data-id="{{ $surgicalRooms[$i-1]->id }}"
-                                data-placement="top"
-                                title="{{ $surgicalRooms[$i-1]->name }}">
-                            {{ $surgicalRooms[$i-1]->name }}
-                        </button>
-                    </div>
-                @if($i%5 == 0)
-                    </div>
-                @endif
-            @endfor
+            <div class="col-md-6 col-md-push-3 col-md-pull-3">
+                <label for="surgical-rooms">Selecione a sala de cirurgia</label>
+                <select name="" id="surgical-rooms" class="form-control">
+                    @foreach($surgicalRooms as $room)
+                        <option value="{{ $room->id }}">{{ $room->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+{{--            @for($i = 1; $i <= count($surgicalRooms); $i++)--}}
+{{--                @if($i%5 == 0)--}}
+{{--                    <div class="row">--}}
+{{--                @endif--}}
+{{--                    <div class="col-md-3">--}}
+{{--                        <button type="button"--}}
+{{--                                class="btn btn-block"--}}
+{{--                                id="surgical-room-{{ $surgicalRooms[$i-1]->id }}"--}}
+{{--                                data-toggle="tooltip"--}}
+{{--                                data-id="{{ $surgicalRooms[$i-1]->id }}"--}}
+{{--                                data-placement="top"--}}
+{{--                                title="{{ $surgicalRooms[$i-1]->name }}">--}}
+{{--                            {{ $surgicalRooms[$i-1]->name }}--}}
+{{--                        </button>--}}
+{{--                    </div>--}}
+{{--                @if($i%5 == 0)--}}
+{{--                    </div>--}}
+{{--                @endif--}}
+{{--            @endfor--}}
         </div>
     <hr>
         <div class="row">

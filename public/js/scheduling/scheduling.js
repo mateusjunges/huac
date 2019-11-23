@@ -718,14 +718,23 @@ $(document).ready(function() {
     /**
      * Callback function for each surgical room.
      */
-    window.surgicalRooms.forEach(function(surgicalRoom) {
-        $("#surgical-room-"+surgicalRoom.id).click(function() {
-            config.data('room', surgicalRoom.id);
-            config.data('color', '#24872c');
-            $("#current-room").html("Sala " + surgicalRoom.id);
-            getEvents(config.data('room'));
-            refetchEvents(config.data('room'));
-        });
+    // window.surgicalRooms.forEach(function(surgicalRoom) {
+    //     $("#surgical-room-"+surgicalRoom.id).click(function() {
+    //         config.data('room', surgicalRoom.id);
+    //         config.data('color', '#24872c');
+    //         $("#current-room").html("Sala " + surgicalRoom.id);
+    //         getEvents(config.data('room'));
+    //         refetchEvents(config.data('room'));
+    //     });
+    // });
+
+    let surgicalRooms = $("#surgical-rooms");
+    surgicalRooms.on('change', function() {
+        config.data('room', surgicalRooms.val());
+        config.data('color', '#24872c');
+        $("#current-room").html("Sala " + surgicalRooms.val());
+        getEvents(config.data('room'));
+        refetchEvents(config.data('room'));
     });
 
     /**
